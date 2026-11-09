@@ -21,7 +21,7 @@
 <link rel="canonical" href="https://guijiyeren.github.io/">
 <link rel="icon" href="assets/logo.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"硅基野人","url":"https://guijiyeren.github.io/","email":"mailto:154647@qq.com","jobTitle":"电商人 / AI 无人公司实战者","sameAs":["https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_","https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2","https://space.bilibili.com/504784256","https://www.kuaishou.com/profile/3x837cneqdzidis","https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/","https://www.tiktok.com/@guijiyeren","https://www.zhihu.com/people/guozhengxin"]}
+{"@context":"https://schema.org","@type":"Person","name":"硅基野人","url":"https://guijiyeren.github.io/","jobTitle":"电商人 / AI 无人公司实战者","sameAs":["https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_","https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2","https://space.bilibili.com/504784256","https://www.kuaishou.com/profile/3x837cneqdzidis","https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/","https://www.tiktok.com/@guijiyeren","https://www.zhihu.com/people/guozhengxin"]}
 </script>
 <style>
   :root { --bg:#0a0f1d; --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --cyan:#38bdf8; --blue:#2563eb; --light:#f6f8fc; }
@@ -100,18 +100,25 @@
   .prog-row { display:grid; grid-template-columns:220px 1fr 110px; gap:16px; align-items:center; font-size:13px; color:#334155; }
   .prog-row em { font-style:normal; font-size:11.5px; color:#94a3b8; text-align:right; }
   .pr-bar { height:9px; background:#e8eef8; border-radius:999px; overflow:hidden; }
-  .pr-bar span { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,#2563eb,#38bdf8); }
+  .pr-bar span { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#4ade80); }
+  .pr-bar.dev span { background:linear-gradient(90deg,#2563eb,#38bdf8); }
+  .badge { font-style:normal; font-size:11px; border-radius:999px; padding:3px 9px; text-align:center; }
+  .badge.online { color:#15803d; background:#dcfce7; }
+  .badge.dev { color:#1d4ed8; background:#e0edff; }
   .note-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
   .note-card { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; transition:.16s; }
   .note-card:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(15,23,42,.1); }
-  .nc-cover { height:96px; display:flex; align-items:flex-end; padding:12px; color:#dbeafe; font-size:11px; letter-spacing:1px; }
+  .nc-cover { height:150px; overflow:hidden; }
+  .nc-cover img { width:100%; height:100%; object-fit:cover; display:block; }
   .nc1 { background:linear-gradient(135deg,#1e3a8a,#2563eb 60%,#38bdf8); }
   .nc2 { background:linear-gradient(135deg,#0f766e,#0ea5e9); }
   .nc3 { background:linear-gradient(135deg,#6d28d9,#a78bfa); }
   .nc-tx { padding:13px 15px 15px; }
   .nc-tx b { display:block; font-size:13.5px; color:#0f172a; line-height:1.55; }
   .nc-tx span { display:block; margin-top:7px; font-size:11px; color:#94a3b8; }
-  .tools-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:24px; }
+  .tools-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:10px; }
+  .tool-groups { margin-top:24px; display:flex; flex-direction:column; gap:22px; }
+  .tool-group h4 { font-size:12px; letter-spacing:1.5px; color:#2563eb; font-weight:700; text-transform:uppercase; }
   .tool-card { display:flex; align-items:center; gap:11px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
   .tool-card img { width:34px; height:34px; border-radius:9px; display:block; flex:0 0 auto; }
   .tool-card b { display:block; font-size:12.5px; color:#0f172a; }
@@ -173,7 +180,7 @@
   .public-project .pp-frame.phone { width:168px; height:292px; }
   .public-project .pp-frame { height:292px; display:flex; align-items:center; justify-content:center; background:#fff; }
   .public-project .pp-frame img { width:100%; height:100%; max-height:none; object-fit:contain; }
-  .public-project .pp-frame.browser img { height:calc(292px - 24px); }
+  .public-project .pp-frame.browser img { height:100%; }
   .public-project .pp-frame.phone img { height:calc(292px - 14px); }
   .public-project .pp-cap { height:44px; display:flex; flex-direction:column; justify-content:center; }
   .public-project .pp-cap { margin-top:10px; text-align:center; width:100%; }
@@ -597,7 +604,6 @@
         <div class="pp-media">
           <div class="pp-stage" id="pp-stage">
             <div class="pp-frame browser">
-              <div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/rensheng</em></div>
               <img id="pp-main-img" src="assets/shot-desktop.png" alt="高性价比人生指南 · 行动版">
             </div>
             <div class="pp-cap"><b id="pp-cap-t">电脑版</b><span id="pp-cap-d">桌面浏览器打开，自适应宽度</span></div>
@@ -629,7 +635,6 @@
         <div class="pp-media">
           <div class="pp-stage">
             <div class="pp-frame browser">
-              <div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/resource</em></div>
               <img id="res-main-img" src="assets/res-shot1.jpg" alt="资源中心 · 展示版">
             </div>
             <div class="pp-cap"><b id="res-cap-t">电脑版</b><span id="res-cap-d">8 分区 · 91 个二级分类 · 类型/年份/评分筛选</span></div>
@@ -661,7 +666,6 @@
         <div class="pp-media">
           <div class="pp-stage">
             <div class="pp-frame browser">
-              <div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/intel</em></div>
               <img id="intel-main-img" src="assets/intel-shot1.jpg" alt="情报中枢 · 展示版">
             </div>
             <div class="pp-cap"><b id="intel-cap-t">主界面</b><span id="intel-cap-d">40+ 来源汇成判断，重点与待验证分开</span></div>
@@ -699,10 +703,14 @@
       <p>不需要天天汇报，进度条会说话。</p>
     </div>
     <div class="prog-list">
-      <div class="prog-row"><div class="pr-name">高性价比人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em>已上线</em></div>
-      <div class="prog-row"><div class="pr-name">资源中心展示版</div><div class="pr-bar"><span style="width:100%"></span></div><em>已上线</em></div>
-      <div class="prog-row"><div class="pr-name">情报中枢快照版</div><div class="pr-bar"><span style="width:100%"></span></div><em>已上线</em></div>
-      <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar"><span style="width:60%"></span></div><em>开发中 60%</em></div>
+      <div class="prog-row"><div class="pr-name">AI 个人工作台</div><div class="pr-bar dev"><span style="width:75%"></span></div><em class="badge dev">开发中 75%</em></div>
+      <div class="prog-row"><div class="pr-name">电商运营系统</div><div class="pr-bar dev"><span style="width:60%"></span></div><em class="badge dev">开发中 60%</em></div>
+      <div class="prog-row"><div class="pr-name">数据库</div><div class="pr-bar dev"><span style="width:45%"></span></div><em class="badge dev">开发中 45%</em></div>
+      <div class="prog-row"><div class="pr-name">飞书知识库</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">个人网页</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar dev"><span style="width:70%"></span></div><em class="badge dev">开发中 70%</em></div>
+      <div class="prog-row"><div class="pr-name">高性价比人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">资源中心 / 情报中枢</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
     </div>
   </div>
 </section>
@@ -840,9 +848,9 @@
       <p>把我正在用的方法写下来，持续更新；完整版先在飞书知识库。</p>
     </div>
     <div class="note-grid">
-      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover nc1">AI 工作台</div><div class="nc-tx"><b>一个人怎么用 AI 跑完选品到发布</b><span>实战 · 11-09 · 8 分钟</span></div></a>
-      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover nc2">电商</div><div class="nc-tx"><b>多平台内容分发的 3 个坑</b><span>复盘 · 11-06 · 6 分钟</span></div></a>
-      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover nc3">AI 视频</div><div class="nc-tx"><b>AI 短视频从 0 到 100 条流程</b><span>教程 · 11-03 · 10 分钟</span></div></a>
+      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-1.jpg" alt="AI 工作台"></div><div class="nc-tx"><b>一个人怎么用 AI 跑完选品到发布</b><span>实战 · 11-09 · 8 分钟</span></div></a>
+      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-2.jpg" alt="电商"></div><div class="nc-tx"><b>多平台内容分发的 3 个坑</b><span>复盘 · 11-06 · 6 分钟</span></div></a>
+      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-3.jpg" alt="AI 视频"></div><div class="nc-tx"><b>AI 短视频从 0 到 100 条流程</b><span>教程 · 11-03 · 10 分钟</span></div></a>
     </div>
   </div>
 </section>
@@ -854,20 +862,47 @@
       <h2>我在用的工具</h2>
       <p>在精不在多，都是每天真的会打开的。</p>
     </div>
-    <div class="tools-grid">
-      <div class="tool-card"><img src="assets/tool-workbuddy.png" alt=""><div><b>WorkBuddy</b><span>把活派给 AI 的总台</span></div></div>
-      <div class="tool-card"><img src="assets/tool-notion.png" alt=""><div><b>Notion</b><span>计划和资料库</span></div></div>
-      <div class="tool-card"><img src="assets/tool-obsidian.png" alt=""><div><b>Obsidian</b><span>本地笔记和第二大脑</span></div></div>
-      <div class="tool-card"><img src="assets/tool-comfyui.png" alt=""><div><b>ComfyUI</b><span>本地出图、改图、批量处理</span></div></div>
-      <div class="tool-card"><img src="assets/tool-photoshop.png" alt=""><div><b>Photoshop</b><span>主图和封面精修</span></div></div>
-      <div class="tool-card"><img src="assets/tool-eagle.png" alt=""><div><b>Eagle</b><span>素材和参考图管理</span></div></div>
-      <div class="tool-card"><img src="assets/tool-octopus.png" alt=""><div><b>八爪鱼 RPA</b><span>重复网页操作自动化</span></div></div>
-      <div class="tool-card"><img src="assets/tool-everything.png" alt=""><div><b>Everything</b><span>秒搜本机文件</span></div></div>
-      <div class="tool-card"><img src="assets/tool-drawio.png" alt=""><div><b>draw.io</b><span>画流程和结构图</span></div></div>
-      <div class="tool-card"><img src="assets/tool-pycharm.png" alt=""><div><b>PyCharm</b><span>写脚本做自动化</span></div></div>
-      <div class="tool-card"><img src="assets/tool-githubdesktop.png" alt=""><div><b>GitHub Desktop</b><span>版本管理和发布</span></div></div>
-      <div class="tool-card"><img src="assets/tool-todesk.png" alt=""><div><b>ToDesk</b><span>远程协作和排障</span></div></div>
-    </div>
+    <div class="tool-groups">
+      <div class="tool-group">
+        <h4>AI Agent · 总台</h4>
+        <div class="tools-grid">
+          <div class="tool-card"><img src="assets/tool-workbuddy.png" alt=""><div><b>WorkBuddy</b><span>把活派给 AI 的总台</span></div></div>
+          <div class="tool-card"><img src="assets/tool-deepseekharness.png" alt=""><div><b>DeepSeek Harness</b><span>跑 Agent 和自动化的主环境</span></div></div>
+          <div class="tool-card"><img src="assets/tool-hermes.png" alt=""><div><b>Hermes Agent</b><span>长任务、多步执行的 Agent</span></div></div>
+          <div class="tool-card"><img src="assets/tool-openclaw.png" alt=""><div><b>OpenClaw</b><span>浏览器和系统操作自动化</span></div></div>
+          <div class="tool-card"><img src="assets/tool-opencode.png" alt=""><div><b>OpenCode</b><span>本地写代码、改脚本</span></div></div>
+          <div class="tool-card"><img src="assets/tool-ccswitch.png" alt=""><div><b>CC Switch</b><span>多模型/多账号切换</span></div></div>
+        </div>
+      </div>
+      <div class="tool-group">
+        <h4>知识 · 笔记</h4>
+        <div class="tools-grid">
+          <div class="tool-card"><img src="assets/tool-notion.png" alt=""><div><b>Notion</b><span>计划和资料库</span></div></div>
+          <div class="tool-card"><img src="assets/tool-obsidian.png" alt=""><div><b>Obsidian</b><span>本地笔记和第二大脑</span></div></div>
+          <div class="tool-card"><img src="assets/tool-drawio.png" alt=""><div><b>draw.io</b><span>画流程和结构图</span></div></div>
+          <div class="tool-card"><img src="assets/tool-everything.png" alt=""><div><b>Everything</b><span>秒搜本机文件</span></div></div>
+        </div>
+      </div>
+      <div class="tool-group">
+        <h4>图像 · 视频</h4>
+        <div class="tools-grid">
+          <div class="tool-card"><img src="assets/tool-comfyui.png" alt=""><div><b>ComfyUI</b><span>本地出图、改图、批量处理</span></div></div>
+          <div class="tool-card"><img src="assets/tool-photoshop.png" alt=""><div><b>Photoshop</b><span>主图和封面精修</span></div></div>
+          <div class="tool-card"><img src="assets/tool-eagle.png" alt=""><div><b>Eagle</b><span>素材和参考图管理</span></div></div>
+        </div>
+      </div>
+      <div class="tool-group">
+        <h4>自动化 · 开发 · 远程</h4>
+        <div class="tools-grid">
+          <div class="tool-card"><img src="assets/tool-octopus.png" alt=""><div><b>八爪鱼 RPA</b><span>重复网页操作自动化</span></div></div>
+          <div class="tool-card"><img src="assets/tool-pycharm.png" alt=""><div><b>PyCharm</b><span>写脚本做自动化</span></div></div>
+          <div class="tool-card"><img src="assets/tool-githubdesktop.png" alt=""><div><b>GitHub Desktop</b><span>版本管理和发布</span></div></div>
+          <div class="tool-card"><img src="assets/tool-todesk.png" alt=""><div><b>ToDesk</b><span>远程协作和排障</span></div></div>
+          <div class="tool-card"><img src="assets/tool-uuremote.png" alt=""><div><b>UU 远程</b><span>备用远程通道</span></div></div>
+          <div class="tool-card"><img src="assets/tool-vmware.png" alt=""><div><b>VMware</b><span>虚拟机跑测试环境</span></div></div>
+        </div>
+      </div>
+    </div></div>
   </div>
 </section>
 
@@ -879,9 +914,9 @@
       <p>都是从自己生意里长出来的活，不是纸上谈兵。</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card"><b>AI 工作台搭建</b><p>把你的流程拆开接上 AI，从选题、生产到发布，一个人干一个团队的活。</p><a href="javascript:void(0)" data-mail>聊聊 →</a></div>
-      <div class="svc-card"><b>电商内容代运营</b><p>选品、主图、短视频、多平台发布，按结果交付，不卖课。</p><a href="javascript:void(0)" data-mail>聊聊 →</a></div>
-      <div class="svc-card"><b>AI 短视频批量生产</b><p>脚本、剪辑、八平台分发，一条片子多个平台同步跑。</p><a href="javascript:void(0)" data-mail>聊聊 →</a></div>
+      <div class="svc-card"><b>AI 工作台搭建</b><p>把你的流程拆开接上 AI，从选题、生产到发布，一个人干一个团队的活。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>电商内容代运营</b><p>选品、主图、短视频、多平台发布，按结果交付，不卖课。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>AI 短视频批量生产</b><p>脚本、剪辑、八平台分发，一条片子多个平台同步跑。</p><a href="#message">聊聊 →</a></div>
     </div>
   </div>
 </section>
@@ -897,16 +932,12 @@
         <div class="tl-row"><b>1986</b><span>出生于湖南怀化一个小镇</span></div>
         <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学</span></div>
         <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币，还帮人远程修电脑</span></div>
-        <div class="tl-row"><b>2009</b><span>第一份工作，做网络运维</span></div>
         <div class="tl-row"><b>2010</b><span>开个人工作室，帮人做网站、网络推广，游走在北京各个角落</span></div>
-        <div class="tl-row"><b>2013</b><span>开始做电商</span></div>
         <div class="tl-row"><b>2014</b><span>结婚、当爸爸，同一年完成人生两件大事</span></div>
         <div class="tl-row"><b>2015</b><span>去江苏东海做水晶饰品</span></div>
         <div class="tl-row"><b>2016</b><span>搬到燕郊，女儿出生，家里多了个小甜心</span></div>
         <div class="tl-row"><b>2017</b><span>卖春节用品和圣诞用品；燕郊的房子卖掉，拿到第一笔原始积累</span></div>
-        <div class="tl-row"><b>2018</b><span>去东北辽源做袜业</span></div>
-        <div class="tl-row"><b>2019</b><span>正式搬到浙江诸暨产业带（2018 年刚去）</span></div>
-        <div class="tl-row"><b>2020</b><span>定居长沙，长沙买房；一年只能回去 7 天</span></div>
+        <div class="tl-row"><b>2018</b><span>正式搬家到浙江诸暨产业带</span></div>
         <div class="tl-row"><b>2021</b><span>生意做大做强后，开始躺平</span></div>
         <div class="tl-row"><b>2022</b><span>三十几岁开上大奔，感觉人生到达了巅峰</span></div>
         <div class="tl-row"><b>2024</b><span>遇到变故，消沉了一阵，业绩腰斩；下半年开始用 AI</span></div>
@@ -996,7 +1027,7 @@
 <a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a>
       <a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="assets/icon-feishu.png" alt="">飞书知识库</a>
       <a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-github.png" alt="">GitHub</a>
-      <a class="social" href="javascript:void(0)" data-mail><img src="assets/icon-qqmail.png" alt="">邮箱</a>
+      <a class="social" href="#message"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H5L3 22v-6.5A8.5 8.5 0 0 1 12.5 3.5h0A8.5 8.5 0 0 1 21 12z"/><path d="M8 10h8M8 14h5"/></svg>留言</a>
     </div>
     <p class="follow-note"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>真诚分享，认真搞钱，因上努力，果上随缘</p>
   </div>
@@ -1034,52 +1065,6 @@
   </div>
 </div>
 
-
-<div class="mail-mask" id="mailMask">
-  <div class="mail-box">
-    <img src="assets/email-card.png" alt="邮箱">
-    <div class="mail-actions">
-      <button type="button" class="mail-copy" id="mailCopy">一键复制邮箱</button>
-      <button type="button" class="mail-close" id="mailClose">关闭</button>
-    </div>
-    <p class="mail-tip">邮箱用图片显示，避免被爬虫采集；需要发信时点「复制」。</p>
-  </div>
-</div>
-<style>
-  .mail-mask { position:fixed; inset:0; background:rgba(10,15,29,.55); display:none; align-items:center; justify-content:center; padding:20px; z-index:200; }
-  .mail-mask.on { display:flex; }
-  .mail-mask .mail-box { background:#fff; border-radius:18px; padding:20px; box-shadow:0 30px 80px rgba(0,0,0,.35); max-width:600px; width:100%; }
-  .mail-mask .mail-box img { width:100%; display:block; border-radius:12px; }
-  .mail-mask .mail-actions { display:flex; gap:10px; margin-top:14px; }
-  .mail-mask button { border:0; border-radius:999px; padding:11px 20px; font:600 13px/1 inherit; cursor:pointer; }
-  .mail-mask .mail-copy { background:#1d4ed8; color:#fff; }
-  .mail-mask .mail-close { background:#f1f5f9; color:#334155; }
-  .mail-mask .mail-tip { margin-top:10px; font-size:11.5px; color:#94a3b8; line-height:1.7; }
-</style>
-<script>(function(){
-  var mask = document.getElementById('mailMask');
-  if (!mask) return;
-  function open(){ mask.classList.add('on'); }
-  function close(){ mask.classList.remove('on'); }
-  document.querySelectorAll('[data-mail]').forEach(function(el){
-    el.addEventListener('click', function(ev){ ev.preventDefault(); open(); });
-  });
-  document.getElementById('mailClose').addEventListener('click', close);
-  mask.addEventListener('click', function(ev){ if (ev.target === mask) close(); });
-  document.getElementById('mailCopy').addEventListener('click', function(){
-    var codes = [49,53,52,54,52,55,64,113,113,46,99,111,109];
-    var addr = String.fromCharCode.apply(null, codes);
-    var b = this;
-    function done(){ b.textContent = '已复制'; setTimeout(function(){ b.textContent = '一键复制邮箱'; }, 1600); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(addr).then(done).catch(done);
-    } else {
-      var ta = document.createElement('textarea'); ta.value = addr; document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); } catch(e) {}
-      document.body.removeChild(ta); done();
-    }
-  });
-})();</script>
 
 <footer id="page-end">
   <div class="in">
@@ -1199,7 +1184,8 @@
     if (Date.now() - openedAt < 2500) { setStatus("别急，先填完再点。", true); return; }
     try { if (Date.now() - Number(localStorage.getItem("guiji_sub_last") || 0) < 300000) { setStatus("刚订阅过，稍后再试。", true); return; } } catch (e) {}
     btn.disabled = true; var old = btn.textContent; btn.textContent = "提交中…";
-    fetch("https://formsubmit.co/ajax/154647@qq.com", {
+    var FS_URL = "https://formsubmit.co/ajax/" + String.fromCharCode(49,53,52,54,52,55,64,113,113,46,99,111,109);
+    fetch(FS_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json", "Accept": "application/json"},
       body: JSON.stringify({ email: email, message: "申请订阅更新：" + email, _subject: "网站订阅更新申请", _template: "table", _captcha: "false" })
@@ -1229,7 +1215,31 @@
     statusEl.className = "mf-status" + (isErr ? " err" : "");
   }
   var openedAt = Date.now();
-  var BAD_WORDS = /(贷款|发票|博彩|赌博|色情|代购|刷单|兼职|网赚|加微信|加QQ|加V|引流|推广|代理|招商|私信我|联系我微信|高仿|办证|开票)/i;
+  // 防广告词库：按类别计分，命中 2 类或核心类直接拦
+  var SCAM = [
+    /(发票|開票|开票|代开|专票|普票|税票|增值税|抵扣|报销|fapiao|fa\s*piao|\bfp\b)/i,
+    /(贷款|代款|网贷|放款|下款|秒批|额度|征信|黑户|白户|过桥|垫资|资金周转|借款)/i,
+    /(微信|薇信|威信|微芯|V信|v信|weixin|wechat|\bwx\b|\bvx\b|加微|加V)/i,
+    /(QQ|扣扣|企鹅|加群|进群|交流群|资源群|合作群|q群|裙)/i,
+    /(刷单|刷dan|\bsd\b|好评返现|返现|日结|代付|代收|兼职刷)/i,
+    /(博彩|菠菜|波菜|彩票|时时彩|六合彩|棋牌|外围|上分|下分|跑分|洗码|水房|四件套|接码)/i,
+    /(USDT|泰达币|比特币|以太坊|数字货币|虚拟币|挖矿|矿机|合约|带单|喊单|分析师|导师|稳赚|包赔|倍投|回血|下注)/i,
+    /(办证|办証|假证|刻章|盖章|文凭|学历|资格证|职称|包过|替考|代考|考试答案)/i,
+    /(黑客|破解|外挂|私服|代练|POS机|套现|洗白|删帖|水军|控评|公关|刷钻)/i,
+    /(代孕|捐卵|试管|包成功|楼凤|会所|保健|spa|按摩|足疗|包夜|小姐|约炮|同城交友|相亲|征婚)/i,
+    /(网赚|躺赚|睡后收入|被动收入|管道收入|裂变|分销|微商|无货源|店群|项目群)/i,
+    /(高仿|复刻|A货|原单|尾单|清仓|秒杀|免费领|内部券|返利|薅羊毛|线报)/i,
+    /(源码|搭建|定制开发|小程序开发|APP开发|网站开发|SEO|排名|外链|蜘蛛池|快排|站群|寄生虫|劫持|暗链|黑帽|灰产|黑产)/i
+  ];
+  var CORE = [0, 1, 5, 7, 8, 9]; // 发票/贷款/博彩/办证/黑客/色情医疗类单独命中即拦
+  var CONTACT = /(1[3-9]\d{9})|(qq\s*[:：]?\s*\d{5,})|([a-z0-9-]+\.(com|cn|net|org|top|vip|xyz|cc|io|me))|(https?:\/\/)|(www\.)/i;
+  function normText(t){
+    return String(t || "")
+      .replace(/[\s\u200b-\u200f\ufeff]/g, "")
+      .replace(/[\uFF01-\uFF5E]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
+      .replace(/[.。·•\-_/\\|,+，、;；:：'"“”‘’`~!！?？()（）【】\[\]{}]/g, "")
+      .toLowerCase();
+  }
   var COOLDOWN = 120000;
   form.addEventListener("submit", function(ev){
     ev.preventDefault();
@@ -1238,8 +1248,11 @@
     var msg = (fd.get("message") || "").toString().trim();
     if (!msg) { setStatus("先写点内容再发。", true); return; }
     if (Date.now() - openedAt < 3000) { setStatus("别急，先写完再发。", true); return; }
-    if (((msg.match(/https?:\/\/|www\./gi) || []).length) > 2) { setStatus("留言里链接太多了，先精简一下。", true); return; }
-    if (BAD_WORDS.test(msg)) { setStatus("内容里含有疑似广告词，换个说法再发。", true); return; }
+    var plain = normText(msg);
+    if (CONTACT.test(plain)) { setStatus("留言里不要放电话/微信/QQ/网址，直接说有需求就行。", true); return; }
+    var hits = 0, coreHit = false;
+    SCAM.forEach(function(re, idx){ if (re.test(plain)) { hits += 1; if (CORE.indexOf(idx) >= 0) coreHit = true; } });
+    if (coreHit || hits >= 2) { setStatus("内容里含有疑似广告信息，换个说法再发。", true); return; }
     try {
       var last = Number(localStorage.getItem("guiji_msg_last") || 0);
       if (Date.now() - last < COOLDOWN) { setStatus("刚发过一条，稍后再发。", true); return; }
@@ -1247,7 +1260,8 @@
     btn.disabled = true;
     var old = btn.textContent;
     btn.textContent = "发送中…";
-    fetch("https://formsubmit.co/ajax/154647@qq.com", {
+    var FS_URL = "https://formsubmit.co/ajax/" + String.fromCharCode(49,53,52,54,52,55,64,113,113,46,99,111,109);
+    fetch(FS_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json", "Accept": "application/json"},
       body: JSON.stringify({
