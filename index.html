@@ -77,7 +77,10 @@
   .chip-c { left:-10px; top:270px; animation-delay:2.1s; }
   .chip-d { bottom:8px; right:40px; animation-delay:3s; }
   @keyframes floaty { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
-  .chip-a { animation-name:floatyX; }
+  @keyframes chipZoom { 0%,100% { scale:1; } 50% { scale:1.07; } }
+  .float-chip { animation:floaty 6s ease-in-out infinite, chipZoom 3.6s ease-in-out infinite; }
+  .chip-a { animation-name:floatyX, chipZoom; }
+  .float-chip:hover { scale:1.14; border-color:var(--cyan); color:#fff; }
   @keyframes floatyX { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(-9px); } }
 
   /* section 通用 */
@@ -255,7 +258,7 @@
   .mig-head b { font-size:14px; letter-spacing:.3px; }
   .mig-head button { margin-left:auto; border:1px solid var(--line); background:#fff; color:#475569; font:600 11.5px/1 inherit; border-radius:999px; padding:6px 13px; cursor:pointer; }
   .mig-head button:hover { border-color:#bfdbfe; color:var(--blue); }
-  .mig-stage { position:relative; flex:1; min-height:300px; border-radius:14px; background:radial-gradient(120% 120% at 70% 10%, #eef5ff 0%, #f8fbff 55%, #ffffff 100%); overflow:hidden; }
+  .mig-stage { position:relative; flex:1; min-height:340px; border-radius:14px; background:radial-gradient(120% 120% at 70% 10%, #eef5ff 0%, #f8fbff 55%, #ffffff 100%); overflow:hidden; }
   .mig-stage svg { width:100%; height:100%; display:block; }
   .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
   .mig-cap b { font-size:15px; color:#0f172a; }
@@ -274,11 +277,7 @@
   .mig-node text { font-size:10.5px; fill:#64748b; }
   .mig-node.on circle { fill:#2563eb; stroke:#2563eb; }
   .mig-node.on text { fill:#0f172a; font-weight:700; }
-  .mig-bubble { position:absolute; z-index:3; transform:translate(-50%,-100%); background:#0f172a; color:#fff; border-radius:9px; padding:6px 11px; font-size:11px; line-height:1.5; white-space:nowrap; opacity:0; transition:opacity .3s, transform .3s; pointer-events:none; box-shadow:0 12px 26px rgba(15,23,42,.28); }
-  .mig-bubble.show { opacity:1; transform:translate(-50%,-118%); }
-  .mig-bubble b { font-weight:700; }
-  .mig-bubble i { font-style:normal; color:#9fd8ff; margin-left:6px; }
-  .mig-bubble::after { content:""; position:absolute; left:50%; bottom:-5px; width:10px; height:10px; background:#0f172a; transform:translateX(-50%) rotate(45deg); border-radius:2px; }
+
   .about-timeline { padding:20px 26px; display:flex; flex-direction:column; justify-content:center; }
   .about-timeline .tl-row { padding:11px 0; gap:16px; }
   .about-timeline .tl-row b { flex:0 0 46px; font-size:13px; }
@@ -304,6 +303,7 @@
   /* 关注 */
   #follow { background:#fff; border-top:1px solid var(--line); }
   .socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .follow-note { margin-top:18px; font-size:13px; color:#64748b; letter-spacing:.3px; }
   .social { display:inline-flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 18px; font-size:13.5px; font-weight:600; color:#1e293b; box-shadow:0 6px 18px rgba(15,23,42,.04); transition:.18s; }
   .social:hover { border-color:#bfdbfe; box-shadow:0 10px 24px rgba(37,99,235,.12); transform:translateY(-1px); }
   .social img { width:18px; height:18px; border-radius:4px; display:block; }
@@ -414,7 +414,7 @@
   <div class="nav-in">
     <a class="brand" href="#top"><img src="assets/logo.png" alt="硅基野人">硅基野人</a>
     <div class="nav-links">
-      <a href="#projects">公开项目</a><a href="#building">实战项目</a><a href="#kb">知识库</a><a href="#works">最新作品</a><a href="#about">关于我</a><a href="#follow">联系</a>
+      <a href="#projects">公开项目</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#works">最新作品</a><a href="#about">关于我</a><a href="#follow">联系</a>
     </div>
   </div>
 </nav>
@@ -610,7 +610,7 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow2">Free Knowledge</div>
-      <h2>免费知识库</h2>
+      <h2>飞书知识库</h2>
       <p>我搭 AI 个人工作台的全部过程、模板和工作流，都放在这里，免费看。</p>
     </div>
     <div class="kb-card">
@@ -685,7 +685,7 @@
     </div>
     <div class="about-rich about-reverse">
       <div class="timeline-mini about-timeline">
-        <div class="tl-row"><b>1986</b><span>出生在湖南一个小镇</span></div>
+        <div class="tl-row"><b>1986</b><span>出生于湖南怀化一个小镇</span></div>
         <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学</span></div>
         <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币，还帮人远程修电脑</span></div>
         <div class="tl-row"><b>2009</b><span>第一份工作，做网络运维</span></div>
@@ -693,7 +693,7 @@
         <div class="tl-row"><b>2013</b><span>开始做电商</span></div>
         <div class="tl-row"><b>2014</b><span>结婚、当爸爸，同一年完成人生两件大事</span></div>
         <div class="tl-row"><b>2015</b><span>去江苏东海做水晶饰品</span></div>
-        <div class="tl-row"><b>2016</b><span>女儿出生，家里多了个小甜心</span></div>
+        <div class="tl-row"><b>2016</b><span>搬到燕郊，女儿出生，家里多了个小甜心</span></div>
         <div class="tl-row"><b>2017</b><span>卖春节用品和圣诞用品；燕郊的房子卖掉，拿到第一笔原始积累</span></div>
         <div class="tl-row"><b>2018</b><span>去东北辽源做袜业</span></div>
         <div class="tl-row"><b>2019</b><span>正式搬到浙江诸暨产业带（2018 年刚去）</span></div>
@@ -749,21 +749,11 @@
 <a class="social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a>
 <a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a>
 <a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a>
-      <a class="social" href="javascript:void(0)" data-mail><img src="assets/icon-qqmail.png" alt="">邮件</a>
+      <a class="social" href="javascript:void(0)" data-mail><img src="assets/icon-qqmail.png" alt="">邮箱</a>
+      <a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="assets/icon-feishu.png" alt="">飞书知识库</a>
+      <a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-github.png" alt="">GitHub</a>
     </div>
-    
-    <div class="more-links">
-      <a class="more-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">
-        <img src="assets/icon-feishu.png" alt="飞书知识库">
-        <span><b>飞书知识库</b><i>AI 个人工作台 · 教程 / 模板 / 工作流，免费看</i></span>
-        <em>进入 →</em>
-      </a>
-    </div>
-
-    <div class="contact">
-      <div><div class="t">合作 · 交流 · 一起赚钱</div><div class="v">点右边看邮箱（图片显示，防采集）</div></div>
-      <a class="btn" href="javascript:void(0)" data-mail>打开邮箱</a>
-    </div>
+    <p class="follow-note">合作 · 交流 · 一起赚钱</p>
   </div>
 </section>
 
@@ -893,14 +883,14 @@
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "湖南", year: "1986", desc: "出生在湖南一个小镇", short: "出生", x: 58, y: 252 },
-    { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2009 做网络运维；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 运维 / 工作室", x: 205, y: 70 },
-    { city: "燕郊", year: "", desc: "在燕郊成家", short: "成家", x: 246, y: 106 },
-    { city: "东海", year: "2015", desc: "去江苏东海做水晶饰品", short: "做水晶饰品", x: 332, y: 170 },
-    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 55 },
-    { city: "诸暨", year: "2019", desc: "进浙江诸暨袜业产业带（2018 年刚去）", short: "进产业带", x: 388, y: 236 },
-    { city: "长沙", year: "2020", desc: "定居长沙，长沙买房；一年只能回去 7 天", short: "定居 / 买房", x: 118, y: 268 },
-    { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了日本、韩国", short: "定居 / 游轮出国", x: 456, y: 250 }
+    { city: "怀化", year: "1986", desc: "出生于湖南怀化一个小镇", short: "出生", x: 52, y: 268 },
+    { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2009 做网络运维；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 运维 / 工作室", x: 196, y: 58 },
+    { city: "燕郊", year: "2016", desc: "搬到燕郊，成家、女儿出生", short: "成家 / 女儿出生", x: 236, y: 92 },
+    { city: "东海", year: "2015", desc: "去江苏东海做水晶饰品", short: "做水晶饰品", x: 330, y: 168 },
+    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 40 },
+    { city: "诸暨", year: "2019", desc: "进浙江诸暨袜业产业带（2018 年刚去）", short: "进产业带", x: 380, y: 264 },
+    { city: "长沙", year: "2020", desc: "定居长沙，长沙买房；一年只能回去 7 天", short: "定居 / 买房", x: 92, y: 236 },
+    { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了日本、韩国", short: "定居 / 游轮出国", x: 452, y: 222 }
   ];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
@@ -941,22 +931,44 @@
     return g;
   });
 
-  // 节点气泡
-  var bubble = document.createElement("div");
-  bubble.className = "mig-bubble";
-  bubble.id = "migBubble";
-  svg.parentElement.appendChild(bubble);
+  // 节点气泡：画在 SVG 里，位置跟着节点坐标走，保证贴在上方
+  var NS = "http://www.w3.org/2000/svg";
+  var bubbleG = document.createElementNS(NS, "g");
+  bubbleG.setAttribute("id", "migBubbleG");
+  bubbleG.style.opacity = 0;
+  bubbleG.style.transition = "opacity .28s";
+  var bRect = document.createElementNS(NS, "rect");
+  bRect.setAttribute("rx", "8");
+  bRect.setAttribute("fill", "#0f172a");
+  var bText = document.createElementNS(NS, "text");
+  bText.setAttribute("fill", "#ffffff");
+  bText.setAttribute("font-size", "10.5");
+  bText.setAttribute("text-anchor", "middle");
+  var bArrow = document.createElementNS(NS, "path");
+  bArrow.setAttribute("fill", "#0f172a");
+  bubbleG.appendChild(bRect); bubbleG.appendChild(bText); bubbleG.appendChild(bArrow);
+  svg.appendChild(bubbleG);
   var bubbleTimer = null;
   function showBubble(i){
     var st = STOPS[i];
-    bubble.innerHTML = "<b>" + st.city + "</b>" + (st.year ? " · " + st.year : "") + "<i>" + (st.short || "") + "</i>";
-    var left = Math.max(9, Math.min(91, st.x / 520 * 100));
-    var top = Math.max(18, st.y / 360 * 100 - 8);
-    bubble.style.left = left + "%";
-    bubble.style.top = top + "%";
-    bubble.classList.add("show");
+    var label = st.city + (st.year ? " · " + st.year : "") + (st.short ? "  " + st.short : "");
+    bText.textContent = label;
+    var w = Math.max(64, label.length * 10.2 + 18);
+    var h = 22;
+    var cx = Math.min(516 - w / 2, Math.max(w / 2 + 4, st.x));
+    var above = (st.y - 36 - h) >= 4; // 太靠上就放节点下方
+    var topY = above ? (st.y - 36 - h) : (st.y + 20);
+    bRect.setAttribute("x", cx - w / 2); bRect.setAttribute("y", topY);
+    bRect.setAttribute("width", w); bRect.setAttribute("height", h);
+    bText.setAttribute("x", cx); bText.setAttribute("y", topY + 15);
+    if (above) {
+      bArrow.setAttribute("d", "M " + (cx - 5) + " " + (topY + h) + " L " + (cx + 5) + " " + (topY + h) + " L " + cx + " " + (topY + h + 6) + " Z");
+    } else {
+      bArrow.setAttribute("d", "M " + (cx - 5) + " " + topY + " L " + (cx + 5) + " " + topY + " L " + cx + " " + (topY - 6) + " Z");
+    }
+    bubbleG.style.opacity = 1;
     clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(function(){ bubble.classList.remove("show"); }, 3800);
+    bubbleTimer = setTimeout(function(){ bubbleG.style.opacity = 0; }, 3800);
   }
 
   var total = prog.getTotalLength();
