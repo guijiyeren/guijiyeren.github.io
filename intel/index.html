@@ -37,148 +37,131 @@
 <body data-skin="A"><a class="skip-link" href="#focus">跳到情报阅读区</a><main class="shell">
 <header class="page-head"><div class="ph-ident"><span class="ph-mark" aria-hidden="true"></span><div class="title-line"><h1>情报中枢</h1><span class="tag">调试中</span></div><p class="muted">电商 · AI 工具 · 内容创作 · 商业线索</p></div><div class="actions"><span id="connection" class="muted">等待连接</span><button id="quick-find" class="search-trigger" aria-label="快速查找，Ctrl K">查找 <kbd>Ctrl K</kbd></button><button id="refresh">刷新</button><button id="settings">设置</button><button id="sync" class="primary" title="备用入口：日常请用总台「一键采集 → 自动采集」；这里手动同步会照旧排网页机翻">同步更新（备用）</button></div></header>
 <section id="auth" class="panel auth" hidden><h2>连接本地情报库</h2><p class="muted">Obsidian 内自动连接，独立预览需本机凭证。</p><label>本机访问凭证<input id="credential" type="password" autocomplete="off"></label><button id="connect" class="primary">连接</button><p id="auth-error" role="alert"></p></section>
-<style>
-  .pipeline-hero { display:none !important; }
-  .wanqian-static { background:#fff; border:1px solid #e2e8f0; border-radius:18px; padding:18px 18px 20px; margin:20px 0; box-shadow:0 14px 36px rgba(15,23,42,.06); }
-  .wanqian-static .wq-head h2 { margin:4px 0 6px; font-size:24px; color:#0f172a; }
-  .wanqian-static .wq-head p { margin:0 0 14px; color:#64748b; font-size:13px; }
-  .wanqian-static .wq-eyebrow { font-size:11.5px; font-weight:800; letter-spacing:1.6px; color:#2563eb; }
-  .wanqian-static img { width:100%; height:auto; display:block; border-radius:14px; }
-  @media (max-width:760px) { .wanqian-static { padding:12px; } .wanqian-static .wq-head h2 { font-size:20px; } }
-</style><section class="wanqian-static">
-  <div class="wq-head"><span class="wq-eyebrow">CONVERGENCE</span><h2>万千信息，汇成你的下一步。</h2><p>40+ 来源汇成一张判断图</p></div>
-  <img src="data/media/hot/wanqian-hub.webp" alt="万千信息汇聚图" loading="eager">
-</section><section class="panel pipeline-hero"><div class="section-top"><div><h2>让信息汇成判断</h2><p class="muted">多路来源，逐层筛选，留下值得关注的信号。</p></div><div class="flow-actions"><span id="mode" class="tag">规则筛选 · AI 未配置</span><button id="motion-toggle" aria-pressed="false" aria-label="暂停汇流动画">暂停动效</button></div></div><div class="diagram-wrap"><svg id="flow" viewBox="0 0 1280 300" role="group" aria-label="多路信息源经过来源准入、内容过滤与证据归并，汇入情报中枢"></svg></div><div class="flow-footer"><div class="legend"><span><i class="led good"></i>最近正常</span><span><i class="led waiting"></i>待接入</span><span><i class="led manual"></i>手动导入</span><span><i class="led bad"></i>失败 / 陈旧</span></div><span class="muted">动画为筛选路径示意，不代表实时网络流量</span></div></section>
+<section class="panel pipeline-hero"><div class="section-top"><div><h2>让信息汇成判断</h2><p class="muted">多路来源，逐层筛选，留下值得关注的信号。</p></div><div class="flow-actions"><span id="mode" class="tag">规则筛选 · AI 未配置</span><button id="motion-toggle" aria-pressed="false" aria-label="暂停汇流动画">暂停动效</button></div></div><div class="diagram-wrap"><svg id="flow" viewBox="0 0 1280 300" role="group" aria-label="多路信息源经过来源准入、内容过滤与证据归并，汇入情报中枢"></svg></div><div class="flow-footer"><div class="legend"><span><i class="led good"></i>最近正常</span><span><i class="led waiting"></i>待接入</span><span><i class="led manual"></i>手动导入</span><span><i class="led bad"></i>失败 / 陈旧</span></div><span class="muted">动画为筛选路径示意，不代表实时网络流量</span></div></section>
 <div id="notice" class="notice" hidden role="status"></div>
 <section class="metrics" aria-label="情报概览"><div><span>今日接收</span><strong id="new">—</strong><small>有效期内的新线索</small></div><div><span>待验证</span><strong id="pending">—</strong><small>等待核实的候选</small></div><div><span>来源正常</span><strong id="healthy">—</strong><small>按最近成功时间判断</small></div><div><span>临时保留</span><strong>168<span class="unit">h</span></strong><small>收藏与仓库长期保留</small></div></section>
 <nav class="section-nav" aria-label="内容导航"><a href="#focus">重点情报</a><a href="#github">工具发现</a><a href="#free-rank">电商榜单</a><a href="#douyin">抖音</a><a href="#research">趋势与机会</a><a href="#library">收藏与记录</a><a href="#source-control">来源管理</a></nav>
 <section id="focus" tabindex="-1"><div class="section-heading"><div><h2>当前值得关注</h2><span class="muted">近 7 天有效内容 · 一手发布与待核实线索分别标记</span></div><button id="candidates">候选验证区</button></div><div id="signals" class="signal-grid"><div class="panel empty">正在读取真实情报…</div></div><div id="candidate-list" class="panel candidate-list" hidden></div><section id="reading-desk" class="panel reading-desk" aria-label="有效期内情报"><div class="desk-head"><div><h3>有效期内情报</h3><span class="muted">近 168 小时内仍有效 · 达标线索最多 50 条</span></div><button id="import-direct">导入一条线索 ↗</button></div><div class="filter-bar"><label class="search-field"><span>⌕</span><input id="event-search" type="search" placeholder="搜索标题、分类或推荐理由" aria-label="搜索有效期内情报"></label><select id="event-category" aria-label="按情报分类筛选"><option value="">全部分类</option></select><span id="event-result-count" class="muted" role="status" aria-live="polite">连接后载入</span></div><div id="event-stream" class="event-stream"><div class="stream-placeholder">等待本地情报库连接</div></div></section></section>
 <style>
-.hot-panel,.vl-panel{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px 20px 22px;margin:22px 0;box-shadow:0 14px 36px rgba(15,23,42,.06)}
-.hot-head h2{font-size:22px;margin:4px 0 6px;color:#0f172a}
-.hot-head p{margin:0;color:#64748b;font-size:13px}
-.hot-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:1.5px;color:#2563eb}
-.hot-grid,.vl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.hot-card,.vl-card{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#f8fafc;display:flex;flex-direction:column}
-.hc-media,.vl-media{position:relative;aspect-ratio:9/12;background:#0b1020;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.hc-media video,.hc-media img,.vl-media video,.vl-media img{width:100%;height:100%;object-fit:cover;display:block}
-.hc-badge{position:absolute;left:8px;top:8px;background:rgba(37,99,235,.92);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
-.vl-media{aspect-ratio:16/10}
-.hc-body,.vl-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:5px;flex:1}
-.hc-body h3,.vl-body h3{font-size:13px;line-height:1.5;color:#0f172a;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.hc-body p,.vl-body p{font-size:11.5px;color:#64748b;margin:0}
-.hc-body a{font-size:12px;color:#1d4ed8;font-weight:700;margin-top:auto;text-decoration:none}
-.vl-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(15,23,42,.82);color:#fff;border:0;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none}
-.vl-mask{position:fixed;inset:0;background:rgba(5,10,22,.72);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
-.vl-mask[hidden]{display:none}
-.vl-box{width:min(900px,96vw);background:#0b1020;border-radius:14px;overflow:hidden;position:relative;padding-top:min(56vw,506px)}
-.vl-box iframe,.vl-box video{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vl-close{position:absolute;right:10px;top:10px;z-index:2;background:#fff;border:0;border-radius:50%;width:32px;height:32px;font-size:20px;cursor:pointer}
-@media (max-width:900px){.hot-grid,.vl-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.hot-grid,.vl-grid{grid-template-columns:1fr}.hot-panel,.vl-panel{padding:16px}}
-</style>
-<section class="hot-panel" id="static-hot">
-  <div class="hot-head"><div><span class="hot-eyebrow">HOT · 最近一个月</span><h2>抖音 / 小红书 / 快手爆款</h2><p>按点赞排序，视频可直接在这里播放；没有视频的给原平台链接。</p></div></div>
-  <div class="hot-grid"><article class="hot-card">
-      <div class="hc-media"><video controls preload="none" playsinline poster="data/media/hot/6ae1d3750000000020008fed.webp" src="data/media/hot/6ae1d3750000000020008fed.mp4"></video><span class="hc-badge">小红书</span></div>
-      <div class="hc-body"><h3>窥探命运（主页素材自取）</h3>
-      <p>窥探命运（主页素材自取） · 31.3万 赞 · 10-28</p>
-      <a href="https://www.xiaohongshu.com/search_result/6ae1d3750000000020008fed?xsec_token=AB_Hk6KhMc6AXRUhjGqfq8G1uRVf6lrSc6CjisDUxZeyg=&amp;xsec_source=" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><img src="data/media/hot/6ac88cdb0000000015014ef0.webp" alt="2026诺奖光遗传学：一束蓝光照进活着的大脑" loading="lazy"><span class="hc-badge">小红书</span></div>
-      <div class="hc-body"><h3>2026诺奖光遗传学：一束蓝光照进活着的大脑</h3>
-      <p>比特新语 · 12.8万 赞 · 10-22</p>
-      <a href="https://www.xiaohongshu.com/search_result/6ac88cdb0000000015014ef0?xsec_token=ABFI_3R2RPb9hoZTLnoI456vxyVjJ3YhpzqagCuy6UMm4=&amp;xsec_source=" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><video controls preload="none" playsinline poster="data/media/hot/6ada09da000000002403b8a3.webp" src="data/media/hot/6ada09da000000002403b8a3.mp4"></video><span class="hc-badge">小红书</span></div>
-      <div class="hc-body"><h3>《地球oline的隐藏说明书》</h3>
-      <p>智能工人Jinber · 6.8万 赞 · 10-23</p>
-      <a href="https://www.xiaohongshu.com/search_result/6ada09da000000002403b8a3?xsec_token=ABnXTaPtjqO2HVsWunN47Cg9yhbn7SLUim_qNoRqYMhnc=&amp;xsec_source=" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><img src="data/media/hot/7702406284011654450.jpg" alt="第18集：Vibe知识大赏｜何为麦穗理论？走过只能走一次的麦田，总想要最大的那一株，结果一路空手走到头。爱情里没有最大的麦穗 —— 不是最好的还在后面，而是学会在合适的时候，握住眼前这株。#vibe知识大赏 #恋爱 #心理学 #情感 #抖音精选app征稿中 @抖音精选App官方账号" loading="lazy"><span class="hc-badge">抖音</span></div>
-      <div class="hc-body"><h3>第18集：Vibe知识大赏｜何为麦穗理论？走过只能走一次的麦田，总想要最大的那一株，结果一路空手走到头。爱情里没有最大的麦穗 —— 不是最好的还在后面，而是学会</h3>
-      <p>识妄斋 · 14.4万 赞 · 3天前</p>
-      <a href="https://www.douyin.com/video/7702406284011654450" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><img src="data/media/hot/7701543280495955236.jpg" alt="#vibe知识大赏｜在抖音，过去 20 多天，4万个知识点，完成了 19 亿次流动。" loading="lazy"><span class="hc-badge">抖音</span></div>
-      <div class="hc-body"><h3>#vibe知识大赏｜在抖音，过去 20 多天，4万个知识点，完成了 19 亿次流动。</h3>
-      <p>抖音和ta的朋友们 · 8.8万 赞 · 5天前</p>
-      <a href="https://www.douyin.com/video/7701543280495955236" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><img src="data/media/hot/7701113687771886193.jpg" alt="Vibe知识大赏|速通《旋律》 #vibe知识大赏 @抖音科技 #vibe热点新知计划 #科普 #乐理 #AI动画" loading="lazy"><span class="hc-badge">抖音</span></div>
-      <div class="hc-body"><h3>Vibe知识大赏|速通《旋律》 #vibe知识大赏 @抖音科技 #vibe热点新知计划 #科普 #乐理 #AI动画</h3>
-      <p>K · 8.4万 赞 · 6天前</p>
-      <a href="https://www.douyin.com/video/7701113687771886193" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><video controls preload="none" playsinline poster="data/media/hot/3xq2m6x7rw4qnny.jpg" src="data/media/hot/3xq2m6x7rw4qnny.mp4"></video><span class="hc-badge">快手</span></div>
-      <div class="hc-body"><h3>如何让你的大脑渴望学习？ #vibe知识大赏 #多巴胺 #脑科学</h3>
-      <p>Ember余烬 · 6.7万 赞 · 10-13</p>
-      <a href="https://www.kuaishou.com/short-video/3xq2m6x7rw4qnny" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><img src="data/media/hot/3xe9ydcw2ubxhr6.jpg" alt="Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速" loading="lazy"><span class="hc-badge">快手</span></div>
-      <div class="hc-body"><h3>Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速</h3>
-      <p>万有引言 · 5.2万 赞 · 10-14</p>
-      <a href="https://www.kuaishou.com/short-video/3xe9ydcw2ubxhr6" target="_blank" rel="noopener">原平台 →</a></div>
-    </article><article class="hot-card">
-      <div class="hc-media"><video controls preload="none" playsinline poster="data/media/hot/3x3nh5gjpr8wdfq.jpg" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="hc-badge">快手</span></div>
-      <div class="hc-body"><h3>漫画家的工作台和他们的作品风格完全一致 #漫画 #漫画家 #二次元 #画画</h3>
-      <p>游娱小玩子 · 4.8万 赞 · 10-22</p>
-      <a href="https://www.kuaishou.com/short-video/3x3nh5gjpr8wdfq" target="_blank" rel="noopener">原平台 →</a></div>
-    </article></div>
-</section>
-<section class="vl-panel" id="static-video">
-  <div class="hot-head"><div><span class="hot-eyebrow">VIDEO · 视频线索</span><h2>先看视频线索</h2><p>B 站 / YouTube 点播放可直接看；其余给原片入口。</p></div></div>
-  <div class="vl-grid"><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-0.jpg" alt="【火柴人】安静坐15分钟，三分之二的男人宁愿电自己｜《科学》2014" loading="lazy"><button type="button" class="vl-play" data-embed="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1Xr4u6JEN5&amp;autoplay=1&amp;danmaku=0&amp;high_quality=1" data-title="【火柴人】安静坐15分钟，三分之二的男人宁愿电自己｜《科学》2014">▶ 播放</button></div>
-      <div class="vl-body"><h3>【火柴人】安静坐15分钟，三分之二的男人宁愿电自己｜《科学》2014</h3><p>怪兽们的爱因斯坦 · B站 · 125.1 万 播放</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-1.jpg" alt="中文标题整理中" loading="lazy"><button type="button" class="vl-play" data-embed="https://www.youtube-nocookie.com/embed/OtbLL6OBNE4?autoplay=1&amp;rel=0&amp;playsinline=1" data-title="中文标题整理中">▶ 播放</button></div>
-      <div class="vl-body"><h3>中文标题整理中</h3><p>Mr omi · YouTube · 73.7 万 播放</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><video controls preload="none" playsinline poster="data/media/hot/vline-2.jpg" src="data/media/hot/vline-2.mp4"></video><a class="vl-play" href="https://x.com/higgsfield/status/2118732716346933423" target="_blank" rel="noopener">▶ 原片</a></div>
-      <div class="vl-body"><h3>中文标题整理中</h3><p>Higgsfield AI 🧩 @higgsfield · 1566.6 万 浏览</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-3.jpg" alt="中文标题整理中" loading="lazy"><a class="vl-play" href="https://x.com/higgsfield_ai/status/2118517745138778461" target="_blank" rel="noopener">▶ 原片</a></div>
-      <div class="vl-body"><h3>中文标题整理中</h3><p>Higgsfield AI 🧩 @higgsfield_ai · 8.2 万 浏览</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-4.jpg" alt="中国AI短剧的风还是吹到好莱坞了😂  烈士家属被欺负，军队大佬派军队维护正义。  这剧情是不是很熟悉😂😂😂 https://t.co/sCNa8pQWC8" loading="lazy"><a class="vl-play" href="https://x.com/liyue_ai/status/2118948057232633940" target="_blank" rel="noopener">▶ 原片</a></div>
-      <div class="vl-body"><h3>中国AI短剧的风还是吹到好莱坞了😂  烈士家属被欺负，军队大佬派军队维护正义。  这剧情是不是很熟悉😂😂😂 https://t.co/sCNa8pQWC8</h3><p>李岳 @liyue_ai · 3.6 万 浏览</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-5.jpg" alt="【抢先版】高价招工是陷阱，剥虾女工看清套路" loading="lazy"><button type="button" class="vl-play" data-embed="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV11bxn6PEWZ&amp;autoplay=1&amp;danmaku=0&amp;high_quality=1" data-title="【抢先版】高价招工是陷阱，剥虾女工看清套路">▶ 播放</button></div>
-      <div class="vl-body"><h3>【抢先版】高价招工是陷阱，剥虾女工看清套路</h3><p>秋叶看世界 · B站 · 318.7 万 播放</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><img src="data/media/hot/vline-6.jpg" alt="中文标题整理中" loading="lazy"><button type="button" class="vl-play" data-embed="https://www.youtube-nocookie.com/embed/2u9_4pW4Qig?autoplay=1&amp;rel=0&amp;playsinline=1" data-title="中文标题整理中">▶ 播放</button></div>
-      <div class="vl-body"><h3>中文标题整理中</h3><p>Ghibli AI videos  and Titu Tinku AI · YouTube · 112.4 万 播放</p></div>
-    </article><article class="vl-card">
-      <div class="vl-media"><video controls preload="none" playsinline poster="data/media/hot/vline-7.jpg" src="data/media/hot/vline-7.mp4"></video><a class="vl-play" href="https://x.com/FilCrow_/status/2118738060196155540" target="_blank" rel="noopener">▶ 原片</a></div>
-      <div class="vl-body"><h3>中文标题整理中</h3><p>Filcrow @FilCrow_ · 756.2 万 浏览</p></div>
-    </article></div>
-</section>
-<div class="vl-mask" id="vlMask" hidden><div class="vl-box"><button type="button" class="vl-close" id="vlClose">×</button><div id="vlFrame"></div></div></div>
-<script>(function(){
-  var mask=document.getElementById('vlMask'), frame=document.getElementById('vlFrame');
-  document.querySelectorAll('.vl-play[data-embed]').forEach(function(b){
-    b.addEventListener('click', function(){
-      if(!mask||!frame) return;
-      frame.innerHTML='<iframe src="'+b.getAttribute('data-embed')+'" allow="autoplay; fullscreen" allowfullscreen></iframe>';
-      mask.removeAttribute('hidden');
-    });
+  .live-brand em.live-logo { background-image:url('assets/logos-sprite.png?v=20261109') !important; }
+  #home-video-focus:not(.home-video-static) { display:none !important; }
+</style><section class="home-douyin" id="static-hot">
+  <div class="dy-head"><div><span class="dy-eyebrow">HOT · 最近一个月</span><h2>抖音 / 小红书 / 快手爆款</h2></div><div class="dy-head-actions"><span class="dy-count">悬停即播 · 点击看原片</span></div></div>
+  <div class="dy-grid"><div class="dy-track"><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ae1d3750000000020008fed?xsec_token=AB_Hk6KhMc6AXRUhjGqfq8G1uRVf6lrSc6CjisDUxZeyg=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ae1d3750000000020008fed.webp" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/6ae1d3750000000020008fed.webp" src="data/media/hot/6ae1d3750000000020008fed.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 31.3万</span></span>
+          <span class="dy-body"><span class="dy-title">窥探命运（主页素材自取）</span><span class="dy-author">窥探命运（主页素材自取） · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ac88cdb0000000015014ef0?xsec_token=ABFI_3R2RPb9hoZTLnoI456vxyVjJ3YhpzqagCuy6UMm4=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ac88cdb0000000015014ef0.webp" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 12.8万</span></span>
+          <span class="dy-body"><span class="dy-title">2026诺奖光遗传学：一束蓝光照进活着的大脑</span><span class="dy-author">比特新语 · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ada09da000000002403b8a3?xsec_token=ABnXTaPtjqO2HVsWunN47Cg9yhbn7SLUim_qNoRqYMhnc=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ada09da000000002403b8a3.webp" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/6ada09da000000002403b8a3.webp" src="data/media/hot/6ada09da000000002403b8a3.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 6.8万</span></span>
+          <span class="dy-body"><span class="dy-title">《地球oline的隐藏说明书》</span><span class="dy-author">智能工人Jinber · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7702406284011654450">
+          <span class="dy-cover"><img src="data/media/hot/7702406284011654450.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 14.4万</span></span>
+          <span class="dy-body"><span class="dy-title">第18集：Vibe知识大赏｜何为麦穗理论？走过只能走一次的麦田，总想要最大的那一株，结果一路空手走到头。爱情里没有最大的麦穗 —— 不是最好</span><span class="dy-author">识妄斋 · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7701543280495955236">
+          <span class="dy-cover"><img src="data/media/hot/7701543280495955236.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 8.8万</span></span>
+          <span class="dy-body"><span class="dy-title">#vibe知识大赏｜在抖音，过去 20 多天，4万个知识点，完成了 19 亿次流动。</span><span class="dy-author">抖音和ta的朋友们 · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7701113687771886193">
+          <span class="dy-cover"><img src="data/media/hot/7701113687771886193.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 8.4万</span></span>
+          <span class="dy-body"><span class="dy-title">Vibe知识大赏|速通《旋律》 #vibe知识大赏 @抖音科技 #vibe热点新知计划 #科普 #乐理 #AI动画</span><span class="dy-author">K · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3xq2m6x7rw4qnny">
+          <span class="dy-cover"><img src="data/media/hot/3xq2m6x7rw4qnny.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3xq2m6x7rw4qnny.jpg" src="data/media/hot/3xq2m6x7rw4qnny.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 6.7万</span></span>
+          <span class="dy-body"><span class="dy-title">如何让你的大脑渴望学习？ #vibe知识大赏 #多巴胺 #脑科学</span><span class="dy-author">Ember余烬 · 快手</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3xe9ydcw2ubxhr6">
+          <span class="dy-cover"><img src="data/media/hot/3xe9ydcw2ubxhr6.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 5.2万</span></span>
+          <span class="dy-body"><span class="dy-title">Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速</span><span class="dy-author">万有引言 · 快手</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3x3nh5gjpr8wdfq">
+          <span class="dy-cover"><img src="data/media/hot/3x3nh5gjpr8wdfq.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3x3nh5gjpr8wdfq.jpg" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
+          <span class="dy-body"><span class="dy-title">漫画家的工作台和他们的作品风格完全一致 #漫画 #漫画家 #二次元 #画画</span><span class="dy-author">游娱小玩子 · 快手</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ae1d3750000000020008fed?xsec_token=AB_Hk6KhMc6AXRUhjGqfq8G1uRVf6lrSc6CjisDUxZeyg=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ae1d3750000000020008fed.webp" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/6ae1d3750000000020008fed.webp" src="data/media/hot/6ae1d3750000000020008fed.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 31.3万</span></span>
+          <span class="dy-body"><span class="dy-title">窥探命运（主页素材自取）</span><span class="dy-author">窥探命运（主页素材自取） · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ac88cdb0000000015014ef0?xsec_token=ABFI_3R2RPb9hoZTLnoI456vxyVjJ3YhpzqagCuy6UMm4=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ac88cdb0000000015014ef0.webp" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 12.8万</span></span>
+          <span class="dy-body"><span class="dy-title">2026诺奖光遗传学：一束蓝光照进活着的大脑</span><span class="dy-author">比特新语 · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ada09da000000002403b8a3?xsec_token=ABnXTaPtjqO2HVsWunN47Cg9yhbn7SLUim_qNoRqYMhnc=&amp;xsec_source=">
+          <span class="dy-cover"><img src="data/media/hot/6ada09da000000002403b8a3.webp" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/6ada09da000000002403b8a3.webp" src="data/media/hot/6ada09da000000002403b8a3.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 6.8万</span></span>
+          <span class="dy-body"><span class="dy-title">《地球oline的隐藏说明书》</span><span class="dy-author">智能工人Jinber · 小红书</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7702406284011654450">
+          <span class="dy-cover"><img src="data/media/hot/7702406284011654450.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 14.4万</span></span>
+          <span class="dy-body"><span class="dy-title">第18集：Vibe知识大赏｜何为麦穗理论？走过只能走一次的麦田，总想要最大的那一株，结果一路空手走到头。爱情里没有最大的麦穗 —— 不是最好</span><span class="dy-author">识妄斋 · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7701543280495955236">
+          <span class="dy-cover"><img src="data/media/hot/7701543280495955236.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 8.8万</span></span>
+          <span class="dy-body"><span class="dy-title">#vibe知识大赏｜在抖音，过去 20 多天，4万个知识点，完成了 19 亿次流动。</span><span class="dy-author">抖音和ta的朋友们 · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.douyin.com/video/7701113687771886193">
+          <span class="dy-cover"><img src="data/media/hot/7701113687771886193.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 8.4万</span></span>
+          <span class="dy-body"><span class="dy-title">Vibe知识大赏|速通《旋律》 #vibe知识大赏 @抖音科技 #vibe热点新知计划 #科普 #乐理 #AI动画</span><span class="dy-author">K · 抖音</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3xq2m6x7rw4qnny">
+          <span class="dy-cover"><img src="data/media/hot/3xq2m6x7rw4qnny.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3xq2m6x7rw4qnny.jpg" src="data/media/hot/3xq2m6x7rw4qnny.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 6.7万</span></span>
+          <span class="dy-body"><span class="dy-title">如何让你的大脑渴望学习？ #vibe知识大赏 #多巴胺 #脑科学</span><span class="dy-author">Ember余烬 · 快手</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3xe9ydcw2ubxhr6">
+          <span class="dy-cover"><img src="data/media/hot/3xe9ydcw2ubxhr6.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 5.2万</span></span>
+          <span class="dy-body"><span class="dy-title">Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速</span><span class="dy-author">万有引言 · 快手</span></span>
+        </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3x3nh5gjpr8wdfq">
+          <span class="dy-cover"><img src="data/media/hot/3x3nh5gjpr8wdfq.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3x3nh5gjpr8wdfq.jpg" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
+          <span class="dy-body"><span class="dy-title">漫画家的工作台和他们的作品风格完全一致 #漫画 #漫画家 #二次元 #画画</span><span class="dy-author">游娱小玩子 · 快手</span></span>
+        </button></div></div>
+</section><section id="home-video-focus" class="home-video-static">
+  <div class="home-video-head"><div><span class="home-video-eyebrow">VIDEO · 视频线索</span><h2>先看视频线索</h2><p>悬停即预览，点击原片播放；B 站 / YouTube 站内播放。</p></div></div>
+  <div class="home-video-cards"><article class="home-video-card">
+          <button class="home-video-open" type="button" data-embed="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1Xr4u6JEN5&amp;autoplay=1&amp;danmaku=0&amp;high_quality=1" data-url="https://www.bilibili.com/video/BV1Xr4u6JEN5">
+            <div class="home-video-cover"><img src="data/media/hot/vline-0.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/bilibili.png" alt=""></span><span class="home-video-number">01</span><span class="home-video-play">▶</span></div>
+            <h3>【火柴人】安静坐15分钟，三分之二的男人宁愿电自己｜《科学》2014</h3>
+            <p>怪兽们的爱因斯坦 · B站 · 125.1 万 播放</p>
+            <span class="home-video-read">悬停预览 · 点击播放 →</span>
+          </button>
+        </article><article class="home-video-card">
+          <button class="home-video-open" type="button" data-embed="https://www.youtube-nocookie.com/embed/OtbLL6OBNE4?autoplay=1&amp;rel=0&amp;playsinline=1" data-url="https://www.youtube.com/watch?v=OtbLL6OBNE4">
+            <div class="home-video-cover"><img src="data/media/hot/vline-1.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/youtube.png" alt=""></span><span class="home-video-number">02</span><span class="home-video-play">▶</span></div>
+            <h3>中文标题整理中</h3>
+            <p>Mr omi · YouTube · 73.7 万 播放</p>
+            <span class="home-video-read">悬停预览 · 点击播放 →</span>
+          </button>
+        </article><article class="home-video-card">
+          <button class="home-video-open" type="button" data-embed="" data-url="https://x.com/higgsfield/status/2118732716346933423">
+            <div class="home-video-cover"><img src="data/media/hot/vline-2.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/x.png" alt=""></span><span class="home-video-number">03</span><span class="home-video-play">▶</span></div>
+            <h3>中文标题整理中</h3>
+            <p>Higgsfield AI 🧩 @higgsfield · 1566.6 万 浏览</p>
+            <span class="home-video-read">悬停预览 · 点击播放 →</span>
+          </button>
+        </article><article class="home-video-card">
+          <button class="home-video-open" type="button" data-embed="" data-url="https://x.com/higgsfield_ai/status/2118517745138778461">
+            <div class="home-video-cover"><img src="data/media/hot/vline-3.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/x.png" alt=""></span><span class="home-video-number">04</span><span class="home-video-play">▶</span></div>
+            <h3>中文标题整理中</h3>
+            <p>Higgsfield AI 🧩 @higgsfield_ai · 8.2 万 浏览</p>
+            <span class="home-video-read">悬停预览 · 点击播放 →</span>
+          </button>
+        </article><article class="home-video-card">
+          <button class="home-video-open" type="button" data-embed="" data-url="https://x.com/liyue_ai/status/2118948057232633940">
+            <div class="home-video-cover"><img src="data/media/hot/vline-4.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/x.png" alt=""></span><span class="home-video-number">05</span><span class="home-video-play">▶</span></div>
+            <h3>中国AI短剧的风还是吹到好莱坞了😂  烈士家属被欺负，军队大佬派军队维护正义。  这剧情是不是很熟悉😂😂😂 https:</h3>
+            <p>李岳 @liyue_ai · 3.6 万 浏览</p>
+            <span class="home-video-read">悬停预览 · 点击播放 →</span>
+          </button>
+        </article></div>
+</section><script>(function(){
+  document.querySelectorAll('.dy-card').forEach(function(c){
+    var v=c.querySelector('.dy-hover');
+    if(!v) return;
+    c.addEventListener('mouseenter', function(){ try{ v.play(); }catch(e){} });
+    c.addEventListener('mouseleave', function(){ try{ v.pause(); v.currentTime=0; }catch(e){} });
+    c.addEventListener('click', function(){ var u=c.getAttribute('data-url'); if(u) window.open(u,'_blank','noopener'); });
   });
-  var close=document.getElementById('vlClose');
-  if(close) close.addEventListener('click', function(){ if(mask) mask.setAttribute('hidden',''); if(frame) frame.innerHTML=''; });
-  if(mask) mask.addEventListener('click', function(e){ if(e.target===mask){ mask.setAttribute('hidden',''); if(frame) frame.innerHTML=''; } });
-  // 把“等待本机连接/链接”改成加载中
-  try{
-    var walker=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    var n;
-    while((n=walker.nextNode())){
-      if(n.nodeValue && (n.nodeValue.indexOf('等待本机连接')>=0 || n.nodeValue.indexOf('等待本机链接')>=0)){
-        n.nodeValue=n.nodeValue.replace(/等待本机连接/g,'加载中…').replace(/等待本机链接/g,'加载中…');
-      }
+  document.querySelectorAll('.home-video-open[data-embed]').forEach(function(b){
+    var card=b.closest('.home-video-card'); var embed=b.getAttribute('data-embed');
+    b.addEventListener('click', function(){ if(embed) window.open(embed,'_blank','noopener'); });
+    if(card && embed){
+      card.addEventListener('mouseenter', function(){
+        if(card.querySelector('.home-video-hover')) return;
+        var f=document.createElement('iframe'); f.className='home-video-hover'; f.src=embed; f.allow='autoplay; fullscreen'; f.setAttribute('allowfullscreen','');
+        card.appendChild(f);
+      });
+      card.addEventListener('mouseleave', function(){ var f=card.querySelector('.home-video-hover'); if(f) f.remove(); });
     }
-  }catch(e){}
-})();</script>
-<section id="github"><div class="section-heading"><div><h2>工具发现</h2><span class="muted">把新项目与长期工具库放在一起。</span></div><span class="muted" id="repo-count">正在读取</span></div><div class="tool-controls panel"><label class="search-field"><span>⌕</span><input id="tool-search" type="search" placeholder="查找工具名称、用途或仓库" aria-label="搜索工具库"></label><select id="tool-category" aria-label="按工具类别筛选"><option value="">全部类别</option></select><button id="tool-reset">重置</button><span id="tool-result-count" class="muted" role="status" aria-live="polite"></span></div><div id="tool-empty" class="panel empty" hidden>没有匹配工具，试试换一个关键词或重置筛选。</div><section class="repo-section panel" id="hot-section"><div class="subhead"><h3>本月新爆款</h3><span id="hot-mode" class="tag">等待读取</span></div><div id="repos-hot" class="repo-grid"></div></section><details class="repo-section panel" open><summary><h3>电商 × AI 工具库</h3><span class="muted">18 项工具 · 新晋优先</span></summary><div id="repos-apps" class="repo-grid"></div></details><section class="repo-section panel"><div class="subhead"><h3>随机发现</h3><button id="draw">换一个发现 ↗</button></div><p id="gacha-count" class="muted"></p><div id="repos-gacha" class="repo-grid"></div></section></section>
+  });
+  try{ var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n; while((n=w.nextNode())){ if(n.nodeValue&&(n.nodeValue.indexOf('等待本机连接')>=0||n.nodeValue.indexOf('等待本机链接')>=0)){ n.nodeValue=n.nodeValue.replace(/等待本机连接/g,'加载中…').replace(/等待本机链接/g,'加载中…'); } } }catch(e){}
+})();</script><section id="github"><div class="section-heading"><div><h2>工具发现</h2><span class="muted">把新项目与长期工具库放在一起。</span></div><span class="muted" id="repo-count">正在读取</span></div><div class="tool-controls panel"><label class="search-field"><span>⌕</span><input id="tool-search" type="search" placeholder="查找工具名称、用途或仓库" aria-label="搜索工具库"></label><select id="tool-category" aria-label="按工具类别筛选"><option value="">全部类别</option></select><button id="tool-reset">重置</button><span id="tool-result-count" class="muted" role="status" aria-live="polite"></span></div><div id="tool-empty" class="panel empty" hidden>没有匹配工具，试试换一个关键词或重置筛选。</div><section class="repo-section panel" id="hot-section"><div class="subhead"><h3>本月新爆款</h3><span id="hot-mode" class="tag">等待读取</span></div><div id="repos-hot" class="repo-grid"></div></section><details class="repo-section panel" open><summary><h3>电商 × AI 工具库</h3><span class="muted">18 项工具 · 新晋优先</span></summary><div id="repos-apps" class="repo-grid"></div></details><section class="repo-section panel"><div class="subhead"><h3>随机发现</h3><button id="draw">换一个发现 ↗</button></div><p id="gacha-count" class="muted"></p><div id="repos-gacha" class="repo-grid"></div></section></section>
 <section id="free-rank">
 <div class="section-heading"><div><h2>电商榜单</h2><span class="muted">匿名首屏：抖查查商品、蝉妈妈达人、1688 货源；不登录、不翻页。</span></div><div class="free-rank-actions"><span id="free-rank-status" class="muted" role="status" aria-live="polite">尚未采集</span><button id="free-rank-sync" class="primary">采集免费榜单</button></div></div>
 <p class="free-rank-note">销量是区间值，不是精确成交；每天一次即可。深层数据、翻页与商品明细需要登录或付费，不在此采集。</p>
@@ -241,13 +224,14 @@ var _m=document.getElementById('mailLink'); if(_m){var _c=_m.getAttribute('data-
   .sec-head h2 { font-size:29px; letter-spacing:.5px; margin:8px 0 0; color:#0f172a; }
   .sec-head p { margin-top:10px; color:#64748b; font-size:14.5px; line-height:1.8; max-width:640px; }
   .socials { display:flex; flex-wrap:nowrap; justify-content:space-between; gap:8px; margin-top:28px; }
-  .social { display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px; background:#fff; border:1px solid #e2e8f0; color:#334155; font-size:11.5px; transition:.16s; }
+  .social { display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px; background:#fff; border:1px solid #e2e8f0; color:#334155; font-size:11.5px; transition:.16s; text-decoration:none; }
   .social img { width:16px; height:16px; border-radius:4px; display:block; }
   .social:hover { color:#2563eb; border-color:#bfdbfe; transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.12); }
   .follow-note { margin-top:24px; font-size:26px; font-weight:800; color:#0f172a; letter-spacing:1px; display:flex; align-items:center; justify-content:center; gap:10px; text-align:center; }
   footer#page-end { background:#070b16; color:#7f8da6; padding:26px 22px; font-size:12px; }
   footer#page-end .in { max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
   footer#page-end b { color:#fff; }
+  #follow a, footer#page-end a { text-decoration:none; }
   footer#page-end a { color:#7dd3fc; }
   @media (max-width:820px) {
     .socials { flex-wrap:wrap; justify-content:flex-start; gap:10px 12px; }
