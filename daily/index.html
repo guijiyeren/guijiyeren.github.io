@@ -90,28 +90,14 @@ h1{font-size:34px;margin:10px 0 8px;color:#fff} .hero p{color:#94a3b8;font-size:
     </article></main>
 <footer class="foot"><span>© 2026 硅基野人 · 内容由 AI 参与生产，我负责拍板</span><span><a href="rss.xml">RSS</a></span></footer>
 
-<div class="theme-bar" id="themeBar">
-  <button class="theme-btn" id="themeBtn" type="button" aria-label="切换白天/夜晚">☾</button>
-  <button class="theme-btn skin-btn" id="skinBtn" type="button" aria-label="切换风格">◐</button>
-  <div class="skin-panel" id="skinPanel">
-    <b>选个风格</b>
-    <button data-skin="blue">深空蓝</button><button data-skin="violet">极光紫</button><button data-skin="orange">落日橙</button><button data-skin="green">森林绿</button><button data-skin="mono">极简灰</button>
-  </div>
-</div>
 <style>
-.theme-bar { position:fixed; right:14px; top:70px; z-index:130; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-.theme-btn { width:38px; height:38px; border-radius:50%; border:1px solid #dbeafe; background:rgba(255,255,255,.94); color:#1e40af; font-size:17px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.16); }
-.theme-btn:hover { background:#eff6ff; }
-.skin-panel { display:none; width:170px; background:rgba(255,255,255,.97); border:1px solid #e2e8f0; border-radius:12px; padding:10px; box-shadow:0 16px 40px rgba(15,23,42,.2); }
-.skin-panel.on { display:block; }
-.skin-panel b { display:block; font-size:11px; color:#64748b; margin:0 0 8px 4px; }
-.skin-panel button { width:100%; text-align:left; border:0; background:transparent; padding:6px 8px; border-radius:8px; font-size:12px; color:#334155; cursor:pointer; }
-.skin-panel button:hover { background:#eff6ff; color:#1d4ed8; }
-html[data-skin="blue"] { --blue:#2563eb; --cyan:#38bdf8; }
-html[data-skin="violet"] { --blue:#7c3aed; --cyan:#a78bfa; }
-html[data-skin="orange"] { --blue:#ea580c; --cyan:#fb923c; }
-html[data-skin="green"] { --blue:#059669; --cyan:#34d399; }
-html[data-skin="mono"] { --blue:#334155; --cyan:#64748b; }
+.theme-mini { width:30px; height:30px; border-radius:50%; border:1px solid #dbeafe; background:#fff; color:#1e40af; font-size:14px; cursor:pointer; flex:0 0 auto; }
+.theme-mini:hover { background:#eff6ff; }
+.rss-mask { position:fixed; inset:0; background:rgba(5,10,22,.66); z-index:200; display:none; align-items:center; justify-content:center; padding:18px; }
+.rss-mask.on { display:flex; }
+.rss-box { position:relative; width:min(1080px,94vw); height:min(82vh,860px); background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,.45); }
+.rss-box iframe { width:100%; height:100%; border:0; display:block; }
+.rss-close { position:absolute; right:10px; top:10px; z-index:2; width:32px; height:32px; border:0; border-radius:50%; background:#0f172a; color:#fff; font-size:20px; cursor:pointer; }
 html[data-theme="night"] body { background:#070b16 !important; color:#dbeafe !important; }
 html[data-theme="night"] section, html[data-theme="night"] main { background-color:#0b1220 !important; color:#dbeafe !important; }
 html[data-theme="night"] .panel, html[data-theme="night"] .card, html[data-theme="night"] article,
@@ -120,9 +106,9 @@ html[data-theme="night"] .input, html[data-theme="night"] input, html[data-theme
 html[data-theme="night"] h1, html[data-theme="night"] h2, html[data-theme="night"] h3, html[data-theme="night"] b { color:#f1f5f9 !important; }
 html[data-theme="night"] p, html[data-theme="night"] span, html[data-theme="night"] .muted { color:#94a3b8 !important; }
 html[data-theme="night"] a { color:#7dd3fc; }
-html[data-theme="night"] .card, html[data-theme="night"] .item { box-shadow:none !important; }
-@media (max-width:760px) { .theme-bar { top:58px; right:10px; } .theme-btn { width:34px; height:34px; font-size:15px; } }
+@media (max-width:760px) { .rss-box { width:96vw; height:78vh; } }
 </style>
+<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报 RSS 预览"></iframe></div></div>
 <script>(function(){
   var html=document.documentElement, btn=document.getElementById('themeBtn');
   var saved=null; try{ saved=localStorage.getItem('guiji_theme'); }catch(e){}
@@ -134,13 +120,17 @@ html[data-theme="night"] .card, html[data-theme="night"] .item { box-shadow:none
     html.setAttribute('data-theme', next); btn.textContent = next==='night'?'☀':'☾';
     try{ localStorage.setItem('guiji_theme', next); }catch(e){}
   });
-  var skin=localStorage.getItem('guiji_skin'); if(skin) html.setAttribute('data-skin', skin);
-  var sb=document.getElementById('skinBtn'), sp=document.getElementById('skinPanel');
-  if(sb) sb.addEventListener('click', function(e){ e.stopPropagation(); sp.classList.toggle('on'); });
-  if(sp) sp.addEventListener('click', function(e){ e.stopPropagation(); });
-  document.addEventListener('click', function(){ if(sp) sp.classList.remove('on'); });
-  document.querySelectorAll('#skinPanel [data-skin]').forEach(function(b){
-    b.addEventListener('click', function(){ var v=b.getAttribute('data-skin'); html.setAttribute('data-skin',v); try{localStorage.setItem('guiji_skin',v);}catch(e){} });
+  var mask=document.getElementById('rssMask'), frame=document.getElementById('rssFrame');
+  function close(){ if(mask) mask.classList.remove('on'); if(frame) frame.src='about:blank'; }
+  document.querySelectorAll('a[href$="daily/"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if(location.pathname.indexOf('/daily/')>=0) return;
+      if(!mask||!frame) return;
+      e.preventDefault(); frame.src=a.getAttribute('href'); mask.classList.add('on');
+    });
   });
+  var cl=document.getElementById('rssClose'); if(cl) cl.addEventListener('click', close);
+  if(mask) mask.addEventListener('click', function(e){ if(e.target===mask) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
 })();</script>
 </body></html>
