@@ -117,13 +117,21 @@
   .nc-tx b { display:block; font-size:13.5px; color:#0f172a; line-height:1.55; }
   .nc-tx span { display:block; margin-top:7px; font-size:11px; color:#94a3b8; }
   .tools-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:10px; }
-  .tool-groups { margin-top:24px; display:flex; flex-direction:column; gap:22px; }
+  .tool-groups { margin-top:28px; display:flex; flex-direction:column; gap:34px; }
   .tool-reason { margin-top:8px; font-size:12px; color:#64748b; line-height:1.8; }
-  .tool-sub { margin-top:16px; }
-  .tool-sub-head { display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
-  .tool-sub-head b { font-size:13px; color:#0f172a; }
-  .tool-sub-head span { font-size:11.5px; color:#94a3b8; }
-  .tool-group h4 { font-size:12px; letter-spacing:1.5px; color:#2563eb; font-weight:700; text-transform:uppercase; }
+  .tool-sub { margin-top:22px; }
+  .tool-sub-head { display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .tool-sub-head b { font-size:14.5px; color:#0f172a; }
+  .tool-sub-head span { font-size:12px; color:#94a3b8; }
+  .tool-group h4 { font-size:20px; color:#0f172a; margin:0 0 10px; font-weight:800; display:flex; align-items:center; gap:10px; }
+  .plat-badge { display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; padding:4px 10px; border-radius:999px; letter-spacing:.5px; }
+  .plat-badge.pc { background:#2563eb; }
+  .plat-badge.mobile { background:#0e9f6e; }
+  .plat-badge.watch { background:#7c3aed; }
+  .tool-card.tool-shot { grid-column:1 / -1; align-items:center; padding:12px 14px; }
+  .tool-card.tool-shot img.tshot { width:220px; height:96px; border-radius:10px; object-fit:cover; display:block; flex:0 0 auto; border:1px solid #e2e8f0; }
+  .tool-card.tool-shot b { font-size:14px; }
+  .tool-card.tool-shot span { font-size:12px; }
   .tool-card { display:flex; align-items:center; gap:11px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
   .tool-card img { width:34px; height:34px; border-radius:9px; display:block; flex:0 0 auto; }
   .tool-card b { display:block; font-size:12.5px; color:#0f172a; }
@@ -136,7 +144,9 @@
   .faq-list { margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:4px 20px; }
   .faq-list details { border-bottom:1px solid #eef2f8; }
   .faq-list details:last-child { border-bottom:0; }
-  .faq-list summary { cursor:pointer; padding:14px 0; font-size:13.5px; font-weight:600; color:#334155; list-style:none; display:flex; justify-content:space-between; }
+  .faq-list summary { cursor:pointer; padding:15px 0; font-size:14.5px; font-weight:600; color:#334155; list-style:none; display:flex; align-items:center; gap:10px; }
+  .faq-q { flex:1; }
+  .faq-ico { flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:#e0edff; color:#2563eb; font-size:12px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; }
   .faq-list summary::-webkit-details-marker { display:none; }
   .faq-list summary::after { content:"+"; color:#94a3b8; font-weight:400; }
   .faq-list details[open] summary::after { content:"−"; }
@@ -383,8 +393,8 @@
   .socials .social { flex:0 0 auto; padding:8px 10px; font-size:11.5px; gap:6px; }
   .socials .social img { width:16px; height:16px; }
   @media (max-width:820px) { .socials { flex-wrap:wrap; justify-content:flex-start; gap:10px 12px; } .social { min-height:38px; } }
-  .follow-note { margin-top:20px; font-size:17px; font-weight:700; color:#334155; letter-spacing:.5px; display:inline-flex; align-items:center; gap:8px; }
-  .follow-note svg { color:#2563eb; flex:0 0 auto; width:18px; height:18px; }
+  .follow-note { margin-top:24px; font-size:26px; font-weight:800; color:#0f172a; letter-spacing:1px; display:flex; align-items:center; justify-content:center; gap:10px; text-align:center; }
+  .follow-note svg { color:#2563eb; flex:0 0 auto; width:22px; height:22px; }
   .msg-form { margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 24px; box-shadow:0 14px 34px rgba(15,23,42,.06); max-width:none; }
   .msg-mask { position:fixed; inset:0; background:rgba(8,12,24,.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:120; }
   .msg-mask.on { display:flex; }
@@ -591,7 +601,7 @@
       <div class="num-card"><b>8</b><span>发布平台</span></div>
       <div class="num-card"><b>10,672</b><span>资源索引</span></div>
       <div class="num-card"><b>767</b><span>人生指南</span></div>
-      <div class="num-card"><b>3</b><span>公开项目</span></div>
+      <div class="num-card"><b>4</b><span>公开项目</span></div>
       <div class="num-card"><b>11-09</b><span>最近更新</span></div>
     </div>
   </div>
@@ -602,7 +612,7 @@
     <div class="sec-head">
       <div class="eyebrow2">Public Project</div>
       <h2>公开项目</h2>
-      <p>已经上线、谁都能打开用的项目。做好一个放一个，不藏私。</p>
+      <p>4 个公开项目，全部免费、谁都能打开用。做好一个放一个，不藏私。</p>
     </div>
     <div class="public-grid">
       <article class="public-project">
@@ -667,7 +677,7 @@
         </div>
       </article>
 
-      <article class="public-project wide">
+      <article class="public-project">
         <div class="pp-media">
           <div class="pp-stage">
             <div class="pp-frame browser">
@@ -696,6 +706,37 @@
           </div>
         </div>
       </article>
+
+      <article class="public-project">
+        <div class="pp-media">
+          <div class="pp-stage">
+            <div class="pp-frame browser">
+              <img src="assets/daily-shot1.jpg" alt="每日拆卡">
+            </div>
+            <div class="pp-cap"><b>飞书页面</b><span>每天早 6 点更新一张</span></div>
+          </div>
+          <div class="pp-thumbs">
+            <button type="button" class="pp-th on" data-big="assets/daily-shot1.jpg" data-kind="browser" data-cap="页面" data-desc="每天一张知识卡"><img src="assets/daily-shot1.jpg" alt="页面"><span>页面</span></button>
+            <button type="button" class="pp-th" data-big="assets/daily-shot2.jpg" data-kind="browser" data-cap="拆卡" data-desc="把知识拆成手机壁纸大小"><img src="assets/daily-shot2.jpg" alt="拆卡"><span>拆卡</span></button>
+            <button type="button" class="pp-th" data-big="assets/daily-shot3.jpg" data-kind="browser" data-cap="卡片墙" data-desc="历史卡片都在这里"><img src="assets/daily-shot3.jpg" alt="卡片墙"><span>卡片墙</span></button>
+            <button type="button" class="pp-th" data-big="assets/daily-shot4.jpg" data-kind="browser" data-cap="目录" data-desc="按日期翻历史"><img src="assets/daily-shot4.jpg" alt="目录"><span>目录</span></button>
+          </div>
+        </div>
+        <div class="pp-info">
+          <div class="tags"><span class="tag">每日更新</span><span class="tag">免费</span><span class="tag">手机看</span><span class="tag">飞书</span></div>
+          <h3>每日拆卡 · 行动卡</h3>
+          <p>每天一张手机壁纸大小的知识卡：只讲一件事，看图就能懂。电商、AI、做生意少绕弯的办法，每天早 6 点更新；哪天没更新，就是那天没 Token 了。</p>
+          <ul class="pp-points">
+            <li>每天 6:00 更新，一张卡只讲一件事</li>
+            <li>电商 / AI / 做生意，图多字少</li>
+            <li>点开直接跳飞书，免费看</li>
+          </ul>
+          <div class="pp-updated">更新频率：每天</div>
+          <div class="pp-links">
+            <a class="btn btn-primary" href="https://guijiyeren.feishu.cn/wiki/HXjTwExuMixbmkkLFHBceN6SnMk" target="_blank" rel="noopener">打开站点 →</a>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -708,12 +749,12 @@
       <p>不需要天天汇报，进度条会说话。</p>
     </div>
     <div class="prog-list">
-      <div class="prog-row"><div class="pr-name">AI 个人工作台</div><div class="pr-bar dev"><span style="width:75%"></span></div><em class="badge dev">开发中 75%</em></div>
       <div class="prog-row"><div class="pr-name">电商运营系统</div><div class="pr-bar dev"><span style="width:60%"></span></div><em class="badge dev">开发中 60%</em></div>
+      <div class="prog-row"><div class="pr-name">AI 个人工作台</div><div class="pr-bar dev"><span style="width:75%"></span></div><em class="badge dev">开发中 75%</em></div>
       <div class="prog-row"><div class="pr-name">OpCity 数据库</div><div class="pr-bar dev"><span style="width:85%"></span></div><em class="badge dev">开发中 85%</em></div>
+      <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar dev"><span style="width:85%"></span></div><em class="badge dev">开发中 85%</em></div>
       <div class="prog-row"><div class="pr-name">飞书知识库</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">个人网页</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
-      <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar dev"><span style="width:70%"></span></div><em class="badge dev">开发中 70%</em></div>
       <div class="prog-row"><div class="pr-name">高性价比人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">资源中心 / 情报中枢</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
     </div>
@@ -854,7 +895,7 @@
     </div>
     <div class="note-grid">
       <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-1.jpg" alt="AI 工作台"></div><div class="nc-tx"><b>一个人怎么用 AI 跑完选品到发布</b><span>实战 · 11-09 · 8 分钟</span></div></a>
-      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-2.jpg" alt="电商"></div><div class="nc-tx"><b>多平台内容分发的 3 个坑</b><span>复盘 · 11-06 · 6 分钟</span></div></a>
+      <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-2.jpg" alt="AI 电商"></div><div class="nc-tx"><b>多平台内容分发的 3 个坑</b><span>复盘 · 11-06 · 6 分钟</span></div></a>
       <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-3.jpg" alt="AI 视频"></div><div class="nc-tx"><b>AI 短视频从 0 到 100 条流程</b><span>教程 · 11-03 · 10 分钟</span></div></a>
     </div>
   </div>
@@ -865,17 +906,20 @@
     <div class="sec-head">
       <div class="eyebrow2">Stack</div>
       <h2>我在用的工具</h2>
-      <p>只列我真在用、别人不一定有的；通用工具不占地方。按电脑 / 手机 / 手表分。</p>
+      <p>只列我正在用的，通用工具就不放这占地方。按电脑 / 手机 / 手表分。</p>
     </div>
     <div class="tool-groups">
       <div class="tool-group">
-        <h4>电脑端 · 干活的地方</h4><p class="tool-reason">按「AI 执行 → 图像视频 → 知识效率 → 采集电商 → 浏览器/系统/远程」排，从产出到环境。</p><div class="tool-sub"><div class="tool-sub-head"><b>AI Agent / 写代码</b><span>替我干活、写脚本、改工作台</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-codex.png" alt="Codex"><div><b>Codex</b><span>写代码 / 改工作台</span></div></div><div class="tool-card"><img src="assets/ftool-claudecode.png" alt="Claude Code"><div><b>Claude Code</b><span>长任务 / 复杂改代码</span></div></div><div class="tool-card"><img src="assets/ftool-deepseekharness.png" alt="DeepSeek Harness"><div><b>DeepSeek Harness</b><span>AI 干活 / 自动化</span></div></div><div class="tool-card"><img src="assets/ftool-workbuddy.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>派活 / 对话式工作流</span></div></div><div class="tool-card"><img src="assets/ftool-grok.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X / 问 AI</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>图像 / 视频</b><span>出图、出片、剪片</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-jimeng.png" alt="即梦 / Seedance"><div><b>即梦 / Seedance</b><span>AI 视频画面</span></div></div><div class="tool-card"><img src="assets/ftool-nanobanana.png" alt="Nano Banana"><div><b>Nano Banana</b><span>图片生成 / 修图</span></div></div><div class="tool-card"><img src="assets/ftool-comfyui.png" alt="ComfyUI"><div><b>ComfyUI</b><span>AI 绘图工作流</span></div></div><div class="tool-card"><img src="assets/ftool-jianying.png" alt="剪映"><div><b>剪映</b><span>视频剪辑</span></div></div><div class="tool-card"><img src="assets/ftool-eagle.png" alt="Eagle"><div><b>Eagle</b><span>素材图管理</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>知识 / 效率</b><span>资料落盘、秒找、画结构</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-obsidian.png" alt="Obsidian"><div><b>Obsidian</b><span>本地知识库 / 素材池</span></div></div><div class="tool-card"><img src="assets/ftool-notion.png" alt="Notion"><div><b>Notion</b><span>记录 / 数据库</span></div></div><div class="tool-card"><img src="assets/ftool-mindmanager.png" alt="MindManager"><div><b>MindManager</b><span>思维导图</span></div></div><div class="tool-card"><img src="assets/ftool-everything.png" alt="everything"><div><b>everything</b><span>文件秒搜</span></div></div><div class="tool-card"><img src="assets/ftool-shandianshuo.png" alt="闪电说"><div><b>闪电说</b><span>语音输入</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>采集 / 电商</b><span>抓数据、存素材</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-octopus.png" alt="八爪鱼 RPA"><div><b>八爪鱼 RPA</b><span>网页采集</span></div></div><div class="tool-card"><img src="assets/ftool-baidupan.png" alt="百度网盘"><div><b>百度网盘</b><span>素材 / 备份</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>浏览器 / 系统 / 远程</b><span>环境、远程、备份</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-chrome.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>网页 / 后台</span></div></div><div class="tool-card"><img src="assets/ftool-ego.png" alt="Ego (lite) 浏览器"><div><b>Ego (lite) 浏览器</b><span>自动化浏览器</span></div></div><div class="tool-card"><img src="assets/ftool-uuremote.png" alt="网易 UU 远程"><div><b>网易 UU 远程</b><span>远程电脑</span></div></div><div class="tool-card"><img src="assets/ftool-itab.png" alt="iTab 新标签页"><div><b>iTab 新标签页</b><span>浏览器起始页</span></div></div><div class="tool-card"><img src="assets/ftool-aomei.png" alt="傲梅备份"><div><b>傲梅备份</b><span>系统 / 数据备份</span></div></div></div></div>
+        <h4><span class="plat-badge pc">电脑</span>干活的地方</h4>
+        <p class="tool-reason">按「AI 执行 → 图像视频 → 知识效率 → 采集电商 → 浏览器/系统/远程」排，从产出到环境。</p>
+        <div class="tool-sub"><div class="tool-sub-head"><b>AI Agent / 写代码</b><span>替我干活、写脚本、改工作台</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-claudecode.png" alt="Claude Code"><div><b>Claude Code</b><span>长任务 / 复杂改代码</span></div></div><div class="tool-card"><img src="assets/ftool-codex.png" alt="Codex"><div><b>Codex</b><span>写代码 / 改工作台</span></div></div><div class="tool-card"><img src="assets/ftool-grok.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X / 问 AI</span></div></div><div class="tool-card"><img src="assets/ftool-workbuddy.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>派活 / 对话式工作流</span></div></div><div class="tool-card"><img src="assets/ftool-deepseekharness.png" alt="DeepSeek Harness"><div><b>DeepSeek Harness</b><span>AI 干活 / 自动化</span></div></div><div class="tool-card"><img src="assets/ftool-hermes.png" alt="Hermes Agent"><div><b>Hermes Agent</b><span>长任务 / 多步执行</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>图像 / 视频</b><span>出图、出片、剪片</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-comfyui.png" alt="ComfyUI"><div><b>ComfyUI</b><span>AI 绘图工作流</span></div></div><div class="tool-card"><img src="assets/ftool-jimeng.png" alt="即梦 / Seedance"><div><b>即梦 / Seedance</b><span>AI 视频画面</span></div></div><div class="tool-card"><img src="assets/ftool-nanobanana.png" alt="Nano Banana"><div><b>Nano Banana</b><span>图片生成 / 修图</span></div></div><div class="tool-card"><img src="assets/ftool-jianying.png" alt="剪映"><div><b>剪映</b><span>视频剪辑</span></div></div><div class="tool-card"><img src="assets/ftool-eagle.png" alt="Eagle"><div><b>Eagle</b><span>素材图管理</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>知识 / 效率</b><span>资料落盘、秒找、画结构</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-obsidian.png" alt="Obsidian"><div><b>Obsidian</b><span>本地知识库 / 素材池</span></div></div><div class="tool-card"><img src="assets/ftool-notion.png" alt="Notion"><div><b>Notion</b><span>记录 / 数据库</span></div></div><div class="tool-card"><img src="assets/ftool-mindmanager.png" alt="MindManager"><div><b>MindManager</b><span>思维导图</span></div></div><div class="tool-card"><img src="assets/ftool-everything.png" alt="everything"><div><b>everything</b><span>文件秒搜</span></div></div><div class="tool-card tool-shot"><img class="tshot" src="assets/tool-shot-shandianshuo.jpg" alt="闪电说"><div><b>闪电说</b><span>语音输入</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>采集 / 电商</b><span>抓数据、存素材</span></div><div class="tools-grid"><div class="tool-card tool-shot"><img class="tshot" src="assets/tool-shot-octopus.jpg" alt="八爪鱼 RPA"><div><b>八爪鱼 RPA</b><span>网页采集</span></div></div><div class="tool-card"><img src="assets/ftool-baidupan.png" alt="百度网盘"><div><b>百度网盘</b><span>素材 / 备份</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>浏览器 / 系统 / 远程</b><span>环境、远程、备份</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-chrome.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>网页 / 后台</span></div></div><div class="tool-card"><img src="assets/ftool-ego.png" alt="Ego (lite) 浏览器"><div><b>Ego (lite) 浏览器</b><span>自动化浏览器</span></div></div><div class="tool-card"><img src="assets/ftool-uuremote.png" alt="网易 UU 远程"><div><b>网易 UU 远程</b><span>远程电脑</span></div></div><div class="tool-card"><img src="assets/ftool-itab.png" alt="iTab 新标签页"><div><b>iTab 新标签页</b><span>浏览器起始页</span></div></div><div class="tool-card"><img src="assets/ftool-aomei.png" alt="傲梅备份"><div><b>傲梅备份</b><span>系统 / 数据备份</span></div></div></div></div>
+      </div>
       <div class="tool-group">
-        <h4>手机端 · 随时看、派活</h4>
+        <h4><span class="plat-badge mobile">手机</span>随时看、派活</h4>
         <div class="tools-grid"><div class="tool-card"><img src="assets/ftool-workbuddy_m.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>手机上派活</span></div></div><div class="tool-card"><img src="assets/ftool-grok_m.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X 一手信息</span></div></div><div class="tool-card"><img src="assets/ftool-claude_m.png" alt="Claude"><div><b>Claude</b><span>手机上问 Claude</span></div></div><div class="tool-card"><img src="assets/ftool-codex_m.png" alt="Codex"><div><b>Codex</b><span>手机上查进度</span></div></div><div class="tool-card"><img src="assets/ftool-x.png" alt="X"><div><b>X</b><span>看海外一手消息</span></div></div><div class="tool-card"><img src="assets/ftool-youtube.png" alt="YouTube"><div><b>YouTube</b><span>学东西 / 看同行</span></div></div><div class="tool-card"><img src="assets/ftool-github.png" alt="GitHub"><div><b>GitHub</b><span>看开源 / 管仓库</span></div></div><div class="tool-card"><img src="assets/ftool-wubianji.png" alt="无边记 / 无边际"><div><b>无边记 / 无边际</b><span>白板 / 随手画</span></div></div><div class="tool-card"><img src="assets/ftool-notion_m.png" alt="Notion"><div><b>Notion</b><span>手机上看资料</span></div></div><div class="tool-card"><img src="assets/ftool-dida.png" alt="滴答清单"><div><b>滴答清单</b><span>待办 / 提醒</span></div></div><div class="tool-card"><img src="assets/ftool-grow.png" alt="GROW"><div><b>GROW</b><span>习惯打卡</span></div></div><div class="tool-card"><img src="assets/ftool-doubao.png" alt="豆包语音"><div><b>豆包语音</b><span>语音输入</span></div></div><div class="tool-card"><img src="assets/ftool-shortcuts.png" alt="快捷指令"><div><b>快捷指令</b><span>一键自动化</span></div></div><div class="tool-card"><img src="assets/ftool-dedao.png" alt="得到"><div><b>得到</b><span>听书 / 课程</span></div></div><div class="tool-card"><img src="assets/ftool-fanshu.png" alt="帆书"><div><b>帆书</b><span>听书</span></div></div><div class="tool-card"><img src="assets/ftool-podcast.png" alt="播客"><div><b>播客</b><span>听播客</span></div></div><div class="tool-card"><img src="assets/ftool-chrome_m.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>手机上查资料</span></div></div><div class="tool-card"><img src="assets/ftool-wacai.png" alt="挖财"><div><b>挖财</b><span>记账</span></div></div><div class="tool-card"><img src="assets/ftool-youzhiyouxing.png" alt="有知有行"><div><b>有知有行</b><span>投资学习</span></div></div></div>
       </div>
       <div class="tool-group">
-        <h4>手表端 · 抬手腕就看</h4>
+        <h4><span class="plat-badge watch">手表</span>抬手腕就看</h4>
         <div class="tools-grid"><div class="tool-card"><img src="assets/ftool-dida_w.png" alt="滴答清单"><div><b>滴答清单</b><span>抬手腕看今日</span></div></div><div class="tool-card"><img src="assets/ftool-grow_w.png" alt="GROW"><div><b>GROW</b><span>打卡 / 圆环</span></div></div><div class="tool-card"><img src="assets/ftool-wechat.png" alt="微信"><div><b>微信</b><span>手表上回消息</span></div></div><div class="tool-card"><img src="assets/ftool-qianniu.png" alt="千牛"><div><b>千牛</b><span>订单 / 客服提醒</span></div></div></div>
       </div>
     </div>
@@ -957,14 +1001,19 @@
       <p>先看这里，能省一次来回。</p>
     </div>
     <div class="faq-list">
-      <details><summary>这个站是怎么做出来的？</summary><p>我自己搭的静态站，托管在 GitHub Pages；数据、图片、视频都是从我的工作台里导出来的，不放任何下载。</p></details>
-      <details><summary>内容可以转载吗？</summary><p>《高性价比人生指南》是 CC BY 4.0，注明出处即可；其他内容版权归原作者，别整段搬运。</p></details>
-      <details><summary>资源中心为什么没有下载入口？</summary><p>版权原因，无法公开分享。这个页面只展示整理和检索方式，不提供任何网盘、提取码或下载。</p></details>
-      <details><summary>情报中枢的数据是真的吗？多久更新？</summary><p>真实快照，页面顶部标了数据截止日期；公开版是静态展示，不能实时刷新。</p></details>
-      <details><summary>视频是用什么做的？</summary><p>AI 工具链：脚本、配音、画面、剪辑、多平台发布，一条片子八平台同步。</p></details>
-      <details><summary>想合作 / 咨询怎么联系？</summary><p>点下面邮箱图标，或者直接给我留言，我都会看。</p></details>
-      <details><summary>以后会收费吗？</summary><p>现在公开内容免费；以后如果有原创的会员内容或服务，会单独标清楚，不会偷偷改。</p></details>
-      <details><summary>为什么有些作品点进去要登录？</summary><p>平台自己的限制，不是站的问题；登录后就能看。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">你这个知识库是怎么弄的？</span></summary><p>没错，你看的这个也是我派活、AI 动手做的——我定结构和要什么，AI 写、我验收，最后排进飞书。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">为什么免费分享这些内容？</span></summary><p>分享是真分享，合作是真合作，搞钱也是真想搞钱。免费的就真免费，不养鱼、不玩虚的；该合作、该收钱的时候我也直说，不以赚钱为耻。先把东西做出来给人用，剩下的顺其自然。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">视频和图文是 AI 全自动做的吗？</span></summary><p>前期一定是人工判断：选题、方向、验收都得我来。做熟了、规则写全了之后，才可以全自动；别一上来就指望它自己转。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">不会写代码能玩吗？</span></summary><p>能。我自己也没什么代码基础，以前就学过 HTML、懂一点 CSS，其他的都是现学现问。关键是把要求说清楚、会验收 AI 交的东西。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">这些 AI 工具贵不贵？</span></summary><p>尽量用原生的、能定制的工具，其实挺便宜；能白嫖免费额度的先用免费额度跑，跑通了再考虑付费。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">工具要装这么多吗？</span></summary><p>不用。一个 AI 对话、一个浏览器、一个笔记就能起步；工具是干活干出来的，不是先装一堆再找活。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">为什么叫「硅基野人」？</span></summary><p>一个碳基老板，带着一群硅基员工的自我调侃；也提醒自己少端着，多干活。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">这些项目收费吗？</span></summary><p>公开的这些都免费；要合作或者深度陪跑，再单独聊。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">情报中枢、资源中心为什么只有展示版？</span></summary><p>里面是我自己的情报和版权内容，公开的只是整理方法和目录样例，原始数据、网盘地址、下载链接不对外放。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">能转载或搬运你的内容吗？</span></summary><p>注明出处的转载可以；想商用、改编，先留言聊一下。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">能加你微信吗？</span></summary><p>先用上面的留言入口，我会看；确实要合作的，再换微信。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">能不能带我做，或者帮我搭工作台？</span></summary><p>可以聊。带货、选品、咨询陪跑、内容合作我都接，见下面「合作 &amp; 留言」；刷单、灰色项目和纯广告不接。</p></details>
+      <details><summary><span class="faq-ico">?</span><span class="faq-q">「订阅更新」是什么？需要我配置吗？</span></summary><p>不需要你配置。填邮箱只是把「你想订阅」这件事发给我，我发新内容时手动发；不自动抓取、不发广告，也可以随时留言退订。</p></details>
     </div>
   </div>
 </section>
@@ -1683,6 +1732,7 @@
   bindGallery(cards[0]);
   bindGallery(cards[1]);
   bindGallery(cards[2]);
+  bindGallery(cards[3]);
 })();
 </script>
 <script>
@@ -2221,8 +2271,8 @@ function coverRc(host) {
 
     const PAL = ["#3b5bdb", "#7048e8", "#0c8599", "#d9480f", "#c2255c", "#2f9e44", "#1864ab", "#e67700"];
     const DW = 300, DH = 230;                 // 设计稿尺寸，实际按 host 大小等比缩放
-    const TARGET = 8458;
-    const COUNT_MS = 2200;                    // 开场翻到 8,458 用多久
+    const TARGET = 10672;
+    const COUNT_MS = 2200;                    // 开场翻到 10,672 用多久
     const FLIP_MS = 420;                      // 一位翻动多久
     const REFRESH_MS = 3000;                  // 每隔多久整排翻一次
 
@@ -2243,9 +2293,9 @@ function coverRc(host) {
     let first = true, tries = 0;
 
     // 四位数字的翻牌状态
-    const dig = ["0", "0", "0", "0"];
-    const from = ["0", "0", "0", "0"];
-    const flipAt = [-1e9, -1e9, -1e9, -1e9];
+    const dig = ["0", "0", "0", "0", "0"];
+    const from = ["0", "0", "0", "0", "0"];
+    const flipAt = [-1e9, -1e9, -1e9, -1e9, -1e9];
     let lastCycle = -1;
 
     const rrect = (x, y, w, h, r) => {
@@ -2279,7 +2329,7 @@ function coverRc(host) {
       ctx.translate(0, seam);
       ctx.scale(1, Math.max(0.02, sy));
       ctx.translate(0, -seam);
-      ctx.font = '800 38px "Segoe UI","Arial Black","Microsoft YaHei",sans-serif';
+      ctx.font = '800 32px "Segoe UI","Arial Black","Microsoft YaHei",sans-serif';
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "rgba(232,255,252,0.92)";
@@ -2319,20 +2369,20 @@ function coverRc(host) {
       const u = Math.min(1, elapsed / COUNT_MS);
       const eased = 1 - Math.pow(1 - u, 3);
       const val = u >= 1 ? TARGET : Math.floor(eased * TARGET);
-      const str = String(val).padStart(4, "0");
+      const str = String(val).padStart(5, "0");
 
       // 计数阶段数字直接跟，翻牌只在计数结束后出现（否则每帧都在翻，会卡在旧数字上）
       const counting = u < 1;
       if (counting) {
-        for (let i = 0; i < 4; i++) dig[i] = str[i];
+        for (let i = 0; i < 5; i++) dig[i] = str[i];
       } else {
         // 每 REFRESH_MS 整排翻一次（翻成同一个字，像翻牌屏刷新）
         const cycle = Math.floor((elapsed - COUNT_MS) / REFRESH_MS);
         if (cycle !== lastCycle) {
           lastCycle = cycle;
-          for (let i = 0; i < 4; i++) { from[i] = dig[i]; flipAt[i] = now + i * 55; }
+          for (let i = 0; i < 5; i++) { from[i] = dig[i]; flipAt[i] = now + i * 55; }
         }
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
           if (str[i] !== dig[i]) { from[i] = dig[i]; dig[i] = str[i]; flipAt[i] = now; }
         }
       }
@@ -2354,16 +2404,16 @@ function coverRc(host) {
       rrect(30.5, 56.5, 239, 89, 10);
       ctx.stroke();
 
-      const widths = [44, 12, 44, 44, 44];
+      const widths = [38, 38, 10, 38, 38, 38];
       const ty = 70, th = 62;
       let total = 0;
       widths.forEach((w, i) => { total += w + (i ? 3 : 0); });
       let x = (DW - total) / 2;
 
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 6; i++) {
         const w = widths[i];
 
-        if (i === 1) {
+        if (i === 2) {
           // 逗号
           ctx.font = '800 32px "Segoe UI",sans-serif';
           ctx.textAlign = "left";
@@ -2374,7 +2424,7 @@ function coverRc(host) {
           continue;
         }
 
-        const k = i === 0 ? 0 : i - 1;           // 第几位数字
+        const k = i < 2 ? i : i - 1;              // 第几位数字
         const p = counting ? 0 : Math.min(1, Math.max(0, (now - flipAt[k]) / FLIP_MS));
         const flipping = p > 0 && p < 1;
 
