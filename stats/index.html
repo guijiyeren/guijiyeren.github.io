@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>站点访问统计 · 硅基野人</title>
+<style>
+  :root { --ink:#0f172a; --line:#e2e8f0; --blue:#2563eb; --bg:#f6f8fc; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:900px; margin:0 auto; padding:36px 22px 60px; }
+  h1 { font-size:24px; letter-spacing:.5px; }
+  .sub { margin-top:8px; color:#64748b; font-size:13px; line-height:1.8; }
+  .panel { margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 22px; }
+  .panel h2 { font-size:15px; margin-bottom:14px; }
+  .row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .cell { border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .cell b { display:block; font-size:11px; letter-spacing:1px; color:#94a3b8; font-weight:700; }
+  .cell .line { display:flex; align-items:baseline; gap:10px; margin-top:6px; }
+  .cell .num { font-size:30px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .cell .num small { font-size:12px; color:#94a3b8; font-weight:500; margin-left:3px; }
+  .cell .tag { font-size:11px; color:#64748b; }
+  .cell .tag em { font-style:normal; color:#0f172a; font-weight:700; margin-left:4px; }
+  .note { margin-top:20px; font-size:12px; color:#94a3b8; line-height:1.9; }
+  a { color:#2563eb; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>站点访问统计</h1>
+  <p class="sub">三个页面分开计数：首页 /、人生指南 /rensheng/、资源中心 /resource/。数据来自 Abacus 免费计数器（无账号、无 cookie），每打开一次 +1，含自己刷新和爬虫，看趋势就好。</p>
+
+  <div class="panel">
+    <h2>今日打开次数</h2>
+    <div class="row">
+      <div class="cell"><b>首页</b><div class="line"><span class="num" id="h-today">-</span><small>次</small></div><div class="tag">累计<em id="h-all">-</em> 次</div></div>
+      <div class="cell"><b>人生指南</b><div class="line"><span class="num" id="r-today">-</span><small>次</small></div><div class="tag">累计<em id="r-all">-</em> 次</div></div>
+      <div class="cell"><b>资源中心</b><div class="line"><span class="num" id="s-today">-</span><small>次</small></div><div class="tag">累计<em id="s-all">-</em> 次</div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>全站合计</h2>
+    <div class="row">
+      <div class="cell"><b>今日</b><div class="line"><span class="num" id="all-today">-</span><small>次</small></div></div>
+      <div class="cell"><b>累计</b><div class="line"><span class="num" id="all-all">-</span><small>次</small></div></div>
+      <div class="cell"><b>统计起始</b><div class="line"><span class="num" style="font-size:20px">2026-11-09</span></div></div>
+    </div>
+  </div>
+
+  <p class="note">
+    这是「打开次数」，不是「独立访客」。想看独立访客 / 来源 / 地区 / 停留时长，需要接 Google Analytics、Cloudflare Web Analytics 或 Microsoft Clarity（都免费，但要用你的账号拿一段统计代码，给我就能装）。<br>
+    数据源：abacus.jasoncameron.dev · 命名空间 <code>guijiyeren</code> · <a href="../">回首页</a>
+  </p>
+</div>
+<script>
+var NS = 'guijiyeren';
+var D = new Date();
+var KEY = '' + D.getFullYear() + ('0' + (D.getMonth() + 1)).slice(-2) + ('0' + D.getDate()).slice(-2);
+
+function getVal(name) {
+  return fetch('https://abacus.jasoncameron.dev/get/' + NS + '/' + name, { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { return (j && typeof j.value === 'number') ? j.value : 0; })
+    .catch(function () { return 0; });
+}
+
+function set(id, v) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = v;
+}
+
+var jobs = [
+  ['home', 'h-today', 'h-all'],
+  ['rensheng', 'r-today', 'r-all'],
+  ['resource', 's-today', 's-all']
+];
+var todaySum = 0, allSum = 0, left = jobs.length;
+
+jobs.forEach(function (j) {
+  var page = j[0];
+  getVal(page + '-' + KEY).then(function (v) {
+    set(j[1], v);
+    todaySum += v;
+    getVal(page + '-all').then(function (v2) {
+      set(j[2], v2);
+      allSum += v2;
+      if (--left === 0) {
+        set('all-today', todaySum);
+        set('all-all', allSum);
+      }
+    });
+  });
+});
+
+setTimeout(function () {
+  if (document.getElementById('all-today').textContent === '-') {
+    set('all-today', todaySum);
+    set('all-all', allSum);
+  }
+}, 6000);
+</script>
+</body>
+</html>

@@ -2582,5 +2582,11 @@ document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !TIP.hid
 })();
 </script>
 <button class="bottom-jump" id="bottom-jump" type="button" aria-label="直接到底部"><span class="arrow" aria-hidden="true">↓</span><span>底部</span></button><script>(function(){var b=document.getElementById("bottom-jump");if(!b)return;b.addEventListener("click",function(){window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"});});})();</script>
+<script>(function(){try{
+  if (location.pathname.indexOf('/stats/') >= 0) return;
+  var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+  var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+}catch(e){}})();</script>
 </body>
 </html>

@@ -1720,5 +1720,11 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 })();
 
 </script>
+<script>(function(){try{
+  if (location.pathname.indexOf('/stats/') >= 0) return;
+  var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+  var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+}catch(e){}})();</script>
 </body>
 </html>

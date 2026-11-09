@@ -19,16 +19,6 @@
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
   .notice { margin-top:14px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:12px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
   .notice b { color:#fff; }
-  .collect { margin-top:12px; border:1px solid rgba(148,163,184,.22); border-radius:12px; background:rgba(255,255,255,.03); }
-  .collect summary { cursor:pointer; padding:11px 16px; font-size:12.5px; color:#cbd5e1; display:flex; align-items:center; gap:8px; list-style:none; }
-  .collect summary::-webkit-details-marker { display:none; }
-  .collect summary em { font-style:normal; color:#7dd3fc; }
-  .collect summary::after { content:"展开"; margin-left:auto; font-size:11px; color:#64748b; }
-  .collect[open] summary::after { content:"收起"; }
-  .ctable { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; padding:0 16px 14px; }
-  .citem { border:1px solid rgba(148,163,184,.18); border-radius:10px; padding:9px 12px; background:rgba(255,255,255,.03); }
-  .citem b { display:block; font-size:12.5px; color:#e2e8f0; }
-  .citem span { font-size:11px; color:#8fa3bd; }
   main { padding:24px 0 60px; display:grid; grid-template-columns:238px 1fr; gap:24px; }
   aside { position:sticky; top:16px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 32px); overflow:auto; }
   aside h3 { font-size:11px; letter-spacing:1.5px; color:#94a3b8; margin:2px 4px 8px; }
@@ -79,6 +69,12 @@
   .modal h2 { font-size:18px; line-height:1.6; padding-right:20px; }
   .modal .rows { margin-top:14px; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#334155; }
   .modal .rows b { color:#0f172a; display:inline-block; min-width:64px; }
+  .modal .dir { flex:1; min-width:0; max-height:260px; overflow:auto; background:#f8fafc; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:12px; line-height:1.7; }
+  .modal .dir .empty { padding:8px; color:#94a3b8; font-size:12px; text-align:left; }
+  .modal .dir .fd { color:#0f172a; font-weight:600; }
+  .modal .dir .fl { color:#475569; display:flex; gap:6px; }
+  .modal .dir .fl i { margin-left:auto; font-style:normal; color:#94a3b8; font-size:10.5px; white-space:nowrap; }
+  .modal .dir .tip { color:#94a3b8; font-size:11px; padding-top:4px; }
   .modal .hide-note { margin-top:16px; padding:12px 14px; border-radius:10px; background:#f1f5f9; color:#475569; font-size:12.5px; line-height:1.8; }
   .modal .close { margin-top:16px; display:inline-flex; border:0; background:#0f172a; color:#fff; font:600 13px/1 inherit; border-radius:999px; padding:11px 20px; cursor:pointer; }
   @media (max-width:960px) {
@@ -100,10 +96,6 @@
       <a class="back" href="../">← 回首页</a>
     </div>
     <div class="notice"><b>先说清楚：本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源链接和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
-    <details class="collect">
-      <summary>采集清单（数据来自这些地方 · 共 <em id="c-total">-</em> 条 · 更新 <em id="c-date">-</em>）</summary>
-      <div class="ctable" id="ctable"></div>
-    </details>
   </div>
 </header>
 <main class="wrap">
@@ -145,6 +137,7 @@
       <div><b>标签</b><span id="m-tags"></span></div>
       <div><b>日期</b><span id="m-date"></span></div>
       <div><b>评分</b><span id="m-rate"></span></div>
+      <div><b>目录</b><div class="dir" id="m-dir">点开加载…</div></div>
     </div>
     <div class="hide-note">网盘地址、提取码、来源链接、目录清单均已隐藏。本站不提供下载或转存入口。</div>
     <button class="close" id="m-close">知道了</button>
@@ -152,7 +145,7 @@
 </div>
 <script>
 var TYPE_LABEL = {"book":"文档 · 合集","video":"视频","design":"设计","education":"教育","ai":"AI","code":"代码","zen":"生活","office":"办公","ecommerce":"电商","life":"生活","play":"影音","other":"其他"};
-var DATA = null, META = null;
+var DATA = null, META = null, dirCache = {};
 var ZONE = '全部', CAT = '全部', TYPE = '全部', YEAR = '全部', RATE = 0, KEY = '';
 var shown = 60;
 var grid = document.getElementById('grid');
@@ -162,9 +155,8 @@ var moreEl = document.getElementById('more');
 
 fetch('data/items.json').then(function(r){ return r.json(); }).then(function(d){
   DATA = d.items; META = d.meta;
-  document.getElementById('c-total').textContent = META.count;
-  document.getElementById('c-date').textContent = META.generated;
-  buildCollect(); buildZones(); buildFilters(); render();
+  DATA.forEach(function(it, i){ it._i = i; });
+  buildZones(); buildFilters(); render();
   document.getElementById('q').addEventListener('input', function(ev){ KEY = ev.target.value.trim().toLowerCase(); shown = 60; render(); });
   document.getElementById('clear').addEventListener('click', function(){
     ZONE = '全部'; CAT = '全部'; TYPE = '全部'; YEAR = '全部'; RATE = 0; shown = 60;
@@ -174,12 +166,6 @@ fetch('data/items.json').then(function(r){ return r.json(); }).then(function(d){
 }).catch(function(e){ countEl.textContent = '数据加载失败'; console.error(e); });
 
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]); }); }
-
-function buildCollect(){
-  document.getElementById('ctable').innerHTML = Object.keys(META.sources).map(function(name){
-    return '<div class="citem"><b>' + esc(name) + '</b><span>采集条目 ' + META.sources[name] + ' 条</span></div>';
-  }).join('');
-}
 
 function buildZones(){
   var box = document.getElementById('zone-tree');
@@ -262,7 +248,7 @@ function render(){
     c.innerHTML = '<div class="top">' + stars + '<span>' + esc(it.zo || '未分区') + '</span></div>' +
       '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
       '<div class="meta"><span>' + esc(it.c || '未分类') + '</span><span>' + esc(it.ty) + '</span></div>';
-    c.addEventListener('click', function(){ openModal(it); });
+    c.addEventListener('click', function(){ openModal(it, it._i); });
     frag.appendChild(c);
   });
   grid.innerHTML = '';
@@ -271,7 +257,39 @@ function render(){
   if (!moreEl.hidden) document.getElementById('more-btn').textContent = '加载更多（还剩 ' + (items.length - shown) + ' 条）';
 }
 
-function openModal(it){
+function fmtSize(n){
+  if (n === null || n === undefined) return '';
+  if (n < 1024) return n + ' KB';
+  return (n / 1024).toFixed(1) + ' MB';
+}
+
+function loadDirs(idx, zone){
+  var box = document.getElementById('m-dir');
+  var files = META.dirs || {};
+  var fname = files[zone];
+  if (!fname) { box.innerHTML = '<div class="empty">这条没有采集到目录</div>'; return; }
+  if (dirCache[fname]) return showDir(dirCache[fname][String(idx)]);
+  box.innerHTML = '<div class="empty">目录加载中…</div>';
+  fetch('data/dirs/' + fname).then(function(r){ return r.json(); }).then(function(mp){
+    dirCache[fname] = mp;
+    showDir(mp[String(idx)]);
+  }).catch(function(){ box.innerHTML = '<div class="empty">目录加载失败</div>'; });
+}
+
+function showDir(lines){
+  var box = document.getElementById('m-dir');
+  if (!lines || !lines.length) { box.innerHTML = '<div class="empty">这条没有采集到目录</div>'; return; }
+  var LIMIT = 120;
+  var html = lines.slice(0, LIMIT).map(function(row){
+    if (row[0] === 'd') return '<div class="fd">📁 ' + esc(row[1]) + '</div>';
+    return '<div class="fl">· ' + esc(row[1]) + '<i>' + fmtSize(row[2]) + '</i></div>';
+  }).join('');
+  if (lines.length > LIMIT) html += '<div class="tip">仅显示前 ' + LIMIT + ' 项，共 ' + lines.length + ' 项</div>';
+  box.innerHTML = html;
+}
+
+function openModal(it, idx){
+  it._i = idx;
   document.getElementById('m-title').textContent = it.t;
   document.getElementById('m-zone').textContent = it.zo || '未分区';
   document.getElementById('m-cat').textContent = it.c || '未分类';
@@ -279,10 +297,18 @@ function openModal(it){
   document.getElementById('m-tags').textContent = it.g.length ? it.g.join(' · ') : '无';
   document.getElementById('m-date').textContent = it.a || '未记录';
   document.getElementById('m-rate').textContent = it.r ? (new Array(it.r + 1).join('★') + new Array(6 - it.r).join('☆')) : '未评分';
+  document.getElementById('m-dir').innerHTML = '<div class="empty">点开加载…</div>';
+  loadDirs(idx, it.zo);
   document.getElementById('mask').classList.add('on');
 }
 document.getElementById('m-close').addEventListener('click', function(){ document.getElementById('mask').classList.remove('on'); });
 document.getElementById('mask').addEventListener('click', function(ev){ if (ev.target.id === 'mask') ev.target.classList.remove('on'); });
 </script>
+<script>(function(){try{
+  if (location.pathname.indexOf('/stats/') >= 0) return;
+  var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+  var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+}catch(e){}})();</script>
 </body>
 </html>
