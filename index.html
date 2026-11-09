@@ -168,12 +168,12 @@
   .faq-list { display:flex; flex-direction:column; gap:14px; margin-top:26px; }
   .faq-list details { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:0 18px; box-shadow:0 8px 22px rgba(15,23,42,.04); transition:.16s; }
   .faq-list details[open] { border-color:#bfdbfe; box-shadow:0 14px 32px rgba(37,99,235,.10); }
-  .faq-list.faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px; align-items:start; }
-  .faq-item { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:20px 22px 18px; box-shadow:0 10px 26px rgba(15,23,42,.05); }
-  .faq-a { display:flex; align-items:flex-start; gap:10px; margin-top:14px; padding-top:13px; border-top:1px dashed #e2e8f0; }
+  .faq-list.faq-grid { display:grid; grid-template-columns:1fr; gap:16px; margin:28px auto 0; max-width:900px; align-items:start; }
+  .faq-item { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:24px 26px 22px; box-shadow:0 10px 26px rgba(15,23,42,.05); min-height:112px; }
+  .faq-a { display:flex; align-items:flex-start; gap:10px; margin-top:16px; padding-top:15px; border-top:1px dashed #e2e8f0; }
   .faq-a-badge { flex:0 0 24px; width:24px; height:24px; border-radius:8px; background:#dcfce7; color:#15803d; font-size:12px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; }
   .faq-a p { margin:0; font-size:13px; line-height:1.9; color:#475569; }
-  @media (max-width:820px) { .faq-list.faq-grid { grid-template-columns:1fr; gap:12px; } }
+  @media (max-width:820px) { .faq-list.faq-grid { grid-template-columns:1fr; gap:14px; } .faq-item { padding:20px 18px; } }
   .faq-q-row { display:flex; align-items:flex-start; gap:11px; font-size:15px; font-weight:700; color:#0f172a; line-height:1.6; }
   .faq-list summary { cursor:pointer; padding:16px 0; font-size:15px; font-weight:700; color:#0f172a; list-style:none; display:flex; align-items:center; gap:12px; }
   .faq-q { flex:1; padding-top:1px; }
@@ -987,22 +987,24 @@
       
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-hint" id="migHint">8 站 · 自动播放</span><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我的迁徙路线</b><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
-            <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线图">
+            <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
-                <linearGradient id="migGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+                <linearGradient id="migGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/>
+                </linearGradient>
               </defs>
-              <path id="migBase" d="" fill="none" stroke="#cfe0f3" stroke-width="2" stroke-dasharray="5 7"/>
-              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3" stroke-linecap="round"/>
+              <path id="migBase" d="" fill="none" stroke="#dbe7f6" stroke-width="2" stroke-dasharray="4 6"/>
+              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="2.5" stroke-linecap="round"/>
               <g id="migNodes"></g>
               <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
-            <div class="mig-cap"><b id="migCity">怀化</b><span id="migDesc">1986 · 出生于湖南怀化一个小镇</span></div>
+            <div class="mig-cap"><b id="migCity">湖南小镇</b><span id="migDesc">故事从这里开始</span></div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar" loading="lazy" decoding="async">
-            <div class="mig-brand"><b>硅基野人</b></div>
+            <div class="mig-brand"><b>硅基野人</b><span>少点废话，多点实战；做成晒结果，翻车晒现场。</span></div>
             <div class="mig-tags"><span>10 年电商</span><span>AI 无人公司</span><span>边做边公开</span></div>
           </div>
         </div>
@@ -1366,173 +1368,7 @@
 })();
 </script>
 
-<script>
-/* ---------- 关于我：迁徙路线动画 ---------- */
-(function(){
-  var STOPS = [
-    { city: "怀化", year: "1986", desc: "出生于湖南怀化一个小镇", short: "出生", x: 52, y: 268 },
-    { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2009 做网络运维；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 运维 / 工作室", x: 196, y: 58 },
-    { city: "燕郊", year: "2016", desc: "搬到燕郊，成家、女儿出生", short: "成家 / 女儿出生", x: 236, y: 92 },
-    { city: "东海", year: "2015", desc: "去江苏东海做水晶饰品", short: "做水晶饰品", x: 330, y: 168 },
-    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 22 },
-    { city: "诸暨", year: "2019", desc: "进浙江诸暨袜业产业带（2018 年刚去）", short: "进产业带", x: 380, y: 264 },
-    { city: "长沙", year: "2020", desc: "定居长沙，长沙买房；一年只能回去 7 天", short: "定居 / 买房", x: 92, y: 236 },
-    { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了日本、韩国", short: "定居 / 游轮出国", x: 452, y: 222 }
-  ];
-  var svg = document.getElementById("migSvg");
-  if (!svg) return;
-  var base = document.getElementById("migBase");
-  var prog = document.getElementById("migProg");
-  var nodesG = document.getElementById("migNodes");
-  var dot = document.getElementById("migDot");
-  var cityEl = document.getElementById("migCity");
-  var descEl = document.getElementById("migDesc");
-  var playBtn = document.getElementById("migPlay");
 
-  function smoothPath(pts){
-    if (pts.length < 2) return "";
-    var d = "M " + pts[0].x + " " + pts[0].y;
-    for (var i = 1; i < pts.length; i++) {
-      var p0 = pts[i - 1], p1 = pts[i];
-      var cx = (p0.x + p1.x) / 2, cy = (p0.y + p1.y) / 2 - 26;
-      d += " Q " + cx + " " + cy + " " + p1.x + " " + p1.y;
-    }
-    return d;
-  }
-  var d = smoothPath(STOPS);
-  base.setAttribute("d", d);
-  prog.setAttribute("d", d);
-
-  // 节点
-  var nodeEls = STOPS.map(function(s, i){
-    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.setAttribute("class", "mig-node");
-    var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    c.setAttribute("cx", s.x); c.setAttribute("cy", s.y); c.setAttribute("r", 5);
-    var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    t.setAttribute("x", s.x + 9); t.setAttribute("y", s.y + 3.5);
-    t.textContent = s.city;
-    g.appendChild(c); g.appendChild(t);
-    g.addEventListener("click", function(){ jump(i); });
-    nodesG.appendChild(g);
-    return g;
-  });
-
-  // 节点气泡：画在 SVG 里，位置跟着节点坐标走，保证贴在上方
-  var NS = "http://www.w3.org/2000/svg";
-  var bubbleG = document.createElementNS(NS, "g");
-  bubbleG.setAttribute("id", "migBubbleG");
-  bubbleG.style.opacity = 0;
-  bubbleG.style.transition = "opacity .28s";
-  var bRect = document.createElementNS(NS, "rect");
-  bRect.setAttribute("rx", "8");
-  bRect.setAttribute("fill", "#0f172a");
-  var bText = document.createElementNS(NS, "text");
-  bText.setAttribute("fill", "#ffffff");
-  bText.setAttribute("font-size", "10.5");
-  bText.setAttribute("text-anchor", "middle");
-  var bArrow = document.createElementNS(NS, "path");
-  bArrow.setAttribute("fill", "#0f172a");
-  bubbleG.appendChild(bRect); bubbleG.appendChild(bText); bubbleG.appendChild(bArrow);
-  svg.appendChild(bubbleG);
-  var bubbleTimer = null;
-  function showBubble(i){
-    var st = STOPS[i];
-    var label = st.city + (st.year ? " · " + st.year : "") + (st.short ? "  " + st.short : "");
-    bText.textContent = label;
-    var w = Math.max(64, label.length * 10.2 + 18);
-    var h = 22;
-    var cx = Math.min(516 - w / 2, Math.max(w / 2 + 4, st.x));
-    var above = (st.y - 36 - h) >= 4; // 太靠上就放节点下方
-    var topY = above ? (st.y - 36 - h) : (st.y + 20);
-    bRect.setAttribute("x", cx - w / 2); bRect.setAttribute("y", topY);
-    bRect.setAttribute("width", w); bRect.setAttribute("height", h);
-    bText.setAttribute("x", cx); bText.setAttribute("y", topY + 15);
-    if (above) {
-      bArrow.setAttribute("d", "M " + (cx - 5) + " " + (topY + h) + " L " + (cx + 5) + " " + (topY + h) + " L " + cx + " " + (topY + h + 6) + " Z");
-    } else {
-      bArrow.setAttribute("d", "M " + (cx - 5) + " " + topY + " L " + (cx + 5) + " " + topY + " L " + cx + " " + (topY - 6) + " Z");
-    }
-    bubbleG.style.opacity = 1;
-    clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(function(){ bubbleG.style.opacity = 0; }, 3800);
-  }
-
-  var total = prog.getTotalLength();
-  // 每个节点在路径上的真实位置，保证光点刚到节点就弹气泡
-  var nodeRatios = STOPS.map(function(st){
-    var best = 0, bestD = Infinity, N = 600;
-    for (var q = 0; q <= N; q++) {
-      var pt = prog.getPointAtLength(total * q / N);
-      var dx = pt.x - st.x, dy = pt.y - st.y, d = dx * dx + dy * dy;
-      if (d < bestD) { bestD = d; best = q / N; }
-    }
-    return best;
-  });
-  for (var mi = 1; mi < nodeRatios.length; mi++) {
-    if (nodeRatios[mi] < nodeRatios[mi - 1]) nodeRatios[mi] = nodeRatios[mi - 1];
-  }
-  prog.style.strokeDasharray = total;
-  prog.style.strokeDashoffset = total;
-
-  var t0 = performance.now(), dur = 14000, paused = false, pausedAt = 0, raf = null, lastActive = -1;
-
-  function pointAt(ratio){ return prog.getPointAtLength(total * ratio); }
-
-  function frame(now){
-    if (paused) return;
-    var ratio = ((now - t0) % dur) / dur;
-    prog.style.strokeDashoffset = total * (1 - ratio);
-    var pt = pointAt(ratio);
-    dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-    // 当前应该亮的节点：按节点在路径上的真实位置
-    var active = 0;
-    for (var i = 0; i < STOPS.length; i++) {
-      if (ratio >= nodeRatios[i] - 0.002) active = i;
-    }
-    if (active !== lastActive) {
-      lastActive = active;
-      nodeEls.forEach(function(g, i){ g.classList.toggle("on", i <= active); });
-      cityEl.textContent = STOPS[active].city;
-      descEl.textContent = (STOPS[active].year ? STOPS[active].year + " · " : "") + STOPS[active].desc;
-      showBubble(active);
-    }
-    raf = requestAnimationFrame(frame);
-  }
-
-  function jump(i){
-    var ratio = i / (STOPS.length - 1);
-    t0 = performance.now() - ratio * dur;
-    if (!paused) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); return; }
-    // 暂停状态点节点：直接更新画面
-    prog.style.strokeDashoffset = total * (1 - ratio);
-    var pt = pointAt(ratio);
-    dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-    nodeEls.forEach(function(g, k){ g.classList.toggle("on", k <= i); });
-    cityEl.textContent = STOPS[i].city;
-    descEl.textContent = (STOPS[i].year ? STOPS[i].year + " · " : "") + STOPS[i].desc;
-    showBubble(i);
-    lastActive = i;
-  }
-
-  playBtn.addEventListener("click", function(){
-    paused = !paused;
-    if (paused) { cancelAnimationFrame(raf); playBtn.textContent = "播放"; }
-    else { t0 = performance.now(); raf = requestAnimationFrame(frame); playBtn.textContent = "暂停"; }
-  });
-
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) {
-    prog.style.strokeDashoffset = 0;
-    nodeEls.forEach(function(g){ g.classList.add("on"); });
-    cityEl.textContent = "浙江杭州"; descEl.textContent = "2025 · 定居杭州";
-    playBtn.style.display = "none";
-    bubble.classList.remove("show");
-  } else {
-    raf = requestAnimationFrame(frame);
-  }
-})();
-</script>
 
 <script>
 (function(){var m=document.getElementById('mailLink');if(m){var c=m.getAttribute('data-mail').split(',').map(Number);m.href='mailto:'+String.fromCharCode.apply(null,c);}})();
@@ -2585,63 +2421,107 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
 }catch(e){}})();</script>
 <script>
-/* 迁徙路线：SVG 路线动画 */
+/* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
-  var svg=document.getElementById('migSvg'); if(!svg) return;
-  var cityEl=document.getElementById('migCity'), descEl=document.getElementById('migDesc'), hintEl=document.getElementById('migHint'), play=document.getElementById('migPlay');
-  var S=[
-    {c:'怀化',y:'1986',d:'出生于湖南怀化一个小镇'},
-    {c:'北京',y:'2005',d:'坐绿皮火车去北京上学'},
-    {c:'燕郊',y:'2016',d:'搬到燕郊；2017 卖掉房子，开始卖春节圣诞用品'},
-    {c:'东海',y:'2015',d:'去江苏连云港东海县做水晶饰品生意'},
-    {c:'辽源',y:'2018',d:'去东北辽源做袜业'},
-    {c:'诸暨',y:'2019',d:'进浙江诸暨袜业产业带'},
-    {c:'长沙',y:'2020',d:'定居长沙，长沙买房'},
-    {c:'杭州',y:'2025',d:'定居杭州；第一次坐游轮出国'}
+  var STOPS = [
+    { city: "湖南小镇", year: "", desc: "故事从这里开始", x: 58, y: 252 },
+    { city: "北京", year: "2006", desc: "去北京上学", x: 212, y: 74 },
+    { city: "燕郊", year: "", desc: "在燕郊成家", x: 248, y: 104 },
+    { city: "江苏东海", year: "2014", desc: "做水晶饰品", x: 330, y: 162 },
+    { city: "东北辽源", year: "2018", desc: "做袜业", x: 338, y: 58 },
+    { city: "浙江诸暨", year: "2019", desc: "进袜业产业带（2018 年刚去）", x: 402, y: 226 },
+    { city: "湖南长沙", year: "2020", desc: "回了趟长沙", x: 118, y: 268 },
+    { city: "浙江杭州", year: "2025", desc: "定居杭州", x: 446, y: 214 }
   ];
-  var pts=[[52,272],[118,92],[190,186],[282,108],[356,34],[408,228],[300,308],[458,286]];
-  var base=document.getElementById('migBase'), prog=document.getElementById('migProg'), nodes=document.getElementById('migNodes'), dot=document.getElementById('migDot');
-  var d='M'+pts[0][0]+','+pts[0][1];
-  for(var i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i];var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;d+=' Q'+mx+','+(my-26)+' '+b[0]+','+b[1];}
-  base.setAttribute('d',d); prog.setAttribute('d',d);
-  var len=prog.getTotalLength(); prog.style.strokeDasharray=len; prog.style.strokeDashoffset=len;
-  var ns='http://www.w3.org/2000/svg';
-  var labels=[];
-  S.forEach(function(st,i){
-    var p=pts[i], g=document.createElementNS(ns,'g');
-    var c=document.createElementNS(ns,'circle'); c.setAttribute('cx',p[0]); c.setAttribute('cy',p[1]); c.setAttribute('r',6); c.setAttribute('fill','#fff'); c.setAttribute('stroke','#2563eb'); c.setAttribute('stroke-width','2.5'); g.appendChild(c);
-    var tx=document.createElementNS(ns,'text'); var LX=p[0]+12; if(LX>430)LX=p[0]-84; var LY=p[1]+4; if(LY<18)LY=18; if(LY>346)LY=346; tx.setAttribute('x',LX); tx.setAttribute('y',LY); tx.setAttribute('font-size',i===0?'13':'11.5'); tx.setAttribute('font-weight','700'); tx.setAttribute('fill',i===0?'#1d4ed8':'#475569'); tx.textContent=st.c+' · '+st.y; g.appendChild(tx);
-    nodes.appendChild(g); labels.push({c:c,tx:tx,p:p});
+  var svg = document.getElementById("migSvg");
+  if (!svg) return;
+  var base = document.getElementById("migBase");
+  var prog = document.getElementById("migProg");
+  var nodesG = document.getElementById("migNodes");
+  var dot = document.getElementById("migDot");
+  var cityEl = document.getElementById("migCity");
+  var descEl = document.getElementById("migDesc");
+  var playBtn = document.getElementById("migPlay");
+
+  function smoothPath(pts){
+    if (pts.length < 2) return "";
+    var d = "M " + pts[0].x + " " + pts[0].y;
+    for (var i = 1; i < pts.length; i++) {
+      var p0 = pts[i - 1], p1 = pts[i];
+      var cx = (p0.x + p1.x) / 2, cy = (p0.y + p1.y) / 2 - 26;
+      d += " Q " + cx + " " + cy + " " + p1.x + " " + p1.y;
+    }
+    return d;
+  }
+  var d = smoothPath(STOPS);
+  base.setAttribute("d", d);
+  prog.setAttribute("d", d);
+
+  // 节点
+  var nodeEls = STOPS.map(function(s, i){
+    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("class", "mig-node");
+    var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    c.setAttribute("cx", s.x); c.setAttribute("cy", s.y); c.setAttribute("r", 5);
+    var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    t.setAttribute("x", s.x + 9); t.setAttribute("y", s.y + 3.5);
+    t.textContent = s.city;
+    g.appendChild(c); g.appendChild(t);
+    g.addEventListener("click", function(){ jump(i); });
+    nodesG.appendChild(g);
+    return g;
   });
-  dot.style.opacity=0;
-  var idx=0, playing=true, raf=null, t0=performance.now(), phase=0;
-  function setActive(i){
-    labels.forEach(function(l,j){ l.c.setAttribute('r',j===i?7:6); l.c.setAttribute('fill',j===i?'#2563eb':'#fff'); l.tx.setAttribute('fill',j===i?'#1d4ed8':'#475569'); });
-    var st=S[i], prev=S[(i+S.length-1)%S.length], next=S[(i+1)%S.length];
-    if(cityEl)cityEl.textContent=st.c+' · '+st.y;
-    if(descEl)descEl.textContent=(i===0?'出生：':'从'+prev.c+'到'+st.c+'：')+st.d;
-    if(hintEl)hintEl.textContent='下一站 '+next.c+' · '+next.y;
-  }
-  function segLen(i){var p=pts[i], q=pts[(i+1)%pts.length]; return Math.hypot(q[0]-p[0],q[1]-p[1]);}
+
+  var total = prog.getTotalLength();
+  prog.style.strokeDasharray = total;
+  prog.style.strokeDashoffset = total;
+
+  var t0 = performance.now(), dur = 14000, paused = false, pausedAt = 0, raf = null, lastActive = -1;
+
+  function pointAt(ratio){ return prog.getPointAtLength(total * ratio); }
+
   function frame(now){
-    if(!playing){raf=null;return;}
-    var elapsed=(now-t0)/1000;
-    var speed=len/26; // 26s full route
-    var cur=Math.min(len,elapsed*speed);
-    prog.style.strokeDashoffset=len-cur;
-    var pt=prog.getPointAtLength(cur); dot.setAttribute('cx',pt.x); dot.setAttribute('cy',pt.y); dot.style.opacity=1;
-    // update active by cumulative length of polyline approx
-    var acc=0, active=0;
-    for(var i=0;i<S.length-1;i++){acc+=segLen(i); if(cur<=acc){active=i+1;break;} active=i+1;}
-    if(active!==idx){idx=active;setActive(Math.min(idx,S.length-1));}
-    if(cur>=len){ /* loop */ t0=now; prog.style.strokeDashoffset=len; setActive(0); idx=0; }
-    raf=requestAnimationFrame(frame);
+    if (paused) return;
+    var ratio = ((now - t0) % dur) / dur;
+    prog.style.strokeDashoffset = total * (1 - ratio);
+    var pt = pointAt(ratio);
+    dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
+    // 当前应该亮的节点：按路径长度近似
+    var active = 0;
+    for (var i = 0; i < STOPS.length; i++) {
+      var seg = i / (STOPS.length - 1);
+      if (ratio >= seg - 0.02) active = i;
+    }
+    if (active !== lastActive) {
+      lastActive = active;
+      nodeEls.forEach(function(g, i){ g.classList.toggle("on", i <= active); });
+      cityEl.textContent = STOPS[active].city;
+      descEl.textContent = (STOPS[active].year ? STOPS[active].year + " · " : "") + STOPS[active].desc;
+    }
+    raf = requestAnimationFrame(frame);
   }
-  setActive(0);
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){ prog.style.strokeDashoffset=0; dot.style.opacity=0; playing=false; if(play)play.textContent='播放'; }
-  if(play) play.addEventListener('click',function(){ playing=!playing; if(playing){ t0=performance.now(); play.textContent='暂停'; if(!raf) raf=requestAnimationFrame(frame);} else { play.textContent='播放'; if(raf){cancelAnimationFrame(raf);raf=null;} } });
-  if(playing) raf=requestAnimationFrame(frame);
+
+  function jump(i){
+    var ratio = i / (STOPS.length - 1);
+    t0 = performance.now() - ratio * dur;
+    if (!paused) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); }
+  }
+
+  playBtn.addEventListener("click", function(){
+    paused = !paused;
+    if (paused) { cancelAnimationFrame(raf); playBtn.textContent = "播放"; }
+    else { t0 = performance.now(); raf = requestAnimationFrame(frame); playBtn.textContent = "暂停"; }
+  });
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) {
+    prog.style.strokeDashoffset = 0;
+    nodeEls.forEach(function(g){ g.classList.add("on"); });
+    cityEl.textContent = "浙江杭州"; descEl.textContent = "2025 · 定居杭州";
+    playBtn.style.display = "none";
+  } else {
+    raf = requestAnimationFrame(frame);
+  }
 })();
 </script>
 <script>
@@ -2708,6 +2588,22 @@ html[data-theme="night"] #migBase { stroke:#243247 !important; }
 html[data-theme="night"] #migSvg text { fill:#cbd5e1 !important; }
 html[data-theme="night"] .mig-card .mig-head button { background:#111a2b !important; color:#cbd5e1 !important; border-color:#243247 !important; }
 html[data-theme="night"] footer#page-end, html[data-theme="night"] .sp-nav { background:#050a14 !important; }
+
+html[data-theme="night"] section { border-top-color:transparent !important; border-bottom-color:transparent !important; }
+html[data-theme="night"] #projects, html[data-theme="night"] #kb, html[data-theme="night"] #works,
+html[data-theme="night"] #notes, html[data-theme="night"] #services, html[data-theme="night"] #follow,
+html[data-theme="night"] #progress, html[data-theme="night"] #about, html[data-theme="night"] #faq,
+html[data-theme="night"] #message { border-top:0 !important; border-bottom:0 !important; }
+html[data-theme="night"] .work-row, html[data-theme="night"] .shot figcaption,
+html[data-theme="night"] .tl-row, html[data-theme="night"] .about-line,
+html[data-theme="night"] .mig-foot, html[data-theme="night"] .faq-a { border-color:#243247 !important; }
+html[data-theme="night"] body { background:#070b16 !important; }
+
+html[data-theme="night"] section { border-top-width:0 !important; border-bottom-width:0 !important; border-left:0 !important; border-right:0 !important; }
+html[data-theme="night"] #projects, html[data-theme="night"] #progress, html[data-theme="night"] #building,
+html[data-theme="night"] #works, html[data-theme="night"] #notes, html[data-theme="night"] #tools,
+html[data-theme="night"] #services, html[data-theme="night"] #about, html[data-theme="night"] #faq,
+html[data-theme="night"] #follow, html[data-theme="night"] #message, html[data-theme="night"] #kb { border:0 !important; }
 </style>
 <div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报 RSS 预览"></iframe></div></div>
 <script>(function(){
