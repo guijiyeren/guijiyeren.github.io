@@ -157,19 +157,45 @@
   .plat:hover { border-color:#bfdbfe; color:var(--blue); box-shadow:0 6px 16px rgba(37,99,235,.12); }
   .plat img { width:14px; height:14px; border-radius:3px; display:block; }
   .works-note { margin-top:14px; font-size:12.5px; color:#64748b; }
+  .works-more { text-align:center; margin-top:16px; }
+  .works-more button { border:1px solid var(--line); background:#fff; color:#334155; font:600 13px/1.2 inherit; border-radius:999px; padding:11px 22px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.06); transition:.18s; }
+  .works-more button:hover { border-color:#bfdbfe; color:var(--blue); }
+  .plat.off { color:#94a3b8; background:#f8fafc; border-style:dashed; cursor:default; }
+  .work-hide { display:none; }
+
+  /* 实战项目：动态封面 */
+  .build-card .cover { position:relative; aspect-ratio:16/9; overflow:hidden; background:#0b1020; }
+  .build-card .cover canvas { width:100%; height:100%; display:block; }
+  .cover-tag { position:absolute; left:10px; top:10px; font-size:9.5px; color:#dbeafe; background:rgba(10,15,29,.62); border:1px solid rgba(125,211,252,.35); border-radius:999px; padding:2px 8px; backdrop-filter:blur(4px); }
 
   /* 关于我 */
   #about { background:linear-gradient(180deg,#f6f8fc,#eef3fb); }
-  .about-rich { display:grid; grid-template-columns:1.25fr .75fr; gap:40px; margin-top:30px; align-items:start; }
-  .about-text p { font-size:14.5px; line-height:2; color:#334155; margin-bottom:14px; }
+  .about-rich { display:grid; grid-template-columns:1.18fr .82fr; gap:40px; margin-top:30px; align-items:start; }
+  .about-text p { font-size:14.5px; line-height:2; color:#334155; margin-bottom:13px; }
   .about-text .quote { margin-top:20px; padding:14px 18px; border-left:3px solid var(--blue); background:#fff; border-radius:0 12px 12px 0; font-weight:700; color:#0f172a; }
   .about-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
   .about-chips span { font-size:12px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:5px 12px; }
-  .timeline { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 22px; box-shadow:0 12px 30px rgba(15,23,42,.05); }
-  .tl-item { display:flex; gap:14px; padding:11px 0; border-bottom:1px dashed var(--line); }
-  .tl-item:last-child { border-bottom:0; }
+  .about-visual { display:flex; flex-direction:column; gap:14px; }
+  .ip-card { position:relative; border-radius:20px; overflow:hidden; background:radial-gradient(600px 300px at 30% 20%, #1e3a8a, #0b1020 70%); border:1px solid rgba(56,189,248,.25); box-shadow:0 20px 50px rgba(15,23,42,.16); }
+  .ip-card::before { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(148,163,184,.35) 1px, transparent 1px); background-size:20px 20px; opacity:.5; }
+  .ip-card img { position:relative; width:86%; display:block; margin:16px auto 0; filter:drop-shadow(0 10px 26px rgba(56,189,248,.25)); }
+  .sign-card { border-radius:14px; overflow:hidden; background:#fff; border:1px solid var(--line); box-shadow:0 12px 30px rgba(15,23,42,.07); }
+  .sign-card img { width:100%; display:block; }
+  .timeline-full { margin-top:34px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 26px; box-shadow:0 14px 34px rgba(15,23,42,.06); display:grid; grid-template-columns:1fr 1fr; gap:0 34px; }
+  .tl-item { display:flex; gap:14px; padding:13px 0; border-bottom:1px dashed var(--line); }
+  .tl-item:nth-last-child(-n+2) { border-bottom:0; }
   .tl-item b { flex:0 0 52px; color:var(--blue); font-size:14px; font-weight:800; letter-spacing:.5px; }
-  .tl-item span { font-size:12.5px; color:#475569; line-height:1.75; }
+  .tl-item span { font-size:12.5px; color:#475569; line-height:1.8; }
+
+  /* 关注 · 更多入口 */
+  .more-links { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  .more-card { display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px 18px; box-shadow:0 10px 26px rgba(15,23,42,.05); transition:.18s; }
+  .more-card:hover { border-color:#bfdbfe; transform:translateY(-1px); box-shadow:0 16px 34px rgba(37,99,235,.1); }
+  .more-card img { width:34px; height:34px; border-radius:9px; display:block; flex:0 0 auto; }
+  .more-card span { flex:1; min-width:0; }
+  .more-card b { display:block; font-size:14px; color:#0f172a; }
+  .more-card i { display:block; font-style:normal; font-size:12px; color:#64748b; margin-top:2px; }
+  .more-card em { font-style:normal; font-size:12.5px; color:var(--blue); font-weight:700; white-space:nowrap; }
 
   /* 关注 */
   #follow { background:#fff; border-top:1px solid var(--line); }
@@ -213,6 +239,11 @@
     .contact .btn { margin-left:0; }
     .kb-card { flex-direction:column; align-items:flex-start; padding:24px 20px; }
     .kb-go { align-self:stretch; justify-content:center; }
+    .about-visual { order:-1; }
+    .timeline-full { grid-template-columns:1fr; padding:18px 20px; }
+    .timeline-full .tl-item:nth-last-child(-n+2) { border-bottom:1px dashed var(--line); }
+    .timeline-full .tl-item:last-child { border-bottom:0; }
+    .more-links { grid-template-columns:1fr; }
     section { padding:52px 0; }
     .avatar-core { width:150px; height:150px; }
     .ring-1 { width:270px; height:270px; }
@@ -303,44 +334,44 @@
     </div>
     <div class="build-grid">
       <article class="build-card">
-        <div class="cover"><img src="assets/cover-1.jpg" alt="人生指南"></div>
+        <div class="cover"><canvas class="cv" data-theme="nebula"></canvas></div>
         <div class="b-body">
           <div class="b-top"><h3>人生指南</h3><span class="b-tag open">已公开</span></div>
           <p>767 条人生建议的行动版，已开源公开。</p>
         </div>
       </article>
 <article class="build-card">
-        <div class="cover"><img src="assets/cover-2.jpg" alt="情报中枢"></div>
+        <div class="cover"><canvas class="cv" data-theme="hub"></canvas></div>
         <div class="b-body">
-          <div class="b-top"><h3>情报中枢</h3><span class="b-tag ">内部系统</span></div>
+          <div class="b-top"><h3>情报中枢</h3><span class="b-tag">内部系统</span></div>
           <p>40+ 情报源每天自动采集、去重、打分、出日报。</p>
         </div>
       </article>
 <article class="build-card">
-        <div class="cover"><img src="assets/cover-3.jpg" alt="生财有术"></div>
+        <div class="cover"><canvas class="cv" data-theme="galaxy"></canvas></div>
         <div class="b-body">
-          <div class="b-top"><h3>生财有术</h3><span class="b-tag ">内部系统</span></div>
+          <div class="b-top"><h3>生财有术</h3><span class="b-tag">内部系统</span></div>
           <p>离线项目库，按主题检索 1 万多条内容。</p>
         </div>
       </article>
 <article class="build-card">
-        <div class="cover"><img src="assets/cover-4.jpg" alt="电商运营"></div>
+        <div class="cover"><canvas class="cv" data-theme="pipeline"></canvas></div>
         <div class="b-body">
-          <div class="b-top"><h3>电商运营</h3><span class="b-tag ">内部系统</span></div>
-          <p>选品→上架→投放的全流程台账与核验。</p>
+          <div class="b-top"><h3>电商运营</h3><span class="b-tag">内部系统</span></div>
+          <p>选品→上架→投放，全流程台账与核验。</p>
         </div>
       </article>
 <article class="build-card">
-        <div class="cover"><img src="assets/cover-5.jpg" alt="资源中心"></div>
+        <div class="cover"><canvas class="cv" data-theme="grid"></canvas></div>
         <div class="b-body">
-          <div class="b-top"><h3>资源中心</h3><span class="b-tag ">内部系统</span></div>
+          <div class="b-top"><h3>资源中心</h3><span class="b-tag">内部系统</span></div>
           <p>1.2 万条资源索引，分类、封面、检索一体。</p>
         </div>
       </article>
 <article class="build-card">
-        <div class="cover"><img src="assets/cover-6.jpg" alt="硅基野人"></div>
+        <div class="cover"><canvas class="cv" data-theme="desk"></canvas></div>
         <div class="b-body">
-          <div class="b-top"><h3>硅基野人</h3><span class="b-tag ">内部系统</span></div>
+          <div class="b-top"><h3>硅基野人</h3><span class="b-tag">内部系统</span></div>
           <p>AI 内容生产线：一条视频九平台发布与回收。</p>
         </div>
       </article>
@@ -373,35 +404,38 @@
     <div class="sec-head">
       <div class="eyebrow2">Latest Works</div>
       <h2>最新作品</h2>
-      <p>AI 短视频，一条片子九平台同步。下面是最近几条，点平台图标直接看。</p>
+      <p>AI 短视频，一条片子九平台同步。按发布顺序列出，点亮的频道可以直接看，灰色的表示这条在该平台的单条链接还没登记（可去主页看）。</p>
     </div>
     <div class="works-list">
-      <article class="work-row">
-        <div class="w-cover"><img src="assets/work-1.jpg" alt="AI模特被迫营业"><span class="w-badge">4 平台</span></div>
-        <div class="w-main"><h3>AI模特被迫营业</h3><p>AI 短视频 · 多平台同步</p></div>
-        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7704561759733959946" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6aec1a26000000000303aa5a" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1EW4t6yE2m" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xnb3jxwb446wz4" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
-      </article>
-<article class="work-row">
-        <div class="w-cover"><img src="assets/work-2.jpg" alt="焦虑型依恋"><span class="w-badge">4 平台</span></div>
-        <div class="w-main"><h3>焦虑型依恋</h3><p>AI 短视频 · 多平台同步</p></div>
-        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7704130945737067803" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6aea9257000000000e00c8e8" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1DGxD64Ekr" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xj5ej4rbwqcp8q" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
-      </article>
-<article class="work-row">
-        <div class="w-cover"><img src="assets/work-3.jpg" alt="人生下半场才刚刚开始"><span class="w-badge">4 平台</span></div>
-        <div class="w-main"><h3>人生下半场才刚刚开始</h3><p>AI 短视频 · 多平台同步</p></div>
-        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703774570771238159" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae94e430000000003000afe" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1Gk4u6SEa1" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xmkkr37gcpx6pi" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
-      </article>
-<article class="work-row">
-        <div class="w-cover"><img src="assets/work-4.jpg" alt="你扛过的每一天都算数"><span class="w-badge">4 平台</span></div>
-        <div class="w-main"><h3>你扛过的每一天都算数</h3><p>AI 短视频 · 多平台同步</p></div>
-        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703534918583848228" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae8745f00000000350119dd" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV12r4c67Ejc" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xv9abbnecz4myq" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
-      </article>
-<article class="work-row">
-        <div class="w-cover"><img src="assets/work-5.jpg" alt="唯独不是你自己"><span class="w-badge">4 平台</span></div>
-        <div class="w-main"><h3>唯独不是你自己</h3><p>AI 短视频 · 多平台同步</p></div>
-        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703423610026724635" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae80fb1000000000e0271f1" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1To4F6EEeZ" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xb6hgjxi6w7tcw" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
-      </article>
+      <article class="work-row"><div class="w-cover"><img src="assets/work-1.jpg" alt="人类简史"><span class="w-badge">#01</span></div><div class="w-main"><h3>人类简史</h3><p>2026-10-27 · 8 个平台</p></div><div class="w-links"><a class="plat on" href="https://douyin.com/video/7700243084986092841" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://xiaohongshu.com/explore/6adcb83a" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://bilibili.com/video/BV1FWHM6LE6U" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://kuaishou.com/short-video/3xg6dfp7emzsduq" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a><span class="plat off" title="YouTube 单条链接未登记"><img src="assets/icon-youtube.png" alt="">YouTube</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span><span class="plat off" title="知乎 单条链接未登记"><img src="assets/icon-zhihu.png" alt="">知乎</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-2.jpg" alt="文明的一天"><span class="w-badge">#02</span></div><div class="w-main"><h3>文明的一天</h3><p>2026-10-27 · 8 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span><span class="plat off" title="YouTube 单条链接未登记"><img src="assets/icon-youtube.png" alt="">YouTube</span><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-3.jpg" alt="宇宙的起源"><span class="w-badge">#03</span></div><div class="w-main"><h3>宇宙的起源</h3><p>2026-10-27 · 8 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span><span class="plat off" title="YouTube 单条链接未登记"><img src="assets/icon-youtube.png" alt="">YouTube</span><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-4.jpg" alt="电商AI工作流"><span class="w-badge">#04</span></div><div class="w-main"><h3>电商AI工作流</h3><p>2026-10-27 · 7 个平台</p></div><div class="w-links"><a class="plat on" href="https://douyin.com/video/7700900747050880307" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://xiaohongshu.com/explore/6adf630f" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://bilibili.com/video/BV16rnd65EWt" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://kuaishou.com/short-video/3xnidq834bpsd7y" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-5.jpg" alt="一个老板一群AI员工"><span class="w-badge">#05</span></div><div class="w-main"><h3>一个老板一群AI员工</h3><p>2026-10-28 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://douyin.com/video/7701569252385475876" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://xiaohongshu.com/explore/6ae17956" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://bilibili.com/video/BV125x56JEyA" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://kuaishou.com/short-video/3xx4usv8v5qttyk" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-6.jpg" alt="一小时干完一天活"><span class="w-badge">#06</span></div><div class="w-main"><h3>一小时干完一天活</h3><p>2026-10-29 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-7.jpg" alt="每一个也许都要付钱"><span class="w-badge">#07</span></div><div class="w-main"><h3>每一个也许都要付钱</h3><p>2026-10-29 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-11.jpg" alt="四渡赤水"><span class="w-badge">#11</span></div><div class="w-main"><h3>四渡赤水</h3><p>2026-10-31 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-12.jpg" alt="中国五千年"><span class="w-badge">#12</span></div><div class="w-main"><h3>中国五千年</h3><p>2026-10-31 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-13.jpg" alt="AI穿搭视频"><span class="w-badge">#13</span></div><div class="w-main"><h3>AI穿搭视频</h3><p>2026-11-01 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-15.jpg" alt="AI工作台V1"><span class="w-badge">#15</span></div><div class="w-main"><h3>AI工作台V1</h3><p>2026-11-01 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-16.jpg" alt="超人体验卡已超额"><span class="w-badge">#16</span></div><div class="w-main"><h3>超人体验卡已超额</h3><p>2026-11-01 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-17.jpg" alt="唯独不是你自己"><span class="w-badge">#17</span></div><div class="w-main"><h3>唯独不是你自己</h3><p>2026-11-02 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7703423610026724635" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae80fb1000000000e0271f1" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1To4F6EEeZ" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xb6hgjxi6w7tcw" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-18.jpg" alt="你扛过的每一天都算数"><span class="w-badge">#18</span></div><div class="w-main"><h3>你扛过的每一天都算数</h3><p>2026-11-02 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7703534918583848228" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae8745f00000000350119dd" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV12r4c67Ejc" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xv9abbnecz4myq" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-22.jpg" alt="讨好型人格"><span class="w-badge">#22</span></div><div class="w-main"><h3>讨好型人格</h3><p>2026-11-03 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-19.jpg" alt="人生下半场才刚刚开始"><span class="w-badge">#19</span></div><div class="w-main"><h3>人生下半场才刚刚开始</h3><p>2026-11-03 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7703774570771238159" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae94e430000000003000afe" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1Gk4u6SEa1" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xmkkr37gcpx6pi" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-21.jpg" alt="射手座"><span class="w-badge">#21</span></div><div class="w-main"><h3>射手座</h3><p>2026-11-04 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-23.jpg" alt="焦虑型依恋"><span class="w-badge">#23</span></div><div class="w-main"><h3>焦虑型依恋</h3><p>2026-11-04 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7704130945737067803" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6aea9257000000000e00c8e8" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1DGxD64Ekr" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xj5ej4rbwqcp8q" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-25.jpg" alt="AI日报"><span class="w-badge">#25</span></div><div class="w-main"><h3>AI日报</h3><p>2026-11-05 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-27.jpg" alt="AI模特委屈落泪"><span class="w-badge">#27</span></div><div class="w-main"><h3>AI模特委屈落泪</h3><p>2026-11-05 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-26.jpg" alt="AI模特被迫营业"><span class="w-badge">#26</span></div><div class="w-main"><h3>AI模特被迫营业</h3><p>2026-11-05 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7704561759733959946" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6aec1a26000000000303aa5a" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1EW4t6yE2m" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xnb3jxwb446wz4" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-24.jpg" alt="每日毒打"><span class="w-badge">#24</span></div><div class="w-main"><h3>每日毒打</h3><p>2026-11-06 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-28.jpg" alt="AI模特含泪上班"><span class="w-badge">#28</span></div><div class="w-main"><h3>AI模特含泪上班</h3><p>2026-11-06 · 5 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-32.jpg" alt="未来十年的25个技能"><span class="w-badge">#32</span></div><div class="w-main"><h3>未来十年的25个技能</h3><p>2026-11-06 · 7 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-8.jpg" alt="活着的意义"><span class="w-badge">#08</span></div><div class="w-main"><h3>活着的意义</h3><p>2026-11-08 · 7 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="知乎 单条链接未登记"><img src="assets/icon-zhihu.png" alt="">知乎</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-31.jpg" alt="成长该学什么"><span class="w-badge">#31</span></div><div class="w-main"><h3>成长该学什么</h3><p>2026-11-08 · 9 个平台</p></div><div class="w-links"><span class="plat off" title="抖音 单条链接未登记"><img src="assets/icon-douyin.png" alt="">抖音</span><span class="plat off" title="小红书 单条链接未登记"><img src="assets/icon-xiaohongshu.png" alt="">小红书</span><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span><span class="plat off" title="YouTube 单条链接未登记"><img src="assets/icon-youtube.png" alt="">YouTube</span><span class="plat off" title="TikTok 单条链接未登记"><img src="assets/icon-tiktok.png" alt="">TikTok</span><span class="plat off" title="今日头条 单条链接未登记"><img src="assets/icon-toutiao.png" alt="">今日头条</span><span class="plat off" title="知乎 单条链接未登记"><img src="assets/icon-zhihu.png" alt="">知乎</span></div></article>
+<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-33.jpg" alt="个人AI工作台V2"><span class="w-badge">#33</span></div><div class="w-main"><h3>个人AI工作台V2</h3><p>2026-11-09 · 2 个平台</p></div><div class="w-links"><span class="plat off" title="B站 单条链接未登记"><img src="assets/icon-bilibili.png" alt="">B站</span><span class="plat off" title="快手 单条链接未登记"><img src="assets/icon-kuaishou.png" alt="">快手</span></div></article>
     </div>
+    <div class="works-more"><button type="button" id="works-expand">展开全部作品（共 27 条）↓</button></div>
     <p class="works-note">更多作品在各平台主页看：抖音、小红书、B站、快手、视频号、YouTube、TikTok、今日头条、知乎。</p>
   </div>
 </section>
@@ -414,19 +448,28 @@
     </div>
     <div class="about-rich">
       <div class="about-text">
-        <p>我叫<b>硅基野人</b>，10 年电商人，做袜业和好物推荐。从拿货、拍照、上架、发货，到投流、算账、售后，整条链路都是自己跑出来的。</p>
-        <p>早些年踩的坑不少：凭感觉选款压库存、素材版权、投流烧钱、系统搭得比生意还复杂。后来扎进产业带，才算把供应链和成本摸明白。</p>
+        <p>我叫<b>硅基野人</b>，10 年电商人。最早是写代码的，2013 年白天上班、晚上学网络营销，2014 年从水晶做起——跑批发市场挑货、拍图、上架、发货，把「拿货→拍照→上架→卖货」这条闭环完整跑通了一遍。</p>
+        <p>2016 年在燕郊的家里开了第一家淘宝店，客厅堆满袜子纸箱，一手扶娃一手改标题。2018 年搬进产业带，仓库六十多平，楼下走十分钟就能到工厂打样——那时候才算真正摸到供应链的底气。</p>
+        <p>踩的坑也不少：凭感觉选款压了几万块库存、素材版权、投流烧钱、系统搭得比生意还复杂。2019 年花两个月利润去听课，从那以后养成习惯：每年花一笔「肉疼」的钱换认知。</p>
         <p>2024 年开始记日记、搭系统，越搭越复杂，业务反而变慢。2025 到 2026 换了个思路：不追工具，先把流程拆明白，再让 AI 干活。</p>
         <p>现在一边卖货，一边用 AI 重做整条内容生产线：选品、文案、图片、视频、九平台发布、数据回收。一个人带着一群「硅基员工」，边干边翻车。</p>
         <div class="quote">少点废话，多点实战；做成晒结果，翻车晒现场；先完成再完美。</div>
         <div class="about-chips"><span>10 年电商</span><span>AI 无人公司</span><span>内容自动化</span><span>边做边开源</span></div>
       </div>
-      <div class="timeline">
-        <div class="tl-item"><b>2014</b><span>从淘宝第一单开始，跑通拿货→拍照→上架→发货的闭环。</span></div>
-        <div class="tl-item"><b>2018</b><span>扎进产业带，把供应链和成本摸清楚，开始做自己的货。</span></div>
-        <div class="tl-item"><b>2024</b><span>开始记日记、搭系统，想用工具解决「没产出」的问题。</span></div>
-        <div class="tl-item"><b>2026</b><span>AI 重做工作流：工作台、情报中枢、内容流水线，一个人干一个团队的活。</span></div>
+      <div class="about-visual">
+        <div class="ip-card"><img src="assets/about-ip.png" alt="硅基野人 IP"></div>
+        <div class="sign-card"><img src="assets/about-sign.png" alt="硅基野人 · 品牌署名卡"></div>
       </div>
+    </div>
+    <div class="timeline-full">
+      <div class="tl-item"><b>2009</b><span>入职第一家公司写代码，拿到第一份工资，开始在北京落脚。</span></div>
+      <div class="tl-item"><b>2013</b><span>白天上班、晚上学网络营销，第一次知道「网上怎么赚钱」。</span></div>
+      <div class="tl-item"><b>2014</b><span>跑水晶货源，把「拿货→拍照→上架→卖货」整条闭环跑通。</span></div>
+      <div class="tl-item"><b>2016</b><span>开第一家淘宝店卖袜子，家里就是仓库和打包台。</span></div>
+      <div class="tl-item"><b>2018</b><span>搬进袜业产业带，供应链和成本终于摸清楚，开始做自己的货。</span></div>
+      <div class="tl-item"><b>2019</b><span>花两个月利润去听课，建立「为认知付费」的习惯，那年跑通双品牌。</span></div>
+      <div class="tl-item"><b>2024</b><span>开始记日记、搭系统，想用工具解决「没产出」的问题。</span></div>
+      <div class="tl-item"><b>2026</b><span>AI 重做工作流：个人工作台、情报中枢、内容流水线，一个人干一个团队的活。</span></div>
     </div>
   </div>
 </section>
@@ -448,6 +491,20 @@
 <a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a>
 <a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a>
     </div>
+    
+    <div class="more-links">
+      <a class="more-card" href="https://github.com/guijiyeren" target="_blank" rel="noopener">
+        <img src="assets/icon-github.png" alt="GitHub">
+        <span><b>GitHub · guijiyeren</b><i>开源项目源码、站点更新都在这里</i></span>
+        <em>去看看 →</em>
+      </a>
+      <a class="more-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">
+        <img src="assets/icon-feishu.png" alt="飞书知识库">
+        <span><b>飞书知识库</b><i>AI 个人工作台 · 教程 / 模板 / 工作流，免费看</i></span>
+        <em>进入 →</em>
+      </a>
+    </div>
+
     <div class="contact">
       <div><div class="t">合作 · 交流 · 提问</div><div class="v">154647@qq.com</div></div>
       <a class="btn" href="mailto:154647@qq.com">发邮件给我 →</a>
@@ -458,7 +515,7 @@
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责审核和拍板</div>
-    <div>GitHub：<a href="https://github.com/guijiyeren/guijiyeren.github.io" target="_blank" rel="noopener">guijiyeren.github.io</a> · 知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
+    <div>GitHub：<a href="https://github.com/guijiyeren" target="_blank" rel="noopener">guijiyeren.github.io</a> · 知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
   </div>
 </footer>
 
@@ -528,6 +585,203 @@
   }
   resize(); init(); frame();
   window.addEventListener('resize', function(){ resize(); init(); });
+})();
+</script>
+
+<script>
+/* ---------- 最新作品：展开/收起 ---------- */
+(function(){
+  var btn = document.getElementById('works-expand');
+  if (!btn) return;
+  var open = false;
+  btn.addEventListener('click', function(){
+    open = !open;
+    document.querySelectorAll('.work-row').forEach(function(el, idx){
+      if (open) el.classList.remove('work-hide');
+      else if (idx >= 8) el.classList.add('work-hide');
+    });
+    btn.textContent = open ? '收起 ↑' : ('展开全部作品（共 ' + document.querySelectorAll('.work-row').length + ' 条）↓');
+  });
+})();
+
+/* ---------- 实战项目：6 个动态封面 ---------- */
+(function(){
+  var canvases = Array.from(document.querySelectorAll('.build-card canvas.cv'));
+  if (!canvases.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setup(cv){
+    var theme = cv.getAttribute('data-theme');
+    var ctx = cv.getContext('2d');
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, parts = [];
+    function resize(){
+      var r = cv.parentElement.getBoundingClientRect();
+      W = r.width; H = r.height;
+      cv.width = W * DPR; cv.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    function rand(a, b){ return a + Math.random() * (b - a); }
+    function init(){
+      parts = [];
+      var n = theme === 'hub' ? 46 : theme === 'grid' ? 40 : theme === 'pipeline' ? 30 : 60;
+      for (var i = 0; i < n; i++) {
+        parts.push({ x: Math.random()*W, y: Math.random()*H, r: rand(0.6, 2.2),
+                     a: rand(0.15, 0.7), vx: rand(-0.25, 0.25), vy: rand(-0.25, 0.25),
+                     s: rand(0.4, 1.4), ph: rand(0, 6.28) });
+      }
+    }
+    var t0 = performance.now();
+    function draw(now){
+      if (!W) { requestAnimationFrame(draw); return; }
+      var t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, W, H);
+      var bg = ctx.createLinearGradient(0, 0, W, H);
+      if (theme === 'nebula') { bg.addColorStop(0, '#0b1020'); bg.addColorStop(.55, '#12224a'); bg.addColorStop(1, '#0a0f1d'); }
+      else if (theme === 'galaxy') { bg.addColorStop(0, '#0a0f1d'); bg.addColorStop(.5, '#1a1440'); bg.addColorStop(1, '#0b1020'); }
+      else if (theme === 'hub') { bg.addColorStop(0, '#071a2b'); bg.addColorStop(.6, '#0b2b45'); bg.addColorStop(1, '#071220'); }
+      else if (theme === 'pipeline') { bg.addColorStop(0, '#0b1020'); bg.addColorStop(.6, '#102a4a'); bg.addColorStop(1, '#0a0f1d'); }
+      else if (theme === 'grid') { bg.addColorStop(0, '#0d1224'); bg.addColorStop(.6, '#13233f'); bg.addColorStop(1, '#0a0f1d'); }
+      else { bg.addColorStop(0, '#0b1020'); bg.addColorStop(.6, '#171338'); bg.addColorStop(1, '#0a0f1d'); }
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+      // 背景星点
+      ctx.save();
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        var tw = 0.35 + 0.35 * Math.sin(t * 1.6 + p.ph);
+        ctx.fillStyle = 'rgba(186,230,253,' + (p.a * tw) + ')';
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+        if (theme === 'hub' || theme === 'pipeline' || theme === 'grid') {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        }
+      }
+      ctx.restore();
+
+      var cx = W/2, cy = H/2;
+      if (theme === 'nebula' || theme === 'galaxy') {
+        var R = Math.min(W, H) * 0.36;
+        var grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+        grd.addColorStop(0, theme === 'galaxy' ? 'rgba(167,139,250,.55)' : 'rgba(56,189,248,.45)');
+        grd.addColorStop(.5, theme === 'galaxy' ? 'rgba(88,60,180,.22)' : 'rgba(37,99,235,.18)');
+        grd.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.fill();
+        // 旋臂
+        for (var k = 0; k < 90; k++) {
+          var ang = k * 0.24 + t * (theme === 'galaxy' ? 0.22 : 0.12);
+          var rr = (k / 90) * R * 0.95;
+          var x = cx + Math.cos(ang) * rr;
+          var y = cy + Math.sin(ang) * rr * 0.55;
+          var al = 0.55 * (1 - rr / (R * 1.1));
+          ctx.fillStyle = theme === 'galaxy' ? 'rgba(196,181,253,' + al + ')' : 'rgba(125,211,252,' + al + ')';
+          ctx.beginPath(); ctx.arc(x, y, 1.4, 0, 6.283); ctx.fill();
+        }
+        // 中心星体
+        var core = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16);
+        core.addColorStop(0, '#fff'); core.addColorStop(.45, theme === 'galaxy' ? '#c4b5fd' : '#7dd3fc'); core.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, 16, 0, 6.283); ctx.fill();
+      } else if (theme === 'hub') {
+        // 多源汇聚
+        var count = 5;
+        for (var s = 0; s < count; s++) {
+          var ang = t * 0.5 + s * 1.2566;
+          var sx = cx + Math.cos(ang) * W * 0.42;
+          var sy = cy + Math.sin(ang) * H * 0.4;
+          var pulse = 0.5 + 0.5 * Math.sin(t * 2 + s);
+          ctx.strokeStyle = 'rgba(56,189,248,' + (0.25 + 0.3 * pulse) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo(cx + (sx - cx) * 0.2, cy + (sy - cy) * 0.2, cx, cy); ctx.stroke();
+          ctx.fillStyle = 'rgba(125,211,252,' + (0.5 + 0.5 * pulse) + ')';
+          ctx.beginPath(); ctx.arc(sx, sy, 3.2, 0, 6.283); ctx.fill();
+        }
+        var hg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 26);
+        hg.addColorStop(0, 'rgba(255,255,255,.95)'); hg.addColorStop(.4, 'rgba(56,189,248,.8)'); hg.addColorStop(1, 'rgba(37,99,235,0)');
+        ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(cx, cy, 26, 0, 6.283); ctx.fill();
+        ctx.fillStyle = 'rgba(224,242,254,.95)'; ctx.beginPath(); ctx.arc(cx, cy, 5.5, 0, 6.283); ctx.fill();
+      } else if (theme === 'pipeline') {
+        // 选品 → 上架 → 推广
+        var stages = ['选品', '上架', '推广'];
+        var bw = W / 3;
+        for (var q = 0; q < 3; q++) {
+          var bx = q * bw;
+          ctx.fillStyle = 'rgba(56,189,248,.06)';
+          ctx.fillRect(bx + 6, H * 0.18, bw - 12, H * 0.64);
+          ctx.strokeStyle = 'rgba(125,211,252,.25)'; ctx.lineWidth = 1;
+          ctx.strokeRect(bx + 6, H * 0.18, bw - 12, H * 0.64);
+          ctx.fillStyle = 'rgba(186,230,253,.9)';
+          ctx.font = '600 11px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(stages[q], bx + bw/2, H * 0.16 + 2);
+        }
+        for (var m = 0; m < 22; m++) {
+          var prog = ((t * 0.16 + m / 22) % 1);
+          var px = W * 0.06 + prog * W * 0.88;
+          var py = H * (0.42 + 0.18 * Math.sin(prog * 6.283 + m));
+          ctx.fillStyle = 'rgba(125,211,252,.9)';
+          ctx.beginPath(); ctx.arc(px, py, 2.2, 0, 6.283); ctx.fill();
+        }
+        var lit = Math.floor((t * 0.8) % 4);
+        for (var q2 = 0; q2 < 3; q2++) {
+          if (q2 !== Math.min(lit, 2)) continue;
+          ctx.fillStyle = 'rgba(56,189,248,.12)';
+          ctx.fillRect(q2 * bw + 6, H * 0.18, bw - 12, H * 0.64);
+        }
+      } else if (theme === 'grid') {
+        // 资源卡片墙
+        var cols = 6, rows = 4;
+        var cw = W / cols, ch = H / rows;
+        for (var ry = 0; ry < rows; ry++) {
+          for (var rz = 0; rz < cols; rz++) {
+            var off = Math.sin(t * 0.5 + ry * 0.7 + rz * 0.35) * 3;
+            var alpha = 0.08 + 0.07 * (0.5 + 0.5 * Math.sin(t + ry + rz));
+            ctx.fillStyle = 'rgba(125,211,252,' + alpha + ')';
+            var rx = rz * cw + 5, ryy = ry * ch + 5 + off;
+            ctx.fillRect(rx, ryy, cw - 10, ch - 10);
+          }
+        }
+        for (var g = 0; g < 10; g++) {
+          var gx = (t * 26 + g * 63) % (W + 120) - 60;
+          var gg = ctx.createLinearGradient(gx, 0, gx + 60, 0);
+          gg.addColorStop(0, 'rgba(56,189,248,0)');
+          gg.addColorStop(.5, 'rgba(125,211,252,.18)');
+          gg.addColorStop(1, 'rgba(56,189,248,0)');
+          ctx.fillStyle = gg; ctx.fillRect(gx, 0, 60, H);
+        }
+      } else {
+        // desk：工作台 / 终端
+        ctx.fillStyle = 'rgba(56,189,248,.05)';
+        ctx.fillRect(W * 0.1, H * 0.18, W * 0.8, H * 0.64);
+        ctx.strokeStyle = 'rgba(125,211,252,.3)'; ctx.strokeRect(W * 0.1, H * 0.18, W * 0.8, H * 0.64);
+        ctx.fillStyle = 'rgba(125,211,252,.22)';
+        ctx.fillRect(W * 0.1, H * 0.18, W * 0.8, 12);
+        for (var d = 0; d < 3; d++) {
+          ctx.fillStyle = 'rgba(248,113,113,.8)'; ctx.beginPath(); ctx.arc(W*0.13 + d*9, H*0.18 + 6, 2.6, 0, 6.283); ctx.fill();
+        }
+        var lines = ['> 派活给 AI ...', '> 采集 40 个情报源', '> 生成 9 平台文案', '> 发布 & 回收数据'];
+        for (var l = 0; l < lines.length; l++) {
+          var ln = lines[l];
+          var chars = Math.floor(((t * 6 + l * 5) % 30));
+          var txt = ln.slice(0, chars);
+          ctx.fillStyle = 'rgba(148,233,255,' + (l === lines.length - 1 ? .95 : .6) + ')';
+          ctx.font = '11px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(txt, W * 0.14, H * 0.33 + l * (H * 0.12));
+        }
+        for (var b2 = 0; b2 < 9; b2++) {
+          var bh = H * 0.06 + (0.5 + 0.5 * Math.sin(t * 1.4 + b2)) * H * 0.14;
+          ctx.fillStyle = 'rgba(56,189,248,.5)';
+          ctx.fillRect(W * 0.62 + b2 * W * 0.036, H * 0.68 - bh, W * 0.022, bh);
+        }
+      }
+      if (!reduce) requestAnimationFrame(draw);
+    }
+    resize(); init();
+    if (reduce) draw(0); else requestAnimationFrame(draw);
+    window.addEventListener('resize', function(){ resize(); init(); });
+  }
+  canvases.forEach(setup);
 })();
 </script>
 </body>
