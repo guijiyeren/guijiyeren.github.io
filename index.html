@@ -391,6 +391,14 @@
   .mig-stage-dark .mig-cap span { color:#93c5fd; }
   .mig-stage svg { width:100%; height:100%; display:block; }
   .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
+  .mig-sub { font-size:11px; color:#94a3b8; }
+  .mig-tip { position:absolute; z-index:3; width:180px; max-width:45%; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.97); border:1px solid #dbeafe; box-shadow:0 12px 30px rgba(15,23,42,.16); transform:translate(-50%,-100%) translateY(-8px) scale(.96); opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; }
+  .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-10px) scale(1); }
+  .mig-tip b { display:block; font-size:12.5px; color:#1d4ed8; }
+  .mig-tip span { display:block; margin-top:3px; font-size:10.5px; line-height:1.6; color:#475569; }
+  html[data-theme="night"] .mig-tip { background:#111a2b !important; border-color:#243247 !important; }
+  html[data-theme="night"] .mig-tip b { color:#7dd3fc !important; }
+  html[data-theme="night"] .mig-tip span { color:#a8b7cc !important; }
   .mig-cap b { font-size:15px; color:#0f172a; }
   .mig-cap span { font-size:11.5px; color:#64748b; line-height:1.6; }
   .mig-cap { align-items:flex-start; }
@@ -1000,7 +1008,7 @@
       
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我的迁徙路线</b><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我走过的城市</b><span class="mig-sub">1986—2025 · 7 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
             <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
@@ -1013,6 +1021,7 @@
               <g id="migNodes"></g>
               <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
+            <div class="mig-tip" id="migTip"><b id="migTipCity"></b><span id="migTipDesc"></span></div>
             <div class="mig-cap"><b id="migCity">湖南小镇 · 1986</b><span id="migDesc">出生在湖南一个小镇</span></div>
           </div>
           <div class="mig-foot">
@@ -2505,6 +2514,26 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   if (mask) mask.addEventListener("click", function(ev){ if (ev.target === mask) closeStop(); });
   document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") closeStop(); });
 
+  var tipEl = document.getElementById("migTip");
+  var tipCity = document.getElementById("migTipCity");
+  var tipDesc = document.getElementById("migTipDesc");
+  var tipTimer = null;
+  function showTip(i){
+    if (!tipEl || !tipCity) return;
+    var st = STOPS[i];
+    tipCity.textContent = st.city + (st.year ? " · " + st.year : "");
+    tipDesc.textContent = st.desc;
+    var left = Math.max(18, Math.min(80, st.x / 520 * 100));
+    var top = Math.max(10, st.y / 360 * 100 - 18);
+    tipEl.style.left = left + "%";
+    tipEl.style.top = top + "%";
+    tipEl.classList.remove("on");
+    void tipEl.offsetWidth;
+    tipEl.classList.add("on");
+    clearTimeout(tipTimer);
+    tipTimer = setTimeout(function(){ tipEl.classList.remove("on"); }, 3200);
+  }
+
   var total = prog.getTotalLength();
   prog.style.strokeDasharray = total;
   prog.style.strokeDashoffset = total;
@@ -2530,6 +2559,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
       nodeEls.forEach(function(g, i){ g.classList.toggle("on", i <= active); });
       cityEl.textContent = STOPS[active].city;
       descEl.textContent = (STOPS[active].year ? STOPS[active].year + " · " : "") + STOPS[active].desc;
+      showTip(active);
     }
     raf = requestAnimationFrame(frame);
   }
@@ -2550,7 +2580,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   if (reduce) {
     prog.style.strokeDashoffset = 0;
     nodeEls.forEach(function(g){ g.classList.add("on"); });
-    cityEl.textContent = "浙江杭州"; descEl.textContent = "2025 · 定居杭州";
+    cityEl.textContent = "浙江杭州"; descEl.textContent = "2025 · 定居杭州"; showTip(STOPS.length - 1);
     playBtn.style.display = "none";
   } else {
     raf = requestAnimationFrame(frame);
