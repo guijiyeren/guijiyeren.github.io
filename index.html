@@ -404,6 +404,18 @@
   .mig-node text { font-size:10.5px; fill:#64748b; }
   .mig-node.on circle { fill:#2563eb; stroke:#2563eb; }
   .mig-node.on text { fill:#0f172a; font-weight:700; }
+  .mig-node { cursor:pointer; }
+  .mig-mask { position:fixed; inset:0; z-index:170; background:rgba(5,10,22,.62); display:none; align-items:center; justify-content:center; padding:18px; }
+  .mig-mask.on { display:flex; }
+  .mig-box { position:relative; width:min(420px,92vw); background:#fff; border-radius:18px; padding:28px 30px 26px; box-shadow:0 30px 90px rgba(0,0,0,.45); }
+  .mig-year { font-size:12px; letter-spacing:2px; font-weight:800; color:#2563eb; }
+  .mig-box h3 { margin:8px 0 10px; font-size:24px; color:#0f172a; }
+  .mig-box p { margin:0; color:#475569; font-size:14px; line-height:1.85; }
+  .mig-close { position:absolute; right:12px; top:12px; width:32px; height:32px; border:0; border-radius:50%; background:#0f172a; color:#fff; font-size:20px; cursor:pointer; }
+  html[data-theme="night"] .mig-box { background:#111a2b; border:1px solid #243247; }
+  html[data-theme="night"] .mig-box h3 { color:#f1f5f9; }
+  html[data-theme="night"] .mig-box p { color:#a8b7cc; }
+  html[data-theme="night"] .mig-year { color:#7dd3fc; }
 
   .about-timeline { padding:20px 26px; display:flex; flex-direction:column; justify-content:center; }
   .about-timeline .tl-row { padding:11px 0; gap:16px; }
@@ -619,7 +631,7 @@
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
-        <div><span class="n">30+</span><span class="l">短视频作品</span></div>
+        <div><span class="n">33 条</span><span class="l">短视频作品</span></div>
         <div><span class="n">全免费</span><span class="l">飞书知识库</span></div>
       </div>
     </div>
@@ -970,18 +982,17 @@
     <div class="about-rich about-reverse">
       <div class="timeline-mini about-timeline">
         <div class="tl-row"><b>1986</b><span>出生于湖南一小镇</span></div>
-        <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学</span></div>
+        <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学，第一次出省</span></div>
         <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币、VIP 论坛会员，还帮人远程修电脑</span></div>
         <div class="tl-row"><b>2010</b><span>开个人工作室，帮人做网站、网络推广，游走在北京各个角落</span></div>
-        <div class="tl-row"><b>2014</b><span>结婚生子，完成人生两件大事</span></div>
+        <div class="tl-row"><b>2014</b><span>结婚生子，一年里完成两件人生大事</span></div>
         <div class="tl-row"><b>2015</b><span>去江苏连云港东海县做水晶饰品生意</span></div>
-        <div class="tl-row"><b>2016</b><span>女儿出生，家里多了个甜心</span></div>
         <div class="tl-row"><b>2017</b><span>卖掉燕郊的房子，开始卖春节和圣诞用品</span></div>
         <div class="tl-row"><b>2018</b><span>搬家到浙江诸暨产业带，开始了卖袜子之旅</span></div>
         <div class="tl-row"><b>2021</b><span>生意做大做强，渐渐开始躺平</span></div>
         <div class="tl-row"><b>2022</b><span>手握大把现金流，开上大奔，感觉人生到达了巅峰</span></div>
         <div class="tl-row"><b>2024</b><span>遇到变故，渐渐消沉，业绩腰斩；下半年开始接触 AI</span></div>
-        <div class="tl-row"><b>2025</b><span>定居杭州，第一次通过坐游轮出了趟国，去了韩国、日本</span></div>
+        <div class="tl-row"><b>2025</b><span>定居杭州，第一次坐邮轮出了趟国，去了韩国、日本</span></div>
         <div class="tl-row"><b>2026</b><span>继续用 AI 把以前做不了的事做成，再拼一把</span></div>
       </div>
       
@@ -1000,7 +1011,7 @@
               <g id="migNodes"></g>
               <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
-            <div class="mig-cap"><b id="migCity">湖南小镇</b><span id="migDesc">故事从这里开始</span></div>
+            <div class="mig-cap"><b id="migCity">湖南小镇 · 1986</b><span id="migDesc">出生在湖南一个小镇</span></div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar" loading="lazy" decoding="async">
@@ -1121,6 +1132,7 @@
   <a href="#faq" data-sec="faq"><i></i><span>FAQ</span></a>
   <a href="#follow" data-sec="follow"><i></i><span>联系</span></a>
 </nav>
+<div class="mig-mask" id="migMask"><div class="mig-box"><button class="mig-close" id="migClose" type="button" aria-label="关闭">×</button><span class="mig-year" id="migYear"></span><h3 id="migModalCity"></h3><p id="migModalDesc"></p></div></div>
 <div class="float-nav" aria-label="页面导航">
   <a class="fbtn" href="#top" title="回到顶部" aria-label="回到顶部">↑</a>
   <a class="fbtn" href="#page-end" title="直接到底部" aria-label="直接到底部">↓</a>
@@ -2424,14 +2436,13 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "湖南小镇", year: "", desc: "故事从这里开始", x: 58, y: 252 },
-    { city: "北京", year: "2006", desc: "去北京上学", x: 212, y: 74 },
-    { city: "燕郊", year: "", desc: "在燕郊成家", x: 248, y: 104 },
-    { city: "江苏东海", year: "2014", desc: "做水晶饰品", x: 330, y: 162 },
-    { city: "东北辽源", year: "2018", desc: "做袜业", x: 338, y: 58 },
-    { city: "浙江诸暨", year: "2019", desc: "进袜业产业带（2018 年刚去）", x: 402, y: 226 },
-    { city: "湖南长沙", year: "2020", desc: "回了趟长沙", x: 118, y: 268 },
-    { city: "浙江杭州", year: "2025", desc: "定居杭州", x: 446, y: 214 }
+    { city: "湖南小镇", year: "1986", desc: "出生在湖南一个小镇", x: 58, y: 252 },
+    { city: "北京", year: "2005", desc: "坐绿皮火车去北京上学，第一次出省", x: 212, y: 74 },
+    { city: "江苏东海", year: "2015", desc: "去江苏连云港东海县做水晶饰品生意", x: 330, y: 162 },
+    { city: "燕郊", year: "2017", desc: "卖掉燕郊的房子，转做春节和圣诞用品", x: 248, y: 104 },
+    { city: "浙江诸暨", year: "2018", desc: "搬到诸暨产业带，开始卖袜子", x: 402, y: 226 },
+    { city: "湖南长沙", year: "2020", desc: "在长沙市买房", x: 118, y: 268 },
+    { city: "浙江杭州", year: "2025", desc: "定居杭州，第一次坐邮轮出国", x: 446, y: 214 }
   ];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
@@ -2467,10 +2478,30 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     t.setAttribute("x", s.x + 9); t.setAttribute("y", s.y + 3.5);
     t.textContent = s.city;
     g.appendChild(c); g.appendChild(t);
-    g.addEventListener("click", function(){ jump(i); });
+    g.addEventListener("click", function(){ showStop(i); });
     nodesG.appendChild(g);
     return g;
   });
+
+  var mask = document.getElementById("migMask");
+  var modalCity = document.getElementById("migModalCity");
+  var modalYear = document.getElementById("migYear");
+  var modalDesc = document.getElementById("migModalDesc");
+  function showStop(i){
+    if (!mask || !modalCity) return;
+    var st = STOPS[i];
+    modalYear.textContent = st.year || "";
+    modalCity.textContent = st.city;
+    modalDesc.textContent = st.desc;
+    mask.classList.add("on");
+  }
+  function closeStop(){
+    if (mask) mask.classList.remove("on");
+  }
+  var closeBtn = document.getElementById("migClose");
+  if (closeBtn) closeBtn.addEventListener("click", closeStop);
+  if (mask) mask.addEventListener("click", function(ev){ if (ev.target === mask) closeStop(); });
+  document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") closeStop(); });
 
   var total = prog.getTotalLength();
   prog.style.strokeDasharray = total;
