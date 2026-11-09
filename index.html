@@ -47,9 +47,13 @@
   .hero-in { position:relative; max-width:1200px; margin:0 auto; padding:74px 24px 66px; display:grid; grid-template-columns:1.12fr .88fr; gap:26px; align-items:center; }
   .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase; }
   .eyebrow::before { content:""; width:22px; height:1px; background:var(--cyan); }
-  .hero h1 { font-size:60px; line-height:1.1; letter-spacing:2px; margin:16px 0 0; color:#fff; text-shadow:0 0 60px rgba(56,189,248,.25); }
+  .hero h1 { font-size:66px; line-height:1.12; letter-spacing:2px; margin:16px 0 0; color:#fff; text-shadow:0 0 60px rgba(56,189,248,.25); }
+  .type-line { display:inline-flex; align-items:flex-end; }
+  .type-cursor { display:inline-block; width:4px; height:.92em; margin-left:8px; border-radius:2px; background:#38bdf8; vertical-align:-.06em; animation:typeblink 1s steps(1) infinite; }
+  .type-cursor.done { opacity:0; animation:none; transition:opacity .4s; }
+  @keyframes typeblink { 50% { opacity:0; } }
   .hero h1 em { font-style:normal; background:linear-gradient(90deg,#38bdf8,#a78bfa 70%); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .hero .lead { margin:18px 0 0; font-size:16.5px; line-height:1.95; color:#b8c4d9; max-width:540px; }
+  .hero .lead { margin:20px 0 0; font-size:18px; line-height:1.95; color:#b8c4d9; max-width:590px; }
   .hero .lead b { color:#fff; font-weight:600; }
   .cta-row { display:flex; align-items:center; gap:14px; margin-top:28px; flex-wrap:wrap; }
   .btn { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:13px 24px; font-size:14.5px; font-weight:700; transition:.18s; }
@@ -57,9 +61,9 @@
   .btn-primary:hover { transform:translateY(-1px); background:linear-gradient(135deg,#1e3a8a,#1e40af); box-shadow:0 14px 30px rgba(30,58,138,.45); }
   .btn-ghost { border:1px solid rgba(148,163,184,.4); color:#e2e8f0; }
   .btn-ghost:hover { border-color:var(--cyan); color:#fff; }
-  .hero-stats { display:flex; gap:32px; margin-top:34px; flex-wrap:wrap; }
-  .hero-stats .n { display:block; font-size:21px; font-weight:800; color:#fff; letter-spacing:.5px; }
-  .hero-stats .l { display:block; font-size:12px; color:#7f8da6; margin-top:2px; letter-spacing:.5px; }
+  .hero-stats { display:flex; gap:36px; margin-top:36px; flex-wrap:wrap; }
+  .hero-stats .n { display:block; font-size:26px; font-weight:800; color:#fff; letter-spacing:.5px; }
+  .hero-stats .l { display:block; font-size:13.5px; color:#8b98b0; margin-top:3px; letter-spacing:.5px; }
 
   /* Hero 动态视觉 */
   .hero-visual { position:relative; width:100%; height:430px; display:flex; align-items:center; justify-content:center; }
@@ -69,9 +73,12 @@
   .ring-2 { width:250px; height:250px; border-color:rgba(167,139,250,.35); animation-direction:reverse; animation-duration:18s; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .avatar-core { position:relative; z-index:2; width:190px; height:190px; border-radius:50%; padding:4px; background:conic-gradient(from 160deg,#38bdf8,#2563eb,#a78bfa,#38bdf8); box-shadow:0 0 80px rgba(56,189,248,.4), inset 0 0 30px rgba(56,189,248,.25); animation:pulse 4s ease-in-out infinite; }
-  .avatar-core img { width:100%; height:100%; border-radius:50%; display:block; background:#0b1020; }
+  .avatar-core img, .avatar-core video { width:100%; height:100%; border-radius:50%; display:block; background:#0b1020; object-fit:cover; }
+  .avatar-core .hero-fallback { display:none; }
+  @media (prefers-reduced-motion: reduce) { .avatar-core .hero-video { display:none; } .avatar-core .hero-fallback { display:block; } }
   @keyframes pulse { 0%,100% { box-shadow:0 0 60px rgba(56,189,248,.32), inset 0 0 24px rgba(56,189,248,.2); } 50% { box-shadow:0 0 110px rgba(56,189,248,.5), inset 0 0 34px rgba(56,189,248,.3); } }
-  .float-chip { position:absolute; z-index:3; background:rgba(10,15,29,.82); border:1px solid rgba(56,189,248,.4); color:#dbeafe; font-size:12px; border-radius:999px; padding:7px 13px; backdrop-filter:blur(8px); white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.35); animation:floaty 6s ease-in-out infinite; }
+  .float-chip { position:absolute; z-index:3; display:inline-flex; align-items:center; gap:9px; background:rgba(10,15,29,.82); border:1px solid rgba(56,189,248,.45); color:#dbeafe; font-size:14px; font-weight:600; border-radius:999px; padding:10px 17px; backdrop-filter:blur(8px); white-space:nowrap; box-shadow:0 10px 26px rgba(0,0,0,.38); animation:floaty 6s ease-in-out infinite; }
+  .float-chip .fc-ico { width:17px; height:17px; color:#7dd3fc; flex:0 0 auto; }
   .chip-a { top:22px; left:50%; transform:translateX(-50%); animation-delay:0s; }
   .chip-b { right:-6px; top:150px; animation-delay:1.2s; }
   .chip-c { left:-10px; top:270px; animation-delay:2.1s; }
@@ -307,7 +314,14 @@
   .socials .social img { width:16px; height:16px; }
   @media (max-width:820px) { .socials { flex-wrap:wrap; } }
   .follow-note { margin-top:18px; font-size:13px; color:#64748b; letter-spacing:.3px; }
-  .msg-form { margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 24px; box-shadow:0 14px 34px rgba(15,23,42,.06); max-width:820px; }
+  .msg-form { margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 24px; box-shadow:0 14px 34px rgba(15,23,42,.06); max-width:none; }
+  .msg-mask { position:fixed; inset:0; background:rgba(8,12,24,.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:120; }
+  .msg-mask.on { display:flex; }
+  .msg-box { width:min(880px,94vw); background:#fff; border-radius:20px; padding:34px 36px; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,.4); }
+  .msg-check { width:56px; height:56px; margin:0 auto 16px; border-radius:50%; background:#dcfce7; color:#16a34a; font-size:28px; line-height:56px; font-weight:800; }
+  .msg-box h3 { font-size:24px; letter-spacing:.5px; }
+  .msg-box p { margin-top:12px; font-size:15px; line-height:1.9; color:#64748b; }
+  .msg-ok { margin-top:22px; border:0; border-radius:999px; padding:12px 34px; font:700 14px/1 inherit; color:#fff; background:linear-gradient(135deg,#1e40af,#1d4ed8); cursor:pointer; }
   .mf-row { display:flex; gap:16px; flex-wrap:wrap; }
   .mf-row label { flex:1 1 220px; }
   .msg-form label { display:flex; flex-direction:column; gap:8px; font-size:12px; color:#64748b; font-weight:600; }
@@ -460,7 +474,7 @@
   <div class="hero-in">
     <div>
       <div class="eyebrow">AI 无人公司 · 实战中</div>
-      <h1>一个碳基老板，<br>带着一群<em>硅基员工</em></h1>
+      <h1>一个碳基老板，<br><span class="type-line"><span id="typePre">带着一群</span><em id="typeGrad">硅基员工</em><span class="type-cursor" id="typeCursor" aria-hidden="true"></span></span></h1>
       <p class="lead">我叫<b>硅基野人</b>，10 年电商人。<br>现在把选品、上架、写文案、剪视频、做发布，一件件拆给 AI 干。<br>边干边翻车，<b>做成晒结果，翻车晒现场</b>。</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
@@ -470,18 +484,24 @@
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
         <div><span class="n">30+</span><span class="l">AI 短视频作品</span></div>
-        <div><span class="n">全免费</span><span class="l">知识库</span></div>
+        <div><span class="n">全免费</span><span class="l">飞书知识库</span></div>
       </div>
     </div>
     <div class="hero-visual">
       <canvas id="orbit-canvas"></canvas>
       <div class="orbit-ring ring-1"></div>
       <div class="orbit-ring ring-2"></div>
-      <div class="avatar-core"><img src="assets/logo.png" alt="硅基野人"></div>
-      <a class="float-chip chip-a" href="#building">🤖 个人 AI 工作台</a>
-      <a class="float-chip chip-b" href="#building">📊 情报中枢</a>
-      <a class="float-chip chip-c" href="#building">📚 资源中心</a>
-      <a class="float-chip chip-d" href="#building">🎬 内容流水线</a>
+      <div class="avatar-core">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg" aria-label="硅基野人在打字，机器人探着脑袋看">
+          <source src="assets/hero-loop.webm" type="video/webm">
+          <source src="assets/hero-loop.mp4" type="video/mp4">
+        </video>
+        <img class="hero-fallback" src="assets/logo.png" alt="硅基野人">
+      </div>
+      <a class="float-chip chip-a" href="#building"><svg class="fc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><circle cx="18.5" cy="17.5" r="2.4"/></svg><span>AI 工作台</span></a>
+      <a class="float-chip chip-b" href="#building"><svg class="fc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 9H7"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg><span>电商工作台</span></a>
+      <a class="float-chip chip-c" href="#building"><svg class="fc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 9h18M7 13h3M14 13h3M7 16h3"/></svg><span>资源中心</span></a>
+      <a class="float-chip chip-d" href="#building"><svg class="fc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 4v5M16 4v5M7 14l3 2-3 2M13 18h4"/></svg><span>内容流水线</span></a>
     </div>
   </div>
 </header>
@@ -817,6 +837,15 @@
   </div>
 </section>
 
+<div class="msg-mask" id="msgMask">
+  <div class="msg-box">
+    <div class="msg-check">✓</div>
+    <h3>感谢你的留言</h3>
+    <p>我们会第一时间查看。<br>祝您生活愉快，工作顺利！</p>
+    <button type="button" class="msg-ok" id="msgOk">关闭</button>
+  </div>
+</div>
+
 
 <div class="mail-mask" id="mailMask">
   <div class="mail-box">
@@ -829,7 +858,7 @@
   </div>
 </div>
 <style>
-  .mail-mask { position:fixed; inset:0; background:rgba(10,15,29,.55); display:none; align-items:center; justify-content:center; padding:20px; z-index:99; }
+  .mail-mask { position:fixed; inset:0; background:rgba(10,15,29,.55); display:none; align-items:center; justify-content:center; padding:20px; z-index:200; }
   .mail-mask.on { display:flex; }
   .mail-mask .mail-box { background:#fff; border-radius:18px; padding:20px; box-shadow:0 30px 80px rgba(0,0,0,.35); max-width:600px; width:100%; }
   .mail-mask .mail-box img { width:100%; display:block; border-radius:12px; }
@@ -852,13 +881,14 @@
   document.getElementById('mailCopy').addEventListener('click', function(){
     var codes = [49,53,52,54,52,55,64,113,113,46,99,111,109];
     var addr = String.fromCharCode.apply(null, codes);
-    function done(){ this.textContent = '已复制'; var b = this; setTimeout(function(){ b.textContent = '一键复制邮箱'; }, 1600); }
+    var b = this;
+    function done(){ b.textContent = '已复制'; setTimeout(function(){ b.textContent = '一键复制邮箱'; }, 1600); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(addr).then(done.bind(this)).catch(done.bind(this));
+      navigator.clipboard.writeText(addr).then(done).catch(done);
     } else {
       var ta = document.createElement('textarea'); ta.value = addr; document.body.appendChild(ta); ta.select();
       try { document.execCommand('copy'); } catch(e) {}
-      document.body.removeChild(ta); done.call(this);
+      document.body.removeChild(ta); done();
     }
   });
 })();</script>
@@ -940,6 +970,30 @@
 </script>
 
 <script>
+/* ---------- Hero 标题打字机（保留渐变） ---------- */
+(function(){
+  var pre = document.getElementById("typePre");
+  var grad = document.getElementById("typeGrad");
+  var cursor = document.getElementById("typeCursor");
+  if (!pre || !grad || !cursor) return;
+  var a = pre.textContent, b = grad.textContent;
+  pre.textContent = ""; grad.textContent = "";
+  var i = 0, total = a.length + b.length;
+  function step(){
+    if (i <= total) {
+      if (i <= a.length) pre.textContent = a.slice(0, i);
+      else grad.textContent = b.slice(0, i - a.length);
+      i++;
+      setTimeout(step, i < 5 ? 140 : 95);
+    } else {
+      setTimeout(function(){ cursor.classList.add("done"); }, 900);
+    }
+  }
+  setTimeout(step, 420);
+})();
+</script>
+
+<script>
 /* ---------- 留言：FormSubmit 发到 QQ 邮箱 ---------- */
 (function(){
   var form = document.getElementById("msgForm");
@@ -975,7 +1029,8 @@
       var ok = j && (j.success === true || j.success === "true");
       if (ok) {
         form.reset();
-        setStatus("已发送，我会尽快看。");
+        setStatus("");
+        showMsgModal();
       } else {
         var m = (j && (j.message || j.error)) || "发送失败，稍后再试";
         if (String(m).toLowerCase().indexOf("confirm") >= 0) m += "（首次使用需点一下确认邮件）";
@@ -988,6 +1043,23 @@
       btn.textContent = old;
     });
   });
+  var mask = document.getElementById("msgMask");
+  var okBtn = document.getElementById("msgOk");
+  var closeTimer = null;
+  function showMsgModal(){
+    if (!mask) return;
+    mask.classList.add("on");
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(closeMsgModal, 8000);
+  }
+  function closeMsgModal(){
+    if (!mask) return;
+    mask.classList.remove("on");
+    clearTimeout(closeTimer);
+  }
+  if (okBtn) okBtn.addEventListener("click", closeMsgModal);
+  if (mask) mask.addEventListener("click", function(ev){ if (ev.target === mask) closeMsgModal(); });
+  window.__showMsgModal = showMsgModal;
 })();
 </script>
 
