@@ -142,9 +142,7 @@ var _m=document.getElementById('mailLink'); if(_m){var _c=_m.getAttribute('data-
   }
   .page-head .actions { display:none !important; }
   .pipeline-hero { position:relative !important; }
-  .kw-logo-wall { position:absolute; left:14px; top:92px; display:grid; grid-template-columns:repeat(5,24px); gap:8px; z-index:4; pointer-events:none; }
   .kw-logo-wall b { grid-column:1/-1; font-size:10px; color:#64748b; font-weight:700; letter-spacing:.5px; }
-  .kw-logo-wall img { width:24px; height:24px; border-radius:6px; object-fit:contain; background:#fff; box-shadow:0 2px 8px rgba(15,23,42,.14); padding:2px; }
   @media (max-width:760px) { .kw-logo-wall { left:8px; top:70px; grid-template-columns:repeat(4,20px); gap:6px; } .kw-logo-wall img { width:20px; height:20px; } }
   .snap-badge { display:inline-block; margin-left:8px; font-size:11px; color:#2563eb; background:#e0edff; border-radius:999px; padding:2px 9px; vertical-align:middle; }
 </style>
@@ -169,17 +167,14 @@ var _m=document.getElementById('mailLink'); if(_m){var _c=_m.getAttribute('data-
     setTimeout(function(){
       document.querySelectorAll('img').forEach(function(img){ if (img.complete && img.naturalWidth === 0) img.style.visibility='hidden'; });
     }, 3000);
-    var pipe = document.querySelector('.pipeline-hero');
-    if (pipe && !pipe.querySelector('.kw-logo-wall')) {
-      var wall = document.createElement('div'); wall.className = 'kw-logo-wall';
-      var lb = document.createElement('b'); lb.textContent = '40+ 来源'; wall.appendChild(lb);
-      var LOGOS = ['douyin','xiaohongshu','bilibili','kuaishou','youtube','wechat','weibo','zhihu','toutiao','baidu',
-        'qqvideo','iqiyi','hupu','douban','ifeng','thepaper','steam','wallstreetcn','cls','xueqiu',
-        'github','hackernews','producthunt','sspai','juejin','oschina','nowcoder','freebuf','coolapk','appinn'];
-      LOGOS.forEach(function(f){
-        var im = document.createElement('img'); im.src = '../assets/logos/' + f + '.png'; im.alt = ''; im.loading = 'lazy'; wall.appendChild(im);
-      });
-      pipe.appendChild(wall);
-    }
+    var _tries = 0;
+    var _t = setInterval(function(){
+      var b = document.getElementById('header-expand');
+      if (b) {
+        if (b.getAttribute('aria-expanded') !== 'true') { try { b.click(); } catch (e) {} }
+        clearInterval(_t);
+      }
+      if (++_tries > 60) clearInterval(_t);
+    }, 250);
   });
 })();</script></body></html>
