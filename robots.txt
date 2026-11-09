@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /resource/
+Disallow: /stats/
 
 Sitemap: https://guijiyeren.github.io/sitemap.txt
