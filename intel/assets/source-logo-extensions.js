@@ -1,0 +1,1 @@
+(()=>{'use strict';const original=window.atlasBrandLogo,logos={'oschina-rss':'oschina.png','hellogithub-rss':'hellogithub.png','techcrunch-rss':'techcrunch-text.svg','ithome-rss':'tophub-74Kvx59dkx.png','sspai-rss':'sspai.png','qbitai-rss':'tophub-MZd7azPorO.png','appinn-rss':'appinn.png'};window.atlasBrandLogo=id=>logos[id]?'/assets/logos/'+logos[id]:original(id);})();

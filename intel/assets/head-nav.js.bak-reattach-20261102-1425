@@ -1,0 +1,63 @@
+/* ============================================================
+   情报中枢 · 头部导航条（2026-11-01）
+   把页内那排栏目链接并进页头，页头贴顶常驻。
+   本文件必须最后加载：其它脚本（reading-first / personal-reading）
+   会先把 .section-nav 挪到页面位置，这里再收进页头。
+   ============================================================ */
+(() => {
+  "use strict";
+
+  const shell = document.querySelector("main.shell") || document.querySelector(".shell");
+  const head = shell && shell.querySelector(".page-head");
+  if (!shell || !head) return;
+
+  /* 1. 栏目并进页头（重复执行也无害） */
+  function attachNav() {
+    const nav = document.querySelector(".section-nav");
+    if (!nav) return;
+    if (nav.parentElement !== head) head.appendChild(nav);
+    head.classList.add("has-nav");
+  }
+  attachNav();
+
+  /* 2. 跟随 .shell 的内边距，让栏横跨整页边到边 */
+  function syncPad() {
+    const cs = getComputedStyle(shell);
+    document.documentElement.style.setProperty("--ph-hp", cs.paddingLeft || "32px");
+  }
+  syncPad();
+
+  /* 3. 记高度：锚点跳转要留出这段 */
+  function syncHeight() {
+    document.documentElement.style.setProperty("--ph-head-h", head.offsetHeight + "px");
+  }
+  syncHeight();
+
+  /* 4. 滚动后加一点投影，和正文分开 */
+  function onScroll() {
+    head.classList.toggle("is-stuck", window.scrollY > 4);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* 5. 视口变化重算 */
+  let raf = 0;
+  function relayout() {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      syncPad();
+      syncHeight();
+    });
+  }
+  window.addEventListener("resize", relayout);
+  if (window.ResizeObserver) new ResizeObserver(relayout).observe(head);
+  document.addEventListener("atlas:loaded", () => { attachNav(); relayout(); });
+
+  /* 6. 万一以后有脚本把导航挪出去，自动收回来 */
+  if (window.MutationObserver) {
+    new MutationObserver(() => {
+      if (document.querySelector(".section-nav")?.parentElement !== head) attachNav();
+    }).observe(shell, { childList: true });
+  }
+})();

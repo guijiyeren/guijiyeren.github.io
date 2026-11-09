@@ -1,0 +1,58 @@
+body:is([data-skin=C],[data-skin=D],[data-skin=F],[data-skin=G]) img[src$="/dark/openai.png"],body:is([data-skin=C],[data-skin=D],[data-skin=F],[data-skin=G]) img[src$="/dark/arxiv.png"]{filter:invert(1)}
+/* Light layer changes pixels only; no layout or independent CSS animation. */
+body .overview-hero .confluence-webgl{display:none;pointer-events:none;z-index:1}
+body .overview-hero[data-motion-style=D] .confluence-webgl{display:block}
+body .overview-hero[data-motion-style=D] .confluence-emblem[aria-label]{filter:brightness(calc(1 + var(--confluence-charge,0)*.18));box-shadow:0 0 0 5px color-mix(in srgb,#b87950 9%,transparent),0 0 calc(5px + var(--confluence-charge,0)*22px) color-mix(in srgb,#dca05f calc(10% + var(--confluence-charge,0)*27%),transparent)}
+/* D endpoint is a readable intelligence mark in both layouts. */
+.confluence-emblem{display:none}
+body .overview-hero[data-motion-style=D] .confluence-emblem{--emblem-size:54px;position:absolute;display:grid;place-items:center;left:min(95.3846%,calc(100% - var(--emblem-size)/2 - 3px));top:43.1579%;transform:translate(-50%,-50%);width:var(--emblem-size);height:var(--emblem-size);z-index:3;border-radius:17px;background:linear-gradient(145deg,#bd8057,#965431);border:1px solid #ad7047;color:#fff;box-shadow:0 0 0 5px color-mix(in srgb,#b87950 9%,transparent);font:600 14px/1.2 'Microsoft YaHei',sans-serif;letter-spacing:.06em;pointer-events:none}
+body .overview-hero[data-motion-style=D].network-expanded .confluence-emblem{--emblem-size:68px;border-radius:21px;font-size:18px}
+@media(max-width:650px){body .overview-hero[data-motion-style=D] .confluence-emblem{--emblem-size:44px;font-size:12px;border-radius:14px}body .overview-hero[data-motion-style=D].network-expanded .confluence-emblem{--emblem-size:56px;font-size:15px;border-radius:17px}}
+/* Header-only refinement: transparent logos and an optional full-width view. */
+/* D · inspired by the public AIHOT about diagram; original ABC selectors remain unchanged. */
+body .overview-hero[data-motion-style=D] .live-scene::after{display:none!important}
+body .overview-hero[data-motion-style=D] .live-scene{min-height:var(--confluence-min-height,330px)!important}
+body .overview-hero[data-motion-style=D] .live-brand,body .overview-hero[data-motion-style=D].network-expanded .live-brand{width:18px!important;height:18px!important;min-width:0!important;min-height:0!important;display:flex!important;justify-content:center!important;gap:0!important;padding:0!important}
+body .overview-hero[data-motion-style=D] .live-brand img,body .overview-hero[data-motion-style=D].network-expanded .live-brand img{width:16px!important;height:16px!important;flex:none}
+body .overview-hero[data-motion-style=D] .live-brand :is(span,i,b,small){display:none!important}
+.overview-hero:not([data-motion-style=D]) .confluence-tooltip{display:none!important}
+.confluence-tooltip{position:absolute;z-index:8;pointer-events:none;max-width:220px;padding:7px 10px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:7px;box-shadow:0 5px 20px #0001;font-size:12px;line-height:1.4}
+.confluence-output{display:none;position:absolute;left:85%;right:0;top:52%;z-index:3;color:var(--text);min-width:0}
+body .overview-hero[data-motion-style=D] .confluence-output{display:block}
+.confluence-output-kicker{font-size:9px;letter-spacing:.1em;color:var(--accent)}
+.confluence-output button{display:block!important;width:100%;min-height:0!important;text-align:left;padding:5px 0!important;border:0!important;background:transparent!important;box-shadow:none!important;white-space:normal!important;color:var(--text)}
+.confluence-output strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;font-size:11px;line-height:1.5;font-weight:600}
+.confluence-output small{display:block;font-size:8px;line-height:1.5;color:var(--muted);margin-top:3px;overflow:hidden;max-height:2.8em}
+@media(max-width:650px){body .overview-hero[data-motion-style=D] .live-brand,body .overview-hero[data-motion-style=D].network-expanded .live-brand{width:12px!important;height:12px!important}body .overview-hero[data-motion-style=D] .live-brand img,body .overview-hero[data-motion-style=D].network-expanded .live-brand img{width:11px!important;height:11px!important}.confluence-output strong{font-size:8px;-webkit-line-clamp:4}.confluence-output small{font-size:7px}.confluence-output-kicker{font-size:7px}}
+body .overview-hero[data-motion-style=D] .live-scene canvas{filter:none!important}
+body .overview-hero[data-motion-style=D] .live-brand{z-index:2}
+body .overview-hero[data-motion-style=D] .live-brand img{opacity:.9}
+body .overview-hero[data-motion-style=D] .live-brand:focus-visible img,body .overview-hero[data-motion-style=D] .live-brand:hover img{opacity:1}
+body .overview-hero[data-motion-style=D] .header-style-control button.active{background:color-mix(in srgb,var(--accent) 12%,var(--panel));color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+body .overview-hero[data-motion-style=D].network-expanded .live-scene::after{top:63%;font-size:12px}
+@media(max-width:650px){body .overview-hero[data-motion-style=D] .live-scene::after{font-size:7px;left:90%;top:66%}body .overview-hero[data-motion-style=D].network-expanded .live-scene::after{font-size:9px;top:63%}}
+body .overview-hero[data-motion-style=D] .live-brand,body .overview-hero[data-motion-style=D].network-expanded .live-brand{width:var(--confluence-icon-size,12px)!important;height:var(--confluence-icon-size,12px)!important}
+body .overview-hero[data-motion-style=D] .live-brand img,body .overview-hero[data-motion-style=D].network-expanded .live-brand img{width:calc(var(--confluence-icon-size,12px) - 2px)!important;height:calc(var(--confluence-icon-size,12px) - 2px)!important}
+body .overview-hero[data-motion-style=D].network-expanded .live-brand :is(span,i,b,small),body .overview-hero[data-motion-style=D].network-expanded .live-brand span{display:none!important}
+body .shell>.overview-hero[data-motion-style=D].network-expanded{grid-template-columns:minmax(0,1fr)}
+body .overview-hero[data-motion-style=D].network-expanded .live-scene{grid-column:1/-1;grid-row:2}
+body .overview-hero[data-motion-style=D].network-expanded #priority-signals{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-left:0;border-top:1px solid var(--line);padding:12px 0 0;margin-top:12px}
+body .overview-hero[data-motion-style=D].network-expanded #priority-signals .priority-label{grid-column:1/-1}
+body .overview-hero[data-motion-style=D].network-expanded #priority-signals .priority-signal+.priority-signal{border-top:0}
+body .overview-hero[data-motion-style=D]:not(.network-expanded) .confluence-output button~button{display:none!important}
+body .overview-hero[data-motion-style=D]:not(.network-expanded) .confluence-output strong{-webkit-line-clamp:2;font-size:10px}
+body .overview-hero[data-motion-style=D]:not(.network-expanded) .confluence-output{left:79%;top:55%;right:1%}
+body .overview-hero[data-motion-style=D]:not(.network-expanded) .live-scene{grid-column:1;grid-row:2}
+@media(max-width:1000px){body .overview-hero[data-motion-style=D]:not(.network-expanded) .confluence-output{left:65%;top:57%;background:color-mix(in srgb,var(--panel) 94%,transparent);padding:4px 0 0 5px}}
+@media(max-width:650px){body .overview-hero[data-motion-style=D].network-expanded #priority-signals{grid-template-columns:minmax(0,1fr);gap:0}.overview-hero[data-motion-style=D] .confluence-output{left:59%;right:1%;top:57%;background:color-mix(in srgb,var(--panel) 92%,transparent);padding:6px 0 0 7px}.overview-hero[data-motion-style=D] .confluence-output strong{font-size:10px;-webkit-line-clamp:2}.overview-hero[data-motion-style=D] .confluence-output small{font-size:8px}.overview-hero[data-motion-style=D] .confluence-output-kicker{font-size:8px}}
+body .overview-hero .live-brand,body .overview-hero .live-brand.board,body .overview-hero .live-brand:hover,body .overview-hero .live-brand:focus-visible{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;border-radius:0!important}
+body .overview-hero .live-brand img,body .overview-hero .live-brand img[src$="github.png"]{background:transparent!important;box-shadow:none!important;border-radius:0!important}
+body .overview-hero .live-brand:focus-visible{outline:2px solid var(--text)!important;outline-offset:3px}
+body .overview-hero #header-expand{font-size:12px;min-height:30px;padding:5px 9px;white-space:nowrap;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px}
+body .shell>.overview-hero.network-expanded{grid-template-columns:minmax(0,1fr)}
+body .overview-hero.network-expanded .live-scene{grid-column:1/-1;grid-row:2;height:475px!important}
+body .overview-hero.network-expanded #priority-signals{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-left:0;border-top:1px solid var(--line);padding:12px 0 0;margin-top:12px}
+.network-expanded .priority-label{grid-column:1/-1}.network-expanded .priority-signal+.priority-signal{border-top:0}
+body .overview-hero.network-expanded .live-brand{width:26px!important;height:26px!important}
+body .overview-hero.network-expanded .live-brand img{width:22px!important;height:22px!important}
+@media(max-width:650px){body .overview-hero .live-brand:nth-child(even){visibility:visible!important}body .overview-hero .live-brand{width:12px!important;height:12px!important}body .overview-hero .live-brand img{width:11px!important;height:11px!important}body .overview-hero #header-expand{font-size:11px;min-height:28px;padding:4px 7px}body .overview-hero.network-expanded .live-scene{height:300px!important}body .overview-hero.network-expanded .live-brand{width:15px!important;height:15px!important}body .overview-hero.network-expanded .live-brand img{width:13px!important;height:13px!important}body .overview-hero.network-expanded #priority-signals{grid-template-columns:minmax(0,1fr);gap:0}.network-expanded .priority-signal+.priority-signal{border-top:1px solid var(--line)}}

@@ -1,0 +1,20 @@
+/* Dedicated homepage video row; the full original issue stays in 视频情报. */
+(()=>{'use strict';let snapshot=null,covers={},busy=false;
+ const root=document.createElement('section');root.id='home-video-focus';root.className='homepage-video';root.setAttribute('aria-label','视频情报独立专区');
+ root.innerHTML='<div class="home-video-head"><div><span class="home-video-eyebrow">VIDEO BRIEF · 视频情报</span><h2>先看这三条视频线索</h2><p id="home-video-meta">连接后读取本机已有视频快照</p></div><button class="video-focus-more">阅读整期视频情报 →</button></div><div id="home-video-cards" class="home-video-cards"><p class="home-video-empty">等待读取真实视频内容。</p></div>';
+ document.querySelector('#focus').before(root);root.hidden=document.body.dataset.intelView!=='focus';document.addEventListener('atlas:view',e=>{root.hidden=e.detail.id!=='focus';});
+ root.querySelector('.video-focus-more').onclick=()=>document.querySelector('.section-nav a[href="#video-radar"]').click();
+ function open(r){window.atlasOpenRadarItem?.('r-head',new URL(r.url).hash.slice(1),r.url);}
+ function paint(){
+  const list=root.querySelector('#home-video-cards');
+  if(!snapshot?.headlines?.length){list.innerHTML='<p class="home-video-empty">当前暂无视频快照，可在视频情报页查看同步状态。</p>';return;}
+  const heads=snapshot.headlines.filter(r=>r.samples?.some(s=>s.cover)),represented=new Set((state?.focus_signals||[]).map(e=>e.radar?.anchor).filter(Boolean)),available=[...heads.filter(r=>!represented.has(new URL(r.url).hash.slice(1))),...heads.filter(r=>represented.has(new URL(r.url).hash.slice(1)))],picks=available.slice(0,3),used=new Set([...document.querySelectorAll('#signals img,#event-stream img')].map(i=>i.src));
+  for(const e of state?.focus_signals||[]){const c=covers[e.id];if(c?.url)used.add(new URL(c.url,location.href).href);}
+  root.querySelector('#home-video-meta').textContent=snapshot.day+'期 · 作者判断与代表作 · 聚合线索，待核实';
+  list.innerHTML=picks.map((r,i)=>{const linked=snapshot.focus_import?.linked?.find(x=>x.section==='r-head'&&x.anchor===new URL(r.url).hash.slice(1)),original=covers[linked?.event_id]?.label==='原文配图'?covers[linked.event_id].url:null,choices=[original,...r.samples.map(s=>s.cover)].filter(Boolean),url=choices.find(c=>!used.has(new URL(c,location.href).href))||choices[0];used.add(new URL(url,location.href).href);return '<article class="home-video-card"><button class="home-video-open" data-video-pick="'+i+'" aria-label="查看视频线索：'+esc(r.title)+'"><div class="home-video-cover"><img src="'+esc(url)+'" referrerpolicy="no-referrer" alt="视频代表作原封面"><span class="home-video-number">0'+(i+1)+'</span><span class="home-video-play" aria-hidden="true">▶</span></div><h3>'+esc(r.title)+'</h3><p>'+esc(r.summary||r.why||'查看作者原判断与代表作')+'</p><span class="home-video-read">原判断与代表作 ↗</span></button></article>';}).join('');
+  list.querySelectorAll('[data-video-pick]').forEach(b=>b.onclick=()=>open(picks[+b.dataset.videoPick]));
+  list.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.hidden=true;const label=document.createElement('span');label.className='home-video-cover-missing';label.textContent='原封面暂不可用 · 点击仍可查看代表作';img.parentElement.append(label);},{once:true}));
+ }
+ async function reload(){if(busy||!state)return;busy=true;try{[snapshot,covers]=await Promise.all([api('/radar'),api('/reading-covers').then(r=>r.images||{})]);paint();}catch(ex){root.querySelector('#home-video-meta').textContent='视频快照暂未更新：'+ex.message+'；可进入整期查看。';}finally{busy=false;}}
+ document.addEventListener('atlas:loaded',reload);if(state)reload();window.__atlasVideoFocus={reload,get picks(){return snapshot?.headlines?.length||0;}};
+})();

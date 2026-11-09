@@ -1,0 +1,75 @@
+/* Video issue only: one type scale, card frame and media rhythm across all eight sections.
+   This is the final video layer after visual-reading.css; source text and markup stay intact. */
+#video-radar[data-original-layout]{--radar-gap:18px;--radar-pad:18px;--radar-radius:14px;--radar-thumb:104px}
+#video-radar[data-original-layout] .video-summary{max-width:none;width:100%;box-sizing:border-box}
+#video-radar[data-original-layout] .video-toolbar{gap:16px;align-items:center;margin:24px 0 12px}
+#video-radar[data-original-layout] #video-tabs{gap:6px}
+#video-radar[data-original-layout] #video-tabs button{min-height:36px;padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.5}
+#video-radar[data-original-layout] #video-search{width:240px;max-width:100%;min-height:36px;font-size:12px;border-radius:8px}
+#video-radar[data-original-layout] #video-status{font-size:11px;line-height:1.7;margin:0 0 24px;color:var(--muted)}
+#video-radar #radar-original{width:100%;max-width:none;font-size:13px;line-height:1.75;overflow-wrap:anywhere}
+#video-radar #radar-original>.rsec{margin:0 0 36px;padding:24px 0 0;border-top:1px solid var(--line);scroll-margin-top:90px}
+#video-radar #radar-original>.rsec:first-child{border-top:0;padding-top:0}
+#video-radar #radar-original>.rsec>h2{font-size:22px;font-weight:650;line-height:1.4;letter-spacing:-.02em;margin:0 0 16px}
+#video-radar #radar-original .rsec-desc{max-width:none;font-size:13px;line-height:1.75;margin:-8px 0 18px;color:var(--muted)}
+#video-radar #radar-original :is(.heads,.rtopics,.deeps,.repos,.past){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch;gap:var(--radar-gap);margin:0;padding:0;list-style:none}
+#video-radar #radar-original :is(.head,.rtopic,.deep,.repo-wrap,.hw-col,.tool-side>.panel,.past>a){height:auto;min-height:0;min-width:0;display:flex!important;flex-direction:column;gap:0;padding:var(--radar-pad);border:1px solid var(--line);border-radius:var(--radar-radius);background:var(--panel);box-shadow:none;overflow:visible}
+#video-radar #radar-original :is(h3,.repo b,.repo strong,.past b){display:block;font-size:18px!important;font-weight:650;line-height:1.5!important;letter-spacing:-.015em;margin:0 0 10px!important}
+#video-radar #radar-original h4{font-size:15px;line-height:1.5;margin:16px 0 10px}
+#video-radar #radar-original p{margin:0 0 12px}
+#video-radar #radar-original :is(.verdict,.t-sum,.repo .use,.past span){font-size:13px;line-height:1.75;margin:0 0 12px;font-weight:400;color:var(--text)}
+#video-radar #radar-original :is(.grade,.lab,.kind-tag){font-size:10px;line-height:1.5;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:2px 6px;margin:0 5px 8px 0;color:var(--muted);background:var(--bg);align-self:flex-start}
+#video-radar #radar-original .rtopic>header{display:flex;flex-wrap:wrap;gap:0;align-items:baseline;margin:0 0 4px}
+#video-radar #radar-original .rtopic>header h3{width:100%;order:2;margin:0 0 8px}
+#video-radar #radar-original .deep>header{margin:0}
+#video-radar #radar-original :is(.t-metrics,.s-meta,.repo-meta,.hw-col small){font-size:11px;line-height:1.6;color:var(--muted);margin:0 0 12px}
+#video-radar #radar-original .repo-meta{display:flex;gap:10px;flex-wrap:wrap;margin:0}
+#video-radar #radar-original .repo-meta i{font-style:normal}
+#video-radar #radar-original .outlier{font-size:12px;line-height:1.75;padding:10px 12px;margin:0 0 12px;border-left:2px solid var(--line);border-radius:0;background:var(--bg);color:var(--muted)}
+/* Every representative work uses the same compact 16:9 thumbnail and full title. */
+#video-radar #radar-original .head :is(.h-media,.h-text){width:100%!important;min-width:0}
+#video-radar #radar-original .head .h-text{display:flex!important;flex:1;flex-direction:column}
+#video-radar #radar-original .h-media{margin:0 0 16px}
+#video-radar #radar-original :is(.rtopic,.deep) .samples{display:grid;grid-template-columns:minmax(0,1fr)!important;gap:12px;align-items:start;margin:4px 0 12px}
+#video-radar #radar-original .sample,#video-radar #radar-original .h-media>.sample{display:grid;grid-template-columns:var(--radar-thumb) minmax(0,1fr);gap:10px;align-items:start;margin:0;border:0;padding:0;overflow:visible;min-width:0}
+#video-radar #radar-original .s-media,#video-radar #radar-original .head .h-media>.sample .s-media{display:block;width:100%;height:auto!important;aspect-ratio:16/9!important;min-height:0;margin:0;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)}
+#video-radar #radar-original .s-body,#video-radar #radar-original .head .h-media>.sample .s-body{padding:0;min-width:0}
+#video-radar #radar-original .s-title{display:block;font-size:12px;line-height:1.6;-webkit-line-clamp:unset;overflow:visible;margin:0 0 4px}
+#video-radar #radar-original .s-meta{font-size:10px;line-height:1.6;margin:0}
+#video-radar #radar-original .s-play::after{width:28px;height:28px;font-size:12px;line-height:28px}
+#video-radar #radar-original .h-strip,#video-radar #radar-original .h-media>.h-strip{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;margin:12px 0 0;padding:0 0 4px;scrollbar-width:thin}
+#video-radar #radar-original .h-strip>.sample{display:block;flex:0 0 var(--radar-thumb);margin:0}
+#video-radar #radar-original .h-strip>.s-media{flex:0 0 var(--radar-thumb)}
+#video-radar #radar-original .h-strip .s-title{font-size:11px;margin-top:6px}
+/* Author reasoning shares one label/body rhythm, including the origin section. */
+#video-radar #radar-original :is(.h-rows,.deep dl){display:grid;gap:10px;font-size:13px;line-height:1.75;margin:0 0 12px}
+#video-radar #radar-original :is(.h-rows,.deep dl)>div{display:grid;grid-template-columns:4em minmax(0,1fr);gap:12px;padding:0}
+#video-radar #radar-original :is(.h-rows,.deep dl) dt{font-size:12px;line-height:1.9;font-weight:400;color:var(--muted)}
+#video-radar #radar-original :is(.h-rows,.deep dl) dd{margin:0;line-height:1.75;overflow-wrap:anywhere}
+#video-radar #radar-original .deep dl>div{grid-template-columns:minmax(0,1fr);gap:3px}
+#video-radar #radar-original :is(.h-links,.basis,.radar-extra-samples){font-size:12px;line-height:1.7;border:0;border-top:1px solid var(--line);margin:12px 0 0;padding:12px 0 0}
+#video-radar #radar-original .h-links{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+#video-radar #radar-original .h-links .lab{margin-bottom:0}
+#video-radar #radar-original .radar-original-link{display:inline-block;font-size:11px;line-height:1.6;color:var(--muted);margin-top:12px;align-self:flex-start}
+#video-radar #radar-original header .radar-original-link{margin:0 0 8px auto}
+#video-radar #radar-original .repo-wrap>.radar-original-link{margin-top:auto;padding-top:12px}
+#video-radar #radar-original summary{font-size:12px;line-height:1.7}
+#video-radar #radar-original details[open]>summary{margin-bottom:12px}
+#video-radar #radar-original .hw,#video-radar #radar-original .tool-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--radar-gap);align-items:stretch;margin:0}
+#video-radar #radar-original .tool-side{margin-top:var(--radar-gap)}
+#video-radar #radar-original .hw-col ol{padding-left:24px;margin:0}
+#video-radar #radar-original .hw-col li{min-height:0;padding:10px 0}
+#video-radar #radar-original .hw-col li span{font-size:11px;color:var(--muted);margin-right:12px}
+/* Short news remains a continuous list, using the same separators and type scale. */
+#video-radar #radar-original .news{display:block;list-style:none;margin:0;padding:0}
+#video-radar #radar-original .news li,#video-radar #radar-original .tool-side .news li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:baseline;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:14px 0;background:transparent;font-size:13px;line-height:1.75}
+#video-radar #radar-original .news li:first-child{padding-top:0}
+#video-radar #radar-original .news li:last-child{border-bottom:0;padding-bottom:0}
+#video-radar #radar-original .news p{margin:4px 0 0;color:var(--muted);font-size:12px}
+#video-radar #radar-original .news :is(small,span){font-size:11px;line-height:1.6;color:var(--muted)}
+#video-radar #radar-original .past>a{height:100%}
+#video-radar #radar-original .past span{margin-bottom:0;color:var(--muted)}
+@media(max-width:1100px){#video-radar #radar-original :is(.heads,.rtopics,.deeps,.repos,.past){grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:850px){#video-radar[data-original-layout] #video-search{width:100%}#video-radar[data-original-layout] #video-tabs{flex-basis:100%}}
+@media(max-width:620px){#video-radar[data-original-layout]{--radar-gap:14px;--radar-pad:16px;--radar-thumb:96px}#video-radar #radar-original :is(.heads,.rtopics,.deeps,.repos,.past,.hw,.tool-side){grid-template-columns:1fr!important}#video-radar #radar-original>.rsec{padding-top:20px;margin-bottom:28px}#video-radar #radar-original>.rsec>h2{font-size:20px}#video-radar[data-original-layout] #video-tabs button{font-size:11px;padding:7px 9px}#video-radar #radar-original .news li{grid-template-columns:minmax(0,1fr);gap:4px}#video-radar #radar-original .news li :is(small,span){justify-self:start}}
+@media(max-width:360px){#video-radar[data-original-layout]{--radar-thumb:80px}#video-radar #radar-original :is(.h-rows,.deep dl)>div{grid-template-columns:minmax(0,1fr);gap:3px}}

@@ -1,158 +1,61 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>情报中枢 · 展示版 · 硅基野人</title>
-<style>
-  :root { --bg:#f5f7fb; --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --blue:#2563eb; --panel:#ffffff; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
-  a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1200px; margin:0 auto; padding:0 22px; }
-  header { background:#0a0f1d; color:#e2e8f0; padding:18px 0 20px; }
-  .hd { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-  .hd img { width:36px; height:36px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
-  .hd h1 { font-size:19px; letter-spacing:.5px; }
-  .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
-  .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
-  .notice { margin-top:12px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:11px 15px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
-  .notice b { color:#fff; }
-  main { padding:22px 0 0; }
-  .panel { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:20px 22px; margin-bottom:16px; box-shadow:0 10px 26px rgba(15,23,42,.05); }
-  .panel h2 { font-size:18px; letter-spacing:.3px; }
-  .panel h2 em { font-style:normal; font-size:11.5px; font-weight:500; color:#94a3b8; margin-left:10px; letter-spacing:0; }
-  .panel .sub { margin-top:6px; font-size:12px; color:#94a3b8; }
-  .tag-demo { display:inline-block; font-size:10.5px; color:#b45309; background:#fef3c7; border:1px solid #fde68a; border-radius:999px; padding:1px 8px; margin-left:8px; vertical-align:2px; }
-  .key-list { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
-  .k-item { border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start; }
-  .k-item .idx { flex:0 0 26px; width:26px; height:26px; border-radius:8px; background:#e0edff; color:#1d4ed8; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
-  .k-item h3 { font-size:14px; line-height:1.6; font-weight:600; }
-  .k-item p { margin-top:4px; font-size:11.5px; color:#94a3b8; }
-  .k-item .score { margin-left:auto; font-size:11px; color:#f59e0b; font-weight:700; white-space:nowrap; }
-  .cloud { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; margin-top:16px; min-height:120px; border:1px dashed var(--line); border-radius:12px; padding:18px; background:#fbfdff; }
-  .cloud b { color:#334155; font-weight:600; }
-  .cloud b:hover { color:var(--blue); }
-  .cloud i { font-style:normal; font-size:10.5px; color:#94a3b8; margin-left:2px; }
-  .reactor { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-top:16px; align-items:center; }
-  .rgraph { position:relative; border:1px solid var(--line); border-radius:14px; background:radial-gradient(circle at 50% 50%,#eef4ff,#fbfdff 70%); min-height:260px; display:flex; align-items:center; justify-content:center; }
-  .rcenter { width:92px; height:92px; border-radius:50%; background:#0f172a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; letter-spacing:1px; box-shadow:0 14px 30px rgba(15,23,42,.3); z-index:2; }
-  .rnode { position:absolute; font-size:11px; color:#334155; background:#fff; border:1px solid var(--line); border-radius:999px; padding:4px 10px; }
-  .rn1 { left:12%; top:22%; } .rn2 { right:10%; top:18%; } .rn3 { left:16%; bottom:18%; } .rn4 { right:14%; bottom:22%; }
-  .rline { position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,transparent 46%,rgba(148,163,184,.18) 47%,transparent 48%); }
-  .picks { display:flex; flex-direction:column; gap:9px; }
-  .picks .pk { border:1px solid var(--line); border-radius:11px; padding:11px 13px; font-size:12.5px; color:#334155; display:flex; gap:8px; }
-  .picks .pk i { font-style:normal; color:#2563eb; font-weight:700; }
-  .duo { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
-  .dcol { border:1px solid var(--line); border-radius:13px; padding:14px 15px; }
-  .dcol h3 { font-size:13.5px; display:flex; align-items:center; gap:8px; }
-  .dcol h3 img { width:18px; height:18px; border-radius:4px; }
-  .dcol ul { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
-  .dcol li { font-size:12px; color:#475569; line-height:1.6; display:flex; gap:8px; }
-  .dcol li i { font-style:normal; color:#f59e0b; font-weight:700; min-width:26px; }
-  .vid, .repo { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
-  .vitem, .ritem { border:1px solid var(--line); border-radius:11px; padding:11px 13px; display:flex; align-items:center; gap:12px; }
-  .vitem .vt, .ritem .rt { flex:1; min-width:0; }
-  .vitem h3, .ritem h3 { font-size:13px; line-height:1.5; }
-  .vitem p, .ritem p { margin-top:3px; font-size:11px; color:#94a3b8; }
-  .vitem .badge { font-size:10.5px; color:#2563eb; background:#e0edff; border-radius:999px; padding:2px 8px; white-space:nowrap; }
-  .ritem .lang { font-size:10.5px; color:#64748b; background:#f1f5f9; border-radius:999px; padding:2px 8px; }
-  @media (max-width:900px) { .reactor, .duo { grid-template-columns:1fr; } .cloud { min-height:90px; } }
-</style>
-</head>
-<body>
-<header>
-  <div class="wrap">
-    <div class="hd">
-      <img src="../assets/logo.png" alt="硅基野人">
-      <h1>情报中枢<span>展示版</span></h1>
-      <a class="back" href="../">← 回首页</a>
-    </div>
-    <div class="notice"><b>只展示界面结构和流程，不展示真实情报数据、来源链接或采集结果。</b>下面六个板块对应我每天在用的情报中枢首页；内容均为演示占位，不是真实情报。</div>
-  </div>
-</header>
-<main>
-  <div class="wrap">
-    <section class="panel">
-      <h2>重点情报 <em>首页这一列</em><span class="tag-demo">示例数据</span></h2>
-      <div class="sub">近 7 天有效内容 · 一手发布与待核实线索分别标记</div>
-      <div class="key-list">
-        <div class="k-item"><div class="idx">1</div><div><h3>示例：某电商平台调整流量分发规则，一批商家的曝光结构发生变化</h3><p>电商 · 一手发布 · 建议跟进核实</p></div><div class="score">92</div></div>
-        <div class="k-item"><div class="idx">2</div><div><h3>示例：一个开源工具更新了批量处理能力，适合内容团队试用</h3><p>AI 工具 · 待验证 · 保持观察</p></div><div class="score">87</div></div>
-        <div class="k-item"><div class="idx">3</div><div><h3>示例：某类内容形式近期起量，小团队可以低成本测试</h3><p>内容创作 · 一手发布 · 可跟进</p></div><div class="score">81</div></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>这一周，情报在关注什么 <em>关键词词云</em><span class="tag-demo">示例数据</span></h2>
-      <div class="sub">字越大 = 包含该词的情报条数越多（数字为示例条数，非搜索量）</div>
-      <div class="cloud">
-        <b style="font-size:30px">AI 工具<i>128</i></b><b style="font-size:26px">电商选品<i>96</i></b><b style="font-size:23px">短视频<i>88</i></b>
-        <b style="font-size:22px">小红书<i>74</i></b><b style="font-size:21px">抖音<i>70</i></b><b style="font-size:19px">供应链<i>52</i></b>
-        <b style="font-size:18px">内容拆解<i>46</i></b><b style="font-size:17px">独立站<i>38</i></b><b style="font-size:16px">投放<i>33</i></b>
-        <b style="font-size:15px">直播<i>28</i></b><b style="font-size:14px">私域<i>24</i></b><b style="font-size:14px">出海<i>22</i></b>
-        <b style="font-size:13px">自动化<i>18</i></b><b style="font-size:12px">选品工具<i>15</i></b><b style="font-size:12px">低粉爆款<i>12</i></b>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>万千信息，汇成你的下一步。<em>汇聚图 · 先看这两条</em><span class="tag-demo">示例数据</span></h2>
-      <div class="reactor">
-        <div class="rgraph">
-          <div class="rline"></div>
-          <div class="rcenter">汇流</div>
-          <div class="rnode rn1">A · 反应堆</div><div class="rnode rn2">B · 星系</div>
-          <div class="rnode rn3">C · 跃迁</div><div class="rnode rn4">D · 汇流</div>
-        </div>
-        <div class="picks">
-          <div class="pk"><i>A</i><span>示例：多条来源指向同一个机会窗口，值得先验证一条链路</span></div>
-          <div class="pk"><i>B</i><span>示例：一个工具类信息连续出现一周，可以放进工具库观察</span></div>
-          <div class="pk"><i>C</i><span>示例：某平台规则变化，先看对现有账号的影响，再决定要不要动</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>最近一个月抖音、小红书 <em>双平台热点</em><span class="tag-demo">示例数据</span></h2>
-      <div class="duo">
-        <div class="dcol"><h3><img src="../assets/icon-douyin.png" alt="">抖音</h3>
-          <ul>
-            <li><i>01</i><span>示例：某类口播结构最近起量，开头三秒抓人</span></li>
-            <li><i>02</i><span>示例：同城类内容互动率上升，适合本地账号测试</span></li>
-            <li><i>03</i><span>示例：AI 生成画面 + 真人配音组合被反复使用</span></li>
-          </ul>
-        </div>
-        <div class="dcol"><h3><img src="../assets/icon-xiaohongshu.png" alt="">小红书</h3>
-          <ul>
-            <li><i>01</i><span>示例：图文笔记的封面公式近期集中出现</span></li>
-            <li><i>02</i><span>示例：测评类长文收藏率明显高于平均</span></li>
-            <li><i>03</i><span>示例：素人账号用同一模板连续发，起号更快</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>先看视频线索 <em>视频情报</em><span class="tag-demo">示例数据</span></h2>
-      <div class="vid">
-        <div class="vitem"><div class="vt"><h3>示例：一条 3 分钟讲解视频把复杂流程拆成三步</h3><p>视频情报 · 7 天有效 · 建议看完再判断</p></div><span class="badge">视频</span></div>
-        <div class="vitem"><div class="vt"><h3>示例：某账号用同一结构连续更新 10 条，条条有量</h3><p>视频情报 · 一手发布 · 值得拆结构</p></div><span class="badge">视频</span></div>
-        <div class="vitem"><div class="vt"><h3>示例：一条关于平台规则变化的解读，信息密度高</h3><p>视频情报 · 待验证 · 先核对原文</p></div><span class="badge">视频</span></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>这一个月最热的仓库 <em>工具与项目</em><span class="tag-demo">示例数据</span></h2>
-      <div class="repo">
-        <div class="ritem"><div class="rt"><h3>示例仓库 A：一个自动化内容生产工具</h3><p>近 30 天热度上升 · 适合内容团队</p></div><span class="lang">TypeScript</span></div>
-        <div class="ritem"><div class="rt"><h3>示例仓库 B：一个数据采集与清洗框架</h3><p>近 30 天热度上升 · 适合做情报管道</p></div><span class="lang">Python</span></div>
-        <div class="ritem"><div class="rt"><h3>示例仓库 C：一个可视化图表组件库</h3><p>近 30 天热度上升 · 适合做展示页</p></div><span class="lang">JavaScript</span></div>
-      </div>
-    </section>
-  </div>
-</main>
-
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>情报中枢</title><link rel="stylesheet" href="assets/style.css?v=20261103f"><link rel="stylesheet" href="assets/workbench.css?v=20261103f"><link rel="stylesheet" href="assets/polish.css?v=20261103f"><link rel="stylesheet" href="assets/newsnow.css?v=20261103f"><script>(function(){
+  var origFetch = window.fetch.bind(window);
+  window.fetch = function(input, init){
+    var u = typeof input === 'string' ? input : (input && input.url) || '';
+    var m = u.match(/\/api\/v1(\/[^#]*)/);
+    if (!m) return origFetch(input, init);
+    var p = m[1] || '/';
+    var name = p.replace(/^\//, '').replace(/[?&=]/g, '_').replace(/\//g, '_');
+    return origFetch('data/api/' + name + '.json').then(function(r){
+      if (!r.ok) throw new Error('no snapshot');
+      return r.json();
+    }).then(function(j){
+      return new Response(JSON.stringify(j), {status:200, headers:{'Content-Type':'application/json'}});
+    }).catch(function(){
+      return new Response(JSON.stringify({ok:true, data:{}}), {status:200, headers:{'Content-Type':'application/json'}});
+    });
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    var el = document.getElementById('credential');
+    var btn = document.getElementById('connect');
+    if (el && btn) { el.value = 'static-snapshot'; setTimeout(function(){ btn.click(); }, 500); }
+  });
+})();</script>
+<script src="assets/app.js?v=20261103d" defer></script><script src="assets/ai-assist.js?v=20261103a" defer></script><script src="assets/polish.js?v=20261103c" defer></script><script src="assets/newsnow.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/command.css?v=20261103f"><script src="assets/command.js?v=20261102i" defer></script><link rel="stylesheet" href="assets/header-styles.css?v=20261103f"><link rel="stylesheet" href="assets/logos-sprite.css?v=20261103b"><script src="assets/header-confluence-fx.js?v=20261103f" defer></script><script src="assets/header-confluence.js?v=20261103f" defer></script><script src="assets/logos-sprite.js?v=20261103b" defer></script><script src="assets/header-styles.js?v=20261103d" defer></script><link rel="stylesheet" href="assets/source-catalog.css?v=20261103f"><script src="assets/source-catalog.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/video-radar.css?v=20261103f"><script src="assets/video-radar.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/reading-first.css?v=20261103f"><script src="assets/reading-first.js?v=20261103f" defer></script><script src="assets/embed-view.js?v=20261103f" defer></script><script src="assets/chinese-reading.js?v=20261103c" defer></script><link rel="stylesheet" href="assets/apple-reading.css?v=20261103f"><link rel="stylesheet" href="assets/personal-reading.css?v=20261102b"><script src="assets/personal-reading.js?v=20261102b" defer></script><script src="assets/hero-picks.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/visual-reading.css?v=20261103f"><script src="assets/visual-reading.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/header-refinement.css?v=20261103f"><script src="assets/radar-original.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/tophub.css?v=20261103f"><script src="assets/tophub.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/aihot.css?v=20261103f"><script src="assets/aihot.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/video-focus.css?v=20261102i"><script src="assets/video-focus.js?v=20261103i" defer></script><link rel="stylesheet" href="assets/home-extra.css?v=20261102j"><script src="assets/home-extra.js?v=20261102j" defer></script><link rel="stylesheet" href="assets/douyin.css?v=20261102l"><script src="assets/douyin.js?v=20261103c" defer></script><link rel="stylesheet" href="assets/radar-layout.css?v=20261103f"><style>.credit-line{margin:56px auto 0;max-width:1214px;color:var(--text);display:flex;flex-direction:column;align-items:center;gap:9px;font-size:12.5px;line-height:1.6}
+.credit-line .cl-src,.credit-line .cl-news{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;width:100%}
+.credit-line .cl-tools{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;font-size:12px;color:#8e8e93}
+.credit-line .cl-k{font-size:11px;letter-spacing:.12em;color:#a0a0a5}
+.credit-line a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:inherit}
+.credit-line a:hover b{text-decoration:underline;text-underline-offset:3px}
+.credit-line img{width:16px;height:16px;border-radius:4px;display:block}
+.credit-line .cl-tools img{width:14px;height:14px}
+.credit-line b{font-weight:500}
+.credit-line .cl-repo{color:#8e8e93;font-weight:400}
+@media(max-width:760px){.credit-line .cl-tools{justify-content:center}}
+</style><link rel="stylesheet" href="assets/focus-keywords.css?v=20261103f"><script src="assets/focus-lens.js?v=20261103f" defer></script><script src="assets/focus-keywords.js?v=20261103e" defer></script><script src="assets/kw-live.js?v=20261102i" defer></script><script src="assets/source-logo-extensions.js?v=20261103f" defer></script><script src="assets/collection-info.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/editorial-topics.css?v=20261103f"><link rel="stylesheet" href="assets/repo-images.css?v=20261103f"><script src="assets/repo-image-controls.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/free-rank.css?v=20261103f"><script src="assets/free-rank.js?v=20261103f" defer></script><link rel="stylesheet" href="assets/head-nav.css?v=20261102l"><script src="assets/head-nav.js?v=20261103f" defer></script><script src="assets/read-full.js?v=20261102i" defer></script><link rel="stylesheet" href="assets/tidy.css?v=20261103m"></head>
+<body data-skin="A"><a class="skip-link" href="#focus">跳到情报阅读区</a><main class="shell">
+<header class="page-head"><div class="ph-ident"><span class="ph-mark" aria-hidden="true"></span><div class="title-line"><h1>情报中枢</h1><span class="tag">调试中</span></div><p class="muted">电商 · AI 工具 · 内容创作 · 商业线索</p></div><div class="actions"><span id="connection" class="muted">等待连接</span><button id="quick-find" class="search-trigger" aria-label="快速查找，Ctrl K">查找 <kbd>Ctrl K</kbd></button><button id="refresh">刷新</button><button id="settings">设置</button><button id="sync" class="primary" title="备用入口：日常请用总台「一键采集 → 自动采集」；这里手动同步会照旧排网页机翻">同步更新（备用）</button></div></header>
+<section id="auth" class="panel auth" hidden><h2>连接本地情报库</h2><p class="muted">Obsidian 内自动连接，独立预览需本机凭证。</p><label>本机访问凭证<input id="credential" type="password" autocomplete="off"></label><button id="connect" class="primary">连接</button><p id="auth-error" role="alert"></p></section>
+<section class="panel pipeline-hero"><div class="section-top"><div><h2>让信息汇成判断</h2><p class="muted">多路来源，逐层筛选，留下值得关注的信号。</p></div><div class="flow-actions"><span id="mode" class="tag">规则筛选 · AI 未配置</span><button id="motion-toggle" aria-pressed="false" aria-label="暂停汇流动画">暂停动效</button></div></div><div class="diagram-wrap"><svg id="flow" viewBox="0 0 1280 300" role="group" aria-label="多路信息源经过来源准入、内容过滤与证据归并，汇入情报中枢"></svg></div><div class="flow-footer"><div class="legend"><span><i class="led good"></i>最近正常</span><span><i class="led waiting"></i>待接入</span><span><i class="led manual"></i>手动导入</span><span><i class="led bad"></i>失败 / 陈旧</span></div><span class="muted">动画为筛选路径示意，不代表实时网络流量</span></div></section>
+<div id="notice" class="notice" hidden role="status"></div>
+<section class="metrics" aria-label="情报概览"><div><span>今日接收</span><strong id="new">—</strong><small>有效期内的新线索</small></div><div><span>待验证</span><strong id="pending">—</strong><small>等待核实的候选</small></div><div><span>来源正常</span><strong id="healthy">—</strong><small>按最近成功时间判断</small></div><div><span>临时保留</span><strong>168<span class="unit">h</span></strong><small>收藏与仓库长期保留</small></div></section>
+<nav class="section-nav" aria-label="内容导航"><a href="#focus">重点情报</a><a href="#github">工具发现</a><a href="#free-rank">电商榜单</a><a href="#douyin">抖音</a><a href="#research">趋势与机会</a><a href="#library">收藏与记录</a><a href="#source-control">来源管理</a></nav>
+<section id="focus" tabindex="-1"><div class="section-heading"><div><h2>当前值得关注</h2><span class="muted">近 7 天有效内容 · 一手发布与待核实线索分别标记</span></div><button id="candidates">候选验证区</button></div><div id="signals" class="signal-grid"><div class="panel empty">正在读取真实情报…</div></div><div id="candidate-list" class="panel candidate-list" hidden></div><section id="reading-desk" class="panel reading-desk" aria-label="有效期内情报"><div class="desk-head"><div><h3>有效期内情报</h3><span class="muted">近 168 小时内仍有效 · 达标线索最多 50 条</span></div><button id="import-direct">导入一条线索 ↗</button></div><div class="filter-bar"><label class="search-field"><span>⌕</span><input id="event-search" type="search" placeholder="搜索标题、分类或推荐理由" aria-label="搜索有效期内情报"></label><select id="event-category" aria-label="按情报分类筛选"><option value="">全部分类</option></select><span id="event-result-count" class="muted" role="status" aria-live="polite">连接后载入</span></div><div id="event-stream" class="event-stream"><div class="stream-placeholder">等待本地情报库连接</div></div></section></section>
+<section id="github"><div class="section-heading"><div><h2>工具发现</h2><span class="muted">把新项目与长期工具库放在一起。</span></div><span class="muted" id="repo-count">正在读取</span></div><div class="tool-controls panel"><label class="search-field"><span>⌕</span><input id="tool-search" type="search" placeholder="查找工具名称、用途或仓库" aria-label="搜索工具库"></label><select id="tool-category" aria-label="按工具类别筛选"><option value="">全部类别</option></select><button id="tool-reset">重置</button><span id="tool-result-count" class="muted" role="status" aria-live="polite"></span></div><div id="tool-empty" class="panel empty" hidden>没有匹配工具，试试换一个关键词或重置筛选。</div><section class="repo-section panel" id="hot-section"><div class="subhead"><h3>本月新爆款</h3><span id="hot-mode" class="tag">等待读取</span></div><div id="repos-hot" class="repo-grid"></div></section><details class="repo-section panel" open><summary><h3>电商 × AI 工具库</h3><span class="muted">18 项工具 · 新晋优先</span></summary><div id="repos-apps" class="repo-grid"></div></details><section class="repo-section panel"><div class="subhead"><h3>随机发现</h3><button id="draw">换一个发现 ↗</button></div><p id="gacha-count" class="muted"></p><div id="repos-gacha" class="repo-grid"></div></section></section>
+<section id="free-rank">
+<div class="section-heading"><div><h2>电商榜单</h2><span class="muted">匿名首屏：抖查查商品、蝉妈妈达人、1688 货源；不登录、不翻页。</span></div><div class="free-rank-actions"><span id="free-rank-status" class="muted" role="status" aria-live="polite">尚未采集</span><button id="free-rank-sync" class="primary">采集免费榜单</button></div></div>
+<p class="free-rank-note">销量是区间值，不是精确成交；每天一次即可。深层数据、翻页与商品明细需要登录或付费，不在此采集。</p>
+<div class="free-rank-grid">
+<article class="panel"><div class="subhead"><h3>抖查查 · 热销商品</h3><span class="tag">抖音</span></div><div id="free-goods" class="free-rank-body"><p class="muted">尚未采集。</p></div></article>
+<article class="panel"><div class="subhead"><h3>蝉妈妈 · 带货达人</h3><span class="tag">抖音</span></div><div id="free-authors" class="free-rank-body"><p class="muted">尚未采集。</p></div></article>
+<article class="panel"><div class="subhead"><h3>1688 · 全网销量</h3><span class="tag">货源</span></div><div id="free-wholesale" class="free-rank-body"><p class="muted">尚未采集。</p></div></article>
+</div>
+</section>
+<section id="research" class="double"><article class="panel opportunities"><div class="section-top"><h2>机会观察</h2><span class="tag">等待商业证据</span></div><div class="quadrant"><span class="qtl">高关注 · 待验证</span><span class="qtr">流量与商业证据充分</span><span class="qbl">观察区</span><span class="qbr">小众 · 有付费需求</span><div class="quadrant-empty"><strong>证据不足，暂不评分</strong><p>有真实需求与可比样本后，再定位机会。</p></div></div></article><article class="panel trends"><div class="section-top"><h2>内容趋势</h2><span class="tag">平台内比较</span></div><div class="tabs" id="platforms"><button data-platform="douyin" class="active">抖音</button><button data-platform="xiaohongshu">小红书</button><button data-platform="bili">B 站</button><button data-platform="youtube">YouTube</button></div><div id="trend-state" class="trend-state"></div><div class="info-line">至少两个可比时间点，才计算增速。</div></article></section>
+<section class="double" id="library"><article class="panel"><div class="section-top"><h2>七日有效信号</h2><button id="retention">清理预览</button></div><div id="timeline" class="timeline"></div><p class="muted">到期退出展示，长期收藏保留。</p></article><article class="panel"><div class="section-top"><h2>收藏与选题</h2><button id="collections">我的收藏</button></div><div class="collection-guide"><strong>把有用的判断留下来</strong><p class="muted">保留摘要、来源和个人判断，导出待验证草稿。</p></div></article></section>
+<section id="source-control" class="panel source-panel"><div class="section-top"><h2>来源管理</h2><span id="last-time" class="muted">尚无成功采集</span></div><div id="sources" class="source-grid"></div></section><section class="credit-line" aria-label="参考与致谢"><span class="cl-src"><span class="cl-k">参考与致谢</span><a href="https://scys.com/" target="_blank" rel="noopener"><img src="assets/logos/credits/scys.png" alt=""><b>生财有术</b><span class="cl-repo">scys.com</span></a><a href="https://github.com/ourongxing/newsnow" target="_blank" rel="noopener"><img src="assets/logos/newsnow.svg" alt=""><b>NewsNow</b><span class="cl-repo">ourongxing/newsnow</span></a></span><span class="cl-tools"><span class="cl-k">工具致谢</span><a href="https://claude.com/claude-code" target="_blank" rel="noopener"><img src="assets/logos/credits/claude.png" alt=""><b>Claude Code</b></a><a href="https://github.com/openai/codex" target="_blank" rel="noopener"><img src="assets/logos/credits/openai.png" alt=""><b>Codex</b></a><a href="https://www.deepseek.com/" target="_blank" rel="noopener"><img src="assets/logos/credits/deepseek.png" alt=""><b>DeepSeek Harness</b></a><a href="https://workbuddy.tencent.com/" target="_blank" rel="noopener"><img src="assets/logos/credits/workbuddy.png" alt=""><b>WorkBuddy</b></a><a href="https://obsidian.md/" target="_blank" rel="noopener"><img src="assets/logos/credits/obsidian.png" alt=""><b>Obsidian</b></a><a href="https://lite.ego.app/" target="_blank" rel="noopener"><img src="assets/logos/credits/ego.png" alt=""><b>Ego 浏览器</b></a></span><span class="cl-news"><span class="cl-k">新闻来源</span><a href="https://tophub.today/" target="_blank" rel="noopener noreferrer"><img src="assets/logos/tophub-gateway.png" alt=""><b>今日热榜</b><span class="cl-repo">tophub.today · 聚合榜单</span></a><a href="https://aihot.news/" target="_blank" rel="noopener noreferrer"><img src="assets/logos/aihot.png" alt=""><b>AIHOT</b><span class="cl-repo">数字生命卡兹克 · 公开MCP</span></a></span></section><footer>本地运行 · 规则筛选 · AI 未配置 · 费用预算 0</footer>
+</main><div id="overlay" class="overlay" hidden></div><aside id="drawer" class="drawer" aria-label="详情侧栏" aria-modal="true" role="dialog" hidden><div class="drawer-head"><span>详情与来源</span><button id="close" aria-label="关闭详情">关闭 ×</button></div><div id="drawer-body"></div></aside><div id="toast" role="status" hidden></div><script src="assets/tidy.js?v=20261102i" defer></script><script src="assets/media-stop.js?v=20261102i" defer></script><script src="assets/nav-social.js?v=20261102i" defer></script><script src="assets/source-data.js?v=20261103a" defer></script><div style="max-width:1120px;margin:10px auto 0;padding:0 22px;font-size:11.5px;color:#94a3b8;">静态快照版 · 数据更新于 2026-11-09 · 原始系统需在本地运行</div>
 <div class="site-foot">
   <div class="sf-in">
     <div class="sf-top">
@@ -227,6 +130,7 @@
   .site-foot .sf-pl:hover img { box-shadow:0 10px 22px rgba(37,99,235,.22); }
   @media (max-width:760px) { .site-foot .sf-row { flex-wrap:wrap; } .site-foot .sf-pl { flex:0 0 22%; } }
 </style>
-
-</body>
-</html>
+<script>(function(){try{
+  var d=new Date(), k=''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/intel-'+k,{cache:'no-store'}).catch(function(){});
+}catch(e){}})();</script></body></html>

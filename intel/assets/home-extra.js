@@ -1,0 +1,39 @@
+/* 2026-11-02 首页扩展：GitHub 最近30天最热三框。重点大事卡已并进「先看两条」，原卡片删除。 */
+(()=>{'use strict';
+const q=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const root=document.createElement('div');root.id='home-extra';
+root.innerHTML='<section id="home-github" class="home-github" hidden><div class="hg-head"><div><span class="hg-eyebrow">GITHUB · 最近 30 天</span><h2>这一个月最热的仓库</h2></div><button class="hg-more" type="button">更多 →</button></div><div class="hg-grid" id="hg-grid"></div></section>';
+const focus=q('#focus');if(focus)focus.before(root);else q('.shell')?.append(root);
+const github=root.querySelector('#home-github');
+let ghBusy=false;
+function openExternal(url){if(!url)return;if(window.parent!==window)window.parent.postMessage({type:'ATLAS_OPEN_URL',url},'app://obsidian.md');else window.open(url,'_blank','noopener');}
+function openRepo(r){
+  const p=r.presentation||{},name=p.cn||r.full_name,desc=p.what||p.pos||r.description||'',img=r.image_url||('https://opengraph.githubassets.com/1/'+r.full_name);
+  drawer('<div class="gh-detail"><span class="hg-eyebrow">GITHUB · 最近 30 天</span><h2>'+esc(name)+'</h2><p class="gh-full">'+esc(r.full_name)+'</p><img class="gh-cover" src="'+esc(img)+'" alt=""><p>'+esc(desc)+'</p><dl class="kv"><dt>Stars</dt><dd>★ '+(Number(r.stars)||0).toLocaleString('zh-CN')+'</dd><dt>日增</dt><dd>'+(r.daily_growth!=null?'+'+Number(r.daily_growth).toLocaleString('zh-CN'):'—')+'</dd><dt>分类</dt><dd>'+esc(p.cat||'开源项目')+'</dd></dl><div class="drawer-actions"><button id="gh-open" class="primary" type="button">在浏览器打开 ↗</button></div></div>');
+  const b=q('#gh-open');if(b)b.onclick=()=>openExternal(r.url);
+}
+async function loadGithub(){
+  if(ghBusy)return;ghBusy=true;
+  try{
+    const d=await api('/github/catalog?pool=hot');
+    const items=(d.items||[]).slice().sort((a,b)=>(b.stars||0)-(a.stars||0)).slice(0,5);
+    if(!items.length){github.hidden=true;return;}
+    github.hidden=false;
+    github.querySelector('#hg-grid').innerHTML=items.map((r,i)=>{
+      const p=r.presentation||{},name=p.cn||r.full_name,desc=(p.what||p.pos||r.description||'').slice(0,120);
+      const img=r.image_url||('https://opengraph.githubassets.com/1/'+r.full_name);
+      const cover='<span class="hg-cover"><img loading="lazy" decoding="async" src="'+esc(img)+'" alt=""></span>';
+      return '<button class="hg-card" type="button" data-idx="'+i+'">'+cover+'<span class="hg-body"><span class="hg-name">'+esc(name)+'</span><small class="hg-full">'+esc(r.full_name)+'</small><p>'+esc(desc)+'</p><span class="hg-meta"><b>★ '+(Number(r.stars)||0).toLocaleString('zh-CN')+'</b>'+(r.daily_growth!=null?'<i>+'+Number(r.daily_growth).toLocaleString('zh-CN')+'</i>':'')+'<em>'+esc(p.cat||'开源项目')+'</em></span></span></button>';
+    }).join('');
+    github.querySelectorAll('.hg-card').forEach(b=>b.onclick=()=>{const r=items[+b.dataset.idx];if(r)openRepo(r);});
+  }catch(e){github.hidden=true;}finally{ghBusy=false;}
+}
+github.querySelector('.hg-more').onclick=()=>q('.section-nav a[href="#github"]')?.click();
+function setView(id){root.hidden=id!=='focus';}
+document.addEventListener('atlas:view',e=>setView(e.detail.id));
+document.addEventListener('atlas:loaded',loadGithub);
+setView(document.body.dataset.intelView||'focus');
+if(state)loadGithub();
+window.__atlasHomeExtra={reload:loadGithub};
+})();

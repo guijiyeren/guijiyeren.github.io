@@ -1,0 +1,6 @@
+/* 2026-11-03：来源图谱改用一张雪碧图，首屏 56 个 logo 只发 1 个请求。 */
+.live-brand em.live-logo{display:inline-block;flex:none;width:var(--logo-size,17px);height:var(--logo-size,17px);border-radius:3px;background-image:url('/assets/logos-sprite.png?v=20261103b');background-repeat:no-repeat;background-size:calc(8 * var(--logo-size,17px)) auto;background-position:calc(var(--logo-x,0) * var(--logo-size,17px) * -1) calc(var(--logo-y,0) * var(--logo-size,17px) * -1)}
+@media(max-width:1100px){.live-brand em.live-logo{--logo-size:15px}}
+.live-header[data-motion-style=C] .live-brand em.live-logo{--logo-size:14px}
+.live-header[data-motion-style=A] .live-brand em.live-logo{--logo-size:19px}
+@media(max-width:760px){.live-brand em.live-logo,.live-header[data-motion-style=A] .live-brand em.live-logo,.live-header[data-motion-style=C] .live-brand em.live-logo{--logo-size:15px}}
