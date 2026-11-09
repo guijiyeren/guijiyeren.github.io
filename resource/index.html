@@ -10,18 +10,18 @@
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1240px; margin:0 auto; padding:0 22px; }
-  header { background:#0a0f1d; color:#e2e8f0; padding:20px 0 22px; }
+  .wrap { max-width:1280px; margin:0 auto; padding:0 22px; }
+  header { background:#0a0f1d; color:#e2e8f0; padding:18px 0 20px; }
   .hd { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-  .hd img { width:38px; height:38px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
-  .hd h1 { font-size:20px; letter-spacing:.5px; }
+  .hd img { width:36px; height:36px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
+  .hd h1 { font-size:19px; letter-spacing:.5px; }
   .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
-  .notice { margin-top:14px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:12px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
+  .notice { margin-top:12px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:11px 15px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
   .notice b { color:#fff; }
-  main { padding:24px 0 60px; display:grid; grid-template-columns:238px 1fr; gap:24px; }
-  aside { position:sticky; top:16px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 32px); overflow:auto; }
-  aside h3 { font-size:11px; letter-spacing:1.5px; color:#94a3b8; margin:2px 4px 8px; }
+  main { padding:20px 0 60px; display:grid; grid-template-columns:250px 1fr; gap:22px; }
+  aside { position:sticky; top:12px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 24px); overflow:auto; }
+  aside h3 { font-size:10.5px; letter-spacing:1.5px; color:#94a3b8; margin:2px 4px 8px; }
   .zone-btn { display:flex; align-items:center; gap:7px; width:100%; border:0; background:none; font:inherit; text-align:left; padding:8px 9px; border-radius:9px; font-size:13px; color:#334155; cursor:pointer; }
   .zone-btn:hover { background:#f1f5f9; }
   .zone-btn.on { background:#e0edff; color:#1d4ed8; font-weight:700; }
@@ -35,55 +35,85 @@
   .cat-btn:hover { background:#f8fafc; }
   .cat-btn.on { color:#1d4ed8; background:#eff6ff; font-weight:600; }
   .cat-btn i { margin-left:auto; font-style:normal; font-size:10.5px; color:#94a3b8; }
-  .tools { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
-  .search { flex:1; min-width:240px; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
-  .search input { flex:1; border:0; outline:0; font:inherit; font-size:14px; background:none; }
-  .count { font-size:12.5px; color:#64748b; }
-  .filters { background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:14px; display:flex; flex-direction:column; gap:9px; }
+
+  .topbar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .search { flex:1; min-width:220px; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:11px; padding:9px 13px; }
+  .search input { flex:1; border:0; outline:0; font:inherit; font-size:13.5px; background:none; }
+  .seg { display:flex; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .seg button { border:0; background:none; font:inherit; font-size:12.5px; padding:8px 13px; color:#64748b; cursor:pointer; }
+  .seg button.on { background:#e0edff; color:#1d4ed8; font-weight:700; }
+  .tbtn { border:1px solid var(--line); background:#fff; font:inherit; font-size:12.5px; color:#475569; border-radius:10px; padding:8px 13px; cursor:pointer; }
+  .tbtn:hover { border-color:#bfdbfe; color:var(--blue); }
+  .cnt { font-size:12px; color:#64748b; }
+  .clear { border:0; background:none; font:inherit; font-size:12px; color:#94a3b8; cursor:pointer; }
+  .clear:hover { color:var(--blue); }
+
+  .filters { background:#fff; border:1px solid var(--line); border-radius:13px; padding:11px 14px; margin-bottom:14px; display:flex; flex-direction:column; gap:8px; }
   .frow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .frow > b { font-size:11px; color:#94a3b8; font-weight:600; letter-spacing:.5px; width:32px; flex:0 0 auto; }
+  .frow > b { font-size:11px; color:#94a3b8; font-weight:700; letter-spacing:.5px; width:34px; flex:0 0 auto; }
   .chip { border:1px solid var(--line); background:#fff; color:#475569; font:inherit; font-size:12px; border-radius:999px; padding:4px 11px; cursor:pointer; }
   .chip:hover { border-color:#bfdbfe; color:var(--blue); }
-  .chip.on { background:#e0edff; border-color:#bfdbfe; color:#1d4ed8; font-weight:600; }
+  .chip.on { background:#e0edff; border-color:#bfdbfe; color:#1d4ed8; font-weight:700; }
   .chip em { font-style:normal; color:#94a3b8; margin-left:4px; font-size:10.5px; }
   .chip.on em { color:#1d4ed8; }
-  .clear { margin-left:auto; border:0; background:none; color:#94a3b8; font:inherit; font-size:12px; cursor:pointer; }
-  .clear:hover { color:var(--blue); }
+  .cloud { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; flex:1; }
+  .cloud b { cursor:pointer; color:#64748b; font-weight:500; }
+  .cloud b:hover { color:var(--blue); }
+  .cloud b.on { color:var(--blue); font-weight:800; }
+  .tag-toggle { border:0; background:none; font:inherit; font-size:11.5px; color:#94a3b8; cursor:pointer; }
+  .tag-toggle:hover { color:var(--blue); }
+
   .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-  .card { position:relative; border-radius:12px; padding:12px 13px; cursor:pointer; color:#fff; min-height:120px; display:flex; flex-direction:column; gap:5px; overflow:hidden; border:1px solid rgba(255,255,255,.08); transition:.15s; }
+  .grid.tall { grid-template-columns:repeat(4,1fr); }
+  .card { position:relative; border-radius:13px; overflow:hidden; color:#fff; border:1px solid rgba(255,255,255,.08); cursor:pointer; transition:.15s; display:flex; flex-direction:column; padding:12px 13px; min-height:118px; }
   .card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(15,23,42,.18); }
-  .card .top { display:flex; align-items:center; gap:6px; font-size:10.5px; color:rgba(255,255,255,.75); }
+  .card .top { display:flex; align-items:center; gap:6px; font-size:10.5px; color:rgba(255,255,255,.78); }
   .card .top .star { color:#fde68a; letter-spacing:-1px; }
-  .card .emoji { font-size:16px; line-height:1.2; }
-  .card .t { font-size:12.5px; font-weight:600; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .card .meta { margin-top:auto; font-size:10.5px; color:rgba(255,255,255,.72); display:flex; gap:6px; flex-wrap:wrap; }
-  .card .meta span { background:rgba(255,255,255,.12); border-radius:999px; padding:1px 7px; }
+  .card .emoji { font-size:17px; }
+  .card .t { font-size:13px; font-weight:600; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-top:2px; }
+  .card .meta { margin-top:auto; font-size:10.5px; color:rgba(255,255,255,.75); display:flex; gap:6px; flex-wrap:wrap; }
+  .card .meta span { background:rgba(255,255,255,.13); border-radius:999px; padding:1px 7px; }
+  .grid.tall .card { min-height:210px; padding:16px 15px; }
+  .grid.tall .card .emoji { font-size:34px; margin-top:6px; }
+  .grid.tall .card .t { font-size:14px; -webkit-line-clamp:3; margin-top:8px; }
+
+  .list { display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .lrow { display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid var(--line); cursor:pointer; }
+  .lrow:last-child { border-bottom:0; }
+  .lrow:hover { background:#fafcff; }
+  .lrow .lic { flex:0 0 40px; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .lrow .lmain { flex:1; min-width:0; }
+  .lrow .lmain h4 { font-size:13.5px; font-weight:600; line-height:1.45; }
+  .lrow .lmain p { margin-top:3px; font-size:11px; color:#94a3b8; }
+  .lrow .lright { display:flex; align-items:center; gap:10px; font-size:11px; color:#94a3b8; }
+  .lrow .star { color:#f59e0b; letter-spacing:-1px; font-size:11px; }
+
   .more { display:flex; justify-content:center; margin-top:18px; }
   .more button { border:1px solid var(--line); background:#fff; color:#334155; font:600 13px/1 inherit; border-radius:999px; padding:11px 24px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.06); }
   .more button:hover { border-color:#bfdbfe; color:var(--blue); }
   .empty { padding:40px; text-align:center; color:#94a3b8; font-size:13px; }
-  footer { border-top:1px solid var(--line); background:#fff; padding:22px 0; font-size:12px; color:#64748b; line-height:1.9; }
+  footer { border-top:1px solid var(--line); background:#fff; padding:20px 0; font-size:12px; color:#64748b; line-height:1.9; }
   .mask { position:fixed; inset:0; background:rgba(10,15,29,.55); display:none; align-items:center; justify-content:center; padding:20px; z-index:50; }
   .mask.on { display:flex; }
-  .modal { width:min(580px,100%); background:#fff; border-radius:16px; padding:22px 24px; box-shadow:0 30px 80px rgba(0,0,0,.35); }
-  .modal h2 { font-size:18px; line-height:1.6; padding-right:20px; }
+  .modal { width:min(600px,100%); background:#fff; border-radius:16px; padding:22px 24px; box-shadow:0 30px 80px rgba(0,0,0,.35); max-height:90vh; overflow:auto; }
+  .modal h2 { font-size:17px; line-height:1.6; padding-right:20px; }
   .modal .rows { margin-top:14px; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#334155; }
   .modal .rows b { color:#0f172a; display:inline-block; min-width:64px; }
-  .modal .dir { flex:1; min-width:0; max-height:260px; overflow:auto; background:#f8fafc; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:12px; line-height:1.7; }
-  .modal .dir .empty { padding:8px; color:#94a3b8; font-size:12px; text-align:left; }
+  .modal .dir { max-height:240px; overflow:auto; background:#f8fafc; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:12px; line-height:1.7; }
   .modal .dir .fd { color:#0f172a; font-weight:600; }
   .modal .dir .fl { color:#475569; display:flex; gap:6px; }
-  .modal .dir .fl i { margin-left:auto; font-style:normal; color:#94a3b8; font-size:10.5px; white-space:nowrap; }
+  .modal .dir .fl i { margin-left:auto; font-style:normal; color:#94a3b8; font-size:10.5px; }
   .modal .dir .tip { color:#94a3b8; font-size:11px; padding-top:4px; }
-  .modal .hide-note { margin-top:16px; padding:12px 14px; border-radius:10px; background:#f1f5f9; color:#475569; font-size:12.5px; line-height:1.8; }
-  .modal .close { margin-top:16px; display:inline-flex; border:0; background:#0f172a; color:#fff; font:600 13px/1 inherit; border-radius:999px; padding:11px 20px; cursor:pointer; }
-  @media (max-width:960px) {
+  .modal .hide-note { margin-top:14px; padding:11px 13px; border-radius:10px; background:#f1f5f9; color:#475569; font-size:12.5px; line-height:1.8; }
+  .modal .close { margin-top:14px; display:inline-flex; border:0; background:#0f172a; color:#fff; font:600 13px/1 inherit; border-radius:999px; padding:11px 20px; cursor:pointer; }
+  @media (max-width:1100px) { .grid, .grid.tall { grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:900px) {
     main { grid-template-columns:1fr; }
     aside { position:static; max-height:none; display:flex; gap:6px; overflow-x:auto; padding:8px; }
     aside h3 { display:none; }
     .zone-wrap { position:relative; }
-    .cats { position:absolute; z-index:6; background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 14px 30px rgba(15,23,42,.15); min-width:160px; padding:6px; }
-    .grid { grid-template-columns:repeat(2,1fr); }
+    .cats { position:absolute; z-index:6; background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 14px 30px rgba(15,23,42,.15); min-width:170px; padding:6px; }
+    .grid, .grid.tall { grid-template-columns:repeat(2,1fr); }
   }
 </style>
 </head>
@@ -95,7 +125,7 @@
       <h1>资源中心<span>展示版</span></h1>
       <a class="back" href="../">← 回首页</a>
     </div>
-    <div class="notice"><b>先说清楚：本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源链接和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
+    <div class="notice"><b>本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源链接和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
   </div>
 </header>
 <main class="wrap">
@@ -104,19 +134,25 @@
     <div id="zone-tree"></div>
   </aside>
   <section>
-    <div class="tools">
+    <div class="topbar">
       <label class="search">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
-        <input id="q" placeholder="搜标题 / 标签 / 分类" autocomplete="off">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+        <input id="q" placeholder="搜标题 / 分类 / 标签…" autocomplete="off">
       </label>
-      <span class="count" id="count">加载中…</span>
+      <div class="seg" id="seg"><button data-v="grid" class="on">▦ 图墙</button><button data-v="list">☰ 列表</button></div>
+      <button class="tbtn" id="sizeBtn">▭ 标准</button>
+      <span class="cnt" id="count"></span>
+      <button class="clear" id="clear">清除筛选</button>
     </div>
+
     <div class="filters">
-      <div class="frow"><b>类型</b><div id="f-type" class="frow" style="flex:1"></div></div>
+      <div class="frow"><b>大类</b><div id="f-big" class="frow" style="flex:1"></div></div>
       <div class="frow"><b>年份</b><div id="f-year" class="frow" style="flex:1"></div></div>
-      <div class="frow"><b>评分</b><div id="f-rate" class="frow" style="flex:1"></div><button class="clear" id="clear">清空筛选</button></div>
+      <div class="frow"><b>评分</b><div id="f-rate" class="frow" style="flex:1"></div></div>
+      <div class="frow"><b>标签</b><div class="cloud" id="f-tag"></div><button class="tag-toggle" id="tag-toggle">更多 ▾</button></div>
     </div>
-    <div class="grid" id="grid"></div>
+
+    <div id="box"></div>
     <div class="empty" id="empty" hidden>没有匹配的条目</div>
     <div class="more" id="more" hidden><button id="more-btn">加载更多</button></div>
   </section>
@@ -133,152 +169,203 @@
     <div class="rows">
       <div><b>分区</b><span id="m-zone"></span></div>
       <div><b>分类</b><span id="m-cat"></span></div>
-      <div><b>类型</b><span id="m-type"></span></div>
       <div><b>标签</b><span id="m-tags"></span></div>
       <div><b>日期</b><span id="m-date"></span></div>
       <div><b>评分</b><span id="m-rate"></span></div>
       <div><b>目录</b><div class="dir" id="m-dir">点开加载…</div></div>
     </div>
-    <div class="hide-note">网盘地址、提取码、来源链接、目录清单均已隐藏。本站不提供下载或转存入口。</div>
+    <div class="hide-note">网盘地址、提取码、来源链接、目录清单中的链接均已隐藏。本站不提供下载或转存入口。</div>
     <button class="close" id="m-close">知道了</button>
   </div>
 </div>
 <script>
-var TYPE_LABEL = {"book":"文档 · 合集","video":"视频","design":"设计","education":"教育","ai":"AI","code":"代码","zen":"生活","office":"办公","ecommerce":"电商","life":"生活","play":"影音","other":"其他"};
-var DATA = null, META = null, dirCache = {};
-var ZONE = '全部', CAT = '全部', TYPE = '全部', YEAR = '全部', RATE = 0, KEY = '';
-var shown = 60;
-var grid = document.getElementById('grid');
-var countEl = document.getElementById('count');
-var emptyEl = document.getElementById('empty');
-var moreEl = document.getElementById('more');
+var META = {"count": 10672, "zones": [{"name": "实战项目区", "count": 3828, "cats": [["虚拟项目", 982], ["AI人工智能", 728], ["短视频运营", 509], ["其它资料", 318], ["跨境电商", 196], ["国外项目", 151], ["国内电商", 137], ["小红书", 121], ["直播玩法", 103], ["创业项目", 76], ["引流涨粉", 75], ["最新收录", 72], ["设计教程", 58], ["投资理财", 57], ["热门给力项目", 49], ["新媒体", 40], ["无货源", 32], ["营销-成交", 29], ["公众号", 27], ["抖音小店", 24], ["CPA CPS", 24], ["文案写作", 19], ["淘客项目", 1]]}, {"name": "电商课程区", "count": 200, "cats": [["AI电商", 38], ["最新收录", 30], ["综合运营", 27], ["直通车", 26], ["抖音教程", 17], ["淘宝天猫", 17], ["拼多多教程", 13], ["美工设计", 9], ["小红书教程", 7], ["京东教程", 4], ["直播主播", 3], ["选品爆款", 3], ["跨境教程", 3], ["剪辑拍摄", 2], ["无货源店群", 1]]}, {"name": "个人成长区", "count": 1058, "cats": [["知识付费", 783], ["名人访谈", 141], ["自我提升", 88], ["有声书", 38], ["训练营", 1], ["语音识别", 1], ["零基础入门", 1], ["沟通方法", 1], ["实战课", 1], ["全流程拆解", 1], ["处世智慧", 1], ["SEO", 1]]}, {"name": "搞钱技能区", "count": 3433, "cats": [["自媒体与短视频", 794], ["AI 与智能体", 704], ["编程与开发", 686], ["设计剪辑", 471], ["电商与营销", 416], ["职场技能", 249], ["软件工具", 86], ["投资与商业", 24], ["职场智慧", 1], ["辣条教程", 1], ["GitHub", 1]]}, {"name": "健康生活区", "count": 498, "cats": [["情感沟通", 178], ["健康养生", 159], ["生活兴趣", 145], ["心理与关系", 16]]}, {"name": "家庭教育区", "count": 14, "cats": [["家庭教育", 14]]}, {"name": "升学考证区", "count": 751, "cats": [["幼儿启蒙", 180], ["初中", 164], ["考公考编", 93], ["高中", 83], ["小学", 81], ["职业与学历", 39], ["外语", 38], ["家庭教育", 38], ["其他教育", 35]]}, {"name": "其他杂烩区", "count": 890, "cats": [["其他课程", 306], ["阅读书单", 147], ["编程开发", 105], ["运动健身", 61], ["教育学习", 46], ["情感恋爱", 44], ["餐饮美食", 39], ["兴趣才艺", 32], ["职场商业", 27], ["生活技能", 23], ["软件工具", 17], ["玄学命理", 14], ["安全测试", 14], ["外语学习", 10], ["生活兴趣", 4], ["设计剪辑", 1]]}], "bigs": [{"name": "健康", "count": 277}, {"name": "搞钱", "count": 1560}, {"name": "成长", "count": 4740}, {"name": "家庭", "count": 67}], "bigsOther": [{"name": "实战项目", "count": 3828}, {"name": "电商课程", "count": 200}], "rates": [{"v": "5", "count": 2073}, {"v": "4", "count": 5205}, {"v": "3", "count": 1406}, {"v": "2", "count": 1720}, {"v": "1", "count": 268}], "years": [{"v": "", "label": "全部年份", "count": 10672}, {"v": "2026", "label": "2026", "count": 3903}, {"v": "2025", "label": "2025", "count": 80}, {"v": "2024", "label": "2024 及更早", "count": 35}, {"v": "未标注", "label": "未标注", "count": 6654}], "tags": [{"name": "实战项目", "count": 3787}, {"name": "虚拟项目", "count": 982}, {"name": "AI人工智能", "count": 728}, {"name": "AI大模型智能体", "count": 514}, {"name": "短视频运营", "count": 509}, {"name": "电商跨境选品", "count": 390}, {"name": "设计素材模板", "count": 383}, {"name": "B站", "count": 335}, {"name": "AI", "count": 322}, {"name": "短视频直播运营", "count": 319}, {"name": "其它资料", "count": 318}, {"name": "编程", "count": 315}, {"name": "职场效率写作", "count": 305}, {"name": "小红书", "count": 298}, {"name": "编程自动化数据", "count": 267}, {"name": "得到", "count": 210}, {"name": "生活技能兴趣", "count": 201}, {"name": "跨境电商", "count": 196}, {"name": "小学", "count": 177}, {"name": "卖家视频", "count": 170}, {"name": "初中", "count": 164}, {"name": "国外项目", "count": 151}, {"name": "国内电商", "count": 137}, {"name": "设计", "count": 127}, {"name": "英语", "count": 124}, {"name": "自媒体", "count": 114}, {"name": "电商", "count": 104}, {"name": "直播玩法", "count": 103}, {"name": "混沌", "count": 102}, {"name": "最新收录", "count": 102}, {"name": "创业", "count": 98}, {"name": "剪辑后期素材", "count": 96}, {"name": "副业", "count": 96}, {"name": "自媒体涨粉变现", "count": 93}, {"name": "抖音", "count": 92}, {"name": "职场", "count": 84}, {"name": "樊登", "count": 79}, {"name": "视频号", "count": 78}, {"name": "快手", "count": 76}, {"name": "国学传统文化养生", "count": 76}, {"name": "创业项目", "count": 76}, {"name": "引流涨粉", "count": 75}, {"name": "高考", "count": 73}, {"name": "心理学", "count": 68}, {"name": "数学", "count": 64}, {"name": "剪辑", "count": 61}, {"name": "TikTok", "count": 61}, {"name": "投资理财", "count": 59}, {"name": "语文", "count": 58}, {"name": "设计教程", "count": 58}, {"name": "已验活", "count": 54}, {"name": "知识付费", "count": 54}, {"name": "两性", "count": 53}, {"name": "有声", "count": 52}, {"name": "软件", "count": 52}, {"name": "热门给力项目", "count": 49}, {"name": "亲子", "count": 45}, {"name": "2023 及更早", "count": 44}, {"name": "新媒体", "count": 40}, {"name": "办公", "count": 38}, {"name": "AI电商", "count": 38}, {"name": "投资", "count": 36}, {"name": "高中", "count": 36}, {"name": "动漫", "count": 35}, {"name": "无货源", "count": 32}, {"name": "算法", "count": 31}, {"name": "营销-成交", "count": 29}, {"name": "幼儿", "count": 27}, {"name": "私域", "count": 27}, {"name": "公众号", "count": 27}, {"name": "综合运营", "count": 27}, {"name": "摄影", "count": 26}, {"name": "直通车", "count": 26}, {"name": "抖音小店", "count": 24}, {"name": "CPA CPS", "count": 24}, {"name": "养生", "count": 23}, {"name": "简历", "count": 23}, {"name": "直播", "count": 21}, {"name": "网络安全", "count": 21}, {"name": "数据库", "count": 19}, {"name": "文案写作", "count": 19}, {"name": "中考", "count": 17}, {"name": "抖音教程", "count": 17}, {"name": "淘宝天猫", "count": 17}, {"name": "电影", "count": 15}, {"name": "考证学历", "count": 15}, {"name": "考公", "count": 14}, {"name": "拼多多教程", "count": 13}, {"name": "餐饮", "count": 12}, {"name": "合同", "count": 9}, {"name": "纪录片", "count": 9}, {"name": "SEO搜索流量", "count": 9}, {"name": "美工设计", "count": 9}, {"name": "素材", "count": 8}, {"name": "健身", "count": 8}, {"name": "健康生活", "count": 8}, {"name": "升级版", "count": 8}, {"name": "名师讲座", "count": 7}, {"name": "商业认知", "count": 7}, {"name": "小红书教程", "count": 7}, {"name": "模板", "count": 6}, {"name": "电子书", "count": 6}, {"name": "喜马拉雅", "count": 5}, {"name": "音乐", "count": 4}, {"name": "短剧", "count": 4}, {"name": "京东教程", "count": 4}, {"name": "直播主播", "count": 3}, {"name": "选品爆款", "count": 3}, {"name": "跨境教程", "count": 3}, {"name": "韩语", "count": 2}, {"name": "教资", "count": 2}, {"name": "语言考试", "count": 2}, {"name": "剪辑拍摄", "count": 2}, {"name": "AI搜索优化", "count": 2}], "generated": "2026-11-09", "dirs": {"实战项目区": "d0.json", "搞钱技能区": "d1.json", "个人成长区": "d2.json", "其他杂烩区": "d3.json", "升学考证区": "d4.json", "健康生活区": "d5.json", "电商课程区": "d6.json", "家庭教育区": "d7.json"}};
+var ITEMS = [];
+var state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', view: 'grid', size: 'std', shown: 60 };
+var TAG_OPEN = false;
+var dirCache = {};
 
 fetch('data/items.json').then(function(r){ return r.json(); }).then(function(d){
-  DATA = d.items; META = d.meta;
-  DATA.forEach(function(it, i){ it._i = i; });
-  buildZones(); buildFilters(); render();
-  document.getElementById('q').addEventListener('input', function(ev){ KEY = ev.target.value.trim().toLowerCase(); shown = 60; render(); });
+  ITEMS = d.items;
+  ITEMS.forEach(function(it, i){ it._i = i; });
+  META = d.meta;
+  buildNav(); buildFilters(); render();
+  document.getElementById('q').addEventListener('input', function(e){ state.q = e.target.value.trim().toLowerCase(); state.shown = 60; render(); });
   document.getElementById('clear').addEventListener('click', function(){
-    ZONE = '全部'; CAT = '全部'; TYPE = '全部'; YEAR = '全部'; RATE = 0; shown = 60;
-    buildZones(); buildFilters(); render();
+    state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', view: state.view, size: state.size, shown: 60 };
+    document.getElementById('q').value = '';
+    buildNav(); buildFilters(); render();
   });
-  document.getElementById('more-btn').addEventListener('click', function(){ shown += 80; render(); });
-}).catch(function(e){ countEl.textContent = '数据加载失败'; console.error(e); });
+  document.getElementById('seg').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-v]'); if (!b) return;
+    state.view = b.dataset.v; state.shown = 60;
+    Array.prototype.forEach.call(document.querySelectorAll('#seg button'), function(x){ x.classList.toggle('on', x === b); });
+    render();
+  });
+  document.getElementById('sizeBtn').addEventListener('click', function(){
+    state.size = state.size === 'std' ? 'tall' : 'std';
+    this.textContent = state.size === 'std' ? '▭ 标准' : '▯ 海报';
+    render();
+  });
+  document.getElementById('tag-toggle').addEventListener('click', function(){
+    TAG_OPEN = !TAG_OPEN; this.textContent = TAG_OPEN ? '收起 ▴' : '更多 ▾'; buildFilters();
+  });
+  document.getElementById('more-btn').addEventListener('click', function(){ state.shown += 80; render(); });
+  document.getElementById('m-close').addEventListener('click', function(){ document.getElementById('mask').classList.remove('on'); });
+  document.getElementById('mask').addEventListener('click', function(e){ if (e.target.id === 'mask') e.target.classList.remove('on'); });
+}).catch(function(e){ document.getElementById('count').textContent = '数据加载失败'; console.error(e); });
 
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]); }); }
+function stars(n){ return n ? new Array(n + 1).join('★') : ''; }
 
-function buildZones(){
+function buildNav(){
   var box = document.getElementById('zone-tree');
-  box.innerHTML = '';
-  var all = document.createElement('button');
-  all.className = 'zone-btn' + (ZONE === '全部' && CAT === '全部' ? ' on' : '');
-  all.innerHTML = '<span>全部</span><i>' + META.count + '</i>';
-  all.addEventListener('click', function(){ ZONE = '全部'; CAT = '全部'; shown = 60; buildZones(); render(); });
-  box.appendChild(all);
-
-  Object.keys(META.zones).forEach(function(z){
-    var wrap = document.createElement('div');
-    wrap.className = 'zone-wrap';
-    var b = document.createElement('button');
-    var active = ZONE === z;
-    b.className = 'zone-btn' + (active && CAT === '全部' ? ' on' : '') + (active ? ' open' : '');
-    b.innerHTML = '<span class="arrow">▶</span><span>' + esc(z) + '</span><i>' + META.zones[z].count + '</i>';
-    var cats = document.createElement('div');
-    cats.className = 'cats' + (active ? ' open' : '');
-    Object.keys(META.zones[z].cats).forEach(function(c){
-      var cb = document.createElement('button');
-      cb.className = 'cat-btn' + (active && CAT === c ? ' on' : '');
-      cb.innerHTML = '<span>' + esc(c) + '</span><i>' + META.zones[z].cats[c] + '</i>';
-      cb.addEventListener('click', function(ev){
-        ev.stopPropagation();
-        ZONE = z; CAT = (CAT === c ? '全部' : c); shown = 60;
-        buildZones(); render();
-      });
-      cats.appendChild(cb);
+  var html = '';
+  html += '<button class="zone-btn' + (!state.zone && !state.cat ? ' on' : '') + '" data-z=""><span>全部</span><i>' + META.count + '</i></button>';
+  META.zones.forEach(function(z){
+    var active = state.zone === z.name;
+    html += '<div class="zone-wrap"><button class="zone-btn' + (active && !state.cat ? ' on' : '') + (active ? ' open' : '') + '" data-z="' + esc(z.name) + '">' +
+      '<span class="arrow">▶</span><span>' + esc(z.name) + '</span><i>' + z.count + '</i></button>';
+    html += '<div class="cats' + (active ? ' open' : '') + '">';
+    z.cats.forEach(function(c){
+      html += '<button class="cat-btn' + (active && state.cat === c[0] ? ' on' : '') + '" data-z="' + esc(z.name) + '" data-c="' + esc(c[0]) + '">' +
+        '<span>' + esc(c[0]) + '</span><i>' + c[1] + '</i></button>';
     });
-    b.addEventListener('click', function(){
-      if (ZONE === z && CAT === '全部') { ZONE = '全部'; CAT = '全部'; }
-      else { ZONE = z; CAT = '全部'; }
-      shown = 60; buildZones(); render();
-    });
-    wrap.appendChild(b); wrap.appendChild(cats);
-    box.appendChild(wrap);
+    html += '</div></div>';
   });
+  box.innerHTML = html;
+  box.onclick = function(e){
+    var cb = e.target.closest('.cat-btn');
+    if (cb) {
+      state.zone = cb.dataset.z; state.cat = state.cat === cb.dataset.c ? '' : cb.dataset.c; state.shown = 60;
+      buildNav(); render(); return;
+    }
+    var zb = e.target.closest('.zone-btn');
+    if (!zb) return;
+    var z = zb.dataset.z;
+    if (state.zone === z) { state.zone = ''; state.cat = ''; } else { state.zone = z; state.cat = ''; }
+    state.shown = 60; buildNav(); render();
+  };
 }
 
-function chips(id, options, current, setter){
-  var box = document.getElementById(id);
-  box.innerHTML = '';
-  options.forEach(function(o){
-    var b = document.createElement('button');
-    b.className = 'chip' + (o.value === current ? ' on' : '');
-    b.innerHTML = esc(o.label) + (o.count ? '<em>' + o.count + '</em>' : '');
-    b.addEventListener('click', function(){ setter(o.value); shown = 60; buildFilters(); render(); });
-    box.appendChild(b);
-  });
+function chip(label, count, on, attrs){
+  return '<button class="chip' + (on ? ' on' : '') + '" ' + attrs + '>' + label + '<em>' + count + '</em></button>';
 }
 
 function buildFilters(){
-  var typeOpts = [{label:'全部', value:'全部'}].concat(Object.keys(META.types).map(function(t){ return {label:t, value:t, count:META.types[t]}; }));
-  chips('f-type', typeOpts, TYPE, function(v){ TYPE = v; });
-  var yearOpts = [{label:'全部', value:'全部'}].concat(Object.keys(META.years).map(function(y){ return {label:y, value:y, count:META.years[y]}; }));
-  chips('f-year', yearOpts, YEAR, function(v){ YEAR = v; });
-  var rateOpts = [{label:'全部', value:0}, {label:'5 星', value:5}, {label:'4 星以上', value:4}, {label:'3 星以上', value:3}];
-  chips('f-rate', rateOpts, RATE, function(v){ RATE = v; });
+  // 大类
+  var b = '<button class="chip' + (!state.big ? ' on' : '') + '" data-big="">全部<em>' + META.count + '</em></button>';
+  META.bigs.forEach(function(x){ b += chip(x.name, x.count, state.big === x.name, 'data-big="' + esc(x.name) + '"'); });
+  document.getElementById('f-big').innerHTML = b;
+  document.getElementById('f-big').onclick = function(e){
+    var t = e.target.closest('[data-big]'); if (!t) return;
+    state.big = t.dataset.big; state.shown = 60; buildFilters(); render();
+  };
+
+  // 年份
+  var y = '';
+  META.years.forEach(function(x){ y += chip(x.label, x.count, state.year === (x.v || ''), 'data-year="' + esc(x.v) + '"'); });
+  document.getElementById('f-year').innerHTML = y;
+  document.getElementById('f-year').onclick = function(e){
+    var t = e.target.closest('[data-year]'); if (!t) return;
+    state.year = t.dataset.year; state.shown = 60; buildFilters(); render();
+  };
+
+  // 评分
+  var r = '<button class="chip' + (!state.star ? ' on' : '') + '" data-star="">全部<em>' + META.count + '</em></button>';
+  META.rates.forEach(function(x){ r += chip(stars(parseInt(x.v, 10)), x.count, state.star === x.v, 'data-star="' + x.v + '"'); });
+  document.getElementById('f-rate').innerHTML = r;
+  document.getElementById('f-rate').onclick = function(e){
+    var t = e.target.closest('[data-star]'); if (!t) return;
+    state.star = t.dataset.star; state.shown = 60; buildFilters(); render();
+  };
+
+  // 标签云
+  var tags = META.tags.slice(0, TAG_OPEN ? 200 : 18);
+  var max = tags.length ? tags[0].count : 1, min = tags.length ? tags[tags.length - 1].count : 0;
+  var cloud = tags.map(function(t){
+    var size = 12 + Math.round(((t.count - min) / Math.max(1, max - min)) * 6);
+    return '<b data-t="' + esc(t.name) + '" class="' + (state.tag === t.name ? 'on' : '') + '" style="font-size:' + size + 'px">' + esc(t.name) + '</b>';
+  }).join('');
+  document.getElementById('f-tag').innerHTML = cloud;
+  document.getElementById('f-tag').onclick = function(e){
+    var t = e.target.closest('[data-t]'); if (!t) return;
+    state.tag = state.tag === t.dataset.t ? '' : t.dataset.t; state.shown = 60; buildFilters(); render();
+  };
+}
+
+function yearMatch(it, v){
+  if (!v) return true;
+  if (v === '未标注') { return !it.g.some(function(g){ return /^20\d{2}$/.test(g) || g === '2023及更早'; }); }
+  if (v === '2024') { return it.g.indexOf('2024') >= 0 || it.g.indexOf('2023及更早') >= 0; }
+  return it.g.indexOf(v) >= 0;
+}
+
+function filtered(){
+  var q = state.q;
+  return ITEMS.filter(function(it){
+    if (state.zone && it.zo !== state.zone) return false;
+    if (state.cat && it.c !== state.cat) return false;
+    if (state.big && it.z !== state.big) return false;
+    if (!yearMatch(it, state.year)) return false;
+    if (state.star && String(it.r) !== state.star) return false;
+    if (state.tag && it.g.indexOf(state.tag) < 0) return false;
+    if (!q) return true;
+    return (it.t + ' ' + it.c + ' ' + it.g.join(' ') + ' ' + it.zo).toLowerCase().indexOf(q) >= 0;
+  });
 }
 
 function render(){
-  var items = DATA.filter(function(it){
-    if (ZONE !== '全部' && it.zo !== ZONE) return false;
-    if (CAT !== '全部' && it.c !== CAT) return false;
-    if (TYPE !== '全部' && it.ty !== TYPE) return false;
-    if (YEAR !== '全部' && it.y !== YEAR) return false;
-    if (RATE && it.r < RATE) return false;
-    if (!KEY) return true;
-    return (it.t + ' ' + it.c + ' ' + it.g.join(' ') + ' ' + it.zo).toLowerCase().indexOf(KEY) >= 0;
-  });
-  countEl.textContent = '共 ' + items.length + ' 条（全库 ' + META.count + ' 条）';
-  emptyEl.hidden = items.length > 0;
-  var frag = document.createDocumentFragment();
-  items.slice(0, shown).forEach(function(it){
-    var c = document.createElement('div');
-    c.className = 'card';
-    c.style.background = 'linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')';
-    var stars = it.r ? '<span class="star">' + new Array(it.r + 1).join('★') + '</span>' : '';
-    c.innerHTML = '<div class="top">' + stars + '<span>' + esc(it.zo || '未分区') + '</span></div>' +
-      '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
-      '<div class="meta"><span>' + esc(it.c || '未分类') + '</span><span>' + esc(it.ty) + '</span></div>';
-    c.addEventListener('click', function(){ openModal(it, it._i); });
-    frag.appendChild(c);
-  });
-  grid.innerHTML = '';
-  grid.appendChild(frag);
-  moreEl.hidden = items.length <= shown;
-  if (!moreEl.hidden) document.getElementById('more-btn').textContent = '加载更多（还剩 ' + (items.length - shown) + ' 条）';
+  var items = filtered();
+  document.getElementById('count').textContent = '共 ' + items.length + ' 条（全库 ' + META.count + ' 条）';
+  document.getElementById('empty').hidden = items.length > 0;
+  var box = document.getElementById('box');
+  var slice = items.slice(0, state.shown);
+  if (state.view === 'list') {
+    box.className = '';
+    box.innerHTML = '<div class="list">' + slice.map(function(it, i){
+      var idx = it._i;
+      return '<div class="lrow" data-i="' + idx + '">' +
+        '<div class="lic" style="background:linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')">' + esc(it.e) + '</div>' +
+        '<div class="lmain"><h4>' + esc(it.t) + '</h4><p>' + esc(it.zo || '未分区') + ' · ' + esc(it.c || '未分类') + (it.g.length ? ' · ' + esc(it.g.slice(0, 3).join(' / ')) : '') + '</p></div>' +
+        '<div class="lright"><span class="star">' + stars(it.r) + '</span></div></div>';
+    }).join('') + '</div>';
+  } else {
+    box.className = 'grid' + (state.size === 'tall' ? ' tall' : '');
+    box.innerHTML = slice.map(function(it){
+      var idx = it._i;
+      return '<div class="card" data-i="' + idx + '" style="background:linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')">' +
+        '<div class="top">' + (it.r ? '<span class="star">' + stars(it.r) + '</span>' : '') + '<span>' + esc(it.zo || '未分区') + '</span></div>' +
+        '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
+        '<div class="meta"><span>' + esc(it.c || '未分类') + '</span>' + (it.z ? '<span>' + esc(it.z) + '</span>' : '') + '</div></div>';
+    }).join('');
+  }
+  box.onclick = function(e){
+    var el = e.target.closest('[data-i]'); if (!el) return;
+    openModal(ITEMS[parseInt(el.dataset.i, 10)]);
+  };
+  document.getElementById('more').hidden = items.length <= state.shown;
+  if (!document.getElementById('more').hidden) {
+    document.getElementById('more-btn').textContent = '加载更多（还剩 ' + (items.length - state.shown) + ' 条）';
+  }
 }
 
-function fmtSize(n){
-  if (n === null || n === undefined) return '';
-  if (n < 1024) return n + ' KB';
-  return (n / 1024).toFixed(1) + ' MB';
-}
-
-function loadDirs(idx, zone){
+function loadDirs(it){
   var box = document.getElementById('m-dir');
   var files = META.dirs || {};
-  var fname = files[zone];
-  if (!fname) { box.innerHTML = '<div class="empty">这条没有采集到目录</div>'; return; }
-  if (dirCache[fname]) return showDir(dirCache[fname][String(idx)]);
-  box.innerHTML = '<div class="empty">目录加载中…</div>';
+  var fname = files[it.zo];
+  if (!fname) { box.innerHTML = '<div class="tip">这条没有采集到目录</div>'; return; }
+  var idx = String(it._i);
+  if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
+  box.innerHTML = '<div class="tip">目录加载中…</div>';
   fetch('data/dirs/' + fname).then(function(r){ return r.json(); }).then(function(mp){
-    dirCache[fname] = mp;
-    showDir(mp[String(idx)]);
-  }).catch(function(){ box.innerHTML = '<div class="empty">目录加载失败</div>'; });
+    dirCache[fname] = mp; showDir(mp[idx]);
+  }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
-
+function fmtSize(n){ if (n == null) return ''; return n < 1024 ? n + ' KB' : (n / 1024).toFixed(1) + ' MB'; }
 function showDir(lines){
   var box = document.getElementById('m-dir');
-  if (!lines || !lines.length) { box.innerHTML = '<div class="empty">这条没有采集到目录</div>'; return; }
+  if (!lines || !lines.length) { box.innerHTML = '<div class="tip">这条没有采集到目录</div>'; return; }
   var LIMIT = 120;
   var html = lines.slice(0, LIMIT).map(function(row){
     if (row[0] === 'd') return '<div class="fd">📁 ' + esc(row[1]) + '</div>';
@@ -287,28 +374,24 @@ function showDir(lines){
   if (lines.length > LIMIT) html += '<div class="tip">仅显示前 ' + LIMIT + ' 项，共 ' + lines.length + ' 项</div>';
   box.innerHTML = html;
 }
-
-function openModal(it, idx){
-  it._i = idx;
+function openModal(it){
   document.getElementById('m-title').textContent = it.t;
   document.getElementById('m-zone').textContent = it.zo || '未分区';
   document.getElementById('m-cat').textContent = it.c || '未分类';
-  document.getElementById('m-type').textContent = it.ty;
   document.getElementById('m-tags').textContent = it.g.length ? it.g.join(' · ') : '无';
   document.getElementById('m-date').textContent = it.a || '未记录';
-  document.getElementById('m-rate').textContent = it.r ? (new Array(it.r + 1).join('★') + new Array(6 - it.r).join('☆')) : '未评分';
-  document.getElementById('m-dir').innerHTML = '<div class="empty">点开加载…</div>';
-  loadDirs(idx, it.zo);
+  document.getElementById('m-rate').textContent = it.r ? (stars(it.r) + '☆'.repeat(5 - it.r)) : '未评分';
+  document.getElementById('m-dir').innerHTML = '<div class="tip">点开加载…</div>';
+  loadDirs(it);
   document.getElementById('mask').classList.add('on');
 }
-document.getElementById('m-close').addEventListener('click', function(){ document.getElementById('mask').classList.remove('on'); });
-document.getElementById('mask').addEventListener('click', function(ev){ if (ev.target.id === 'mask') ev.target.classList.remove('on'); });
 </script>
 <script>(function(){try{
   if (location.pathname.indexOf('/stats/') >= 0) return;
   var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
   var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
-  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
 }catch(e){}})();</script>
 </body>
 </html>
