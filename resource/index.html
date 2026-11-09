@@ -10,49 +10,83 @@
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1180px; margin:0 auto; padding:0 22px; }
-  header { background:#0a0f1d; color:#e2e8f0; padding:20px 0 26px; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 22px; }
+  header { background:#0a0f1d; color:#e2e8f0; padding:20px 0 22px; }
   .hd { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
   .hd img { width:38px; height:38px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
   .hd h1 { font-size:20px; letter-spacing:.5px; }
   .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
-  .notice { margin-top:16px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:12px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
+  .notice { margin-top:14px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:12px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
   .notice b { color:#fff; }
-  main { padding:26px 0 60px; display:grid; grid-template-columns:196px 1fr; gap:26px; }
-  aside { position:sticky; top:16px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; }
-  aside h3 { font-size:11px; letter-spacing:1.5px; color:#94a3b8; margin-bottom:8px; }
-  .zone { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 9px; border-radius:9px; font-size:13px; color:#334155; cursor:pointer; }
-  .zone:hover { background:#f1f5f9; }
-  .zone.on { background:#e0edff; color:#1d4ed8; font-weight:700; }
-  .zone i { font-style:normal; font-size:11px; color:#94a3b8; }
-  .zone.on i { color:#1d4ed8; }
-  .tools { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  .collect { margin-top:12px; border:1px solid rgba(148,163,184,.22); border-radius:12px; background:rgba(255,255,255,.03); }
+  .collect summary { cursor:pointer; padding:11px 16px; font-size:12.5px; color:#cbd5e1; display:flex; align-items:center; gap:8px; list-style:none; }
+  .collect summary::-webkit-details-marker { display:none; }
+  .collect summary em { font-style:normal; color:#7dd3fc; }
+  .collect summary::after { content:"展开"; margin-left:auto; font-size:11px; color:#64748b; }
+  .collect[open] summary::after { content:"收起"; }
+  .ctable { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; padding:0 16px 14px; }
+  .citem { border:1px solid rgba(148,163,184,.18); border-radius:10px; padding:9px 12px; background:rgba(255,255,255,.03); }
+  .citem b { display:block; font-size:12.5px; color:#e2e8f0; }
+  .citem span { font-size:11px; color:#8fa3bd; }
+  main { padding:24px 0 60px; display:grid; grid-template-columns:238px 1fr; gap:24px; }
+  aside { position:sticky; top:16px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 32px); overflow:auto; }
+  aside h3 { font-size:11px; letter-spacing:1.5px; color:#94a3b8; margin:2px 4px 8px; }
+  .zone-btn { display:flex; align-items:center; gap:7px; width:100%; border:0; background:none; font:inherit; text-align:left; padding:8px 9px; border-radius:9px; font-size:13px; color:#334155; cursor:pointer; }
+  .zone-btn:hover { background:#f1f5f9; }
+  .zone-btn.on { background:#e0edff; color:#1d4ed8; font-weight:700; }
+  .zone-btn i { margin-left:auto; font-style:normal; font-size:11px; color:#94a3b8; }
+  .zone-btn.on i { color:#1d4ed8; }
+  .zone-btn .arrow { font-style:normal; font-size:9px; color:#94a3b8; transition:.15s; }
+  .zone-btn.open .arrow { transform:rotate(90deg); color:#1d4ed8; }
+  .cats { display:none; padding:2px 0 6px 16px; }
+  .cats.open { display:block; }
+  .cat-btn { display:flex; width:100%; align-items:center; gap:6px; border:0; background:none; font:inherit; text-align:left; padding:6px 8px; border-radius:7px; font-size:12px; color:#64748b; cursor:pointer; }
+  .cat-btn:hover { background:#f8fafc; }
+  .cat-btn.on { color:#1d4ed8; background:#eff6ff; font-weight:600; }
+  .cat-btn i { margin-left:auto; font-style:normal; font-size:10.5px; color:#94a3b8; }
+  .tools { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
   .search { flex:1; min-width:240px; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
   .search input { flex:1; border:0; outline:0; font:inherit; font-size:14px; background:none; }
   .count { font-size:12.5px; color:#64748b; }
+  .filters { background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:14px; display:flex; flex-direction:column; gap:9px; }
+  .frow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .frow > b { font-size:11px; color:#94a3b8; font-weight:600; letter-spacing:.5px; width:32px; flex:0 0 auto; }
+  .chip { border:1px solid var(--line); background:#fff; color:#475569; font:inherit; font-size:12px; border-radius:999px; padding:4px 11px; cursor:pointer; }
+  .chip:hover { border-color:#bfdbfe; color:var(--blue); }
+  .chip.on { background:#e0edff; border-color:#bfdbfe; color:#1d4ed8; font-weight:600; }
+  .chip em { font-style:normal; color:#94a3b8; margin-left:4px; font-size:10.5px; }
+  .chip.on em { color:#1d4ed8; }
+  .clear { margin-left:auto; border:0; background:none; color:#94a3b8; font:inherit; font-size:12px; cursor:pointer; }
+  .clear:hover { color:var(--blue); }
   .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-  .card { position:relative; border-radius:12px; padding:13px 13px 12px; cursor:pointer; color:#fff; min-height:108px; display:flex; flex-direction:column; gap:6px; overflow:hidden; border:1px solid rgba(255,255,255,.08); transition:.15s; }
+  .card { position:relative; border-radius:12px; padding:12px 13px; cursor:pointer; color:#fff; min-height:120px; display:flex; flex-direction:column; gap:5px; overflow:hidden; border:1px solid rgba(255,255,255,.08); transition:.15s; }
   .card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(15,23,42,.18); }
-  .card .emoji { font-size:18px; }
-  .card .t { font-size:13px; font-weight:600; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .card .top { display:flex; align-items:center; gap:6px; font-size:10.5px; color:rgba(255,255,255,.75); }
+  .card .top .star { color:#fde68a; letter-spacing:-1px; }
+  .card .emoji { font-size:16px; line-height:1.2; }
+  .card .t { font-size:12.5px; font-weight:600; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   .card .meta { margin-top:auto; font-size:10.5px; color:rgba(255,255,255,.72); display:flex; gap:6px; flex-wrap:wrap; }
   .card .meta span { background:rgba(255,255,255,.12); border-radius:999px; padding:1px 7px; }
+  .more { display:flex; justify-content:center; margin-top:18px; }
+  .more button { border:1px solid var(--line); background:#fff; color:#334155; font:600 13px/1 inherit; border-radius:999px; padding:11px 24px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.06); }
+  .more button:hover { border-color:#bfdbfe; color:var(--blue); }
   .empty { padding:40px; text-align:center; color:#94a3b8; font-size:13px; }
   footer { border-top:1px solid var(--line); background:#fff; padding:22px 0; font-size:12px; color:#64748b; line-height:1.9; }
   .mask { position:fixed; inset:0; background:rgba(10,15,29,.55); display:none; align-items:center; justify-content:center; padding:20px; z-index:50; }
   .mask.on { display:flex; }
-  .modal { width:min(560px,100%); background:#fff; border-radius:16px; padding:22px 24px; box-shadow:0 30px 80px rgba(0,0,0,.35); }
+  .modal { width:min(580px,100%); background:#fff; border-radius:16px; padding:22px 24px; box-shadow:0 30px 80px rgba(0,0,0,.35); }
   .modal h2 { font-size:18px; line-height:1.6; padding-right:20px; }
   .modal .rows { margin-top:14px; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#334155; }
   .modal .rows b { color:#0f172a; display:inline-block; min-width:64px; }
   .modal .hide-note { margin-top:16px; padding:12px 14px; border-radius:10px; background:#f1f5f9; color:#475569; font-size:12.5px; line-height:1.8; }
   .modal .close { margin-top:16px; display:inline-flex; border:0; background:#0f172a; color:#fff; font:600 13px/1 inherit; border-radius:999px; padding:11px 20px; cursor:pointer; }
-  @media (max-width:900px) {
+  @media (max-width:960px) {
     main { grid-template-columns:1fr; }
-    aside { position:static; display:flex; gap:6px; overflow-x:auto; }
+    aside { position:static; max-height:none; display:flex; gap:6px; overflow-x:auto; padding:8px; }
     aside h3 { display:none; }
-    .zone { white-space:nowrap; }
+    .zone-wrap { position:relative; }
+    .cats { position:absolute; z-index:6; background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 14px 30px rgba(15,23,42,.15); min-width:160px; padding:6px; }
     .grid { grid-template-columns:repeat(2,1fr); }
   }
 </style>
@@ -65,13 +99,17 @@
       <h1>资源中心<span>展示版</span></h1>
       <a class="back" href="../">← 回首页</a>
     </div>
-    <div class="notice"><b>先说清楚：本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源渠道和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
+    <div class="notice"><b>先说清楚：本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源链接和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
+    <details class="collect">
+      <summary>采集清单（数据来自这些地方 · 共 <em id="c-total">-</em> 条 · 更新 <em id="c-date">-</em>）</summary>
+      <div class="ctable" id="ctable"></div>
+    </details>
   </div>
 </header>
 <main class="wrap">
   <aside>
-    <h3>分区</h3>
-    <div id="zones"></div>
+    <h3>分区 · 分类</h3>
+    <div id="zone-tree"></div>
   </aside>
   <section>
     <div class="tools">
@@ -81,8 +119,14 @@
       </label>
       <span class="count" id="count">加载中…</span>
     </div>
+    <div class="filters">
+      <div class="frow"><b>类型</b><div id="f-type" class="frow" style="flex:1"></div></div>
+      <div class="frow"><b>年份</b><div id="f-year" class="frow" style="flex:1"></div></div>
+      <div class="frow"><b>评分</b><div id="f-rate" class="frow" style="flex:1"></div><button class="clear" id="clear">清空筛选</button></div>
+    </div>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty" hidden>没有匹配的条目</div>
+    <div class="more" id="more" hidden><button id="more-btn">加载更多</button></div>
   </section>
 </main>
 <footer>
@@ -97,94 +141,148 @@
     <div class="rows">
       <div><b>分区</b><span id="m-zone"></span></div>
       <div><b>分类</b><span id="m-cat"></span></div>
+      <div><b>类型</b><span id="m-type"></span></div>
       <div><b>标签</b><span id="m-tags"></span></div>
       <div><b>日期</b><span id="m-date"></span></div>
+      <div><b>评分</b><span id="m-rate"></span></div>
     </div>
-    <div class="hide-note">网盘地址、提取码、来源渠道、目录清单均已隐藏。本站不提供下载或转存入口。</div>
+    <div class="hide-note">网盘地址、提取码、来源链接、目录清单均已隐藏。本站不提供下载或转存入口。</div>
     <button class="close" id="m-close">知道了</button>
   </div>
 </div>
 <script>
-let DATA = null, ZONE = "全部", KEY = "";
-const grid = document.getElementById('grid');
-const zonesBox = document.getElementById('zones');
-const countEl = document.getElementById('count');
-const emptyEl = document.getElementById('empty');
+var TYPE_LABEL = {"book":"文档 · 合集","video":"视频","design":"设计","education":"教育","ai":"AI","code":"代码","zen":"生活","office":"办公","ecommerce":"电商","life":"生活","play":"影音","other":"其他"};
+var DATA = null, META = null;
+var ZONE = '全部', CAT = '全部', TYPE = '全部', YEAR = '全部', RATE = 0, KEY = '';
+var shown = 60;
+var grid = document.getElementById('grid');
+var countEl = document.getElementById('count');
+var emptyEl = document.getElementById('empty');
+var moreEl = document.getElementById('more');
 
-fetch('data/items.json').then(r => r.json()).then(d => {
-  DATA = d;
-  renderZones();
-  render();
-}).catch(e => {
-  countEl.textContent = '数据加载失败';
-  console.error(e);
-});
-
-function renderZones(){
-  const all = document.createElement('div');
-  all.className = 'zone on';
-  all.dataset.zone = '全部';
-  all.innerHTML = '<span>全部</span><i>' + DATA.count + '</i>';
-  zonesBox.appendChild(all);
-  Object.keys(DATA.zones).sort((a,b) => DATA.zones[b]-DATA.zones[a]).forEach(z => {
-    const el = document.createElement('div');
-    el.className = 'zone';
-    el.dataset.zone = z;
-    el.innerHTML = '<span>' + esc(z) + '</span><i>' + DATA.zones[z] + '</i>';
-    zonesBox.appendChild(el);
+fetch('data/items.json').then(function(r){ return r.json(); }).then(function(d){
+  DATA = d.items; META = d.meta;
+  document.getElementById('c-total').textContent = META.count;
+  document.getElementById('c-date').textContent = META.generated;
+  buildCollect(); buildZones(); buildFilters(); render();
+  document.getElementById('q').addEventListener('input', function(ev){ KEY = ev.target.value.trim().toLowerCase(); shown = 60; render(); });
+  document.getElementById('clear').addEventListener('click', function(){
+    ZONE = '全部'; CAT = '全部'; TYPE = '全部'; YEAR = '全部'; RATE = 0; shown = 60;
+    buildZones(); buildFilters(); render();
   });
-  zonesBox.addEventListener('click', ev => {
-    const z = ev.target.closest('.zone');
-    if (!z) return;
-    ZONE = z.dataset.zone;
-    zonesBox.querySelectorAll('.zone').forEach(x => x.classList.toggle('on', x === z));
-    render();
+  document.getElementById('more-btn').addEventListener('click', function(){ shown += 80; render(); });
+}).catch(function(e){ countEl.textContent = '数据加载失败'; console.error(e); });
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]); }); }
+
+function buildCollect(){
+  document.getElementById('ctable').innerHTML = Object.keys(META.sources).map(function(name){
+    return '<div class="citem"><b>' + esc(name) + '</b><span>采集条目 ' + META.sources[name] + ' 条</span></div>';
+  }).join('');
+}
+
+function buildZones(){
+  var box = document.getElementById('zone-tree');
+  box.innerHTML = '';
+  var all = document.createElement('button');
+  all.className = 'zone-btn' + (ZONE === '全部' && CAT === '全部' ? ' on' : '');
+  all.innerHTML = '<span>全部</span><i>' + META.count + '</i>';
+  all.addEventListener('click', function(){ ZONE = '全部'; CAT = '全部'; shown = 60; buildZones(); render(); });
+  box.appendChild(all);
+
+  Object.keys(META.zones).forEach(function(z){
+    var wrap = document.createElement('div');
+    wrap.className = 'zone-wrap';
+    var b = document.createElement('button');
+    var active = ZONE === z;
+    b.className = 'zone-btn' + (active && CAT === '全部' ? ' on' : '') + (active ? ' open' : '');
+    b.innerHTML = '<span class="arrow">▶</span><span>' + esc(z) + '</span><i>' + META.zones[z].count + '</i>';
+    var cats = document.createElement('div');
+    cats.className = 'cats' + (active ? ' open' : '');
+    Object.keys(META.zones[z].cats).forEach(function(c){
+      var cb = document.createElement('button');
+      cb.className = 'cat-btn' + (active && CAT === c ? ' on' : '');
+      cb.innerHTML = '<span>' + esc(c) + '</span><i>' + META.zones[z].cats[c] + '</i>';
+      cb.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        ZONE = z; CAT = (CAT === c ? '全部' : c); shown = 60;
+        buildZones(); render();
+      });
+      cats.appendChild(cb);
+    });
+    b.addEventListener('click', function(){
+      if (ZONE === z && CAT === '全部') { ZONE = '全部'; CAT = '全部'; }
+      else { ZONE = z; CAT = '全部'; }
+      shown = 60; buildZones(); render();
+    });
+    wrap.appendChild(b); wrap.appendChild(cats);
+    box.appendChild(wrap);
   });
 }
 
-function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function chips(id, options, current, setter){
+  var box = document.getElementById(id);
+  box.innerHTML = '';
+  options.forEach(function(o){
+    var b = document.createElement('button');
+    b.className = 'chip' + (o.value === current ? ' on' : '');
+    b.innerHTML = esc(o.label) + (o.count ? '<em>' + o.count + '</em>' : '');
+    b.addEventListener('click', function(){ setter(o.value); shown = 60; buildFilters(); render(); });
+    box.appendChild(b);
+  });
+}
+
+function buildFilters(){
+  var typeOpts = [{label:'全部', value:'全部'}].concat(Object.keys(META.types).map(function(t){ return {label:t, value:t, count:META.types[t]}; }));
+  chips('f-type', typeOpts, TYPE, function(v){ TYPE = v; });
+  var yearOpts = [{label:'全部', value:'全部'}].concat(Object.keys(META.years).map(function(y){ return {label:y, value:y, count:META.years[y]}; }));
+  chips('f-year', yearOpts, YEAR, function(v){ YEAR = v; });
+  var rateOpts = [{label:'全部', value:0}, {label:'5 星', value:5}, {label:'4 星以上', value:4}, {label:'3 星以上', value:3}];
+  chips('f-rate', rateOpts, RATE, function(v){ RATE = v; });
+}
 
 function render(){
-  const items = DATA.items.filter(it => {
+  var items = DATA.filter(function(it){
     if (ZONE !== '全部' && it.zo !== ZONE) return false;
+    if (CAT !== '全部' && it.c !== CAT) return false;
+    if (TYPE !== '全部' && it.ty !== TYPE) return false;
+    if (YEAR !== '全部' && it.y !== YEAR) return false;
+    if (RATE && it.r < RATE) return false;
     if (!KEY) return true;
-    const hay = (it.t + ' ' + it.c + ' ' + it.g.join(' ') + ' ' + it.zo).toLowerCase();
-    return hay.includes(KEY);
+    return (it.t + ' ' + it.c + ' ' + it.g.join(' ') + ' ' + it.zo).toLowerCase().indexOf(KEY) >= 0;
   });
-  countEl.textContent = '共 ' + items.length + ' 条（全库 ' + DATA.count + ' 条）';
+  countEl.textContent = '共 ' + items.length + ' 条（全库 ' + META.count + ' 条）';
   emptyEl.hidden = items.length > 0;
-  const frag = document.createDocumentFragment();
-  items.slice(0, 400).forEach(it => {
-    const c = document.createElement('div');
+  var frag = document.createDocumentFragment();
+  items.slice(0, shown).forEach(function(it){
+    var c = document.createElement('div');
     c.className = 'card';
     c.style.background = 'linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')';
-    c.innerHTML = '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
-      '<div class="meta"><span>' + esc(it.zo || '未分区') + '</span><span>' + esc(it.c || '未分类') + '</span></div>';
-    c.addEventListener('click', () => openModal(it));
+    var stars = it.r ? '<span class="star">' + new Array(it.r + 1).join('★') + '</span>' : '';
+    c.innerHTML = '<div class="top">' + stars + '<span>' + esc(it.zo || '未分区') + '</span></div>' +
+      '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
+      '<div class="meta"><span>' + esc(it.c || '未分类') + '</span><span>' + esc(it.ty) + '</span></div>';
+    c.addEventListener('click', function(){ openModal(it); });
     frag.appendChild(c);
   });
   grid.innerHTML = '';
   grid.appendChild(frag);
-  if (items.length > 400) {
-    const more = document.createElement('div');
-    more.className = 'empty';
-    more.style.gridColumn = '1 / -1';
-    more.textContent = '匹配 ' + items.length + ' 条，这里先显示前 400 条，用搜索缩一下范围';
-    grid.appendChild(more);
-  }
+  moreEl.hidden = items.length <= shown;
+  if (!moreEl.hidden) document.getElementById('more-btn').textContent = '加载更多（还剩 ' + (items.length - shown) + ' 条）';
 }
 
 function openModal(it){
   document.getElementById('m-title').textContent = it.t;
   document.getElementById('m-zone').textContent = it.zo || '未分区';
   document.getElementById('m-cat').textContent = it.c || '未分类';
+  document.getElementById('m-type').textContent = it.ty;
   document.getElementById('m-tags').textContent = it.g.length ? it.g.join(' · ') : '无';
   document.getElementById('m-date').textContent = it.a || '未记录';
+  document.getElementById('m-rate').textContent = it.r ? (new Array(it.r + 1).join('★') + new Array(6 - it.r).join('☆')) : '未评分';
   document.getElementById('mask').classList.add('on');
 }
-document.getElementById('m-close').addEventListener('click', () => document.getElementById('mask').classList.remove('on'));
-document.getElementById('mask').addEventListener('click', ev => { if (ev.target.id === 'mask') ev.target.classList.remove('on'); });
-document.getElementById('q').addEventListener('input', ev => { KEY = ev.target.value.trim().toLowerCase(); render(); });
+document.getElementById('m-close').addEventListener('click', function(){ document.getElementById('mask').classList.remove('on'); });
+document.getElementById('mask').addEventListener('click', function(ev){ if (ev.target.id === 'mask') ev.target.classList.remove('on'); });
 </script>
 </body>
 </html>
