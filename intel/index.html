@@ -138,19 +138,31 @@
   #github, #free-rank, #douyin, #research, #library, #source-control, #my-news-sources,
   #focus, #hot-section, .credit-line, .restored-source-directory, .restored-source-group,
   #quick-find, #refresh, #settings, #sync, #ai-assist, #collection-info, #candidates,
-  #import-direct, #motion-toggle, #recommendation-basis, section.metrics, .notice { display:none !important; }
+  #import-direct, #motion-toggle, #recommendation-basis, section.metrics, .notice, #head-stats,
+  .home-video-cover-missing { display:none !important; }
   .page-head .actions { display:none !important; }
   .snap-badge { display:inline-block; margin-left:8px; font-size:11px; color:#2563eb; background:#e0edff; border-radius:999px; padding:2px 9px; vertical-align:middle; }
 </style>
 <script>(function(){
+  var FIX = function(){
+    var conn = document.getElementById('connection');
+    if (conn) conn.textContent = '展示版 · 数据快照 2026-11-09';
+    var hs = document.getElementById('head-stats'); if (hs) hs.style.display = 'none';
+    document.querySelectorAll('image').forEach(function(im){
+      var h = im.getAttribute('href') || im.getAttribute('xlink:href') || '';
+      if (h.indexOf('/assets/') === 0) { im.setAttribute('href', 'assets/' + h.slice(8)); }
+    });
+    document.querySelectorAll('.home-video-cover-missing').forEach(function(el){ el.style.display = 'none'; });
+  };
   document.addEventListener('DOMContentLoaded', function(){
     var h = document.querySelector('.page-head .title-line');
     if (h && !h.querySelector('.snap-badge')) {
       var b = document.createElement('span'); b.className='snap-badge'; b.textContent='展示版'; h.appendChild(b);
     }
+    FIX();
+    setInterval(FIX, 1200);
     setTimeout(function(){
-      // 隐藏残留的“原封面暂不可用”占位（图片已本地化，若仍失败的图隐藏）
       document.querySelectorAll('img').forEach(function(img){ if (img.complete && img.naturalWidth === 0) img.style.visibility='hidden'; });
-    }, 2500);
+    }, 3000);
   });
 })();</script></body></html>
