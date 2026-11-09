@@ -21,7 +21,7 @@
 .notice .nt { font-size:17px; font-weight:800; color:#b45309; letter-spacing:.3px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
 .notice p { margin:4px 0 0; }
 .notice b { color:#9a3412; }
-.notice a { color:#b45309; text-decoration:underline; }5px; line-height:1.9; color:#b8c4d9; }
+.notice a { color:#b45309; text-decoration:underline; }
   
   main { padding:20px 0 60px; display:grid; grid-template-columns:250px 1fr; gap:22px; }
   aside { position:sticky; top:12px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 24px); overflow:auto; }
@@ -173,7 +173,6 @@
       <a href="../rensheng/">人生指南</a>
       <a href="../resource/">资源中心</a>
       <a href="../intel/">情报中枢</a>
-      <a href="../stats/">访问统计</a>
     </nav>
   </div>
 </div>
@@ -480,8 +479,9 @@ function loadDirs(it){
 }
 function fmtSize(n){ if (n == null) return ''; return n < 1024 ? n + ' KB' : (n / 1024).toFixed(1) + ' MB'; }
 // 目录里夹杂的联系方式/广告/说明，一律隐藏
-var JUNK = /(微信|QQ群|qq群|公众号|联系方式|联系我|加群|进群|交流群|客服|助理|vx|VX|v信|每天更新|每日更新|小白资源|终身学习|资源整理|整理于网络|广告勿信|重要提示|风险提醒|风险提示|免责|声明|网盘|提取码|下载地址|转存|获取方式|扫码|二维码|课程顾问|付费|涨价|原价|优惠|领取|网址|链接)/i;
-var JUNK_EXT = /\.(url|lnk|exe|apk|txt)$/i;
+var JUNK = /(微信|QQ群|qq群|公众号|联系方式|联系我|加群|进群|交流群|客服|助理|vx|VX|v信|每天更新|每日更新|小白资源|终身学习|终身学习社|资源整理|整理于网络|广告勿信|广告|重要提示|风险提醒|风险提示|免责|声明|中创|站长|带你搞钱|搞钱|网赚|创业网|资源网|素材网|学习网|课堂网|学院网|论坛|网址|域名|网站|欢迎加入|免费领取|福利|加我|私聊|扫码|二维码|课程顾问|付费|涨价|原价|优惠|领取|网盘|提取码|下载地址|转存|获取方式|必看)/i;
+var JUNK_EXT = /\.(url|lnk)$/i;
+var JUNK_DOMAIN = /(https?:\/\/|www\.)|[a-z0-9-]+\.(com|cn|net|org|top|vip|xyz|cc|io|me)\b/i;
 function cleanName(name){
   var n = String(name == null ? '' : name);
   n = n.replace(/^[\s\u{1F300}-\u{1FAFF}\u2600}-\u27BF\uFE0F\u200D]+/gu, '');
@@ -493,6 +493,8 @@ function isJunkRow(row){
   if (!name) return true;
   if (row[0] !== 'd' && JUNK_EXT.test(name)) return true;
   if (JUNK.test(name) || JUNK.test(raw)) return true;
+  if (JUNK_DOMAIN.test(name) || JUNK_DOMAIN.test(raw)) return true;
+  if (!/\.[a-z0-9]+$/i.test(name) && /\.[a-z0-9]{2,5}$/i.test(name)) return true;
   return false;
 }
 function showDir(lines){
