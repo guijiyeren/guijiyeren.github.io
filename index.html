@@ -302,7 +302,10 @@
 
   /* 关注 */
   #follow { background:#fff; border-top:1px solid var(--line); }
-  .socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .socials { display:flex; flex-wrap:nowrap; justify-content:space-between; gap:8px; margin-top:28px; }
+  .socials .social { flex:0 0 auto; padding:8px 10px; font-size:11.5px; gap:6px; }
+  .socials .social img { width:16px; height:16px; }
+  @media (max-width:820px) { .socials { flex-wrap:wrap; } }
   .follow-note { margin-top:18px; font-size:13px; color:#64748b; letter-spacing:.3px; }
   .social { display:inline-flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 18px; font-size:13.5px; font-weight:600; color:#1e293b; box-shadow:0 6px 18px rgba(15,23,42,.04); transition:.18s; }
   .social:hover { border-color:#bfdbfe; box-shadow:0 10px 24px rgba(37,99,235,.12); transform:translateY(-1px); }
@@ -584,8 +587,8 @@
 <article class="build-card">
         <div class="cover" data-cover="galaxy"></div>
         <div class="b-body">
-          <div class="b-top"><h3>项目干货库</h3><span class="b-tag">内部系统</span></div>
-          <p>把圈内干货按主题整理成可检索的项目库，1 万多条。</p>
+          <div class="b-top"><h3>项目干货</h3><span class="b-tag">内部系统</span></div>
+          <p>把圈内干货按主题整理成可检索的资料，1 万多条。</p>
         </div>
       </article>
 <article class="build-card">
@@ -749,11 +752,11 @@
 <a class="social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a>
 <a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a>
 <a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a>
-      <a class="social" href="javascript:void(0)" data-mail><img src="assets/icon-qqmail.png" alt="">邮箱</a>
       <a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="assets/icon-feishu.png" alt="">飞书知识库</a>
       <a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-github.png" alt="">GitHub</a>
+      <a class="social" href="javascript:void(0)" data-mail><img src="assets/icon-qqmail.png" alt="">邮箱</a>
     </div>
-    <p class="follow-note">合作 · 交流 · 一起赚钱</p>
+    <p class="follow-note">合作交流，一起搞钱</p>
   </div>
 </section>
 
@@ -887,7 +890,7 @@
     { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2009 做网络运维；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 运维 / 工作室", x: 196, y: 58 },
     { city: "燕郊", year: "2016", desc: "搬到燕郊，成家、女儿出生", short: "成家 / 女儿出生", x: 236, y: 92 },
     { city: "东海", year: "2015", desc: "去江苏东海做水晶饰品", short: "做水晶饰品", x: 330, y: 168 },
-    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 40 },
+    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 22 },
     { city: "诸暨", year: "2019", desc: "进浙江诸暨袜业产业带（2018 年刚去）", short: "进产业带", x: 380, y: 264 },
     { city: "长沙", year: "2020", desc: "定居长沙，长沙买房；一年只能回去 7 天", short: "定居 / 买房", x: 92, y: 236 },
     { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了日本、韩国", short: "定居 / 游轮出国", x: 452, y: 222 }
@@ -972,6 +975,19 @@
   }
 
   var total = prog.getTotalLength();
+  // 每个节点在路径上的真实位置，保证光点刚到节点就弹气泡
+  var nodeRatios = STOPS.map(function(st){
+    var best = 0, bestD = Infinity, N = 600;
+    for (var q = 0; q <= N; q++) {
+      var pt = prog.getPointAtLength(total * q / N);
+      var dx = pt.x - st.x, dy = pt.y - st.y, d = dx * dx + dy * dy;
+      if (d < bestD) { bestD = d; best = q / N; }
+    }
+    return best;
+  });
+  for (var mi = 1; mi < nodeRatios.length; mi++) {
+    if (nodeRatios[mi] < nodeRatios[mi - 1]) nodeRatios[mi] = nodeRatios[mi - 1];
+  }
   prog.style.strokeDasharray = total;
   prog.style.strokeDashoffset = total;
 
@@ -985,11 +1001,10 @@
     prog.style.strokeDashoffset = total * (1 - ratio);
     var pt = pointAt(ratio);
     dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-    // 当前应该亮的节点：按路径长度近似
+    // 当前应该亮的节点：按节点在路径上的真实位置
     var active = 0;
     for (var i = 0; i < STOPS.length; i++) {
-      var seg = i / (STOPS.length - 1);
-      if (ratio >= seg - 0.02) active = i;
+      if (ratio >= nodeRatios[i] - 0.002) active = i;
     }
     if (active !== lastActive) {
       lastActive = active;
