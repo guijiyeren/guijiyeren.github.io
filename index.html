@@ -374,6 +374,11 @@
   .mig-head button { margin-left:auto; border:1px solid var(--line); background:#fff; color:#475569; font:600 11.5px/1 inherit; border-radius:999px; padding:6px 13px; cursor:pointer; }
   .mig-head button:hover { border-color:#bfdbfe; color:var(--blue); }
   .mig-stage { position:relative; flex:1; min-height:340px; border-radius:14px; background:radial-gradient(120% 120% at 70% 10%, #eef5ff 0%, #f8fbff 55%, #ffffff 100%); overflow:hidden; }
+  .mig-stage.mig-stage-dark { background:radial-gradient(120% 120% at 65% 20%, #0d2440 0%, #071321 60%, #040a13 100%); }
+  #migGlobe { display:block; width:100%; height:340px; }
+  .mig-hint { margin-left:auto; font-size:11px; color:#94a3b8; }
+  .mig-stage-dark .mig-cap b { color:#e0f2fe; }
+  .mig-stage-dark .mig-cap span { color:#93c5fd; }
   .mig-stage svg { width:100%; height:100%; display:block; }
   .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
   .mig-cap b { font-size:15px; color:#0f172a; }
@@ -466,6 +471,14 @@
   .w-badge { position:absolute; right:5px; bottom:5px; font-size:9.5px; color:#e0f2fe; background:rgba(10,15,29,.75); border-radius:999px; padding:1px 7px; }
   /* 悬浮导航 */
   .float-nav { position:fixed; right:22px; bottom:26px; z-index:50; display:flex; flex-direction:column; gap:8px; }
+  .side-nav { position:fixed; left:10px; top:50%; transform:translateY(-50%); z-index:88; display:flex; flex-direction:column; gap:7px; padding:9px 7px; border-radius:16px; background:rgba(7,12,24,.78); border:1px solid rgba(56,189,248,.18); backdrop-filter:blur(12px); box-shadow:0 14px 36px rgba(0,0,0,.25); }
+  .side-nav a { position:relative; display:flex; align-items:center; justify-content:center; width:14px; height:14px; text-decoration:none; }
+  .side-nav a i { width:6px; height:6px; border-radius:50%; background:#475569; transition:.18s; }
+  .side-nav a span { position:absolute; left:20px; top:50%; transform:translateY(-50%) translateX(-4px); opacity:0; pointer-events:none; white-space:nowrap; font-size:11px; color:#dbeafe; background:rgba(8,14,28,.95); border:1px solid rgba(56,189,248,.3); border-radius:8px; padding:4px 9px; transition:.16s; }
+  .side-nav:hover a span, .side-nav a.active span { opacity:1; transform:translateY(-50%) translateX(0); }
+  .side-nav a.active i { background:#38bdf8; box-shadow:0 0 10px #38bdf8; }
+  .side-nav a:hover i { background:#7dd3fc; }
+  @media (max-width:1279px){ .side-nav { display:none; } }
   .fbtn { width:42px; height:42px; border-radius:50%; background:#fff; border:1px solid var(--line); box-shadow:0 10px 26px rgba(15,23,42,.18); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:#334155; transition:.15s; }
   .fbtn:hover { color:var(--blue); border-color:#bfdbfe; transform:translateY(-2px); }
 
@@ -816,14 +829,14 @@
 <article class="build-card">
         <div class="cover" data-cover="rc"></div>
         <div class="b-body">
-          <div class="b-top"><h3>资源中心</h3><span class="b-tag">内部系统</span></div>
+          <div class="b-top"><h3>资源中心</h3><span class="b-tag open">已公开</span></div>
           <p>1.2 万条资源索引，分类、封面、检索一体。</p>
         </div>
       </article>
 <article class="build-card">
         <div class="cover" data-cover="hub"></div>
         <div class="b-body">
-          <div class="b-top"><h3>情报中枢</h3><span class="b-tag">内部系统</span></div>
+          <div class="b-top"><h3>情报中枢</h3><span class="b-tag open">已公开</span></div>
           <p>40+ 情报源每天自动采集、去重、打分、出日报。</p>
         </div>
       </article>
@@ -864,9 +877,9 @@
 <article class="work-row"><div class="w-cover"><img src="assets/work-13.jpg" alt="AI穿搭视频"><span class="w-badge">#13</span></div><div class="w-main"><h3>AI穿搭视频</h3><p>2026-11-01 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7703028644700048703" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae6a78f000000001802d093" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1m8xp63EVB" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xijdfejy5s8z2a" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
 <article class="work-row"><div class="w-cover"><img src="assets/work-15.jpg" alt="AI工作台V1"><span class="w-badge">#15</span></div><div class="w-main"><h3>AI工作台V1</h3><p>2026-11-01 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7703053836029676850" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae6c0e1000000001200a171" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV1Xcxx6ZE95" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xvsuzsiq6c6yac" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
 <article class="work-row"><div class="w-cover"><img src="assets/work-5.jpg" alt="一个老板一群AI员工"><span class="w-badge">#05</span></div><div class="w-main"><h3>一个老板一群AI员工</h3><p>2026-10-28 · 5 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7701569252385475876" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6ae179560000000023013763" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV125x56JEyA" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xx4usv8v5qttyk" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div></article>
-<article class="work-row work-hide"><div class="w-cover"><img src="assets/work-4.jpg" alt="电商AI工作流"><span class="w-badge">#04</span></div><div class="w-main"><h3>电商AI工作流</h3><p>2026-10-27 · 7 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7700900747050880307" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6adf630f00000000150081ff" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV16rnd65EWt" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xnidq834bpsd7y" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a><a class="plat on" href="https://www.tiktok.com/@guijiyeren/video/7705761189736811798" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a><a class="plat on" href="https://www.toutiao.com/video/7705760974649705014/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a><a class="plat on" href="https://www.zhihu.com/pin/2102836509799982694" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a><a class="plat on" href="https://www.youtube.com/watch?v=UzAzNBupVZw" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="">YouTube</a></div></article>
+<article class="work-row"><div class="w-cover"><img src="assets/work-4.jpg" alt="电商AI工作流"><span class="w-badge">#04</span></div><div class="w-main"><h3>电商AI工作流</h3><p>2026-10-27 · 7 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7700900747050880307" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6adf630f00000000150081ff" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV16rnd65EWt" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xnidq834bpsd7y" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a><a class="plat on" href="https://www.tiktok.com/@guijiyeren/video/7705761189736811798" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a><a class="plat on" href="https://www.toutiao.com/video/7705760974649705014/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a><a class="plat on" href="https://www.zhihu.com/pin/2102836509799982694" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a><a class="plat on" href="https://www.youtube.com/watch?v=UzAzNBupVZw" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="">YouTube</a></div></article>
     </div>
-    <div class="works-more"><button type="button" id="works-expand">展开全部作品（共 6 条）↓</button></div>
+    
     <div class="works-platforms">
       <div class="wp-head">更多作品，在下面这些平台的主页看</div>
       <div class="wp-row"><a class="wp-item" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="抖音"><span>抖音</span></a>
@@ -965,21 +978,11 @@
       </div>
       
       <div class="about-visual">
-        <div class="mig-card">
-          <div class="mig-head"><b>我的迁徙路线</b><button type="button" id="migPlay">暂停</button></div>
-          <div class="mig-stage">
-            <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
-              <defs>
-                <linearGradient id="migGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/>
-                </linearGradient>
-              </defs>
-              <path id="migBase" d="" fill="none" stroke="#dbe7f6" stroke-width="2" stroke-dasharray="4 6"/>
-              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="2.5" stroke-linecap="round"/>
-              <g id="migNodes"></g>
-              <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
-            </svg>
-            <div class="mig-cap"><b id="migCity">湖南小镇</b><span id="migDesc">故事从这里开始</span></div>
+        <div class="mig-card mig-globe">
+          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-hint">8 站 · 星球航线</span></div>
+          <div class="mig-stage mig-stage-dark">
+            <canvas id="migGlobe" aria-label="迁徙路线星球图"></canvas>
+            <div class="mig-cap"><b id="migCity">怀化</b><span id="migDesc">1986 · 出生于湖南怀化一个小镇</span></div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar">
@@ -1088,6 +1091,18 @@
   </div>
 </footer>
 
+<nav class="side-nav" id="sideNav" aria-label="页面目录">
+  <a href="#projects" data-sec="projects"><i></i><span>公开项目</span></a>
+  <a href="#progress" data-sec="progress"><i></i><span>项目进度</span></a>
+  <a href="#building" data-sec="building"><i></i><span>实战项目</span></a>
+  <a href="#works" data-sec="works"><i></i><span>最新作品</span></a>
+  <a href="#notes" data-sec="notes"><i></i><span>实战笔记</span></a>
+  <a href="#tools" data-sec="tools"><i></i><span>工具箱</span></a>
+  <a href="#services" data-sec="services"><i></i><span>服务</span></a>
+  <a href="#about" data-sec="about"><i></i><span>关于我</span></a>
+  <a href="#faq" data-sec="faq"><i></i><span>FAQ</span></a>
+  <a href="#follow" data-sec="follow"><i></i><span>联系</span></a>
+</nav>
 <div class="float-nav" aria-label="页面导航">
   <a class="fbtn" href="#top" title="回到顶部" aria-label="回到顶部">↑</a>
   <a class="fbtn" href="#page-end" title="直接到底部" aria-label="直接到底部">↓</a>
@@ -2553,5 +2568,70 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
   fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
 }catch(e){}})();</script>
+<script>
+/* 迁徙路线 · 星球航线 */
+(function(){
+  var cv=document.getElementById('migGlobe'); if(!cv) return;
+  var cityEl=document.getElementById('migCity'), descEl=document.getElementById('migDesc');
+  var S=[
+    {c:'怀化',y:'1986',d:'出生于湖南怀化一个小镇'},
+    {c:'北京',y:'2005',d:'坐绿皮火车去北京上学'},
+    {c:'燕郊',y:'2016',d:'女儿出生；2017 卖掉燕郊的房子'},
+    {c:'东海',y:'2015',d:'去江苏连云港东海县做水晶饰品生意'},
+    {c:'辽源',y:'2018',d:'去东北辽源做袜业'},
+    {c:'诸暨',y:'2019',d:'进浙江诸暨袜业产业带'},
+    {c:'长沙',y:'2020',d:'定居长沙，长沙买房'},
+    {c:'杭州',y:'2025',d:'定居杭州；第一次坐游轮出国'}
+  ];
+  var pts=[[-.52,-.08],[-.26,-.56],[.06,-.68],[.36,-.5],[.6,-.15],[.64,.2],[.34,.52],[-.1,.6]];
+  var ctx=cv.getContext('2d'), W=0,H=0, mx=-999,my=-999, T=0, hover=-1;
+  function fit(){ var r=cv.getBoundingClientRect(); var d=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height; cv.width=W*d; cv.height=H*d; ctx.setTransform(d,0,0,d,0,0); }
+  window.addEventListener('resize',fit); fit();
+  function P(i){ var R=Math.min(W,H)*.34; return {x:W/2+pts[i][0]*R, y:H/2+pts[i][1]*R}; }
+  function draw(){
+    T+=0.006; ctx.clearRect(0,0,W,H);
+    var R=Math.min(W,H)*.34;
+    var g=ctx.createRadialGradient(W/2-R*.3,H/2-R*.35,R*.1,W/2,H/2,R*1.25);
+    g.addColorStop(0,'#164f82'); g.addColorStop(.55,'#0a1c36'); g.addColorStop(1,'#040812');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(W/2,H/2,R,0,6.283); ctx.fill();
+    ctx.strokeStyle='rgba(56,189,248,.16)'; ctx.lineWidth=1;
+    for(var k=-3;k<=3;k++){ ctx.beginPath(); ctx.ellipse(W/2,H/2+k*R*.24,R*Math.sqrt(1-(k*.24)*(k*.24)),R*.1,0,0,6.283); ctx.stroke(); }
+    for(var q=0;q<12;q++){ var ang=q/12*Math.PI*2+T*.12; ctx.beginPath(); ctx.ellipse(W/2,H/2,R*.98,R*.9,ang,0,6.283); ctx.globalAlpha=.05; ctx.stroke(); }
+    ctx.globalAlpha=1;
+    ctx.strokeStyle='rgba(125,211,252,.3)'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.ellipse(W/2,H/2,R*1.24,R*.5,-.15,0,6.283); ctx.stroke();
+    ctx.strokeStyle='rgba(125,211,252,.8)'; ctx.lineWidth=2; ctx.beginPath();
+    for(var i=0;i<S.length;i++){ var p=P(i); if(!i) ctx.moveTo(p.x,p.y); else { var q2=P(i-1); ctx.quadraticCurveTo((q2.x+p.x)/2,(q2.y+p.y)/2-R*.18,p.x,p.y); } }
+    ctx.stroke();
+    var nowHover=-1;
+    for(var j=0;j<S.length;j++){
+      var pj=P(j); var hov=Math.hypot(pj.x-mx,pj.y-my)<18; if(hov) nowHover=j;
+      ctx.fillStyle=hov?'#fff':'#7dd3fc'; ctx.beginPath(); ctx.arc(pj.x,pj.y,hov?6:4,0,6.283); ctx.fill();
+      ctx.strokeStyle='rgba(56,189,248,'+(0.3+0.35*Math.sin(T*5+j))+')'; ctx.beginPath(); ctx.arc(pj.x,pj.y,10+Math.sin(T*3+j)*3,0,6.283); ctx.stroke();
+      ctx.fillStyle=hov?'#fff':'#cfe9ff'; ctx.font='600 '+(hov?12:10.5)+'px -apple-system,"PingFang SC",sans-serif'; ctx.textAlign='left'; ctx.fillText(S[j].c,pj.x+9,pj.y+3);
+    }
+    if(nowHover>=0){ hover=nowHover; if(cityEl) cityEl.textContent=S[hover].c; if(descEl) descEl.textContent=S[hover].y+' · '+S[hover].d; }
+    requestAnimationFrame(draw);
+  }
+  cv.addEventListener('mousemove',function(e){ var r=cv.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; });
+  cv.addEventListener('mouseleave',function(){ mx=-999; my=-999; });
+  draw();
+})();
+</script>
+<script>
+/* 左侧悬浮章节导航 */
+(function(){
+  var nav=document.getElementById('sideNav'); if(!nav) return;
+  var links=Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var pairs=links.map(function(a){ return [document.getElementById(a.getAttribute('data-sec')),a]; }).filter(function(x){ return x[0]; });
+  function update(){
+    var y=window.scrollY+window.innerHeight*0.35, cur=null;
+    pairs.forEach(function(p){ if(p[0].offsetTop<=y) cur=p; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if(cur) cur[1].classList.add('active');
+  }
+  window.addEventListener('scroll',update,{passive:true}); update();
+  links.forEach(function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('data-sec')); if(!el) return; e.preventDefault(); window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-8,behavior:'smooth'}); }); });
+})();
+</script>
 </body>
 </html>
