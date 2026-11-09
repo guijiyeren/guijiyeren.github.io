@@ -29,11 +29,11 @@
   html { scroll-behavior:smooth; }
   body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; color:var(--ink); background:var(--light); -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
 
   /* 导航 */
   .nav { position:sticky; top:0; z-index:30; background:#0a0f1d; box-shadow:0 1px 0 rgba(148,163,184,.16); transform:translateZ(0); }
-  .nav-in { max-width:1120px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:18px; }
+  .nav-in { max-width:1200px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:18px; }
   .brand { display:flex; align-items:center; gap:10px; color:#f1f5f9; font-weight:800; font-size:16px; letter-spacing:.5px; }
   .brand img { width:32px; height:32px; border-radius:50%; border:1px solid rgba(56,189,248,.45); }
   .nav-links { display:flex; gap:22px; margin-left:auto; font-size:13.5px; color:#cbd5e1; }
@@ -44,7 +44,7 @@
   /* Hero */
   .hero { position:relative; overflow:hidden; background:radial-gradient(1200px 620px at 82% -10%, rgba(37,99,235,.5), transparent 62%), radial-gradient(900px 520px at 6% 112%, rgba(56,189,248,.18), transparent 60%), var(--bg); color:#e2e8f0; }
   .hero::before { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(148,163,184,.16) 1px, transparent 1px); background-size:26px 26px; mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 76%); }
-  .hero-in { position:relative; max-width:1120px; margin:0 auto; padding:74px 24px 66px; display:grid; grid-template-columns:1.12fr .88fr; gap:26px; align-items:center; }
+  .hero-in { position:relative; max-width:1200px; margin:0 auto; padding:74px 24px 66px; display:grid; grid-template-columns:1.12fr .88fr; gap:26px; align-items:center; }
   .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase; }
   .eyebrow::before { content:""; width:22px; height:1px; background:var(--cyan); }
   .hero h1 { font-size:60px; line-height:1.1; letter-spacing:2px; margin:16px 0 0; color:#fff; text-shadow:0 0 60px rgba(56,189,248,.25); }
@@ -205,6 +205,14 @@
   .plat:hover { border-color:#bfdbfe; color:var(--blue); box-shadow:0 6px 16px rgba(37,99,235,.12); }
   .plat img { width:14px; height:14px; border-radius:3px; display:block; }
   .works-note { margin-top:14px; font-size:12.5px; color:#64748b; }
+  .works-platforms { margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:18px 22px 20px; box-shadow:0 10px 26px rgba(15,23,42,.05); }
+  .wp-head { font-size:12px; color:#94a3b8; letter-spacing:.3px; margin-bottom:14px; }
+  .wp-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .wp-item { display:flex; flex-direction:column; align-items:center; gap:8px; flex:1 1 0; min-width:0; color:#334155; font-size:12px; transition:.16s; }
+  .wp-item img { width:42px; height:42px; border-radius:11px; display:block; box-shadow:0 8px 20px rgba(15,23,42,.14); transition:.16s; }
+  .wp-item span { white-space:nowrap; }
+  .wp-item:hover { color:var(--blue); transform:translateY(-2px); }
+  .wp-item:hover img { box-shadow:0 12px 26px rgba(37,99,235,.24); }
   .works-more { text-align:center; margin-top:16px; }
   .works-more button { border:1px solid var(--line); background:#fff; color:#334155; font:600 13px/1.2 inherit; border-radius:999px; padding:11px 22px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.06); transition:.18s; }
   .works-more button:hover { border-color:#bfdbfe; color:var(--blue); }
@@ -236,7 +244,8 @@
   .tl-item span { font-size:12.5px; color:#475569; line-height:1.8; }
 
   /* 关注 · 更多入口 */
-  .about-rich.about-reverse { display:grid; grid-template-columns:1.08fr .92fr; gap:32px; align-items:stretch; }
+  .about-rich.about-reverse { display:grid; grid-template-columns:1.08fr .92fr; gap:32px; align-items:start; }
+  .about-rich.about-reverse .about-visual { max-width:100%; margin:0; }
   .about-timeline { padding:20px 26px; display:flex; flex-direction:column; justify-content:center; }
   .about-timeline .tl-row { padding:11px 0; gap:16px; }
   .about-timeline .tl-row b { flex:0 0 46px; font-size:13px; }
@@ -271,7 +280,7 @@
   .contact .btn { margin-left:auto; background:#0f172a; color:#fff; }
 
   footer { background:var(--bg); color:#7f8da6; padding:32px 0; font-size:12.5px; line-height:1.9; }
-  footer .in { max-width:1120px; margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  footer .in { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
   footer b { color:#cbd5e1; }
   footer a { color:#94a3b8; border-bottom:1px dotted rgba(148,163,184,.4); }
 
@@ -621,7 +630,17 @@
 <article class="work-row work-hide"><div class="w-cover"><img src="assets/work-4.jpg" alt="电商AI工作流"><span class="w-badge">#04</span></div><div class="w-main"><h3>电商AI工作流</h3><p>2026-10-27 · 7 个平台</p></div><div class="w-links"><a class="plat on" href="https://www.douyin.com/video/7700900747050880307" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat on" href="https://www.xiaohongshu.com/explore/6adf630f00000000150081ff" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat on" href="https://www.bilibili.com/video/BV16rnd65EWt" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat on" href="https://www.kuaishou.com/short-video/3xnidq834bpsd7y" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a><a class="plat on" href="https://www.tiktok.com/@guijiyeren/video/7705761189736811798" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a><a class="plat on" href="https://www.toutiao.com/video/7705760974649705014/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a><a class="plat on" href="https://www.zhihu.com/pin/2102836509799982694" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a><a class="plat on" href="https://www.youtube.com/watch?v=UzAzNBupVZw" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="">YouTube</a></div></article>
     </div>
     <div class="works-more"><button type="button" id="works-expand">展开全部作品（共 27 条）↓</button></div>
-    <p class="works-note">更多作品在各平台主页看：抖音、小红书、B站、快手、视频号、YouTube、TikTok、今日头条、知乎。</p>
+    <div class="works-platforms">
+      <div class="wp-head">更多作品，在下面这些平台的主页看</div>
+      <div class="wp-row"><a class="wp-item" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="抖音"><span>抖音</span></a>
+<a class="wp-item" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="小红书"><span>小红书</span></a>
+<a class="wp-item" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="B站"><span>B站</span></a>
+<a class="wp-item" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="快手"><span>快手</span></a>
+<a class="wp-item" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="YouTube"><span>YouTube</span></a>
+<a class="wp-item" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="TikTok"><span>TikTok</span></a>
+<a class="wp-item" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="今日头条"><span>今日头条</span></a>
+<a class="wp-item" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="知乎"><span>知乎</span></a></div>
+    </div>
   </div>
 </section>
 
@@ -635,10 +654,10 @@
       <div class="timeline-mini about-timeline">
         <div class="tl-row"><b>2008</b><span>在网上卖手机充值卡，第一次靠网络赚钱</span></div>
         <div class="tl-row"><b>2010</b><span>帮别人做网站、做网络推广，靠一台电脑接活</span></div>
-        <div class="tl-row"><b>2013</b><span>正式转做电商，从水晶做到袜子</span></div>
-        <div class="tl-row"><b>2016</b><span>开第一家淘宝店卖袜子，客厅就是仓库</span></div>
-        <div class="tl-row"><b>2018</b><span>搬进浙江袜业产业带，供应链握在自己手里</span></div>
-        <div class="tl-row"><b>2021</b><span>踩中行情，杭州买房，暂时实现财富自由</span></div>
+        <div class="tl-row"><b>2013</b><span>做电商，从水晶饰品开始</span></div>
+        <div class="tl-row"><b>2016</b><span>卖春节用品和圣诞用品，后来受政策限制，生意下滑</span></div>
+        <div class="tl-row"><b>2018</b><span>转行做袜子，搬进浙江袜业产业带</span></div>
+        <div class="tl-row"><b>2021</b><span>挣了一大笔，暂时实现财务自由</span></div>
         <div class="tl-row"><b>2024</b><span>遇到变故，消沉了一阵，业绩腰斩；下半年开始用 AI</span></div>
         <div class="tl-row"><b>2026</b><span>工作台、情报中枢、内容流水线跑通</span></div>
       </div>
