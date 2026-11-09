@@ -19,128 +19,204 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://guijiyeren.github.io/og.png">
 <link rel="canonical" href="https://guijiyeren.github.io/">
-<link rel="icon" href="assets/home/favicon.png">
+<link rel="icon" href="assets/logo.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"硅基野人","url":"https://guijiyeren.github.io/","email":"mailto:154647@qq.com","jobTitle":"电商人 / AI 无人公司实战者","sameAs":["https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_", "https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2", "https://space.bilibili.com/504784256", "https://www.kuaishou.com/profile/3x837cneqdzidis", "https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/", "https://www.tiktok.com/@guijiyeren", "https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/", "https://www.zhihu.com/people/guozhengxin"]}
+{"@context":"https://schema.org","@type":"Person","name":"硅基野人","url":"https://guijiyeren.github.io/","email":"mailto:154647@qq.com","jobTitle":"电商人 / AI 无人公司实战者","sameAs":["https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_","https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2","https://space.bilibili.com/504784256","https://www.kuaishou.com/profile/3x837cneqdzidis","https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/","https://www.tiktok.com/@guijiyeren","https://www.zhihu.com/people/guozhengxin"]}
 </script>
 <style>
-  :root {
-    --bg: #0a0f1d; --card: #ffffff; --ink: #0f172a; --ink2: #475569;
-    --muted: #94a3b8; --line: #e2e8f0; --cyan: #38bdf8; --blue: #2563eb;
-    --light: #f6f8fc;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; color: var(--ink); background: var(--light); -webkit-font-smoothing: antialiased; }
-  a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  :root { --bg:#0a0f1d; --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --cyan:#38bdf8; --blue:#2563eb; --light:#f6f8fc; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; color:var(--ink); background:var(--light); -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
 
-  .nav { position: sticky; top: 0; z-index: 20; background: rgba(10,15,29,.82); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(148,163,184,.16); }
-  .nav-in { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 18px; }
-  .brand { display: flex; align-items: center; gap: 10px; color: #f1f5f9; font-weight: 800; font-size: 16px; letter-spacing: .5px; }
-  .brand img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(56,189,248,.45); }
-  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 13.5px; color: #cbd5e1; }
-  .nav-links a:hover { color: #fff; }
-  .nav-gh { border: 1px solid rgba(148,163,184,.35); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: #e2e8f0; }
-  .nav-gh:hover { border-color: var(--cyan); color: #fff; }
+  /* 导航 */
+  .nav { position:sticky; top:0; z-index:30; background:rgba(10,15,29,.82); backdrop-filter:blur(14px); border-bottom:1px solid rgba(148,163,184,.16); }
+  .nav-in { max-width:1120px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:18px; }
+  .brand { display:flex; align-items:center; gap:10px; color:#f1f5f9; font-weight:800; font-size:16px; letter-spacing:.5px; }
+  .brand img { width:32px; height:32px; border-radius:50%; border:1px solid rgba(56,189,248,.45); }
+  .nav-links { display:flex; gap:22px; margin-left:auto; font-size:13.5px; color:#cbd5e1; }
+  .nav-links a:hover { color:#fff; }
+  .nav-gh { border:1px solid rgba(148,163,184,.35); border-radius:999px; padding:6px 14px; font-size:13px; color:#e2e8f0; }
+  .nav-gh:hover { border-color:var(--cyan); color:#fff; }
 
-  .hero { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 78% -10%, rgba(37,99,235,.45), transparent 60%), radial-gradient(900px 500px at 8% 110%, rgba(56,189,248,.16), transparent 60%), var(--bg); color: #e2e8f0; }
-  .hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(148,163,184,.18) 1px, transparent 1px); background-size: 26px 26px; mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 78%); }
-  .hero-in { position: relative; max-width: 1120px; margin: 0 auto; padding: 88px 24px 76px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 40px; align-items: center; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; letter-spacing: 1.5px; color: var(--cyan); text-transform: uppercase; }
-  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--cyan); }
-  .hero h1 { font-size: 64px; line-height: 1.08; letter-spacing: 2px; margin: 18px 0 0; color: #fff; text-shadow: 0 0 60px rgba(56,189,248,.25); }
-  .hero h1 em { font-style: normal; background: linear-gradient(90deg, #38bdf8, #a78bfa 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero .lead { margin: 20px 0 0; font-size: 17px; line-height: 1.95; color: #b8c4d9; max-width: 560px; }
-  .hero .lead b { color: #fff; font-weight: 600; }
-  .cta-row { display: flex; align-items: center; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 13px 24px; font-size: 14.5px; font-weight: 700; transition: .18s; }
-  .btn-primary { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; box-shadow: 0 10px 30px rgba(37,99,235,.35); }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 34px rgba(37,99,235,.45); }
-  .btn-ghost { border: 1px solid rgba(148,163,184,.4); color: #e2e8f0; }
-  .btn-ghost:hover { border-color: var(--cyan); color: #fff; }
-  .hero-stats { display: flex; gap: 34px; margin-top: 38px; flex-wrap: wrap; }
-  .hero-stats .n { display: block; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: .5px; }
-  .hero-stats .l { display: block; font-size: 12px; color: #7f8da6; margin-top: 2px; letter-spacing: .5px; }
-  .avatar-box { position: relative; display: flex; justify-content: center; }
-  .avatar-ring { position: relative; width: 280px; height: 280px; border-radius: 50%; padding: 4px; background: conic-gradient(from 160deg, #38bdf8, #2563eb, #a78bfa, #38bdf8); box-shadow: 0 0 70px rgba(56,189,248,.35); }
-  .avatar-ring img { width: 100%; height: 100%; border-radius: 50%; display: block; background: #0b1020; }
-  .avatar-tag { position: absolute; right: -4px; bottom: 10px; background: rgba(10,15,29,.9); border: 1px solid rgba(56,189,248,.45); color: #e2e8f0; font-size: 12px; border-radius: 999px; padding: 6px 12px; backdrop-filter: blur(8px); }
-  .avatar-tag em { font-style: normal; color: var(--cyan); }
+  /* Hero */
+  .hero { position:relative; overflow:hidden; background:radial-gradient(1200px 620px at 82% -10%, rgba(37,99,235,.5), transparent 62%), radial-gradient(900px 520px at 6% 112%, rgba(56,189,248,.18), transparent 60%), var(--bg); color:#e2e8f0; }
+  .hero::before { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(148,163,184,.16) 1px, transparent 1px); background-size:26px 26px; mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 76%); }
+  .hero-in { position:relative; max-width:1120px; margin:0 auto; padding:74px 24px 66px; display:grid; grid-template-columns:1.12fr .88fr; gap:26px; align-items:center; }
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase; }
+  .eyebrow::before { content:""; width:22px; height:1px; background:var(--cyan); }
+  .hero h1 { font-size:60px; line-height:1.1; letter-spacing:2px; margin:16px 0 0; color:#fff; text-shadow:0 0 60px rgba(56,189,248,.25); }
+  .hero h1 em { font-style:normal; background:linear-gradient(90deg,#38bdf8,#a78bfa 70%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero .lead { margin:18px 0 0; font-size:16.5px; line-height:1.95; color:#b8c4d9; max-width:540px; }
+  .hero .lead b { color:#fff; font-weight:600; }
+  .cta-row { display:flex; align-items:center; gap:14px; margin-top:28px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:13px 24px; font-size:14.5px; font-weight:700; transition:.18s; }
+  .btn-primary { background:linear-gradient(135deg,#38bdf8,#2563eb); color:#fff; box-shadow:0 10px 30px rgba(37,99,235,.35); }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 14px 34px rgba(37,99,235,.45); }
+  .btn-ghost { border:1px solid rgba(148,163,184,.4); color:#e2e8f0; }
+  .btn-ghost:hover { border-color:var(--cyan); color:#fff; }
+  .hero-stats { display:flex; gap:32px; margin-top:34px; flex-wrap:wrap; }
+  .hero-stats .n { display:block; font-size:21px; font-weight:800; color:#fff; letter-spacing:.5px; }
+  .hero-stats .l { display:block; font-size:12px; color:#7f8da6; margin-top:2px; letter-spacing:.5px; }
 
-  section { padding: 74px 0; }
-  .eyebrow2 { font-size: 12.5px; letter-spacing: 2px; color: var(--blue); font-weight: 700; text-transform: uppercase; }
-  .sec-head h2 { font-size: 30px; letter-spacing: .5px; margin: 8px 0 0; }
-  .sec-head p { margin-top: 10px; color: var(--ink2); font-size: 14.5px; line-height: 1.8; max-width: 620px; }
+  /* Hero 动态视觉 */
+  .hero-visual { position:relative; width:100%; height:430px; display:flex; align-items:center; justify-content:center; }
+  #orbit-canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .orbit-ring { position:absolute; border-radius:50%; border:1px dashed rgba(125,211,252,.35); animation:spin 26s linear infinite; }
+  .ring-1 { width:330px; height:330px; }
+  .ring-2 { width:250px; height:250px; border-color:rgba(167,139,250,.35); animation-direction:reverse; animation-duration:18s; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .avatar-core { position:relative; z-index:2; width:190px; height:190px; border-radius:50%; padding:4px; background:conic-gradient(from 160deg,#38bdf8,#2563eb,#a78bfa,#38bdf8); box-shadow:0 0 80px rgba(56,189,248,.4), inset 0 0 30px rgba(56,189,248,.25); animation:pulse 4s ease-in-out infinite; }
+  .avatar-core img { width:100%; height:100%; border-radius:50%; display:block; background:#0b1020; }
+  @keyframes pulse { 0%,100% { box-shadow:0 0 60px rgba(56,189,248,.32), inset 0 0 24px rgba(56,189,248,.2); } 50% { box-shadow:0 0 110px rgba(56,189,248,.5), inset 0 0 34px rgba(56,189,248,.3); } }
+  .float-chip { position:absolute; z-index:3; background:rgba(10,15,29,.82); border:1px solid rgba(56,189,248,.4); color:#dbeafe; font-size:12px; border-radius:999px; padding:7px 13px; backdrop-filter:blur(8px); white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.35); animation:floaty 6s ease-in-out infinite; }
+  .chip-a { top:22px; left:50%; transform:translateX(-50%); animation-delay:0s; }
+  .chip-b { right:-6px; top:150px; animation-delay:1.2s; }
+  .chip-c { left:-10px; top:270px; animation-delay:2.1s; }
+  .chip-d { bottom:8px; right:40px; animation-delay:3s; }
+  @keyframes floaty { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
+  .chip-a { animation-name:floatyX; }
+  @keyframes floatyX { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(-9px); } }
 
-  #projects { background: #fff; border-top: 1px solid var(--line); }
-  .projects-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; margin-top: 34px; }
-  .project { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: 0 18px 44px rgba(15,23,42,.07); transition: .2s; }
-  .project:hover { transform: translateY(-3px); box-shadow: 0 26px 60px rgba(15,23,42,.12); }
-  .project .thumb { position: relative; aspect-ratio: 16/8.4; background: #0b1020; overflow: hidden; }
-  .project .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .96; }
-  .project .thumb .badge { position: absolute; right: 14px; bottom: 14px; background: rgba(10,15,29,.78); color: #dbeafe; font-size: 11.5px; border: 1px solid rgba(56,189,248,.4); border-radius: 999px; padding: 4px 10px; backdrop-filter: blur(6px); }
-  .project .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .project .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tag { font-size: 11px; color: #475569; background: #f1f5f9; border-radius: 6px; padding: 3px 8px; }
-  .project h3 { font-size: 18px; letter-spacing: .3px; }
-  .project p { font-size: 13.5px; color: var(--ink2); line-height: 1.8; }
-  .project .links { margin-top: auto; display: flex; gap: 10px; padding-top: 6px; }
-  .link-a { font-size: 13px; font-weight: 700; color: var(--blue); }
-  .link-a.muted { color: #64748b; font-weight: 500; }
-  .project.placeholder { background: #f8fafc; border-style: dashed; align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 40px 24px; min-height: 300px; }
-  .project.placeholder .plus { width: 56px; height: 56px; border-radius: 16px; border: 1px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #94a3b8; }
-  .project.placeholder h3 { font-size: 16px; color: #334155; }
-  .project.placeholder p { font-size: 13px; color: #94a3b8; }
+  /* section 通用 */
+  section { padding:70px 0; }
+  .eyebrow2 { font-size:12.5px; letter-spacing:2px; color:var(--blue); font-weight:700; text-transform:uppercase; }
+  .sec-head h2 { font-size:29px; letter-spacing:.5px; margin:8px 0 0; }
+  .sec-head p { margin-top:10px; color:var(--ink2); font-size:14.5px; line-height:1.8; max-width:640px; }
 
-  #kb { background: linear-gradient(180deg, #f6f8fc, #eef3fb); }
-  .kb-card { position: relative; overflow: hidden; margin-top: 32px; border-radius: 24px; padding: 34px 36px; background: linear-gradient(120deg, #0b1224 0%, #10203f 55%, #123a6b 100%); color: #e2e8f0; display: flex; align-items: center; gap: 26px; box-shadow: 0 24px 60px rgba(15,23,42,.18); }
-  .kb-card::after { content: ""; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(56,189,248,.35), transparent 65%); }
-  .kb-icon { width: 64px; height: 64px; border-radius: 16px; background: #fff; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-  .kb-icon img { width: 40px; height: 40px; display: block; }
-  .kb-main { flex: 1; min-width: 0; position: relative; z-index: 1; }
-  .kb-main .k { font-size: 12px; letter-spacing: 2px; color: #7dd3fc; font-weight: 700; }
-  .kb-main h3 { font-size: 22px; margin: 6px 0 8px; color: #fff; letter-spacing: .5px; }
-  .kb-main p { font-size: 13.5px; color: #b8c4d9; line-height: 1.8; }
-  .kb-chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-  .kb-chips span { font-size: 11.5px; color: #bae6fd; border: 1px solid rgba(125,211,252,.35); border-radius: 999px; padding: 4px 10px; background: rgba(56,189,248,.08); }
-  .kb-go { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #0b1224; font-weight: 800; font-size: 14px; border-radius: 999px; padding: 13px 22px; flex: 0 0 auto; white-space: nowrap; }
+  /* 开源项目 */
+  #projects { background:#fff; border-top:1px solid var(--line); }
+  .projects-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:22px; margin-top:32px; }
+  .project { display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:20px; overflow:hidden; box-shadow:0 18px 44px rgba(15,23,42,.07); transition:.2s; }
+  .project:hover { transform:translateY(-3px); box-shadow:0 26px 60px rgba(15,23,42,.12); }
+  .project .thumb { position:relative; aspect-ratio:16/8.4; background:#0b1020; overflow:hidden; }
+  .project .thumb img { width:100%; height:100%; object-fit:cover; display:block; opacity:.96; }
+  .project .thumb .badge { position:absolute; right:14px; bottom:14px; background:rgba(10,15,29,.78); color:#dbeafe; font-size:11.5px; border:1px solid rgba(56,189,248,.4); border-radius:999px; padding:4px 10px; backdrop-filter:blur(6px); }
+  .project .body { padding:20px 22px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .project .tags { display:flex; gap:8px; flex-wrap:wrap; }
+  .tag { font-size:11px; color:#475569; background:#f1f5f9; border-radius:6px; padding:3px 8px; }
+  .project h3 { font-size:18px; letter-spacing:.3px; }
+  .project p { font-size:13.5px; color:var(--ink2); line-height:1.8; }
+  .project .links { margin-top:auto; display:flex; gap:10px; padding-top:6px; }
+  .link-a { font-size:13px; font-weight:700; color:var(--blue); }
+  .link-a.muted { color:#64748b; font-weight:500; }
+  .build-card .b-tag.open { color:#166534; background:#dcfce7; }
 
-  #about { background: #fff; border-top: 1px solid var(--line); }
-  .about-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 32px; }
-  .about-item { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: #fbfdff; }
-  .about-item .ico { width: 38px; height: 38px; border-radius: 11px; background: linear-gradient(135deg, #e0f2fe, #dbeafe); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
-  .about-item h4 { font-size: 15px; margin-bottom: 6px; }
-  .about-item p { font-size: 13px; color: var(--ink2); line-height: 1.8; }
+  /* 配图版 */
+  .shot-gallery { margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .shot { background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:0 12px 30px rgba(15,23,42,.06); display:flex; flex-direction:column; }
+  .shot img { width:100%; height:250px; display:block; object-fit:cover; object-position:top center; }
+  .shot.big img { height:320px; }
+  .shot figcaption { padding:10px 14px; font-size:12px; color:#64748b; border-top:1px solid var(--line); background:#fbfdff; display:flex; align-items:center; gap:6px; }
+  .shot figcaption .pill { font-size:10px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:1px 8px; }
+  .shot.phone { background:radial-gradient(600px 240px at 50% 0%, #dbeafe, #f1f5f9); display:flex; flex-direction:column; }
+  .shot.phone .ph-wrap { flex:1; display:flex; align-items:center; justify-content:center; padding:20px; min-height:220px; }
+  .shot.phone img { width:150px; height:auto; border-radius:18px; border:5px solid #0f172a; box-shadow:0 16px 40px rgba(15,23,42,.28); }
 
-  #follow { background: #f6f8fc; border-top: 1px solid var(--line); }
-  .socials { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-  .social { display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 11px 18px; font-size: 13.5px; font-weight: 600; color: #1e293b; box-shadow: 0 6px 18px rgba(15,23,42,.04); transition: .18s; }
-  .social:hover { border-color: #bfdbfe; box-shadow: 0 10px 24px rgba(37,99,235,.12); transform: translateY(-1px); }
-  .social img { width: 18px; height: 18px; border-radius: 4px; display: block; }
-  .contact { margin-top: 34px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 22px 26px; }
-  .contact .t { font-size: 12px; letter-spacing: 1.5px; color: #64748b; font-weight: 700; }
-  .contact .v { font-size: 19px; font-weight: 800; color: #0f172a; letter-spacing: .5px; }
-  .contact .btn { margin-left: auto; background: #0f172a; color: #fff; }
+  /* 实战项目 */
+  #building { background:linear-gradient(180deg,#f6f8fc,#eef3fb); }
+  .build-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px; }
+  .build-card { background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 14px 34px rgba(15,23,42,.06); transition:.2s; }
+  .build-card:hover { transform:translateY(-3px); box-shadow:0 22px 50px rgba(15,23,42,.12); }
+  .build-card .cover { aspect-ratio:16/9; overflow:hidden; background:#0b1020; }
+  .build-card .cover img { width:100%; height:100%; object-fit:cover; display:block; animation:ken 16s ease-in-out infinite alternate; }
+  @keyframes ken { 0% { transform:scale(1) translate(0,0); } 100% { transform:scale(1.08) translate(-1.5%, -1.5%); } }
+  .b-body { padding:15px 16px 17px; }
+  .b-top { display:flex; align-items:center; gap:8px; }
+  .b-top h3 { font-size:15.5px; }
+  .b-tag { margin-left:auto; font-size:10.5px; color:#64748b; background:#f1f5f9; border-radius:999px; padding:2px 8px; white-space:nowrap; }
+  .b-body p { margin-top:7px; font-size:12.5px; color:var(--ink2); line-height:1.75; }
 
-  footer { background: var(--bg); color: #7f8da6; padding: 34px 0; font-size: 12.5px; line-height: 1.9; }
-  footer .in { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-  footer b { color: #cbd5e1; }
-  footer a { color: #94a3b8; border-bottom: 1px dotted rgba(148,163,184,.4); }
+  /* 免费知识库 */
+  #kb { background:#fff; border-top:1px solid var(--line); }
+  .kb-card { position:relative; overflow:hidden; margin-top:30px; border-radius:24px; padding:32px 34px; background:linear-gradient(120deg,#0b1224 0%,#10203f 55%,#123a6b 100%); color:#e2e8f0; display:flex; align-items:center; gap:24px; box-shadow:0 24px 60px rgba(15,23,42,.18); }
+  .kb-card::after { content:""; position:absolute; right:-80px; top:-80px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle,rgba(56,189,248,.35),transparent 65%); }
+  .kb-icon { width:60px; height:60px; border-radius:15px; background:#fff; display:flex; align-items:center; justify-content:center; flex:0 0 auto; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+  .kb-icon img { width:38px; height:38px; display:block; }
+  .kb-main { flex:1; min-width:0; position:relative; z-index:1; }
+  .kb-main .k { font-size:11.5px; letter-spacing:2px; color:#7dd3fc; font-weight:700; }
+  .kb-main h3 { font-size:21px; margin:5px 0 7px; color:#fff; letter-spacing:.5px; }
+  .kb-main p { font-size:13px; color:#b8c4d9; line-height:1.8; }
+  .kb-chips { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .kb-chips span { font-size:11px; color:#bae6fd; border:1px solid rgba(125,211,252,.35); border-radius:999px; padding:4px 10px; background:rgba(56,189,248,.08); }
+  .kb-go { position:relative; z-index:1; display:inline-flex; align-items:center; gap:8px; background:#fff; color:#0b1224; font-weight:800; font-size:13.5px; border-radius:999px; padding:12px 20px; flex:0 0 auto; white-space:nowrap; }
 
-  @media (max-width: 900px) {
-    .hero-in { grid-template-columns: 1fr; padding: 54px 24px 48px; }
-    .avatar-box { order: -1; }
-    .avatar-ring { width: 180px; height: 180px; }
-    .hero h1 { font-size: 34px; letter-spacing: 1px; }
-    .hero .lead { font-size: 15px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .about-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .kb-card { flex-direction: column; align-items: flex-start; padding: 26px 22px; }
-    .kb-go { align-self: stretch; justify-content: center; }
-    .contact .btn { margin-left: 0; }
-    section { padding: 54px 0; }
+  /* 最新作品 */
+  #works { background:#fff; border-top:1px solid var(--line); }
+  .works-list { margin-top:26px; border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+  .work-row { display:flex; align-items:center; gap:18px; padding:16px 20px; border-bottom:1px solid var(--line); background:#fff; transition:.15s; }
+  .work-row:last-child { border-bottom:0; }
+  .work-row:hover { background:#fafcff; }
+  .work-row .w-main { flex:1; min-width:0; }
+  .work-row h3 { font-size:15.5px; }
+  .work-row .w-main p { margin-top:3px; font-size:12px; color:#94a3b8; }
+  .w-links { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .plat { display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#334155; border:1px solid var(--line); border-radius:999px; padding:5px 11px; background:#fff; transition:.15s; }
+  .plat:hover { border-color:#bfdbfe; color:var(--blue); box-shadow:0 6px 16px rgba(37,99,235,.12); }
+  .plat img { width:14px; height:14px; border-radius:3px; display:block; }
+  .works-note { margin-top:14px; font-size:12.5px; color:#64748b; }
+
+  /* 关于我 */
+  #about { background:linear-gradient(180deg,#f6f8fc,#eef3fb); }
+  .about-rich { display:grid; grid-template-columns:1.25fr .75fr; gap:40px; margin-top:30px; align-items:start; }
+  .about-text p { font-size:14.5px; line-height:2; color:#334155; margin-bottom:14px; }
+  .about-text .quote { margin-top:20px; padding:14px 18px; border-left:3px solid var(--blue); background:#fff; border-radius:0 12px 12px 0; font-weight:700; color:#0f172a; }
+  .about-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .about-chips span { font-size:12px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:5px 12px; }
+  .timeline { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 22px; box-shadow:0 12px 30px rgba(15,23,42,.05); }
+  .tl-item { display:flex; gap:14px; padding:11px 0; border-bottom:1px dashed var(--line); }
+  .tl-item:last-child { border-bottom:0; }
+  .tl-item b { flex:0 0 52px; color:var(--blue); font-size:14px; font-weight:800; letter-spacing:.5px; }
+  .tl-item span { font-size:12.5px; color:#475569; line-height:1.75; }
+
+  /* 关注 */
+  #follow { background:#fff; border-top:1px solid var(--line); }
+  .socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .social { display:inline-flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 18px; font-size:13.5px; font-weight:600; color:#1e293b; box-shadow:0 6px 18px rgba(15,23,42,.04); transition:.18s; }
+  .social:hover { border-color:#bfdbfe; box-shadow:0 10px 24px rgba(37,99,235,.12); transform:translateY(-1px); }
+  .social img { width:18px; height:18px; border-radius:4px; display:block; }
+  .contact { margin-top:30px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 26px; }
+  .contact .t { font-size:12px; letter-spacing:1.5px; color:#64748b; font-weight:700; }
+  .contact .v { font-size:19px; font-weight:800; color:#0f172a; }
+  .contact .btn { margin-left:auto; background:#0f172a; color:#fff; }
+
+  footer { background:var(--bg); color:#7f8da6; padding:32px 0; font-size:12.5px; line-height:1.9; }
+  footer .in { max-width:1120px; margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  footer b { color:#cbd5e1; }
+  footer a { color:#94a3b8; border-bottom:1px dotted rgba(148,163,184,.4); }
+
+  /* 作品封面 */
+  .work-row .w-cover { position:relative; flex:0 0 132px; width:132px; height:74px; border-radius:10px; overflow:hidden; background:#0b1020; }
+  .work-row .w-cover img { width:100%; height:100%; object-fit:cover; display:block; }
+  .w-badge { position:absolute; right:5px; bottom:5px; font-size:9.5px; color:#e0f2fe; background:rgba(10,15,29,.75); border-radius:999px; padding:1px 7px; }
+  /* 悬浮导航 */
+  .float-nav { position:fixed; right:22px; bottom:26px; z-index:50; display:flex; flex-direction:column; gap:8px; }
+  .fbtn { width:42px; height:42px; border-radius:50%; background:#fff; border:1px solid var(--line); box-shadow:0 10px 26px rgba(15,23,42,.18); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:#334155; transition:.15s; }
+  .fbtn:hover { color:var(--blue); border-color:#bfdbfe; transform:translateY(-2px); }
+
+  @media (max-width:900px) {
+    .hero-in { grid-template-columns:1fr; padding:40px 24px 42px; }
+    .hero-visual { height:340px; order:-1; }
+    .hero h1 { font-size:34px; letter-spacing:1px; }
+    .hero .lead { font-size:15px; }
+    .projects-grid, .build-grid, .about-rich { grid-template-columns:1fr; }
+    .shot-gallery { grid-template-columns:1fr 1fr; }
+    .shot.big { grid-column:1 / -1; }
+    .nav-links { display:none; }
+    .work-row { flex-direction:column; align-items:flex-start; }
+    .work-row .w-cover { flex-basis:auto; width:100%; height:150px; }
+    .w-links { justify-content:flex-start; }
+    .float-nav { right:14px; bottom:16px; }
+    .fbtn { width:38px; height:38px; }
+    .contact .btn { margin-left:0; }
+    .kb-card { flex-direction:column; align-items:flex-start; padding:24px 20px; }
+    .kb-go { align-self:stretch; justify-content:center; }
+    section { padding:52px 0; }
+    .avatar-core { width:150px; height:150px; }
+    .ring-1 { width:270px; height:270px; }
+    .ring-2 { width:210px; height:210px; }
   }
 </style>
 </head>
@@ -148,9 +224,9 @@
 
 <nav class="nav">
   <div class="nav-in">
-    <a class="brand" href="#top"><img src="assets/home/logo.png" alt="硅基野人">硅基野人</a>
+    <a class="brand" href="#top"><img src="assets/logo.png" alt="硅基野人">硅基野人</a>
     <div class="nav-links">
-      <a href="#projects">开源项目</a><a href="#kb">知识库</a><a href="#about">关于我</a><a href="#follow">关注 · 联系</a>
+      <a href="#projects">开源项目</a><a href="#building">实战项目</a><a href="#kb">知识库</a><a href="#works">最新作品</a><a href="#about">关于我</a><a href="#follow">联系</a>
     </div>
     <a class="nav-gh" href="https://github.com/guijiyeren" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
@@ -164,18 +240,24 @@
       <p class="lead">我叫<b>硅基野人</b>，10 年电商人。<br>现在把选品、上架、写文案、剪视频、做发布，一件件拆给 AI 干。<br>边干边翻车，<b>做成晒结果，翻车晒现场</b>。</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#projects">看看我在做什么 →</a>
-        <a class="btn btn-ghost" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">免费知识库</a>
+        <a class="btn btn-ghost" href="#building">我在做的系统</a>
       </div>
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
-        <div><span class="n">1 个</span><span class="l">开源项目</span></div>
+        <div><span class="n">30+</span><span class="l">AI 短视频作品</span></div>
         <div><span class="n">全免费</span><span class="l">知识库</span></div>
       </div>
     </div>
-    <div class="avatar-box">
-      <div class="avatar-ring"><img src="assets/home/logo.png" alt="硅基野人"></div>
-      <div class="avatar-tag">正在 <em>AI 无人公司</em> 实战</div>
+    <div class="hero-visual">
+      <canvas id="orbit-canvas"></canvas>
+      <div class="orbit-ring ring-1"></div>
+      <div class="orbit-ring ring-2"></div>
+      <div class="avatar-core"><img src="assets/logo.png" alt="硅基野人"></div>
+      <div class="float-chip chip-a">🤖 个人 AI 工作台</div>
+      <div class="float-chip chip-b">📊 情报中枢</div>
+      <div class="float-chip chip-c">📚 资源中心</div>
+      <div class="float-chip chip-d">🎬 内容流水线</div>
     </div>
   </div>
 </header>
@@ -189,24 +271,84 @@
     </div>
     <div class="projects-grid">
       <article class="project">
-        <div class="thumb"><span class="badge">767 条 · CC BY 4.0</span><img src="assets/home/guide-cover.png" alt="高性价比人生指南 · 行动版"></div>
+        <div class="thumb"><span class="badge">767 条 · CC BY 4.0</span><img src="assets/shot-desktop.png" alt="高性价比人生指南 · 行动版"></div>
         <div class="body">
           <div class="tags"><span class="tag">开源改编</span><span class="tag">行动清单</span><span class="tag">进度本地保存</span></div>
           <h3>高性价比人生指南 · 行动版</h3>
           <p>把开源书《高性价比人生指南》做成能动手的网页：767 条按钱、时间、毅力筛选，可以标「待做 / 已做到 / 暂不适合」，进度只存浏览器。</p>
-          <div class="links"><a class="link-a" href="./rensheng/">打开站点 →</a><a class="link-a muted" href="https://github.com/guijiyeren/guijiyeren.github.io" target="_blank" rel="noopener">源码</a></div>
+          <div class="links"><a class="link-a" href="./rensheng/">打开站点 →</a><a class="link-a" href="./rensheng/graph.html">3D 星图</a><a class="link-a muted" href="https://github.com/guijiyeren/guijiyeren.github.io" target="_blank" rel="noopener">源码</a></div>
         </div>
       </article>
-      <div class="project placeholder">
-        <div class="plus">+</div>
-        <h3>下一个项目</h3>
-        <p>在做了，做完开源到这里</p>
+      <div class="project placeholder" style="background:#f8fafc;border-style:dashed;align-items:center;justify-content:center;text-align:center;gap:8px;padding:40px 24px;">
+        <div style="width:56px;height:56px;border-radius:16px;border:1px dashed #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:26px;color:#94a3b8">+</div>
+        <h3 style="font-size:16px;color:#334155">下一个项目</h3>
+        <p style="font-size:13px;color:#94a3b8">在做了，做完开源到这里</p>
       </div>
+    </div>
+    <div class="shot-gallery">
+      <figure class="shot big"><img src="assets/shot-desktop.png" alt=""><figcaption>桌面版：搜索、筛选、行动标记</figcaption></figure>
+      <figure class="shot big"><img src="assets/shot-graph.png" alt=""><figcaption><span class="pill">3D</span>标签星云：知识图谱可视化（已部署 /rensheng/graph.html）</figcaption></figure>
+      <figure class="shot phone"><div class="ph-wrap"><img src="assets/shot-mobile.png" alt=""></div><figcaption>手机版</figcaption></figure>
+      <figure class="shot phone"><div class="ph-wrap"><img src="assets/shot-search.png" alt=""></div><figcaption>搜「血压」找到 34 条</figcaption></figure>
     </div>
   </div>
 </section>
 
-<section id="kb">
+<section id="building">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow2">In Progress</div>
+      <h2>正在用的实战项目</h2>
+      <p>这些是我每天在跑的内部系统，不对外，但效果都看得见——AI 内容、情报、选品、发布都靠它们串起来。</p>
+    </div>
+    <div class="build-grid">
+      <article class="build-card">
+        <div class="cover"><img src="assets/cover-1.jpg" alt="人生指南"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>人生指南</h3><span class="b-tag open">已公开</span></div>
+          <p>767 条人生建议的行动版，已开源公开。</p>
+        </div>
+      </article>
+<article class="build-card">
+        <div class="cover"><img src="assets/cover-2.jpg" alt="情报中枢"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>情报中枢</h3><span class="b-tag ">内部系统</span></div>
+          <p>40+ 情报源每天自动采集、去重、打分、出日报。</p>
+        </div>
+      </article>
+<article class="build-card">
+        <div class="cover"><img src="assets/cover-3.jpg" alt="生财有术"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>生财有术</h3><span class="b-tag ">内部系统</span></div>
+          <p>离线项目库，按主题检索 1 万多条内容。</p>
+        </div>
+      </article>
+<article class="build-card">
+        <div class="cover"><img src="assets/cover-4.jpg" alt="电商运营"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>电商运营</h3><span class="b-tag ">内部系统</span></div>
+          <p>选品→上架→投放的全流程台账与核验。</p>
+        </div>
+      </article>
+<article class="build-card">
+        <div class="cover"><img src="assets/cover-5.jpg" alt="资源中心"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>资源中心</h3><span class="b-tag ">内部系统</span></div>
+          <p>1.2 万条资源索引，分类、封面、检索一体。</p>
+        </div>
+      </article>
+<article class="build-card">
+        <div class="cover"><img src="assets/cover-6.jpg" alt="硅基野人"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>硅基野人</h3><span class="b-tag ">内部系统</span></div>
+          <p>AI 内容生产线：一条视频九平台发布与回收。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="kb" style="background:#fff;border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow2">Free Knowledge</div>
@@ -214,7 +356,7 @@
       <p>我搭 AI 个人工作台的全部过程、模板和工作流，都放在这里，免费看。</p>
     </div>
     <div class="kb-card">
-      <div class="kb-icon"><img src="assets/home/icon-feishu.png" alt="飞书知识库"></div>
+      <div class="kb-icon"><img src="assets/icon-feishu.png" alt="飞书知识库"></div>
       <div class="kb-main">
         <div class="k">FEISHU WIKI</div>
         <h3>AI 个人工作台 · 实战知识库</h3>
@@ -226,17 +368,65 @@
   </div>
 </section>
 
+<section id="works">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow2">Latest Works</div>
+      <h2>最新作品</h2>
+      <p>AI 短视频，一条片子九平台同步。下面是最近几条，点平台图标直接看。</p>
+    </div>
+    <div class="works-list">
+      <article class="work-row">
+        <div class="w-cover"><img src="assets/work-1.jpg" alt="AI模特被迫营业"><span class="w-badge">4 平台</span></div>
+        <div class="w-main"><h3>AI模特被迫营业</h3><p>AI 短视频 · 多平台同步</p></div>
+        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7704561759733959946" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6aec1a26000000000303aa5a" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1EW4t6yE2m" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xnb3jxwb446wz4" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
+      </article>
+<article class="work-row">
+        <div class="w-cover"><img src="assets/work-2.jpg" alt="焦虑型依恋"><span class="w-badge">4 平台</span></div>
+        <div class="w-main"><h3>焦虑型依恋</h3><p>AI 短视频 · 多平台同步</p></div>
+        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7704130945737067803" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6aea9257000000000e00c8e8" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1DGxD64Ekr" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xj5ej4rbwqcp8q" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
+      </article>
+<article class="work-row">
+        <div class="w-cover"><img src="assets/work-3.jpg" alt="人生下半场才刚刚开始"><span class="w-badge">4 平台</span></div>
+        <div class="w-main"><h3>人生下半场才刚刚开始</h3><p>AI 短视频 · 多平台同步</p></div>
+        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703774570771238159" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae94e430000000003000afe" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1Gk4u6SEa1" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xmkkr37gcpx6pi" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
+      </article>
+<article class="work-row">
+        <div class="w-cover"><img src="assets/work-4.jpg" alt="你扛过的每一天都算数"><span class="w-badge">4 平台</span></div>
+        <div class="w-main"><h3>你扛过的每一天都算数</h3><p>AI 短视频 · 多平台同步</p></div>
+        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703534918583848228" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae8745f00000000350119dd" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV12r4c67Ejc" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xv9abbnecz4myq" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
+      </article>
+<article class="work-row">
+        <div class="w-cover"><img src="assets/work-5.jpg" alt="唯独不是你自己"><span class="w-badge">4 平台</span></div>
+        <div class="w-main"><h3>唯独不是你自己</h3><p>AI 短视频 · 多平台同步</p></div>
+        <div class="w-links"><a class="plat" href="https://www.douyin.com/video/7703423610026724635" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a><a class="plat" href="https://www.xiaohongshu.com/explore/6ae80fb1000000000e0271f1" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a><a class="plat" href="https://www.bilibili.com/video/BV1To4F6EEeZ" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a><a class="plat" href="https://www.kuaishou.com/short-video/3xb6hgjxi6w7tcw" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a></div>
+      </article>
+    </div>
+    <p class="works-note">更多作品在各平台主页看：抖音、小红书、B站、快手、视频号、YouTube、TikTok、今日头条、知乎。</p>
+  </div>
+</section>
+
 <section id="about">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow2">About</div>
       <h2>关于我</h2>
     </div>
-    <div class="about-grid">
-      <div class="about-item"><div class="ico">🛒</div><h4>10 年电商人</h4><p>选品、上架、投放、店铺运营都干过。踩过的坑比看过的课多，所以更看重能落地的东西。</p></div>
-      <div class="about-item"><div class="ico">🤖</div><h4>正在实战 AI 无人公司</h4><p>一个碳基老板，带着一群硅基员工干活：把重复工作拆成流程交给 AI，我负责定方向、审核和拍板。</p></div>
-      <div class="about-item"><div class="ico">🎬</div><h4>内容矩阵</h4><p>抖音、小红书、B站、快手、视频号、YouTube、TikTok、今日头条、知乎同步更新，讲 AI 干活和电商实战。</p></div>
-      <div class="about-item"><div class="ico">📚</div><h4>边做边开源</h4><p>做出来的工具和网页，觉得别人能用就开源；踩坑记录和模板放进免费知识库。</p></div>
+    <div class="about-rich">
+      <div class="about-text">
+        <p>我叫<b>硅基野人</b>，10 年电商人，做袜业和好物推荐。从拿货、拍照、上架、发货，到投流、算账、售后，整条链路都是自己跑出来的。</p>
+        <p>早些年踩的坑不少：凭感觉选款压库存、素材版权、投流烧钱、系统搭得比生意还复杂。后来扎进产业带，才算把供应链和成本摸明白。</p>
+        <p>2024 年开始记日记、搭系统，越搭越复杂，业务反而变慢。2025 到 2026 换了个思路：不追工具，先把流程拆明白，再让 AI 干活。</p>
+        <p>现在一边卖货，一边用 AI 重做整条内容生产线：选品、文案、图片、视频、九平台发布、数据回收。一个人带着一群「硅基员工」，边干边翻车。</p>
+        <div class="quote">少点废话，多点实战；做成晒结果，翻车晒现场；先完成再完美。</div>
+        <div class="about-chips"><span>10 年电商</span><span>AI 无人公司</span><span>内容自动化</span><span>边做边开源</span></div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><b>2014</b><span>从淘宝第一单开始，跑通拿货→拍照→上架→发货的闭环。</span></div>
+        <div class="tl-item"><b>2018</b><span>扎进产业带，把供应链和成本摸清楚，开始做自己的货。</span></div>
+        <div class="tl-item"><b>2024</b><span>开始记日记、搭系统，想用工具解决「没产出」的问题。</span></div>
+        <div class="tl-item"><b>2026</b><span>AI 重做工作流：工作台、情报中枢、内容流水线，一个人干一个团队的活。</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -248,14 +438,16 @@
       <h2>关注我 · 联系我</h2>
       <p>各个平台同名「硅基野人」，内容同步更新。</p>
     </div>
-    <div class="socials"><a class="social" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="assets/home/icon-douyin.png" alt="">抖音</a>
-<a class="social" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="assets/home/icon-xiaohongshu.png" alt="">小红书</a>
-<a class="social" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="assets/home/icon-bilibili.png" alt="">B站</a>
-<a class="social" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="assets/home/icon-kuaishou.png" alt="">快手</a>
-<a class="social" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="assets/home/icon-youtube.png" alt="">YouTube</a>
-<a class="social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/home/icon-tiktok.png" alt="">TikTok</a>
-<a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/home/icon-toutiao.png" alt="">今日头条</a>
-<a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/home/icon-zhihu.png" alt="">知乎</a></div>
+    <div class="socials">
+      <a class="social" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="">抖音</a>
+<a class="social" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="">小红书</a>
+<a class="social" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="">B站</a>
+<a class="social" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="">快手</a>
+<a class="social" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="">YouTube</a>
+<a class="social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="">TikTok</a>
+<a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="">今日头条</a>
+<a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="">知乎</a>
+    </div>
     <div class="contact">
       <div><div class="t">合作 · 交流 · 提问</div><div class="v">154647@qq.com</div></div>
       <a class="btn" href="mailto:154647@qq.com">发邮件给我 →</a>
@@ -263,12 +455,80 @@
   </div>
 </section>
 
-<footer>
+<footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责审核和拍板</div>
-    <div>GitHub：<a href="https://github.com/guijiyeren" target="_blank" rel="noopener">guijiyeren.github.io</a> · 知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
+    <div>GitHub：<a href="https://github.com/guijiyeren/guijiyeren.github.io" target="_blank" rel="noopener">guijiyeren.github.io</a> · 知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
   </div>
 </footer>
 
+<div class="float-nav" aria-label="页面导航">
+  <a class="fbtn" href="#top" title="回到顶部" aria-label="回到顶部">↑</a>
+  <a class="fbtn" href="#page-end" title="直接到底部" aria-label="直接到底部">↓</a>
+</div>
+
+<script>
+(function(){
+  const cv = document.getElementById('orbit-canvas');
+  const ctx = cv.getContext('2d');
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const dots = [], stars = [], orbits = [];
+  function resize(){
+    const r = cv.parentElement.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR;
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  function init(){
+    stars.length = 0; orbits.length = 0; dots.length = 0;
+    for (let i=0;i<70;i++) stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.3+.3, a:Math.random()*.6+.2, v:Math.random()*.15+.03});
+    orbits.push({rx:W*0.36, ry:H*0.36, speed:0.00035, phase:0});
+    orbits.push({rx:W*0.27, ry:H*0.27, speed:-0.00055, phase:2});
+    orbits.push({rx:W*0.45, ry:H*0.45, speed:0.00022, phase:4});
+    orbits.forEach((o,i)=>{ for(let k=0;k<3;k++) dots.push({orbit:i, off:k*2.1, r:2.2+Math.random()*1.6}); });
+  }
+  let t = 0, shooting = null;
+  function frame(){
+    t += 16;
+    ctx.clearRect(0,0,W,H);
+    const cx = W/2, cy = H/2;
+    // 星空
+    for (const s of stars){
+      s.y -= s.v; if (s.y < 0){ s.y = H; s.x = Math.random()*W; }
+      ctx.beginPath(); ctx.fillStyle = 'rgba(186,230,253,' + s.a + ')'; ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+    }
+    // 轨道环
+    ctx.lineWidth = 1;
+    for (const o of orbits){
+      ctx.beginPath(); ctx.strokeStyle = 'rgba(125,211,252,.10)'; ctx.ellipse(cx, cy, o.rx, o.ry*0.62, 0, 0, Math.PI*2); ctx.stroke();
+    }
+    // 轨道粒子
+    for (const d of dots){
+      const o = orbits[d.orbit];
+      const a = t * o.speed + d.off + o.phase;
+      const x = cx + Math.cos(a) * o.rx;
+      const y = cy + Math.sin(a) * o.ry * 0.62;
+      const g = ctx.createRadialGradient(x,y,0,x,y,8);
+      g.addColorStop(0,'rgba(125,211,252,.95)'); g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,8,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#bae6fd'; ctx.beginPath(); ctx.arc(x,y,d.r,0,Math.PI*2); ctx.fill();
+    }
+    // 流星
+    if (!shooting && Math.random() < 0.004) shooting = {x: Math.random()*W, y: 0, vx: 2.4, vy: 4.2, life: 70};
+    if (shooting){
+      shooting.x += shooting.vx; shooting.y += shooting.vy; shooting.life--;
+      const g = ctx.createLinearGradient(shooting.x, shooting.y, shooting.x - shooting.vx*10, shooting.y - shooting.vy*10);
+      g.addColorStop(0,'rgba(255,255,255,.9)'); g.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.beginPath();
+      ctx.moveTo(shooting.x, shooting.y); ctx.lineTo(shooting.x - shooting.vx*10, shooting.y - shooting.vy*10); ctx.stroke();
+      if (shooting.life <= 0 || shooting.x > W+40 || shooting.y > H+40) shooting = null;
+    }
+    requestAnimationFrame(frame);
+  }
+  resize(); init(); frame();
+  window.addEventListener('resize', function(){ resize(); init(); });
+})();
+</script>
 </body>
 </html>

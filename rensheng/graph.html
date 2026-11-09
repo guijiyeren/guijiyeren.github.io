@@ -1,0 +1,1720 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>标签星云 · 高性价比人生指南</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:#04060c;color:#e8eeff;
+    font:14px/1.6 "PingFang SC","Microsoft YaHei",Segoe UI,system-ui,sans-serif}
+  #bg{position:fixed;inset:0;z-index:0;transition:background .5s ease}
+  #host{position:fixed;inset:0;z-index:1}
+  .bar{position:fixed;left:20px;top:16px;right:20px;z-index:10;display:flex;align-items:center;gap:12px}
+  .bar a.back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:inherit;
+    border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 12px;font-size:13px;
+    background:rgba(12,18,32,.62);backdrop-filter:blur(8px)}
+  .bar a.back:hover{border-color:#7fb2ff;color:#9cc4ff}
+  .bar .t{font-weight:600;font-size:15px}
+  .bar .t span{font-weight:400;font-size:12px;color:rgba(232,238,255,.55);margin-left:8px}
+  .themes{margin-left:auto;display:flex;gap:6px}
+  .sw{width:30px;height:30px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;position:relative}
+  .sw[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.18)}
+  .sw span{position:absolute;left:50%;bottom:-20px;transform:translateX(-50%);font-size:11px;white-space:nowrap;
+    color:rgba(255,255,255,.75);opacity:0;transition:opacity .15s}
+  .sw:hover span{opacity:1}
+  .hint{position:fixed;left:20px;bottom:16px;z-index:10;font-size:12px;color:rgba(232,238,255,.45)}
+  #tip{position:fixed;z-index:20;pointer-events:none;padding:6px 10px;border-radius:9px;font-size:12.5px;opacity:0;
+    background:rgba(8,12,24,.9);border:1px solid rgba(140,180,255,.3);transition:opacity .12s;line-height:1.5}
+  #panel{position:fixed;right:20px;top:64px;width:330px;max-height:calc(100vh - 120px);z-index:12;display:none;
+    background:rgba(10,14,26,.92);border:1px solid rgba(140,180,255,.22);border-radius:14px;padding:16px;
+    backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  #panel h3{margin:0 0 2px;font-size:16px}
+  #panel .c{font-size:12px;color:rgba(232,238,255,.55);margin-bottom:10px}
+  #panel ol{margin:0;padding-left:20px;font-size:12.5px;line-height:1.7;color:rgba(232,238,255,.86);max-height:60vh;overflow:auto}
+  #panel li{margin-bottom:6px}
+  #panel li a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(140,180,255,.4)}
+  #panel li a:hover{color:#9cc4ff}
+  #panel .x{position:absolute;right:10px;top:8px;background:none;border:none;color:rgba(232,238,255,.6);font-size:16px;cursor:pointer}
+  .lbl{position:fixed;z-index:5;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);
+    font-size:12px;text-shadow:0 0 6px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.7);transition:opacity .2s}
+  .lbl.cat{font-size:14px;font-weight:600;letter-spacing:.04em}
+  .lbl small{font-weight:400;opacity:.62;margin-left:5px;font-size:11px}
+  #imgprev{position:fixed;left:0;top:0;z-index:30;width:min(46vw,520px);pointer-events:none;opacity:0;
+    transition:opacity .14s ease;will-change:transform,opacity}
+  #imgprev.on{opacity:1}
+  #flare{position:fixed;left:0;top:0;width:0;height:0;pointer-events:none;z-index:4;opacity:0;will-change:transform,opacity}
+  #flare>div{position:absolute;border-radius:50%;transform:translate(-50%,-50%)}
+  #info-btn{margin-left:10px;width:20px;height:20px;border-radius:50%;border:1px solid rgba(140,190,255,.45);
+    background:rgba(30,50,80,.6);color:#cfe4ff;font-size:12px;line-height:18px;text-align:center;
+    cursor:pointer;padding:0;vertical-align:2px;transition:.2s}
+  #info-btn:hover{background:rgba(60,110,180,.85);color:#fff}
+  #info-panel{position:fixed;left:20px;top:56px;z-index:70;width:300px;padding:16px 18px 14px;border-radius:14px;
+    background:rgba(8,14,26,.92);border:1px solid rgba(120,170,240,.22);backdrop-filter:blur(14px);
+    color:#d6e4ff;font-size:13px;line-height:1.75;display:none;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+  #info-panel.on{display:block}
+  #info-panel .ip-title{font-size:15px;font-weight:600;margin-bottom:10px;color:#eaf2ff}
+  #info-panel .ip-title span{display:block;font-size:11px;font-weight:400;color:rgba(170,200,255,.6);margin-top:3px;letter-spacing:.5px}
+  #info-panel .ip-list{margin:0;padding-left:16px;color:rgba(210,226,255,.82)}
+  #info-panel .ip-list b{color:#9fd0ff;font-weight:600}
+  #info-panel .ip-actions{display:flex;gap:10px;margin-top:14px}
+  #info-panel .ip-actions button{flex:1;padding:7px 0;border-radius:9px;cursor:pointer;
+    background:rgba(40,70,120,.55);border:1px solid rgba(130,180,255,.25);color:#d6e4ff;font-size:12px}
+  #info-panel .ip-actions button:hover{background:rgba(60,110,180,.8);color:#fff}
+  #fps{position:fixed;left:20px;bottom:18px;z-index:80;padding:6px 10px;border-radius:8px;
+    background:rgba(8,14,26,.8);border:1px solid rgba(120,170,240,.2);color:#9fd0ff;font-size:11px;
+    font-family:ui-monospace,monospace;pointer-events:none}
+  #fs-btn,#fs-exit{position:fixed;z-index:60;width:40px;height:40px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    background:rgba(12,20,36,.55);border:1px solid rgba(140,190,255,.22);color:#cfe4ff;
+    font-size:15px;line-height:1;backdrop-filter:blur(8px);transition:.2s;opacity:.55}
+  #fs-btn{right:18px;bottom:52px}
+  #fs-btn:hover,#fs-exit:hover{opacity:1;background:rgba(40,70,120,.75);color:#fff}
+  #fs-exit{right:18px;top:18px;display:none;border-radius:50%}
+  html.fs-mode #fs-btn{display:none}
+  html.fs-mode #fs-exit{display:flex}
+  html.fs-mode .bar,html.fs-mode .hint{opacity:0;transition:opacity .3s;pointer-events:none}
+  html.no-labels .lbl{opacity:0!important;transition:opacity .25s}
+  #loading{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:18px;background:#04060e;transition:opacity .6s ease}
+  #loading.off{opacity:0;pointer-events:none}
+  #loading .ld-ring{width:46px;height:46px;border-radius:50%;border:2px solid rgba(140,190,255,.18);
+    border-top-color:#8fd0ff;animation:ldspin 1s linear infinite}
+  #loading .ld-txt{font-size:13px;letter-spacing:2px;color:rgba(190,215,255,.75)}
+  @keyframes ldspin{to{transform:rotate(360deg)}}
+  #imgprev img{display:block;width:100%;height:auto;border-radius:10px;background:#fff;
+    box-shadow:0 22px 54px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.14)}
+  body.theme-glass .lbl{color:#1b2634;text-shadow:0 0 6px rgba(255,255,255,.95),0 0 14px rgba(255,255,255,.9)}
+  body.theme-glass .hint{color:rgba(20,30,46,.5)}
+  body.theme-glass .bar a.back{background:rgba(255,255,255,.75);border-color:rgba(20,30,46,.14)}
+  body.theme-glass #tip{background:rgba(255,255,255,.95);color:#16202e;border-color:rgba(20,30,46,.12)}
+  body.theme-glass #panel{background:rgba(255,255,255,.94);color:#16202e;border-color:rgba(20,30,46,.12)}
+  body.theme-glass #panel ol{color:rgba(20,30,46,.85)}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="host"></div>
+<div class="bar">
+  <a class="back" href="index.html">← 回到指南</a>
+  <div class="t">标签星云<button id="info-btn" title="说明">!</button></div>
+  <div class="themes" id="themes" role="group" aria-label="切换风格"></div>
+</div>
+<button id="fs-btn" title="全屏（F）">⛶</button>
+<button id="fs-exit" title="退出全屏（Esc）">✕</button>
+<div id="fps" style="display:none"></div>
+<div id="tip"></div>
+<div id="imgprev"><img alt=""></div>
+
+<div id="info-panel">
+  <div class="ip-title">标签星云<span>8 大类 · 46 个标签 · 767 条 · 11 套风格</span></div>
+  <ul class="ip-list">
+    <li><b>拖动</b>旋转视角，<b>滚轮</b>缩放</li>
+    <li><b>点球</b>看该类的条目，鼠标停在条目上可预览大图</li>
+    <li><b>双击行星</b>镜头飞过去，<b>Esc</b> 复位</li>
+    <li><b>H</b> 隐藏/显示所有文字</li>
+    <li><b>F</b> 显示帧率面板</li>
+    <li><b>空格</b> 暂停/恢复自动旋转</li>
+  </ul>
+  <div class="ip-actions">
+    <button id="ip-bloom">辉光：开</button>
+    <button id="ip-close">关闭</button>
+  </div>
+</div>
+<div id="loading">
+  <div class="ld-ring"></div>
+  <div class="ld-txt">正在点燃恒星…</div>
+</div>
+<aside id="panel">
+  <button class="x" id="px" aria-label="关闭">✕</button>
+  <h3 id="pt"></h3><div class="c" id="pc"></div><ol id="pl"></ol>
+</aside>
+<script src="assets/planets/planets.js"></script>
+<script src="assets/bg/galaxy.js"></script>
+<script src="_lib/three.min.js"></script>
+<script src="_lib/pp/CopyShader.js"></script>
+<script src="_lib/pp/LuminosityHighPassShader.js"></script>
+<script src="_lib/pp/EffectComposer.js"></script>
+<script src="_lib/pp/RenderPass.js"></script>
+<script src="_lib/pp/ShaderPass.js"></script>
+<script src="_lib/pp/UnrealBloomPass.js"></script>
+<script id="gd" type="application/json">{"categories":[{"id":"health","name":"健康","color":"#5aa9ff","count":317,"tags":["sleep","diet","sport","weight","checkup","medicine","doctor","smoke","teeth","mind","vaccine"]},{"id":"money","name":"钱","color":"#59d6b0","count":202,"tags":["insurance","social","debt","spend","invest","tax","save","income"]},{"id":"safety","name":"安全与法律","color":"#ff9f6b","count":303,"tags":["scam","contract","rent","traffic","fire","law","privacy","crime"]},{"id":"family","name":"家庭与老人","color":"#f28ac0","count":189,"tags":["kids","school","marriage","elder","relation"]},{"id":"work","name":"工作与创业","color":"#b39bff","count":80,"tags":["job","office","startup","legalentity","ecom"]},{"id":"growth","name":"技能与成长","color":"#8fd47a","count":75,"tags":["time","focus","habit","learn"]},{"id":"risk","name":"应急与意外","color":"#ffd166","count":23,"tags":["disaster","emergency"]},{"id":"life","name":"生活杂项","color":"#8fb4c9","count":33,"tags":["home","pet","digital"]}],"tags":[{"id":"sleep","name":"睡眠作息","cat":"health","count":15,"items":["1-9","2-13","2-37","2-38","3-2","3-3","3-4","3-9","3-11","3-26","3-27","6-34","13-33","29-3","30-10"]},{"id":"diet","name":"饮食","cat":"health","count":10,"items":["2-7","2-23","2-27","6-4","6-9","7-17","13-23","21-13","22-4","31-12"]},{"id":"sport","name":"运动体能","cat":"health","count":14,"items":["2-14","2-15","2-16","2-44","3-18","6-8","6-29","8-13","13-10","13-28","16-14","22-6","28-1","30-21"]},{"id":"weight","name":"体重","cat":"health","count":12,"items":["1-8","1-29","2-32","2-37","2-45","6-8","6-26","6-33","28-1","28-4","28-6","30-7"]},{"id":"checkup","name":"体检筛查","cat":"health","count":35,"items":["1-7","1-8","1-16","1-17","1-18","1-19","1-23","1-24","1-28","1-29","1-31","1-35","1-39","1-47","2-12","2-45","5-12","6-7","6-10","6-17","6-18","6-19","6-20","13-45","16-2","16-4","16-13","22-11","27-2","27-6","27-13","29-1","30-7","30-8","30-12"]},{"id":"medicine","name":"用药","cat":"health","count":34,"items":["1-7","1-40","2-12","2-20","3-25","6-1","6-3","6-4","6-6","6-19","6-34","6-35","13-20","13-38","20-7","20-14","20-16","21-12","22-7","29-1","30-4","33-1","34-1","34-2","34-3","34-4","34-5","34-7","34-8","34-9","34-10","34-11","34-12","34-13"]},{"id":"doctor","name":"就医","cat":"health","count":115,"items":["1-5","1-14","1-15","1-27","1-28","1-32","1-33","1-34","1-38","1-40","1-44","2-1","2-3","2-5","2-21","2-43","2-47","3-19","3-25","3-26","3-27","5-12","6-7","6-20","6-27","6-28","6-33","6-35","8-15","9-20","10-18","13-3","13-4","13-5","13-6","13-7","13-8","13-11","13-14","13-16","13-21","13-29","13-38","13-39","13-40","13-42","13-45","13-46","13-47","16-2","16-3","16-4","16-5","16-6","16-7","16-11","16-12","16-13","16-14","17-8","17-9","17-10","17-12","17-13","20-7","20-8","20-12","20-13","20-14","20-17","21-4","21-12","24-1","24-2","24-3","24-4","24-5","24-6","24-7","24-8","24-9","24-11","24-12","24-13","24-14","24-15","25-3","25-4","27-7","27-8","27-9","27-16","27-18","28-2","28-5","28-6","28-7","28-8","28-9","29-2","29-4","29-5","29-6","29-8","29-11","30-1","30-2","30-12","33-1","33-3","33-21","34-1","34-3","34-6","34-7"]},{"id":"smoke","name":"烟酒","cat":"health","count":19,"items":["1-24","2-1","2-2","2-3","2-4","2-5","2-6","2-19","2-20","2-21","2-30","2-46","8-7","13-23","13-28","13-46","22-11","27-4","34-11"]},{"id":"teeth","name":"口腔","cat":"health","count":6,"items":["2-10","13-14","13-48","24-12","28-9","30-13"]},{"id":"mind","name":"心理情绪","cat":"health","count":38,"items":["1-25","1-32","1-37","1-43","3-14","3-18","3-19","3-20","3-23","3-24","4-13","6-3","6-12","6-23","6-27","6-28","8-14","10-4","11-21","17-4","17-13","22-6","22-7","22-8","23-25","27-16","29-4","29-8","29-9","29-10","29-11","29-12","29-14","30-8","30-15","30-16","30-17","33-2"]},{"id":"vaccine","name":"疫苗","cat":"health","count":19,"items":["1-14","1-16","1-18","1-20","1-21","1-22","2-46","6-10","8-30","13-13","16-11","16-12","20-1","20-2","20-3","21-13","27-3","27-15","27-18"]},{"id":"insurance","name":"保险","cat":"money","count":28,"items":["5-25","5-26","5-39","5-40","5-41","5-42","5-43","5-44","5-46","5-49","7-1","7-10","7-20","8-1","8-21","8-38","9-21","13-39","17-7","18-2","19-13","19-19","21-4","21-8","27-11","29-13","32-7","33-20"]},{"id":"social","name":"医保社保","cat":"money","count":30,"items":["5-3","5-13","5-20","5-46","7-1","7-9","7-12","7-13","7-18","7-20","12-16","13-39","15-16","16-6","17-6","17-7","19-19","19-21","24-2","24-13","24-15","25-2","25-5","25-9","27-11","27-12","27-14","29-3","29-10","31-11"]},{"id":"debt","name":"负债","cat":"money","count":32,"items":["5-2","5-7","5-16","5-27","5-28","5-33","5-43","5-49","7-10","7-15","7-23","8-3","8-9","8-17","8-18","8-19","8-20","8-45","9-6","9-7","12-2","14-5","14-11","15-4","15-10","15-11","15-13","15-15","15-16","23-4","31-4","31-16"]},{"id":"spend","name":"消费","cat":"money","count":17,"items":["5-1","5-7","5-8","5-9","5-22","5-24","5-25","5-35","5-50","6-23","8-21","9-24","10-22","17-5","26-8","26-13","30-14"]},{"id":"invest","name":"投资","cat":"money","count":13,"items":["5-6","5-15","5-16","5-17","5-18","5-19","5-37","5-38","5-42","5-51","8-3","17-6","18-2"]},{"id":"tax","name":"税费","cat":"money","count":10,"items":["5-2","5-20","5-33","5-47","12-12","12-13","18-1","19-18","31-15","33-11"]},{"id":"save","name":"省钱","cat":"money","count":23,"items":["1-31","4-3","5-24","5-37","7-3","7-5","8-9","9-8","11-18","12-14","14-10","15-4","17-5","20-3","23-9","24-10","26-2","26-11","27-2","27-3","28-3","33-12","33-20"]},{"id":"income","name":"收入与赔偿","cat":"money","count":49,"items":["4-18","5-31","5-40","7-2","7-3","7-7","8-5","8-12","8-30","8-35","8-41","9-19","9-24","10-10","10-19","11-20","12-12","12-16","12-17","12-28","18-3","19-1","19-2","19-3","19-4","19-5","19-6","19-8","19-11","19-12","19-13","19-14","19-15","19-18","19-20","19-24","23-1","23-6","23-7","23-12","23-23","23-24","24-9","25-9","29-12","29-13","31-12","31-15","32-4"]},{"id":"scam","name":"防骗反诈","cat":"safety","count":25,"items":["5-10","5-29","8-3","8-4","8-22","8-24","8-26","8-29","8-38","8-45","9-5","9-7","9-21","9-27","10-11","11-3","11-5","12-14","12-24","12-25","14-1","15-6","17-3","21-5","32-10"]},{"id":"contract","name":"合同","cat":"safety","count":62,"items":["5-22","5-28","5-29","5-41","5-48","5-50","7-20","8-18","8-25","8-36","8-39","10-10","10-15","10-18","10-23","11-9","11-12","11-13","11-14","12-5","12-15","12-16","12-17","12-27","12-28","15-1","15-4","15-6","15-7","15-9","15-10","15-11","15-12","15-13","15-14","15-18","17-1","17-11","17-12","18-3","19-5","19-7","19-8","19-9","19-10","19-14","19-16","19-17","19-20","19-22","19-23","19-24","21-1","21-8","25-11","25-12","26-10","26-11","31-11","31-13","31-14","31-17"]},{"id":"rent","name":"租房买房","cat":"safety","count":23,"items":["5-3","7-5","7-15","7-16","7-17","7-23","8-27","10-11","12-27","15-1","15-2","15-3","15-7","15-8","15-9","15-14","15-17","15-18","17-11","21-9","23-22","25-8","31-14"]},{"id":"traffic","name":"交通","cat":"safety","count":13,"items":["1-1","1-2","1-6","1-9","3-27","8-7","13-3","13-7","22-12","29-14","30-20","33-15","34-12"]},{"id":"fire","name":"消防与燃气","cat":"safety","count":7,"items":["1-3","1-4","1-26","2-29","9-28","13-19","13-24"]},{"id":"law","name":"法律维权","cat":"safety","count":111,"items":["1-3","1-4","3-19","5-4","5-30","5-31","5-43","5-45","5-47","5-48","5-49","5-50","5-51","6-18","6-22","6-28","6-31","7-2","7-15","7-19","7-22","8-1","8-5","8-6","8-10","8-12","8-15","8-16","8-18","8-19","8-20","8-21","8-22","8-24","8-32","8-34","8-35","8-36","8-37","8-39","8-41","8-42","8-43","8-44","8-45","8-46","9-2","9-10","9-15","9-17","9-19","9-25","9-28","10-12","10-15","10-19","10-21","10-22","10-23","11-1","11-6","11-12","11-18","11-21","12-2","12-15","12-17","12-20","12-26","13-2","13-19","13-36","13-37","13-42","14-4","14-5","14-8","15-2","15-11","15-12","15-13","15-17","19-1","19-6","19-11","19-16","19-17","19-20","19-21","19-22","19-23","19-24","21-3","21-7","24-6","24-15","25-1","25-7","25-10","25-11","26-9","26-13","30-3","30-19","32-2","33-1","33-9","33-12","33-16","33-18","33-20"]},{"id":"privacy","name":"账号隐私","cat":"safety","count":22,"items":["1-37","8-8","8-16","8-32","11-6","11-9","11-11","11-15","12-14","13-36","14-1","14-2","14-3","14-4","14-5","14-6","14-10","14-11","14-12","25-10","26-12","30-19"]},{"id":"crime","name":"刑事红线","cat":"safety","count":40,"items":["7-19","8-6","8-7","8-8","8-10","8-11","8-26","8-33","8-35","8-38","8-43","8-44","9-2","9-3","9-4","9-5","9-6","9-8","9-9","9-13","9-15","9-16","9-19","9-21","9-23","9-24","11-1","11-2","11-4","11-5","11-8","11-19","11-21","12-20","12-26","17-3","21-5","21-12","22-3","22-4"]},{"id":"kids","name":"育儿","cat":"family","count":70,"items":["1-10","1-11","1-12","2-2","3-9","5-9","5-10","5-40","8-10","8-15","9-20","10-23","13-1","13-14","13-16","13-25","13-26","13-43","13-44","13-45","18-1","18-3","18-4","18-5","18-7","19-10","20-1","20-2","20-3","20-4","20-5","20-6","20-8","20-9","20-11","20-12","20-13","20-14","20-15","20-16","20-17","27-3","27-4","27-14","27-15","27-20","29-7","30-1","30-3","30-4","30-5","30-7","30-8","30-10","30-11","30-12","30-13","30-14","30-15","30-16","30-17","30-18","30-19","30-20","30-21","33-8","33-14","34-2","34-4","34-8"]},{"id":"school","name":"上学与教育","cat":"family","count":41,"items":["8-12","9-25","9-29","21-9","23-3","23-4","23-5","23-6","23-21","23-22","23-24","29-4","30-2","30-3","30-10","30-11","30-18","31-1","31-2","31-3","31-4","31-7","31-8","31-9","31-10","31-13","31-16","31-17","32-1","32-2","32-3","32-4","32-5","32-6","32-7","32-9","32-10","32-11","32-12","33-13","33-14"]},{"id":"marriage","name":"婚恋","cat":"family","count":21,"items":["8-13","8-23","8-24","8-25","8-26","8-43","10-6","10-7","10-8","10-9","10-10","10-13","10-14","10-15","10-16","10-17","10-19","10-21","10-22","18-6","29-10"]},{"id":"elder","name":"老人照护","cat":"family","count":43,"items":["1-13","1-46","5-2","5-13","5-20","5-46","7-18","8-25","9-20","10-11","10-18","11-15","13-2","13-10","14-9","17-1","17-2","17-3","17-4","17-5","17-6","17-7","17-9","17-10","17-11","17-12","17-13","18-1","18-6","19-19","23-1","25-9","25-12","26-8","29-5","29-6","29-7","29-12","30-20","31-11","33-4","33-5","33-19"]},{"id":"relation","name":"家庭关系","cat":"family","count":14,"items":["1-37","5-13","5-31","7-6","7-22","8-44","10-12","10-17","10-21","12-1","16-6","18-2","21-11","27-12"]},{"id":"job","name":"求职","cat":"work","count":7,"items":["7-5","7-14","21-5","23-5","23-12","31-7","31-17"]},{"id":"office","name":"职场","cat":"work","count":13,"items":["7-2","7-18","7-22","8-19","11-6","11-7","11-12","19-1","19-2","19-8","19-17","19-18","19-22"]},{"id":"startup","name":"创业","cat":"work","count":16,"items":["5-6","5-37","5-45","12-1","12-2","12-3","12-5","12-18","12-23","12-24","12-25","12-26","12-27","12-28","17-2","31-16"]},{"id":"legalentity","name":"注册合规","cat":"work","count":36,"items":["7-10","8-28","9-8","11-10","11-14","11-16","11-17","11-19","11-20","12-1","12-3","12-5","12-6","12-7","12-8","12-10","12-12","12-19","12-20","12-21","12-23","12-25","15-10","16-2","21-9","23-8","25-8","26-2","26-3","26-4","26-6","26-7","26-11","28-2","28-10","33-11"]},{"id":"ecom","name":"电商","cat":"work","count":8,"items":["5-30","5-34","7-23","12-10","12-24","26-3","26-4","26-8"]},{"id":"time","name":"时间管理","cat":"growth","count":36,"items":["1-14","3-2","3-4","3-12","3-13","3-25","3-26","4-6","4-17","4-18","6-12","6-25","6-26","10-3","10-6","10-9","11-13","13-21","14-6","15-1","18-4","19-2","19-9","19-23","23-13","23-15","24-7","24-11","28-6","28-8","29-9","30-2","31-5","32-9","33-13","33-14"]},{"id":"focus","name":"拖延与专注","cat":"growth","count":10,"items":["3-1","3-9","4-9","4-13","4-15","8-39","19-5","19-21","26-9","26-12"]},{"id":"habit","name":"习惯","cat":"growth","count":14,"items":["1-40","2-45","4-1","4-4","4-12","6-26","7-14","16-8","16-14","19-12","23-25","28-9","31-4","31-7"]},{"id":"learn","name":"学习","cat":"growth","count":15,"items":["3-12","7-14","23-2","23-5","23-6","23-10","23-11","23-13","23-15","23-16","23-18","30-5","31-10","32-4","32-12"]},{"id":"disaster","name":"灾害","cat":"risk","count":4,"items":["13-27","13-28","13-30","13-33"]},{"id":"emergency","name":"急救","cat":"risk","count":19,"items":["1-26","1-46","13-1","13-2","13-12","13-15","13-16","13-18","13-20","13-25","13-26","13-29","13-40","13-43","13-44","13-46","13-47","20-12","34-12"]},{"id":"home","name":"居家","cat":"life","count":3,"items":["5-3","8-27","15-18"]},{"id":"pet","name":"宠物","cat":"life","count":8,"items":["2-44","8-30","9-14","13-13","13-31","17-10","21-13","27-17"]},{"id":"digital","name":"数码与备份","cat":"life","count":22,"items":["1-9","3-1","4-10","5-4","5-9","5-10","8-8","8-32","8-42","9-7","11-4","11-8","13-36","14-1","14-3","14-4","14-6","14-12","21-2","21-7","29-6","30-5"]}],"items":[{"id":"1-1","t":"系安全带，前排后排都系","s":"1","cat":"safety","tags":["traffic"]},{"id":"1-2","t":"骑摩托车、电动自行车戴头盔并扣好","s":"1","cat":"safety","tags":["traffic"]},{"id":"1-3","t":"装烟雾报警器；冬天在室内烧煤、用燃气取暖的再装一氧化碳报警器","s":"1","cat":"safety","tags":["fire","law"]},{"id":"1-4","t":"燃气软管和灶具到期就换，不自己改管道，燃气公司上门推销可以直接拒绝","s":"1","cat":"safety","tags":["fire","law"]},{"id":"1-5","t":"不采、不买、不吃野生蘑菇，任何「土办法鉴别」都不成立","s":"1","cat":"health","tags":["doctor"]},{"id":"1-6","t":"电动自行车不推进楼道、不进电梯、不在家里充电","s":"1","cat":"safety","tags":["traffic"]},{"id":"1-7","t":"量血压，高了就吃药降到达标","s":"1","cat":"health","tags":["checkup","medicine"]},{"id":"1-8","t":"35 岁以后只要超重，就去查一次空腹血糖，正常也每三年再查","s":"1","cat":"health","tags":["weight","checkup"]},{"id":"1-9","t":"开车不超速、不酒驾，不看手机，困了就停车歇","s":"1","cat":"safety","tags":["traffic","digital","sleep"]},{"id":"1-10","t":"坐车时给 4 岁以下儿童用安全座椅，不要抱在怀里","s":"1","cat":"family","tags":["kids"]},{"id":"1-11","t":"家里有小孩就给窗户和阳台装限位器，纱窗不算防护","s":"1","cat":"family","tags":["kids"]},{"id":"1-12","t":"儿童近水不离视线，划船、野泳穿救生衣","s":"1","cat":"family","tags":["kids"]},{"id":"1-13","t":"60 岁以上练平衡和腿部力量，改造家里的浴室和楼梯","s":"1","cat":"family","tags":["elder"]},{"id":"1-14","t":"查乙肝两对半，结合接种记录判断要不要补疫苗","s":"1","cat":"health","tags":["vaccine","doctor","time"]},{"id":"1-15","t":"被铁钉、木刺扎到或者伤口沾了泥土，当天去处理，顺便问破伤风要不要打","s":"1","cat":"health","tags":["doctor"]},{"id":"1-16","t":"女性接种 HPV 疫苗，越早越好","s":"1","cat":"health","tags":["vaccine","checkup"]},{"id":"1-17","t":"女性 40 岁起做乳腺癌筛查，每两年一次钼靶","s":"1","cat":"health","tags":["checkup"]},{"id":"1-18","t":"30 岁以上女性做宫颈癌筛查，优先 HPV 检测","s":"1","cat":"health","tags":["checkup","vaccine"]},{"id":"1-19","t":"45 到 50 岁起做结直肠癌筛查，做查大便隐血的粪便免疫化学检测或者肠镜","s":"1","cat":"health","tags":["checkup"]},{"id":"1-20","t":"有心血管病的人和老年人每年打流感疫苗","s":"1","cat":"health","tags":["vaccine"]},{"id":"1-21","t":"50 岁以后打带状疱疹疫苗","s":"1","cat":"health","tags":["vaccine"]},{"id":"1-22","t":"65 岁以上打肺炎球菌疫苗","s":"1","cat":"health","tags":["vaccine"]},{"id":"1-23","t":"查幽门螺杆菌，阳性就根除","s":"1","cat":"health","tags":["checkup"]},{"id":"1-24","t":"重度吸烟者每年做一次低剂量胸部 CT","s":"1","cat":"health","tags":["smoke","checkup"]},{"id":"1-25","t":"抑郁或有自杀念头时打 12356，家里不囤安眠药和农药","s":"1","cat":"health","tags":["mind"]},{"id":"1-26","t":"备齐灭火器、灭火毯、逃生呼吸面罩和急救包，每年检查一次","s":"1","cat":"safety","tags":["fire","emergency"]},{"id":"1-27","t":"尿里出现肉眼看得见的血，哪怕不疼、哪怕第二天就干净了，也要去查一次","s":"1","cat":"health","tags":["doctor"]},{"id":"1-28","t":"勃起功能出了问题，先去查心血管，别当成单纯的「那方面的事」","s":"1","cat":"health","tags":["checkup","doctor"]},{"id":"1-29","t":"减重、戒烟、把血压血糖控住，勃起功能能跟着好转","s":"1","cat":"health","tags":["checkup","weight"]},{"id":"1-30","t":"性行为全程用安全套，不和别人共用针具","s":"1","cat":"risk","tags":[]},{"id":"1-31","t":"有过高危行为就去查一次艾滋病，疾控中心免费、结果保密","s":"1","cat":"money","tags":["save","checkup"]},{"id":"1-32","t":"自杀念头一冒出来先告诉身边的一个人，把这几十分钟交出去","s":"1","cat":"health","tags":["mind","doctor"]},{"id":"1-33","t":"别把「救回来」当成兜底：喝农药、吸煤气之后急诊能保住的是命，可能保不住肺和脑子","s":"1","cat":"health","tags":["doctor"]},{"id":"1-34","t":"别拿「躺几天就好」赌高处坠落：进了创伤 ICU 的人多数活下来，代价按年算","s":"1","cat":"health","tags":["doctor"]},{"id":"1-35","t":"别拿「少一个肾没什么」换钱：剩下那个要替两个干活，卖过肾的人事后 86% 说身体变差","s":"1","cat":"health","tags":["checkup"]},{"id":"1-36","t":"不捡、不拆、不卖来路不明的金属件，带三叶草警示标志的离远点","s":"1","cat":"risk","tags":[]},{"id":"1-37","t":"赌到借钱还赌、心情一直低落时，先打 12356，再把银行卡和支付密码交给家人管","s":"1","cat":"family","tags":["relation","mind","privacy"]},{"id":"1-38","t":"有高危性行为的男男性行为者，去艾滋病定点医院问暴露前预防药，按时吃能少感染约七成","s":"1","cat":"health","tags":["doctor"]},{"id":"1-39","t":"65 岁以上的女性去做一次双能 X 线骨密度检查，绝经后有骨质疏松危险因素的不用等到 65 岁","s":"1","cat":"health","tags":["checkup"]},{"id":"1-40","t":"查出骨质疏松，或者轻轻一摔就骨折过，就请医生开抗骨质疏松药并坚持用，别拿补钙代替","s":"1","cat":"health","tags":["doctor","habit","medicine"]},{"id":"1-41","t":"上野外冰面前先打孔量厚度，不到 15 厘米别上，河上的冰和冰钓洞边别去","s":"1","cat":"risk","tags":[]},{"id":"1-42","t":"装好护罩、戴上护目镜加面屏再用角磨机，双手握稳，别装木工锯片切木头","s":"1","cat":"risk","tags":[]},{"id":"1-43","t":"直接问身边情绪不对的人「你有没有想过自杀」，问了不会让他更想","s":"1","cat":"health","tags":["mind"]},{"id":"1-44","t":"心慌、心跳乱就去做心电图，查出房颤请医生评估吃抗凝药防中风，别拿阿司匹林代替","s":"1","cat":"health","tags":["doctor"]},{"id":"1-45","t":"成年人查一次丙肝抗体，阳性就再查核酸，确诊了吃 8 到 12 周口服药，绝大多数能治好","s":"1","cat":"risk","tags":[]},{"id":"1-46","t":"下化粪池、窨井、污水池、菜窖地窖、发酵罐等有限空间前，先通风、检测合格、落实防护和监护，条件不够不进入。有人倒下别跟着下去，打 119 和 120","s":"1","cat":"family","tags":["elder","emergency"]},{"id":"1-47","t":"45 岁以上，住在胃癌食管癌高发地区、有家族史或幽门螺杆菌阳性的，去做胃镜筛查","s":"1","cat":"health","tags":["checkup"]},{"id":"1-48","t":"泡发的木耳、银耳当顿吃完别过夜，河粉、肠粉这类湿米粉买来当天吃，家里不自制酵米面","s":"1","cat":"risk","tags":[]},{"id":"2-1","t":"戒烟，越早越好","s":"2","cat":"health","tags":["smoke","doctor"]},{"id":"2-2","t":"别在家里和车里抽烟，也别让客人在家里抽","s":"2","cat":"health","tags":["smoke","kids"]},{"id":"2-3","t":"戒烟别光靠忍，先去拿药：吃伐尼克兰的成功率能翻一倍多","s":"2","cat":"health","tags":["smoke","doctor"]},{"id":"2-4","t":"定一个戒烟日，到那天一次停掉，别先慢慢减","s":"2","cat":"health","tags":["smoke"]},{"id":"2-5","t":"去戒烟门诊，或者打 12320 问当地有没有戒烟服务","s":"2","cat":"health","tags":["doctor","smoke"]},{"id":"2-6","t":"已经戒不掉再考虑电子烟，本来不吸烟的人别碰","s":"2","cat":"health","tags":["smoke"]},{"id":"2-7","t":"不喝含糖饮料，换成无糖的也不算解决","s":"2","cat":"health","tags":["diet"]},{"id":"2-8","t":"不嚼槟榔","s":"2","cat":"health","tags":[]},{"id":"2-9","t":"把家里的食盐换成低钠盐（钾盐）","s":"2","cat":"health","tags":[]},{"id":"2-10","t":"认真刷牙，每天清一次牙缝，缺了牙去看牙医","s":"2","cat":"health","tags":["teeth"]},{"id":"2-11","t":"每天走到 7000–8000 步，或者每周累计快走 150–300 分钟","s":"2","cat":"health","tags":[]},{"id":"2-12","t":"成年后定期查血脂，40 岁前每 2 到 5 年一次、40 岁起每年一次；有高血压、高血脂就按医嘱规律吃药，别自行停","s":"2","cat":"health","tags":["checkup","medicine"]},{"id":"2-13","t":"每晚睡 7 小时左右，作息固定","s":"2","cat":"health","tags":["sleep"]},{"id":"2-14","t":"常打网球、羽毛球、乒乓球这类球拍类运动","s":"2","cat":"health","tags":["sport"]},{"id":"2-15","t":"把爬楼梯、快走赶路这类零碎的用力活动攒到每天四五分钟","s":"2","cat":"health","tags":["sport"]},{"id":"2-16","t":"每周做 30–60 分钟力量训练","s":"2","cat":"health","tags":["sport"]},{"id":"2-17","t":"别连着坐太久，隔一阵起身动一动","s":"2","cat":"health","tags":[]},{"id":"2-18","t":"少吃加工肉（火腿、培根、香肠、午餐肉）","s":"2","cat":"health","tags":[]},{"id":"2-19","t":"少喝或不喝酒","s":"2","cat":"health","tags":["smoke"]},{"id":"2-20","t":"每天都喝酒、一停就手抖心慌的人，别自己硬戒","s":"2","cat":"health","tags":["smoke","medicine"]},{"id":"2-21","t":"想少喝酒，先把一周喝了多少数出来，再找医生聊几分钟","s":"2","cat":"health","tags":["doctor","smoke"]},{"id":"2-22","t":"每天吃一小把坚果","s":"2","cat":"health","tags":[]},{"id":"2-23","t":"把一部分红肉换成鱼和禽肉","s":"2","cat":"health","tags":["diet"]},{"id":"2-24","t":"把一部分精米白面换成全谷物","s":"2","cat":"health","tags":[]},{"id":"2-25","t":"每周喝三次以上茶","s":"2","cat":"health","tags":[]},{"id":"2-26","t":"每天喝三到四杯咖啡，咖啡因总量不超过 400 mg，不加糖不加奶盖","s":"2","cat":"health","tags":[]},{"id":"2-27","t":"每天吃够 5 份（约 400 g）水果蔬菜","s":"2","cat":"health","tags":["diet"]},{"id":"2-28","t":"少吃超加工食品（薯片、方便面、糕点、速食）","s":"2","cat":"health","tags":[]},{"id":"2-29","t":"做饭、取暖不烧煤和柴，换成电或燃气","s":"2","cat":"safety","tags":["fire"]},{"id":"2-30","t":"热的东西放一放再喝，不喝滚烫的茶、汤和咖啡","s":"2","cat":"health","tags":["smoke"]},{"id":"2-31","t":"白天出门晒晒太阳，别整天不见光","s":"2","cat":"health","tags":[]},{"id":"2-32","t":"把 BMI 控制在 20–25，超重就减","s":"2","cat":"health","tags":["weight"]},{"id":"2-33","t":"每周吃四次以上辣椒","s":"2","cat":"health","tags":[]},{"id":"2-34","t":"每天喝一两份奶或酸奶","s":"2","cat":"health","tags":[]},{"id":"2-35","t":"鸡蛋不用戒，一天一个以内就行","s":"2","cat":"health","tags":[]},{"id":"2-36","t":"有条件就泡澡，别只冲淋浴","s":"2","cat":"health","tags":[]},{"id":"2-37","t":"把午睡控制在半小时内，别超过一小时，非得睡一两小时才撑得住就去查原因","s":"2","cat":"health","tags":["sleep","weight"]},{"id":"2-38","t":"熬夜之后第二天晚上就补觉，别攒到周末","s":"2","cat":"health","tags":["sleep"]},{"id":"2-39","t":"上夜班干得越久心血管风险越高，能转岗就趁早转","s":"2","cat":"health","tags":[]},{"id":"2-40","t":"买预包装、有 SC 编号的食用油，不买小作坊散装自榨花生油","s":"2","cat":"health","tags":[]},{"id":"2-41","t":"做饭用植物油代替猪油和黄油，不必为了健康换着买油，也别指望亚麻籽油护心","s":"2","cat":"health","tags":[]},{"id":"2-42","t":"炒菜、煎炸时打开抽油烟机，从开火一直开到做完","s":"2","cat":"health","tags":[]},{"id":"2-43","t":"绝经前后潮热盗汗影响到生活，就去妇科评估激素治疗，别硬扛也别自己买药，更别拿它防心脏病","s":"2","cat":"health","tags":["doctor"]},{"id":"2-44","t":"本来就想养狗的，把每天遛狗算进走路量，别为了长寿专门去养狗","s":"2","cat":"life","tags":["pet","sport"]},{"id":"2-45","t":"查出糖尿病前期（血糖偏高、还没到糖尿病），就靠少吃、减重、多动把糖尿病往后推，每半年复查一次血糖","s":"2","cat":"health","tags":["weight","checkup","habit"]},{"id":"2-46","t":"家里的花生、玉米、坚果和米面发了霉，整包扔掉，别挑掉霉的吃剩下的；嚼到发苦的坚果马上吐掉","s":"2","cat":"health","tags":["smoke","vaccine"]},{"id":"2-47","t":"别吃淡水鱼虾做的鱼生、生鱼片、鱼生粥和醉虾，常吃过的去医院查一次肝吸虫，查出来按医嘱吃吡喹酮","s":"2","cat":"health","tags":["doctor"]},{"id":"3-1","t":"关掉非必要通知，工作时把手机放到视线之外","s":"3","cat":"growth","tags":["focus","digital"]},{"id":"3-2","t":"固定起床时间，周末也一样","s":"3","cat":"growth","tags":["time","sleep"]},{"id":"3-3","t":"每晚睡够 7 到 8 小时，别把 6 小时当作够用","s":"3","cat":"health","tags":["sleep"]},{"id":"3-4","t":"下午两点以后不碰咖啡因","s":"3","cat":"health","tags":["sleep","time"]},{"id":"3-5","t":"把邮件和消息改成每天固定几次批量处理","s":"3","cat":"health","tags":[]},{"id":"3-6","t":"做需要连续思考的工作时，把哪怕几秒钟的打断也挡在外面","s":"3","cat":"health","tags":[]},{"id":"3-7","t":"一次只做一件事，不要边开会边回消息","s":"3","cat":"health","tags":[]},{"id":"3-8","t":"睡前一小时不看发光屏幕，要看就看纸书或不开屏幕灯的墨水屏","s":"3","cat":"health","tags":[]},{"id":"3-9","t":"到点就睡，不为游戏、短视频、色情内容熬夜","s":"3","cat":"health","tags":["sleep","focus","kids"]},{"id":"3-10","t":"深夜不做重大决定、不发要紧的消息","s":"3","cat":"health","tags":[]},{"id":"3-11","t":"下午困了就睡 10 分钟，不要睡半小时","s":"3","cat":"health","tags":["sleep"]},{"id":"3-12","t":"在开放式办公室工作时用耳塞或找安静房间做需要记忆的活","s":"3","cat":"growth","tags":["learn","time"]},{"id":"3-13","t":"别把每周工作时间一味往上加：过了 49 小时上下，多干一小时多出的活越来越少","s":"3","cat":"growth","tags":["time"]},{"id":"3-14","t":"发现自己在反复回想同一件糟心事时，换个需要动手的活","s":"3","cat":"health","tags":["mind"]},{"id":"3-15","t":"把「事情肯定会更糟」这类念头当症状看，不当事实看","s":"3","cat":"health","tags":[]},{"id":"3-16","t":"减少让你消耗的人际关系，学会拒绝不想接的请求","s":"3","cat":"health","tags":[]},{"id":"3-17","t":"生气时先离场，把对方当天气而不是当敌人","s":"3","cat":"health","tags":[]},{"id":"3-18","t":"情绪低落时先做性价比最高的几件事：动起来、多见光、按时睡、找人说、打 12356","s":"3","cat":"health","tags":["mind","sport"]},{"id":"3-19","t":"把警察、医生、柜员当成按规则上班的人，别当成角色：能推动事情的是文书和期限，不是情绪","s":"3","cat":"health","tags":["doctor","mind","law"]},{"id":"3-20","t":"别把「别人过得怎么样」当每日必读：给刷同龄人动态的应用设限或关掉","s":"3","cat":"health","tags":["mind"]},{"id":"3-21","t":"觉得「所有人都看见我出丑了」的时候，把这个估计除以二","s":"3","cat":"health","tags":[]},{"id":"3-22","t":"把「别人要求我做到完美」当症状看，不当事实看","s":"3","cat":"health","tags":[]},{"id":"3-23","t":"生气时别靠打沙袋、跑一圈来发泄，先让身体慢下来","s":"3","cat":"health","tags":["mind"]},{"id":"3-24","t":"心里压着一件事，可以连着几天把想法和感受写下来，但别指望它治病","s":"3","cat":"health","tags":["mind"]},{"id":"3-25","t":"痛经就吃布洛芬这类止痛药，别硬扛；痛到耽误上班上学、吃三个月药也压不住，就去妇科查","s":"3","cat":"health","tags":["medicine","doctor","time"]},{"id":"3-26","t":"长期失眠（一周三晚以上、拖了三个月以上）先做失眠的认知行为治疗，别一上来就长期吃安眠药","s":"3","cat":"health","tags":["sleep","doctor","time"]},{"id":"3-27","t":"打鼾很响、有人看见你睡着时憋气、白天困到开车都想睡的，去医院做睡眠监测查睡眠呼吸暂停，中重度的夜里戴呼吸机","s":"3","cat":"health","tags":["sleep","doctor","traffic"]},{"id":"4-1","t":"把「打算做」写成「几点、在哪、遇到什么就做什么」","s":"4","cat":"growth","tags":["habit"]},{"id":"4-2","t":"开工前写下退出条件","s":"4","cat":"growth","tags":[]},{"id":"4-3","t":"决定是否继续时，只看未来投入和未来回报，不看已投入多少","s":"4","cat":"money","tags":["save"]},{"id":"4-4","t":"估工期时按过去同类任务的实际耗时估，不按计划推","s":"4","cat":"growth","tags":["habit"]},{"id":"4-5","t":"会前发议程，没议程的会不开；能站着开就站着开","s":"4","cat":"growth","tags":[]},{"id":"4-6","t":"砍会议数量，能用文字异步解决的不开会","s":"4","cat":"growth","tags":["time"]},{"id":"4-7","t":"把大任务拆成子任务再估时、再开工","s":"4","cat":"growth","tags":[]},{"id":"4-8","t":"给没有外部截止的事自己定一个日期","s":"4","cat":"growth","tags":[]},{"id":"4-9","t":"把拖延当成在躲开难受，不要当成不够努力","s":"4","cat":"growth","tags":["focus"]},{"id":"4-10","t":"把要用的东西摆到手边，把不想碰的挪远，别指望当场忍住","s":"4","cat":"life","tags":["digital"]},{"id":"4-11","t":"想让自己做到就把钱押上，但先问自己肯不肯押","s":"4","cat":"growth","tags":[]},{"id":"4-12","t":"新习惯按月算，不要按「21 天」算","s":"4","cat":"growth","tags":["habit"]},{"id":"4-13","t":"拖延已经影响生活的，用有随机试验支持的自助材料，不用非找治疗师","s":"4","cat":"growth","tags":["focus","mind"]},{"id":"4-14","t":"用自己的时薪决定哪些家务外包","s":"4","cat":"growth","tags":[]},{"id":"4-15","t":"给短视频和无目的刷屏设硬上限","s":"4","cat":"growth","tags":["focus"]},{"id":"4-16","t":"不看电视和滚动新闻，需要的信息定时集中看","s":"4","cat":"growth","tags":[]},{"id":"4-17","t":"花一次时间学常用软件的键盘快捷键和自动化","s":"4","cat":"growth","tags":["time"]},{"id":"4-18","t":"选住处时把通勤时长放在前面，缩短单程通勤","s":"4","cat":"growth","tags":["time","income"]},{"id":"5-1","t":"关掉所有自动续费，改为到期手动续","s":"5","cat":"money","tags":["spend"]},{"id":"5-2","t":"每年三月到六月做一次个税汇算，专项附加扣除该填的填","s":"5","cat":"money","tags":["tax","debt","elder"]},{"id":"5-3","t":"公积金不只用来买房：租房、装修、物业费都能提，2026 年 9 月 20 日起按新条例办","s":"5","cat":"safety","tags":["rent","social","home"]},{"id":"5-4","t":"每年重算一次手机和宽带套餐，用不上的降档，运营商不给转就投诉","s":"5","cat":"safety","tags":["law","digital"]},{"id":"5-5","t":"不买彩票","s":"5","cat":"money","tags":[]},{"id":"5-6","t":"看到「高收益」「保本」「稳赚」直接走开","s":"5","cat":"money","tags":["invest","startup"]},{"id":"5-7","t":"不用信用卡最低还款，不为消费开分期或消费贷；非借不可，先把利息换成年化利率再比","s":"5","cat":"money","tags":["debt","spend"]},{"id":"5-8","t":"不给主播打赏、不给游戏充值、不冲动下单","s":"5","cat":"money","tags":["spend"]},{"id":"5-9","t":"孩子用手机充值打赏，八岁以上的大额支出未经家长追认可以主张退","s":"5","cat":"money","tags":["spend","kids","digital"]},{"id":"5-10","t":"教孩子记一句话：网上任何人让你拿家长的手机去操作、去报验证码，都是骗子","s":"5","cat":"safety","tags":["scam","kids","digital"]},{"id":"5-11","t":"拒绝电子产品的延长保修（延保）","s":"5","cat":"money","tags":[]},{"id":"5-12","t":"优先选通过一致性评价的仿制药和集采中选药","s":"5","cat":"health","tags":["checkup","doctor"]},{"id":"5-13","t":"在医保 App 上办一次家庭共济绑定，职工医保个人账户的钱就能给配偶、父母、子女看病买药","s":"5","cat":"family","tags":["elder","relation","social"]},{"id":"5-14","t":"喝烧开的自来水，不常年订饮水机用的桶装水、买瓶装水","s":"5","cat":"money","tags":[]},{"id":"5-15","t":"不频繁交易股票，行情暴涨暴跌的时候更要少动手","s":"5","cat":"money","tags":["invest"]},{"id":"5-16","t":"不借钱投资、不加杠杆、不买自己看不懂的","s":"5","cat":"money","tags":["invest","debt"]},{"id":"5-17","t":"用宽基指数基金替代主动管理基金作为长期底仓（长期拿着不动的那部分钱）","s":"5","cat":"money","tags":["invest"]},{"id":"5-18","t":"同类基金优先选费率低的","s":"5","cat":"money","tags":["invest"]},{"id":"5-19","t":"别把钱押在一只股票、一个平台、一套房上","s":"5","cat":"money","tags":["invest"]},{"id":"5-20","t":"开个人养老金账户前先算节税、查领取条件；不交个税或税率只有 3% 的人，别只为抵税交钱","s":"5","cat":"money","tags":["tax","social","elder"]},{"id":"5-21","t":"健身房按次付费或短周期付费，除非有一年以上的稳定记录","s":"5","cat":"money","tags":[]},{"id":"5-22","t":"交预付款要签书面合同；商家出风险要停收，跑路前你有权要回未消费的余额","s":"5","cat":"safety","tags":["contract","spend"]},{"id":"5-23","t":"大额非必需购买设 24 小时冷静期，网购善用七日无理由退货","s":"5","cat":"money","tags":[]},{"id":"5-24","t":"不为「划线价」和大促囤货","s":"5","cat":"money","tags":["spend","save"]},{"id":"5-25","t":"保险优先买消费型，把「返还」「分红」当作不保证的部分","s":"5","cat":"money","tags":["insurance","spend"]},{"id":"5-26","t":"三者险买够：交强险限额全国统一且不高，超出的部分从你自己家里出","s":"5","cat":"money","tags":["insurance"]},{"id":"5-27","t":"先存出 3 到 6 个月生活费的应急金，放在随时能取的地方","s":"5","cat":"money","tags":["debt"]},{"id":"5-28","t":"提前还房贷之前先做一道比较题，不要凭感觉","s":"5","cat":"money","tags":["debt","contract"]},{"id":"5-29","t":"网购认平台规则和法条，不认主播和「好评」","s":"5","cat":"safety","tags":["contract","scam"]},{"id":"5-30","t":"直播间买的东西出了问题，先向平台要卖家和带货人的信息，平台必须给","s":"5","cat":"work","tags":["ecom","law"]},{"id":"5-31","t":"买到不安全的食品，除了退钱还能要十倍价款，增加赔偿不足一千元的按一千元算","s":"5","cat":"money","tags":["income","law","relation"]},{"id":"5-32","t":"买大件前先查国家抽检通报、3C 认证和能效标识","s":"5","cat":"money","tags":[]},{"id":"5-33","t":"手串、玉石、名表、潮玩按「花掉的钱」算账，不按「存下的钱」算","s":"5","cat":"money","tags":["debt","tax"]},{"id":"5-34","t":"珠宝玉石只认带 CMA 标志的检测报告，并到发证部门官网核一下这家机构","s":"5","cat":"work","tags":["ecom"]},{"id":"5-35","t":"盲盒、抽卡这类随机销售，按「这笔钱不会回来」算","s":"5","cat":"money","tags":["spend"]},{"id":"5-36","t":"在意食品里加了什么，就买预包装的：散装柜台法律上不要求标配料表","s":"5","cat":"money","tags":[]},{"id":"5-37","t":"亏了的股票也要按事先定好的规则卖掉，不靠往下补仓摊平成本翻身","s":"5","cat":"money","tags":["invest","save","startup"]},{"id":"5-38","t":"想买美股这类海外资产，走 QDII 基金或港股通，别去境外券商开户，也别拿每年的换汇额度去买","s":"5","cat":"money","tags":["invest"]},{"id":"5-39","t":"只给自己扛不住的损失买保险，扛得住的损失用应急金兜着","s":"5","cat":"money","tags":["insurance"]},{"id":"5-40","t":"家里有人靠你的收入过日子，先给挣钱的人买定期寿险，别先给孩子买","s":"5","cat":"money","tags":["insurance","income","kids"]},{"id":"5-41","t":"签了一年以上的人身险又后悔，在犹豫期内退掉，保费基本全退","s":"5","cat":"money","tags":["insurance","contract"]},{"id":"5-42","t":"在银行柜台签字前，先看清手里的是存款还是保险","s":"5","cat":"money","tags":["insurance","invest"]},{"id":"5-43","t":"想退保就自己找保险公司办，别找「代理退保」，觉得被误导了打 12378 投诉","s":"5","cat":"money","tags":["insurance","law","debt"]},{"id":"5-44","t":"保单上把受益人写成具体的人，出了事记得去领钱：寿险 5 年、其他保险 2 年内要主张","s":"5","cat":"money","tags":["insurance"]},{"id":"5-45","t":"别拿钱买比特币、泰达币这类虚拟货币，别人拉你一起投也不跟：交易不受法律保护，亏了打官司也要不回来","s":"5","cat":"safety","tags":["law","startup"]},{"id":"5-46","t":"没单位的人自己交职工养老保险，按最低档交、先把年限交够最划算；别当成一交就赚，按最低档也要领约 10 年才回本","s":"5","cat":"money","tags":["social","elder","insurance"]},{"id":"5-47","t":"买新车提车时当场验车，收好发票和三包凭证；头 7 天、头 60 天里出大毛病，可以要求换车或退车","s":"5","cat":"money","tags":["tax","law"]},{"id":"5-48","t":"在车商那里买二手车，先查出险和维修记录，合同里写明「不是事故车、泡水车」；被隐瞒了可以要求退车并赔三倍车款","s":"5","cat":"safety","tags":["contract","law"]},{"id":"5-49","t":"在 4S 店买车，不交「金融服务费」，保险、贷款、上牌也不必在店里办","s":"5","cat":"money","tags":["insurance","debt","law"]},{"id":"5-50","t":"跟团游被导游带进没约定的购物店买了东西，回来 30 天内找旅行社退货，货款让旅行社先垫","s":"5","cat":"safety","tags":["law","spend","contract"]},{"id":"5-51","t":"银行员工推荐的理财，先在这家银行自己的 App 或官网里查到再买，查不到的可能是员工私卖的「飞单」","s":"5","cat":"money","tags":["invest","law"]},{"id":"6-1","t":"不要为了长寿或防心血管病吃复合维生素","s":"6","cat":"health","tags":["medicine"]},{"id":"6-2","t":"不要为了预防心血管病吃普通鱼油","s":"6","cat":"money","tags":[]},{"id":"6-3","t":"不要为了长寿给不缺维生素 D 的人补维生素 D","s":"6","cat":"health","tags":["medicine","mind"]},{"id":"6-4","t":"不要为了防癌吃抗氧化补剂（β 胡萝卜素、维生素 E、维生素 A）","s":"6","cat":"health","tags":["medicine","diet"]},{"id":"6-5","t":"不要指望氨糖（葡萄糖胺）/软骨素治膝关节炎","s":"6","cat":"money","tags":[]},{"id":"6-6","t":"不要靠维生素 C 预防感冒","s":"6","cat":"health","tags":["medicine"]},{"id":"6-7","t":"不要给没有症状的自己做「全身 PET-CT」或「肿瘤标志物套餐」","s":"6","cat":"health","tags":["checkup","doctor"]},{"id":"6-8","t":"不要指望手环/手表的运动量化帮你减重","s":"6","cat":"health","tags":["weight","sport"]},{"id":"6-9","t":"不要为了「更健康」花溢价买有机食品","s":"6","cat":"health","tags":["diet"]},{"id":"6-10","t":"不要花大钱买保健品、膏方、滋补品来「调理身体」","s":"6","cat":"health","tags":["checkup","vaccine"]},{"id":"6-11","t":"不要在没有肠道问题时长期吃益生菌","s":"6","cat":"money","tags":[]},{"id":"6-12","t":"不要为了「增强免疫力」逼自己洗冷水澡","s":"6","cat":"health","tags":["mind","time"]},{"id":"6-13","t":"不要买排毒、清肠、酵素、碱性水这类产品","s":"6","cat":"money","tags":[]},{"id":"6-14","t":"不要为了凑够「每天 8 杯水」强迫自己喝水","s":"6","cat":"money","tags":[]},{"id":"6-15","t":"不要花钱算命、看塔罗、看星座来做决定","s":"6","cat":"money","tags":[]},{"id":"6-16","t":"不要买防蓝光眼镜来「保护视力」，也不要相信「对着屏幕干几个月眼睛就废了」，但眼睛胀痛发红要当急症","s":"6","cat":"money","tags":[]},{"id":"6-17","t":"不要把献血当保健：「排毒、降血脂、防心梗」没有随机试验支持，频繁献倒是真会缺铁","s":"6","cat":"health","tags":["checkup"]},{"id":"6-18","t":"不要靠通用体检套餐防病，按年龄性别做那几项有证据的筛查","s":"6","cat":"health","tags":["checkup","law"]},{"id":"6-19","t":"不要因为体检查出尿酸高、但从没痛过，就开始吃降尿酸药","s":"6","cat":"health","tags":["checkup","medicine"]},{"id":"6-20","t":"不要因为体检查出胆囊结石、但从没疼过，就去预防性切胆囊","s":"6","cat":"health","tags":["checkup","doctor"]},{"id":"6-21","t":"不要为了防肾结石把钙戒掉","s":"6","cat":"money","tags":[]},{"id":"6-22","t":"不要为了「转运」「招财」「养人」买水晶、手串、貔貅这类物件","s":"6","cat":"safety","tags":["law"]},{"id":"6-23","t":"不要指望买东西改善心情或身份感","s":"6","cat":"health","tags":["mind","spend"]},{"id":"6-24","t":"不要为了「在周围人里往上挪一档」多花钱换房、换车、换圈子","s":"6","cat":"money","tags":[]},{"id":"6-25","t":"不要相信「意志力像肌肉，用一会儿就没了」","s":"6","cat":"growth","tags":["time"]},{"id":"6-26","t":"不要指望吃早餐或 16:8 轻断食帮你控制体重，吃饭时间挑你能长期坚持的","s":"6","cat":"health","tags":["weight","time","habit"]},{"id":"6-27","t":"不要相信「手淫伤身」「戒色才能变好」，真正要看的是有没有耽误睡觉、工作和关系","s":"6","cat":"health","tags":["doctor","mind"]},{"id":"6-28","t":"不要花钱做「性取向矫正」「同性恋治疗」，也不要把家里人送去","s":"6","cat":"health","tags":["doctor","mind","law"]},{"id":"6-29","t":"不要指望学会「正确搬运姿势」、上搬运培训就能防腰痛，要减的是搬的重量和次数，平时多锻炼","s":"6","cat":"health","tags":["sport"]},{"id":"6-30","t":"不要指望骨折之后猛补钙、喝骨头汤能让骨头长得更快","s":"6","cat":"money","tags":[]},{"id":"6-31","t":"不要指望靠 AI 聊天机器人自己判断病情和法律问题，看病、打官司、花大钱之前，把它说的依据找到原文核一遍","s":"6","cat":"safety","tags":["law"]},{"id":"6-32","t":"不要因为「人随时会死，早点把钱花完才快乐」就不存钱，三十岁的人约九成能活到六十岁","s":"6","cat":"money","tags":[]},{"id":"6-33","t":"不要因为中老年人膝盖慢慢疼起来（骨关节炎、退化性半月板撕裂）就做关节镜清理或切半月板，先减重、练大腿肌肉","s":"6","cat":"health","tags":["weight","doctor"]},{"id":"6-34","t":"不要指望长期失眠靠吃褪黑素治好，它平均只让人早睡着约 7 分钟，先做失眠的认知行为治疗","s":"6","cat":"health","tags":["sleep","medicine"]},{"id":"6-35","t":"不要因为感冒、普通发烧就要求输液，也不要在换季时去输液「冲血管」「通血管」","s":"6","cat":"health","tags":["doctor","medicine"]},{"id":"7-1","t":"失业了先在线申领失业保险金","s":"7","cat":"money","tags":["insurance","social"]},{"id":"7-2","t":"被欠薪先投诉劳动监察，再申请劳动仲裁，两条路都不收费，多数案子几个月内有结果","s":"7","cat":"safety","tags":["law","office","income"]},{"id":"7-3","t":"打不起官司就申请法律援助，讨薪、赡养费、工伤这类案子本来就在范围内","s":"7","cat":"money","tags":["income","save"]},{"id":"7-4","t":"走投无路时去救助站，管吃住和返乡车票","s":"7","cat":"money","tags":[]},{"id":"7-5","t":"找活先用免费的公共就业服务和零工市场，不找收费中介","s":"7","cat":"money","tags":["save","rent","job"]},{"id":"7-6","t":"突发变故先申请临时救助","s":"7","cat":"family","tags":["relation"]},{"id":"7-7","t":"收入低于当地低保线就申请低保，比低保线略高或者看病上学花得多的申请医疗、教育、住房、就业救助","s":"7","cat":"money","tags":["income"]},{"id":"7-8","t":"持残疾人证的去申请残疾人两项补贴","s":"7","cat":"money","tags":[]},{"id":"7-9","t":"居民医保每年 400 元不要断，困难户可减免","s":"7","cat":"money","tags":["social"]},{"id":"7-10","t":"得了重病先走医保、大病保险、医疗救助和异地备案，不碰网贷","s":"7","cat":"money","tags":["debt","insurance","legalentity"]},{"id":"7-11","t":"身份证丢了立刻补办，急用先领临时身份证","s":"7","cat":"money","tags":[]},{"id":"7-12","t":"办失业登记后争取就业困难人员认定，拿社保补贴或公益性岗位","s":"7","cat":"money","tags":["social"]},{"id":"7-13","t":"失业期间去领职业培训补贴、就业见习补贴和社保补贴，别自费上培训班","s":"7","cat":"money","tags":["social"]},{"id":"7-14","t":"求职别只投简历，用系统方法：学技巧、定目标、找人帮","s":"7","cat":"work","tags":["job","habit","learn"]},{"id":"7-15","t":"不交押金、不押证件、不签「培训贷」、不进传销、不借高利贷","s":"7","cat":"money","tags":["debt","rent","law"]},{"id":"7-16","t":"住房困难先排公租房","s":"7","cat":"safety","tags":["rent"]},{"id":"7-17","t":"把住和吃压到最低：合租月租代替日租，自炊和助餐食堂代替外卖","s":"7","cat":"health","tags":["diet","rent"]},{"id":"7-18","t":"社保断缴不要慌：养老按累计算，医保按规则补","s":"7","cat":"money","tags":["social","elder","office"]},{"id":"7-19","t":"坐过牢、破过产、上过失信名单，法律上都有重来的路，先把手续走完","s":"7","cat":"safety","tags":["law","crime"]},{"id":"7-20","t":"大病之前，基本医保之外配一份一年期医疗险或重疾险，看清「保证续保」四个字","s":"7","cat":"money","tags":["insurance","social","contract"]},{"id":"7-21","t":"实在没地方睡，24 小时营业场所只能应急一晚，优先去救助站","s":"7","cat":"money","tags":[]},{"id":"7-22","t":"被欠了工钱，先分清雇你的是谁：没执照的作坊和包工头照样找劳动监察，给家庭或个人干私活才去法院","s":"7","cat":"safety","tags":["law","relation","office"]},{"id":"7-23","t":"信用卡、网贷已经还不上，自己打银行或平台客服申请个性化分期或延期，别借新还旧，也别付钱找「停息挂账」「征信修复」「反催收」中介","s":"7","cat":"money","tags":["debt","rent","ecom"]},{"id":"8-1","t":"出了交通事故先停车、救人、报警，不要跑","s":"8","cat":"safety","tags":["law","insurance"]},{"id":"8-2","t":"发现被骗，立刻打 110 或 96110 要求止付，别先自己查","s":"8","cat":"safety","tags":[]},{"id":"8-3","t":"记住反诈硬规则：来电不轻信、信息不透露、链接不点击、转账多核实，七种最常见的骗局都是这个形状","s":"8","cat":"safety","tags":["scam","debt","invest"]},{"id":"8-4","t":"视频里看见脸、电话里听见声音都不算核实，涉及转账先挂断，用自己通讯录里的旧号码打回去","s":"8","cat":"safety","tags":["scam"]},{"id":"8-5","t":"被指控或被传唤，先请律师，不私了、不删记录","s":"8","cat":"safety","tags":["law","income"]},{"id":"8-6","t":"出了事主动去说清楚：自首最多能减四成刑，犯罪较轻的还能减更多甚至免罚，「躲过追诉期」这条路是堵死的","s":"8","cat":"safety","tags":["crime","law"]},{"id":"8-7","t":"喝了酒就不碰方向盘，包括电动车和「挪一下车」，也别把车借给喝了酒或没驾照的人开","s":"8","cat":"safety","tags":["traffic","crime","smoke"]},{"id":"8-8","t":"不把银行卡、手机卡、支付账号借给任何人，「跑分」不是兼职","s":"8","cat":"safety","tags":["privacy","digital","crime"]},{"id":"8-9","t":"每年免费查两次自己的征信报告，看有没有不是自己办的贷款和卡","s":"8","cat":"money","tags":["debt","save"]},{"id":"8-10","t":"起了冲突先报警不动手，先动手的那个容易让对方的还手算成正当防卫","s":"8","cat":"safety","tags":["law","crime","kids"]},{"id":"8-11","t":"躲不掉的侵害可以还手，但只打正在动手的那个人，他停你就停","s":"8","cat":"safety","tags":["crime"]},{"id":"8-12","t":"跟谁结了怨——被欠薪、被开除、被坑了钱——走投诉、仲裁、起诉，别去找人算账","s":"8","cat":"safety","tags":["law","income","school"]},{"id":"8-13","t":"再恨也别对不相干的人下手：驾车冲撞人群、在公共场所行凶按以危险方法危害公共安全定罪，起刑三年，死了人十年起步、最高死刑","s":"8","cat":"health","tags":["sport","marriage"]},{"id":"8-14","t":"冒出「拉个垫背的」「同归于尽」这种念头，当急症处理：离开现场，把车钥匙和刀交给别人，打 12356","s":"8","cat":"health","tags":["mind"]},{"id":"8-15","t":"身边人说出「谁也别想好过」「带着孩子一起走」，别当气话：近亲属可以直接送诊，公安接到报警也必须管","s":"8","cat":"safety","tags":["law","doctor","kids"]},{"id":"8-16","t":"网上不骂人、不造谣、不转发没核实的事；被网暴先留证再报警","s":"8","cat":"safety","tags":["law","privacy"]},{"id":"8-17","t":"签字前把纸看完，不替人签字，不在空白纸上签","s":"8","cat":"money","tags":["debt"]},{"id":"8-18","t":"借钱写清借条，替人担保前先想清楚自己愿不愿意替他还","s":"8","cat":"money","tags":["debt","law","contract"]},{"id":"8-19","t":"维权有期限：民事诉讼时效 3 年，劳动仲裁 1 年，过了对方一句「超过时效」就够","s":"8","cat":"safety","tags":["law","office","debt"]},{"id":"8-20","t":"被起诉、被执行了，如实报财产、能还多少还多少，别把房和钱转给亲友或公司","s":"8","cat":"safety","tags":["law","debt"]},{"id":"8-21","t":"被限制消费或者被列入失信名单，先查清是按哪一条纳入的，能纠正的申请纠正","s":"8","cat":"money","tags":["spend","law","insurance"]},{"id":"8-22","t":"网购、二手交易被骗，先平台投诉，再报警，再算值不值得起诉","s":"8","cat":"safety","tags":["law","scam"]},{"id":"8-23","t":"恋爱和婚内的大额赠与，交付之前想清楚，交付之后原则上要不回","s":"8","cat":"family","tags":["marriage"]},{"id":"8-24","t":"彩礼走转账并备注，聊天记录留好；借婚姻要钱可以要回","s":"8","cat":"family","tags":["marriage","scam","law"]},{"id":"8-25","t":"婚前财产不用怕，房子加名和父母出资先写清楚","s":"8","cat":"family","tags":["marriage","elder","contract"]},{"id":"8-26","t":"结婚前核对对方婚姻状况，以结婚为幌子骗钱的按诈骗罪追究","s":"8","cat":"family","tags":["marriage","scam","crime"]},{"id":"8-27","t":"上门维修、验车、装修，先问价再动手，全程在旁边看着","s":"8","cat":"life","tags":["home","rent"]},{"id":"8-28","t":"别当「挂名法人」，别把身份证借给人注册公司","s":"8","cat":"work","tags":["legalentity"]},{"id":"8-29","t":"出入境不帮陌生人带东西，不代收来路不明的包裹","s":"8","cat":"safety","tags":["scam"]},{"id":"8-30","t":"养狗必须牵绳：不牵绳出了事是无过错责任（你有没有错都要赔），赔到底。狗还要按时打狂犬病疫苗、办养犬登记","s":"8","cat":"life","tags":["pet","vaccine","income"]},{"id":"8-31","t":"对方喝到意识不清、睡着，或者可能不满 14 岁，就不要发生关系","s":"8","cat":"safety","tags":[]},{"id":"8-32","t":"发生关系、裸聊之后对方拿报警、发照片、告诉你单位来要钱，一分钱不给，一条记录不删，直接报警","s":"8","cat":"life","tags":["digital","law","privacy"]},{"id":"8-33","t":"被人捏造事实举报，可以要求追究：够治安处罚的拘留 5 日起，够罪的判 3 年以下","s":"8","cat":"safety","tags":["crime"]},{"id":"8-34","t":"证据不足本来就应当判无罪，逼出来的口供应当排除；判了还有申诉和再审","s":"8","cat":"safety","tags":["law"]},{"id":"8-35","t":"被羁押后撤案、不起诉或者判无罪的，去申请国家赔偿，按天算钱","s":"8","cat":"safety","tags":["law","income","crime"]},{"id":"8-36","t":"自己是受害人去索赔，走 12315、起诉或者律师，别单独赴对方的约，别把「给钱」和「我不曝光」绑成一句话","s":"8","cat":"safety","tags":["law","contract"]},{"id":"8-37","t":"被网暴了：先开防护、先固证，再在平台、禁令、报警三条路里挑","s":"8","cat":"safety","tags":["law"]},{"id":"8-38","t":"「先给人买保险再动手」这条路法律上从头堵死：钱一分拿不到，罪按故意杀人加保险诈骗数罪并罚","s":"8","cat":"money","tags":["insurance","scam","crime"]},{"id":"8-39","t":"报警当场要受案回执，不立案要书面通知：7 日内可申请复议，再 7 日可申请复核，检察院能通知公安立案","s":"8","cat":"safety","tags":["contract","law","focus"]},{"id":"8-40","t":"别给办案、执法的人送钱送卡：行贿自己也判，对监察、执法、司法人员行贿还要从重","s":"8","cat":"safety","tags":[]},{"id":"8-41","t":"可能翻脸的电话和面谈，直接开录音：自己参加的谈话，不用先征得对方同意","s":"8","cat":"safety","tags":["law","income"]},{"id":"8-42","t":"现场出了事，先拍全景，再拍位置关系，最后拍损坏和伤情，原图原视频别删","s":"8","cat":"safety","tags":["law","digital"]},{"id":"8-43","t":"被家暴了：先报警留下出警记录，再去法院申请人身安全保护令，不用先离婚，也不收费","s":"8","cat":"safety","tags":["law","marriage","crime"]},{"id":"8-44","t":"家里人赌博欠了债，别急着替他还：赌债法律不保护，为赌借的钱也不算夫妻共同债务","s":"8","cat":"safety","tags":["law","crime","relation"]},{"id":"8-45","t":"熟人让你「帮忙刷个脸、做个见证」去办贷款，或者要你念验证码，别答应：这叫 AB 贷，借款人是你，不是担保人","s":"8","cat":"money","tags":["debt","scam","law"]},{"id":"8-46","t":"给门窗装好锁、门外装一盏感应灯，出门真的锁上：防入室盗窃靠这几样，单装一个报警器看不出用","s":"8","cat":"safety","tags":["law"]},{"id":"9-1","t":"群里不转发不知真假的灾情、疫情、警情消息，不 P 图、不用 AI 造现场图","s":"9","cat":"safety","tags":[]},{"id":"9-2","t":"不发、不转侮辱英烈的图片、表情包和评论，不拿国旗国歌开玩笑","s":"9","cat":"safety","tags":["law","crime"]},{"id":"9-3","t":"境外网站上的东西看完就关，不截图、不转发、不搬进群里，也不在评论区跟着说","s":"9","cat":"safety","tags":["crime"]},{"id":"9-4","t":"黄色视频自己看归自己，别往群里发、别卖「资源」、别建群","s":"9","cat":"safety","tags":["crime"]},{"id":"9-5","t":"「兼职」要你用自己的卡收钱、取现、转账，不管给多少好处费都不做","s":"9","cat":"safety","tags":["scam","crime"]},{"id":"9-6","t":"有人拉你去「包装材料」贷款、按贷款额分你好处费，一个都不做","s":"9","cat":"money","tags":["debt","crime"]},{"id":"9-7","t":"捡到银行卡不取钱，捡到手机、钱包联系失主或交给警察，不揣走","s":"9","cat":"life","tags":["digital","debt","scam"]},{"id":"9-8","t":"优惠用自己的真实身份领，不买虚拟号批量注册小号，不靠漏洞重复领","s":"9","cat":"money","tags":["save","crime","legalentity"]},{"id":"9-9","t":"阳台、窗户不往外扔任何东西，烟头、垃圾袋、酒瓶都算","s":"9","cat":"safety","tags":["crime"]},{"id":"9-10","t":"不网购仿真枪、钢珠枪、气枪，不买来路不明的「玩具枪」","s":"9","cat":"safety","tags":["law"]},{"id":"9-11","t":"买了无人机先实名登记，机场、军事区和城市管制空域不飞，不破解限高","s":"9","cat":"safety","tags":[]},{"id":"9-12","t":"不偷拍别人，不在出租屋、民宿、酒店房间装摄像头","s":"9","cat":"safety","tags":[]},{"id":"9-13","t":"麻将、扑克可以打，不抽头、不当庄、不组局收钱，不玩网络赌博","s":"9","cat":"safety","tags":["crime"]},{"id":"9-14","t":"不吃野味，不买卖、不养保护动物当宠物，野兰花、崖柏、红豆杉也别挖别买卖","s":"9","cat":"life","tags":["pet"]},{"id":"9-15","t":"要债不扣人、不关人、不跟到家里赖着不让走","s":"9","cat":"safety","tags":["law","crime"]},{"id":"9-16","t":"身份证不借人，不用别人的身份证，也不拿别人的证件登记、开卡、买票","s":"9","cat":"safety","tags":["crime"]},{"id":"9-17","t":"被警察拦下或带走时配合，不推、不打、不抢执法记录仪，喝了酒更要忍","s":"9","cat":"safety","tags":["law"]},{"id":"9-18","t":"对方不满 14 岁就不能发生关系，「她同意」不是理由","s":"9","cat":"safety","tags":[]},{"id":"9-19","t":"动手打人前算清这笔账：拘留、赔钱、判刑","s":"9","cat":"safety","tags":["crime","income","law"]},{"id":"9-20","t":"孩子生下来养不了，只有民政登记这一条合法出路：收钱把孩子给人可能按拐卖罪判，扔下不管是遗弃罪","s":"9","cat":"family","tags":["kids","doctor","elder"]},{"id":"9-21","t":"别伪造事故、别夸大损失骗理赔：这是保险诈骗罪，帮你作证、帮你修车、帮你鉴定的人一起算","s":"9","cat":"money","tags":["insurance","scam","crime"]},{"id":"9-22","t":"不卖自己的器官，也别帮人找供体：肾到手 2 万多，同一枚转手卖 20 万，钱要被没收还要按交易额罚 10 到 20 倍","s":"9","cat":"safety","tags":[]},{"id":"9-23","t":"别嫖娼：默认档是拘留 10 到 15 日，不是罚点钱了事","s":"9","cat":"safety","tags":["crime"]},{"id":"9-24","t":"汉化漫画、搬运影视剧、分享网盘资源和盗版电子书，不收钱也是侵权；挂广告、收会员费就可能判刑","s":"9","cat":"money","tags":["spend","crime","income"]},{"id":"9-25","t":"写同人、做二创拿去出版或卖钱，先取得原作许可，或者把借来的人物名字和关系换成自己的","s":"9","cat":"safety","tags":["law","school"]},{"id":"9-26","t":"别为了防身买甩棍、电击器、匕首、辣椒水带在身上，放在车里也算携带","s":"9","cat":"safety","tags":[]},{"id":"9-27","t":"捕鱼、钓鱼时，禁渔期和禁渔区不下网，任何时候都不电鱼、毒鱼、炸鱼，不用禁用渔具","s":"9","cat":"safety","tags":["scam"]},{"id":"9-28","t":"上坟、烧荒、野炊时不在林区和草原点火，看到山火打 12119 或 119","s":"9","cat":"safety","tags":["fire","law"]},{"id":"9-29","t":"考公、考研、考驾照和考职业资格时，不替人考、不找人替考，不买卖答案，不帮人组织作弊","s":"9","cat":"family","tags":["school"]},{"id":"10-1","t":"认识更多人，而不是死磕一个：两个人合不合得来，见面之前预测不出来","s":"10","cat":"family","tags":[]},{"id":"10-2","t":"对方明确拒绝之后就停下，继续纠缠是治安违法，不是「诚意」","s":"10","cat":"family","tags":[]},{"id":"10-3","t":"判断对方有没有兴趣，看行为不看「信号」：谁主动、谁安排、谁跟进","s":"10","cat":"growth","tags":["time"]},{"id":"10-4","t":"关系好不好，主要看你自己在这段关系里的感受，不是看对方条件","s":"10","cat":"health","tags":["mind"]},{"id":"10-5","t":"想拉近距离就轮流回答一组由浅入深的问题，别学话术","s":"10","cat":"family","tags":[]},{"id":"10-6","t":"异地恋不比同城差，真正的坎是搬到一起之后的头三个月","s":"10","cat":"family","tags":["marriage","time"]},{"id":"10-7","t":"先看登记数据再听长辈：结婚率、离婚率各是什么口径","s":"10","cat":"family","tags":["marriage"]},{"id":"10-8","t":"把结婚的健康收益算进去，但按观察性数据打折","s":"10","cat":"family","tags":["marriage"]},{"id":"10-9","t":"时间账按「无酬劳动」算，谈清分工再领证","s":"10","cat":"growth","tags":["time","marriage"]},{"id":"10-10","t":"结婚的钱账先看法律默认规则，再决定要不要书面约定","s":"10","cat":"family","tags":["marriage","contract","income"]},{"id":"10-11","t":"父母出资买房，在转账的时候就把是借是送写清楚","s":"10","cat":"safety","tags":["scam","rent","elder"]},{"id":"10-12","t":"配偶一方大额借的钱，你没签字也没追认，不自动变成你的债","s":"10","cat":"safety","tags":["law","relation"]},{"id":"10-13","t":"领证只要身份证加一份签字声明，不用户口簿，不收钱，当场发证","s":"10","cat":"family","tags":["marriage"]},{"id":"10-14","t":"婚前做一次婚检，有重大疾病必须在登记前如实告诉对方","s":"10","cat":"family","tags":["marriage"]},{"id":"10-15","t":"算退出成本：协议离婚有 30 天冷静期，诉讼离婚有法定条件","s":"10","cat":"safety","tags":["law","marriage","contract"]},{"id":"10-16","t":"给「为长辈结婚」单独记一笔账，别和自己的账混在一起","s":"10","cat":"family","tags":["marriage"]},{"id":"10-17","t":"把关系好坏当成一笔健康账：吵架对事不对人，别骂人、别挖苦","s":"10","cat":"family","tags":["marriage","relation"]},{"id":"10-18","t":"同性伴侣趁两个人都清醒，办好授权委托、意定监护和遗嘱：法律上你们不是近亲属，不办就没有签字权和继承权","s":"10","cat":"family","tags":["elder","doctor","contract"]},{"id":"10-19","t":"别靠隐瞒性取向结婚，也别把形婚当成省事的办法：法律上它就是一段真婚姻，想退出只能走离婚","s":"10","cat":"family","tags":["marriage","income","law"]},{"id":"10-20","t":"关系卡在反复吵架和冷战里，两个人一起去做伴侣治疗：干等着基本不会自己好","s":"10","cat":"family","tags":[]},{"id":"10-21","t":"办了婚礼、摆了酒席，也要去领结婚证：没登记的在法律上不算夫妻，对方去世你没有配偶的继承权","s":"10","cat":"family","tags":["marriage","relation","law"]},{"id":"10-22","t":"配偶背着你拿夫妻共同的钱大额打赏主播、转给婚外的人：不离婚也能请求分割共同财产，转给婚外的人的钱可以起诉要回","s":"10","cat":"safety","tags":["law","spend","marriage"]},{"id":"10-23","t":"有未成年孩子的夫妻离婚时，把孩子跟谁、每月抚养费多少、探望的方式和时间都写进离婚协议：写得越具体，离婚后越少再打官司","s":"10","cat":"safety","tags":["contract","law","kids"]},{"id":"11-1","t":"动手前先问一句：厂商、平台、公司会不会去报案；被追究后马上找刑事律师","s":"11","cat":"safety","tags":["law","crime"]},{"id":"11-2","t":"不做、不卖游戏外挂和辅助，包括「只读屏幕不碰内存」的 AI 辅助，也不卖给微信这类软件加功能的改版","s":"11","cat":"safety","tags":["crime"]},{"id":"11-3","t":"不写、不卖抢票、秒杀、刷单、薅羊毛脚本，哪怕只是「自动化点按钮」","s":"11","cat":"safety","tags":["scam"]},{"id":"11-4","t":"爬虫只爬无需登录的公开页面，不绕反爬、不碰个人信息，爬到的数据不卖","s":"11","cat":"safety","tags":["crime","digital"]},{"id":"11-5","t":"不接赌博、诈骗、色情 App 的开发单，不替「客户」搭支付通道、解封账号","s":"11","cat":"safety","tags":["crime","scam"]},{"id":"11-6","t":"离职时交清账号权限，不删库、不留后门、不改密码锁系统，哪怕公司欠你钱","s":"11","cat":"safety","tags":["privacy","office","law"]},{"id":"11-7","t":"离职不带走源码、客户名单和技术文档，不上传个人网盘，不在下家复用","s":"11","cat":"work","tags":["office"]},{"id":"11-8","t":"不在别人的电脑、服务器、摄像头上跑自己的程序，公司机器不拿来挖矿","s":"11","cat":"life","tags":["digital","crime"]},{"id":"11-9","t":"没有书面授权不测别人的系统，「出于好意」和「事后上报」在法条里都不是出罪理由","s":"11","cat":"safety","tags":["contract","privacy"]},{"id":"11-10","t":"漏洞按规定报送，修补前不公开细节、不发利用工具、不交给境外","s":"11","cat":"work","tags":["legalentity"]},{"id":"11-11","t":"不卖翻墙工具、VPN 账号，不替人搭这类节点","s":"11","cat":"safety","tags":["privacy"]},{"id":"11-12","t":"签了竞业协议，离职后公司不按月给补偿就书面催告，满 3 个月没给可以解除；没接触过商业秘密的岗位可请求确认条款不生效","s":"11","cat":"safety","tags":["contract","office","law"]},{"id":"11-13","t":"上班时间、用公司资源写的代码归公司，自己的开源项目用自己的时间和设备做，不混公司代码","s":"11","cat":"growth","tags":["time","contract"]},{"id":"11-14","t":"用 GPL 等开源代码做产品，按许可证要求开源或换许可证，不当「没人管」","s":"11","cat":"work","tags":["legalentity","contract"]},{"id":"11-15","t":"做 App 只收业务必需的个人信息，14 岁以下要监护人同意，隐私政策写清楚","s":"11","cat":"safety","tags":["privacy","elder"]},{"id":"11-16","t":"网站、App 上线前先做 ICP 备案，按等级保护要求留 6 个月以上日志","s":"11","cat":"work","tags":["legalentity"]},{"id":"11-17","t":"对公众提供生成式 AI 服务前先按规定做安全评估和算法备案，生成内容加标识","s":"11","cat":"work","tags":["legalentity"]},{"id":"11-18","t":"不做、不发自动跳过或屏蔽别家 App 广告的工具，免费也可能被判不正当竞争","s":"11","cat":"money","tags":["save","law"]},{"id":"11-19","t":"不搭「AI 中转站」低价转卖境外大模型接口：上海已有站长被刑事拘留","s":"11","cat":"safety","tags":["crime","legalentity"]},{"id":"11-20","t":"不写、不卖、不传软件的破解补丁、注册机和破解版，卖钱够了数就按侵犯著作权罪判","s":"11","cat":"work","tags":["legalentity","income"]},{"id":"11-21","t":"不帮人发起 DDoS 流量攻击，不卖、不租「压力测试」打流量平台，打游戏输了也别去打对方的服务器","s":"11","cat":"health","tags":["mind","law","crime"]},{"id":"12-1","t":"只拿亏得起的钱创业，不动家底、不借钱开张","s":"12","cat":"work","tags":["startup","relation","legalentity"]},{"id":"12-2","t":"不给公司贷款签个人担保，配偶更不要跟着签","s":"12","cat":"money","tags":["debt","law","startup"]},{"id":"12-3","t":"开张前选对主体：个体户和合伙人赔到底，有限公司才「有限」","s":"12","cat":"work","tags":["legalentity","startup"]},{"id":"12-4","t":"不当挂名股东，不替人代持股权","s":"12","cat":"work","tags":[]},{"id":"12-5","t":"加盟前先查商务部备案，拿到书面披露，把「冷静期」写进合同","s":"12","cat":"safety","tags":["contract","legalentity","startup"]},{"id":"12-6","t":"注册前把名称、经营场所、经营范围和注册资本定下来，材料齐了当场就能领执照","s":"12","cat":"work","tags":["legalentity"]},{"id":"12-7","t":"要许可证的行当，证没下来不开张","s":"12","cat":"work","tags":["legalentity"]},{"id":"12-8","t":"做食品先看自己落在哪一档：生产和做餐饮要许可，只卖预包装的改备案，卖生鲜肉菜不用证","s":"12","cat":"work","tags":["legalentity"]},{"id":"12-9","t":"卖预包装食品先核对标签：生产日期、保质期、配料表按规定标齐","s":"12","cat":"work","tags":[]},{"id":"12-10","t":"普通食品不许说能治病：标签、说明书、广告和直播话术都算","s":"12","cat":"work","tags":["ecom","legalentity"]},{"id":"12-11","t":"食品这一行有刑事线：卖病死肉、超标货就够罪，掺了有毒有害的不看金额、起刑五年以下","s":"12","cat":"work","tags":[]},{"id":"12-12","t":"领了执照就按期如实申报，没有收入也要报，符合条件才零申报","s":"12","cat":"money","tags":["income","legalentity","tax"]},{"id":"12-13","t":"发票只按真实交易开，小规模纳税人用足免税额","s":"12","cat":"money","tags":["tax"]},{"id":"12-14","t":"自称税务局、打电话或发消息催你往指定账号交钱报税的都是骗子，办税只走电子税务局和 12366","s":"12","cat":"safety","tags":["privacy","scam","save"]},{"id":"12-15","t":"收钱写「定金」不写「订金」，违约金写明数，账期当放贷来审","s":"12","cat":"safety","tags":["contract","law"]},{"id":"12-16","t":"用人第一个月内签书面合同，30 日内办社保登记","s":"12","cat":"safety","tags":["contract","social","income"]},{"id":"12-17","t":"工资按合同和法律给，加薪、借款、奖金都走书面","s":"12","cat":"safety","tags":["contract","income","law"]},{"id":"12-18","t":"先卖再造：用预售和小订单验证有人买，再投钱生产","s":"12","cat":"work","tags":["startup"]},{"id":"12-19","t":"样品做出来先过一遍量产清单，再谈开工","s":"12","cat":"work","tags":["legalentity"]},{"id":"12-20","t":"进货一批留一批票据和上家信息，进货价明显低于市场价的不进：员工替公司进的假货，算公司犯罪时老板也是被判的那个","s":"12","cat":"safety","tags":["crime","legalentity","law"]},{"id":"12-21","t":"商品、包装、吊牌和宣传图上的图案要么自己做要么买授权，改个颜色、加个图标不算「改过了」","s":"12","cat":"work","tags":["legalentity"]},{"id":"12-22","t":"在岗位上按规程办事，规程之外的好意先想清楚责任归谁","s":"12","cat":"work","tags":[]},{"id":"12-23","t":"亏了就按程序退场：能简易注销就注销，资不抵债走破产，别放着不管","s":"12","cat":"work","tags":["startup","legalentity"]},{"id":"12-24","t":"花钱请人代运营网店、上开店培训、做「无货源」之前，先问清后面还要不要加钱、销量从哪来","s":"12","cat":"work","tags":["ecom","startup","scam"]},{"id":"12-25","t":"开公司、当个体户的，每年 1 月 1 日到 6 月 30 日上网报上一年的年报，没生意也要报，年报不收费","s":"12","cat":"work","tags":["legalentity","startup","scam"]},{"id":"12-26","t":"找人凑钱做生意，只找亲友和员工当面谈，不在朋友圈、群里公开招人投钱，也别让亲友替你再去拉人","s":"12","cat":"work","tags":["startup","law","crime"]},{"id":"12-27","t":"租铺面开店，签约前先查这间房能不能开你的店：住宅改成店要同一栋楼的业主全都同意，住宅楼里不能新开有油烟的餐馆","s":"12","cat":"safety","tags":["contract","rent","startup"]},{"id":"12-28","t":"几个人合伙开店，开张前把出资、分钱、谁说了算、谁拿工资、怎么退出写成书面协议","s":"12","cat":"safety","tags":["contract","startup","income"]},{"id":"13-1","t":"有人倒地、叫不应、没正常呼吸，立刻用力按压胸口，让旁人打 120 并找 AED","s":"13","cat":"family","tags":["kids","emergency"]},{"id":"13-2","t":"老人摔倒、有人倒地，先蹲下喊他、打 120，别急着把人扶起来；陌生人这档走开在国内也合法，停下来就别上手搬","s":"13","cat":"safety","tags":["law","elder","emergency"]},{"id":"13-3","t":"突然嘴歪、一侧胳膊没劲、说话说不清，立刻打 120，不要等、不要自己开车去","s":"13","cat":"safety","tags":["traffic","doctor"]},{"id":"13-4","t":"突然天旋地转站不稳、看东西成双、一只眼发黑，或者手指点不到自己鼻尖，也按卒中打 120","s":"13","cat":"health","tags":["doctor"]},{"id":"13-5","t":"一只眼睛突然像拉下窗帘一样黑掉，哪怕几分钟就自己好了，也当天按卒中去急诊","s":"13","cat":"health","tags":["doctor"]},{"id":"13-6","t":"一只眼又胀又痛、发红，看灯有一圈彩虹，还头痛恶心想吐，当天去眼科急诊","s":"13","cat":"health","tags":["doctor"]},{"id":"13-7","t":"胸口压着疼、闷、发紧超过 15 分钟不缓解，或者疼时出冷汗、恶心、喘不上气，打 120，不要自己扛也不要自己开车","s":"13","cat":"safety","tags":["traffic","doctor"]},{"id":"13-8","t":"突然像被撕开一样的剧痛，从胸口往后背、往腰一路挪，打 120 并说清「像撕开一样」","s":"13","cat":"health","tags":["doctor"]},{"id":"13-9","t":"突然一记「这辈子最疼的头痛」，一小时内就到最疼，立刻去急诊做头颅 CT","s":"13","cat":"risk","tags":[]},{"id":"13-10","t":"老人磕过头之后两三周到几个月变得走路不稳、迟钝、嗜睡或者一侧没劲，去做头颅 CT","s":"13","cat":"health","tags":["sport","elder"]},{"id":"13-11","t":"一条腿突然肿起来、发紧、按着疼，尽快就医；再加上突然喘不上气或者胸痛，立刻打 120","s":"13","cat":"health","tags":["doctor"]},{"id":"13-12","t":"大出血先用手死死压住伤口，四肢压不住就上止血带，同时打 120","s":"13","cat":"risk","tags":["emergency"]},{"id":"13-13","t":"被狗、猫咬伤或抓破皮，先用肥皂水和流水交替冲 15 分钟，当天去打疫苗","s":"13","cat":"life","tags":["pet","vaccine"]},{"id":"13-14","t":"烫伤后立刻用凉的流动水冲 20 分钟，别抹牙膏酱油","s":"13","cat":"health","tags":["teeth","kids","doctor"]},{"id":"13-15","t":"突然全身起疹、喘不上气或者发晕，按过敏性休克处理，立刻叫 120 并说清楚","s":"13","cat":"risk","tags":["emergency"]},{"id":"13-16","t":"有人抽搐倒地，清开周围、让他侧躺、看表计时，什么都别往嘴里塞；孩子发烧时抽搐也一样","s":"13","cat":"family","tags":["kids","doctor","emergency"]},{"id":"13-17","t":"糖尿病人突然发抖、出冷汗、说话不清，先给 15 克糖，15 分钟后复测","s":"13","cat":"risk","tags":[]},{"id":"13-18","t":"有人触电，先断电，再用干燥的木棍之类挑开电源，不要直接上手拉","s":"13","cat":"risk","tags":["emergency"]},{"id":"13-19","t":"一氧化碳报警器响了，或者一屋子人同时头痛恶心，先出门再打电话","s":"13","cat":"safety","tags":["fire","law"]},{"id":"13-20","t":"误服清洁剂、农药、药物先别催吐，带上瓶子立刻就医；溅到眼睛或皮肤用大量清水至少冲 15 分钟","s":"13","cat":"health","tags":["medicine","emergency"]},{"id":"13-21","t":"酸碱等化学品溅到身上，立刻脱掉污染的衣服、用大量流动清水冲，眼睛要掰开眼皮冲，冲够时间再走","s":"13","cat":"growth","tags":["time","doctor"]},{"id":"13-22","t":"高温下头晕、恶心、不出汗或意识不清，立刻挪到阴凉处脱衣泼水降温，意识不清的不喂水、打 120","s":"13","cat":"risk","tags":[]},{"id":"13-23","t":"中暑的人只要清醒，就少量多次喝凉的淡盐水或运动饮料，别猛灌、别喝酒和高糖饮料","s":"13","cat":"health","tags":["smoke","diet"]},{"id":"13-24","t":"火灾时贴地爬、摸门再开门、门烫就别开，走楼梯不坐电梯，出去了别回头","s":"13","cat":"safety","tags":["fire"]},{"id":"13-25","t":"看到有人溺水，先叫人和打 110/120，伸竿、抛漂浮物，自己不下水","s":"13","cat":"risk","tags":["emergency","kids"]},{"id":"13-26","t":"有人噎住说不出话，1 岁以上的站到背后做 5 次拍背加 5 次腹部冲击，倒下就做心肺复苏","s":"13","cat":"risk","tags":["emergency","kids"]},{"id":"13-27","t":"在戈壁、沙漠、无人区迷路或车坏了，留在原地或车旁，先报位置，再遮阳保温，省水，不乱走","s":"13","cat":"risk","tags":["disaster"]},{"id":"13-28","t":"发抖、说话含糊、走路打晃是失温，换掉湿衣、包起来，先暖躯干，喝热甜饮不喝酒","s":"13","cat":"health","tags":["sport","smoke","disaster"]},{"id":"13-29","t":"被蛇咬，坐下别动、摘掉戒指手表、尽快送医院打抗蛇毒血清，不切、不吸、不绑死","s":"13","cat":"health","tags":["doctor","emergency"]},{"id":"13-30","t":"地震时先看自己在什么房子里：符合抗震设防的楼里就地躲，会垮的老房子门在几步外就出去","s":"13","cat":"risk","tags":["disaster"]},{"id":"13-31","t":"遇到熊、野猪、成群野狗，别跑，侧身慢慢退开","s":"13","cat":"life","tags":["pet"]},{"id":"13-32","t":"野外遇上雷雨，钻进有硬顶的车或建筑，避开山脊、孤树、水面和金属","s":"13","cat":"risk","tags":[]},{"id":"13-33","t":"上高原按睡眠海拔（当晚睡在多高）慢慢升，症状加重就下撤，不要硬扛","s":"13","cat":"health","tags":["sleep","disaster"]},{"id":"13-34","t":"被蜱虫叮住，用尖头镊子贴着皮肤稳稳拉出来，别涂油别用火烧","s":"13","cat":"risk","tags":[]},{"id":"13-35","t":"野外的水一律烧开再喝，滚开一分钟就够，常见的旅行海拔上不用因为海拔高多煮","s":"13","cat":"risk","tags":[]},{"id":"13-36","t":"荒郊野外被陌生人索财，钱给他，不动手，记特征，脱身后报警","s":"13","cat":"safety","tags":["law","privacy","digital"]},{"id":"13-37","t":"撞见一群人打架，退开走人，别上去拉架、别围观、别捡地上的家伙；要报警就退到安全距离打 110","s":"13","cat":"safety","tags":["law"]},{"id":"13-38","t":"可能被 HIV 暴露了，72 小时内去拿阻断药，越早越好","s":"13","cat":"health","tags":["doctor","medicine"]},{"id":"13-39","t":"救人受了伤、搭进了钱，先找加害人和医保，再去申报见义勇为确认","s":"13","cat":"money","tags":["social","doctor","insurance"]},{"id":"13-40","t":"刀、钢筋、玻璃扎进身体，压住异物周围止血，不要把它拔出来","s":"13","cat":"health","tags":["doctor","emergency"]},{"id":"13-41","t":"怀疑骨折就别再动那个部位，托着不动、冷敷 20 分钟以内，别自己掰正","s":"13","cat":"risk","tags":[]},{"id":"13-42","t":"被性侵之后，先到安全的地方打 110；验伤之前别洗澡、别洗衣服、别收拾房间，72 小时内去医院","s":"13","cat":"health","tags":["doctor","law"]},{"id":"13-43","t":"不满 1 岁的婴儿噎住哭不出声，趴着拍背 5 下、翻过来按胸口 5 下，轮着做，别按肚子","s":"13","cat":"family","tags":["kids","emergency"]},{"id":"13-44","t":"不满 1 岁的婴儿没反应、没正常呼吸，开免提打 120，做婴儿心肺复苏：按 30 下吹 2 口气","s":"13","cat":"family","tags":["kids","emergency"]},{"id":"13-45","t":"孩子吞了纽扣电池，或者吞了两颗以上的强磁珠，立刻去有胃镜的医院急诊，别等它自己拉出来、别催吐","s":"13","cat":"health","tags":["doctor","kids","checkup"]},{"id":"13-46","t":"有人喝醉了，让他侧躺、有人一直守着，别让他一个人睡；叫不醒、呼吸慢或不规律、抽搐、身上发凉就打 120","s":"13","cat":"risk","tags":["emergency","doctor","smoke"]},{"id":"13-47","t":"手指、脚趾被切断，先压住伤口止血，断下来的部分用湿纱布包好装进密封袋，袋子放进冰水里，去有手外科的医院","s":"13","cat":"health","tags":["doctor","emergency"]},{"id":"13-48","t":"恒牙（换牙之后长出来的牙）整颗撞掉，捏住牙冠冲一下，能放回去就放回去，放不回就泡在牛奶里，马上去看牙；乳牙别放回去","s":"13","cat":"health","tags":["teeth"]},{"id":"14-1","t":"邮箱、支付、社交账号都开二次验证，优先用手机弹窗确认，其次才是短信验证码","s":"14","cat":"safety","tags":["privacy","scam","digital"]},{"id":"14-2","t":"邮箱密码单独一个，不和任何网站重复","s":"14","cat":"safety","tags":["privacy"]},{"id":"14-3","t":"手机设锁屏密码，SIM 卡设 PIN 码","s":"14","cat":"safety","tags":["privacy","digital"]},{"id":"14-4","t":"手机丢了按这个顺序做：挂失 SIM 卡、远程锁定、改密码、报警、冻结银行卡","s":"14","cat":"safety","tags":["privacy","digital","law"]},{"id":"14-5","t":"卡被盗刷先挂失冻结再报警，然后要求银行赔：证明「是你自己刷的」是银行的责任","s":"14","cat":"safety","tags":["law","debt","privacy"]},{"id":"14-6","t":"每隔一段时间看一次账号的登录设备和已授权应用，不用的清掉","s":"14","cat":"safety","tags":["privacy","time","digital"]},{"id":"14-7","t":"别为了用 App 点「全部同意」：不是必需的信息，你不同意也不能拒绝给你服务","s":"14","cat":"safety","tags":[]},{"id":"14-8","t":"你有权查看、复制、更正和删除自己的个人信息，被拒绝可以起诉","s":"14","cat":"safety","tags":["law"]},{"id":"14-9","t":"刷脸不是必须答应的：有别的办法就不能只让你刷脸，你不同意得给你其他方式","s":"14","cat":"family","tags":["elder"]},{"id":"14-10","t":"别把代码、密钥和隐私资料交给来路不明的「AI 中转站」，让 AI 自动执行命令时尤其如此","s":"14","cat":"safety","tags":["privacy","save"]},{"id":"14-11","t":"每年查一次自己名下有几张电话卡、几张银行卡，查出不是自己办的就去注销","s":"14","cat":"money","tags":["debt","privacy"]},{"id":"14-12","t":"换手机号、不用旧号之前，先把银行、支付和社交账号改绑到新号上，别让旧号欠费停机了事","s":"14","cat":"safety","tags":["privacy","digital"]},{"id":"15-1","t":"租房时押金的数额、退还时间和扣减情形，必须写进合同","s":"15","cat":"safety","tags":["rent","contract","time"]},{"id":"15-2","t":"被断水断电、换锁、上门威胁赶人，先报警留证：法规禁止用这些方式逼你腾房","s":"15","cat":"safety","tags":["law","rent"]},{"id":"15-3","t":"中介不得代收代付租金和押金，钱直接给房东","s":"15","cat":"safety","tags":["rent"]},{"id":"15-4","t":"租长租公寓先查它的资金监管账户，别图便宜一次性付一年","s":"15","cat":"money","tags":["save","debt","contract"]},{"id":"15-5","t":"房子租期内被卖掉，租约继续有效，不用搬","s":"15","cat":"safety","tags":[]},{"id":"15-6","t":"租房签约前核对产权证和抵押情况，所有款项走转账并备注用途","s":"15","cat":"safety","tags":["contract","scam"]},{"id":"15-7","t":"二手房让中介代收房款的，必须走中介在银行开的交易资金专用存款账户","s":"15","cat":"safety","tags":["rent","contract"]},{"id":"15-8","t":"别租隔断房：最小出租单位是原设计的房间，厨房、卫生间、阳台不得住人","s":"15","cat":"safety","tags":["rent"]},{"id":"15-9","t":"城镇户口想搬去乡下住，只租农房，别买宅基地和宅基地上的房子","s":"15","cat":"safety","tags":["contract","rent"]},{"id":"15-10","t":"买期房时先看预售许可证，定金、首付和贷款只打进合同写明的预售资金监管账户","s":"15","cat":"safety","tags":["contract","debt","legalentity"]},{"id":"15-11","t":"买新房交了认购定金或者首付，没签成正式合同、贷款批不下来（比如签约后政策收紧、银行停贷）又怪不到你的，要求开发商退钱","s":"15","cat":"safety","tags":["contract","debt","law"]},{"id":"15-12","t":"买新房签合同前看清面积误差怎么处理，楼书、广告和沙盘上的承诺拍照留好","s":"15","cat":"safety","tags":["contract","law"]},{"id":"15-13","t":"买新房遇上开发商逾期交房、逾期办证，先发书面催告留证据，再按合同要违约金","s":"15","cat":"safety","tags":["contract","debt","law"]},{"id":"15-14","t":"买房签约前查清有没有查封和抵押，签约后去不动产登记机构办预告登记","s":"15","cat":"safety","tags":["contract","rent"]},{"id":"15-15","t":"背着浮动利率房贷的，利率比新发放的房贷高出一截时，找银行协商降利率或者申请置换","s":"15","cat":"money","tags":["debt"]},{"id":"15-16","t":"买首套房要贷款的，先用住房公积金贷款，额度不够再加商业贷款做组合贷，别直接全做商业贷款","s":"15","cat":"money","tags":["debt","social"]},{"id":"15-17","t":"住小区被物业停水、停电、停暖、停气逼交物业费的，向当地房地产主管部门投诉；自己欠了物业费，物业只能催告、起诉或者申请仲裁","s":"15","cat":"safety","tags":["law","rent"]},{"id":"15-18","t":"买新房收房时当场验房、把问题写进交房记录，漏水和水电管线出毛病，在《住宅质量保证书》的保修期内找开发商修","s":"15","cat":"safety","tags":["rent","home","contract"]},{"id":"16-1","t":"药按医嘱吃满，别感觉好了就停","s":"16","cat":"health","tags":[]},{"id":"16-2","t":"先办门诊慢特病认定再办异地备案，高血压、糖尿病、放化疗、透析、抗排异就能异地直接结算","s":"16","cat":"health","tags":["doctor","checkup","legalentity"]},{"id":"16-3","t":"复查按医生给的间隔做，把每次的指标记在同一个本子上","s":"16","cat":"health","tags":["doctor"]},{"id":"16-4","t":"别为了试偏方、保健品停掉正规治疗","s":"16","cat":"health","tags":["checkup","doctor"]},{"id":"16-5","t":"病情稳定的慢性病，在社区医院一次可以开到 12 周的药","s":"16","cat":"health","tags":["doctor"]},{"id":"16-6","t":"在社区签家庭医生之前，问清楚哪些进医保、哪些自费","s":"16","cat":"money","tags":["social","doctor","relation"]},{"id":"16-7","t":"确诊糖尿病就去查一次眼底，之后按医生给的间隔查；每年查一次脚","s":"16","cat":"health","tags":["doctor"]},{"id":"16-8","t":"得过肾结石就把水喝到每天 2.5–3 升，盐降到 6 克以内","s":"16","cat":"growth","tags":["habit"]},{"id":"16-9","t":"确诊痛风后长了痛风石、影像上看到骨头被啃出缺损或每年发作 2 次以上的，就长期吃降尿酸药，把血尿酸压到 360 µmol/L 以下并一直维持","s":"16","cat":"health","tags":[]},{"id":"16-10","t":"得过痛风的，吃烧烤、聚餐时别一顿吃下大量肉和海鲜，酒也要少喝","s":"16","cat":"health","tags":[]},{"id":"16-11","t":"查出乙肝表面抗原阳性的，每半年做一次肝脏 B 超加甲胎蛋白，按医生评估决定吃不吃抗病毒药，吃上了别自己停","s":"16","cat":"health","tags":["doctor","vaccine"]},{"id":"16-12","t":"确诊慢阻肺的，复诊时让医生或药师看你当面用一遍吸入剂；因为急性加重住过院的，出院后去做肺康复","s":"16","cat":"health","tags":["doctor","vaccine"]},{"id":"16-13","t":"有糖尿病的每年查一次尿白蛋白肌酐比和血肌酐，有高血压的也要查，早点发现慢性肾病","s":"16","cat":"health","tags":["checkup","doctor"]},{"id":"16-14","t":"结肠癌做完手术和化疗的，参加有人指导的运动方案，坚持练满三年","s":"16","cat":"health","tags":["doctor","sport","habit"]},{"id":"17-1","t":"趁老人清醒，书面指定将来的监护人","s":"17","cat":"family","tags":["elder","contract"]},{"id":"17-2","t":"把遗嘱立了，记住后立的推翻先立的，公证遗嘱不再优先","s":"17","cat":"family","tags":["elder","startup"]},{"id":"17-3","t":"老人的钱单独放一个账户，大额支出定一个双人确认的规矩","s":"17","cat":"family","tags":["elder","scam","crime"]},{"id":"17-4","t":"给老人备好一句随时能说出口的推辞：「我要回去和家里人商量」","s":"17","cat":"family","tags":["elder","mind"]},{"id":"17-5","t":"凡是让老人先交钱的「投资养老」都别碰：办卡、买床位、买养老公寓、旅居养老、买老年产品是同一套非法集资","s":"17","cat":"family","tags":["elder","spend","save"]},{"id":"17-6","t":"除了保险公司的住房反向抵押养老保险，其他「以房养老」都别碰，绝不抵押房子去买理财","s":"17","cat":"money","tags":["invest","social","elder"]},{"id":"17-7","t":"家里老人长期卧床或重度失能，去参保地医保部门申请长期护理保险；它不是只发给老人","s":"17","cat":"family","tags":["elder","insurance","social"]},{"id":"17-8","t":"家里有人长期卧床，把压疮当头号敌人：上电动气垫床、定时翻身、每天看一遍骨头突出的地方","s":"17","cat":"health","tags":["doctor"]},{"id":"17-9","t":"老人的白内障已经影响看路，就去眼科评估做手术；两只眼都有的，第二只别拖太久","s":"17","cat":"health","tags":["doctor","elder"]},{"id":"17-10","t":"家里老人遛狗，把牵绳握在手心、别缠在手上，绳子收短，狗先训练到牵着不往前猛冲","s":"17","cat":"life","tags":["pet","doctor","elder"]},{"id":"17-11","t":"送老人住养老院，先查它在民政部门备没备案、签书面协议；押金最多 12 个月床位费，要打进银行专用账户","s":"17","cat":"safety","tags":["contract","elder","rent"]},{"id":"17-12","t":"独生子女的父母住院，查本省条例有没有给子女的护理假，有就带着住院证明向单位书面申请","s":"17","cat":"family","tags":["elder","doctor","contract"]},{"id":"17-13","t":"老人记性越来越差、开始耽误过日子，带去医院的记忆门诊或者神经内科查一次，先排除抑郁、吃的药、听不清看不清这类能改的原因","s":"17","cat":"health","tags":["doctor","elder","mind"]},{"id":"18-1","t":"先把能领的算进来：国家育儿补贴每孩每年 3600 元，发到 3 岁；个税专项附加扣除每孩每月 2000 元","s":"18","cat":"money","tags":["tax","elder","kids"]},{"id":"18-2","t":"产假 98 天，生育津贴由生育保险基金按单位上年度职工月平均工资发；男方的陪产假和夫妻俩的育儿假按本省条例休","s":"18","cat":"money","tags":["insurance","invest","relation"]},{"id":"18-3","t":"知道这条：不得因怀孕、生育、哺乳降工资或者辞退","s":"18","cat":"money","tags":["income","contract","kids"]},{"id":"18-4","t":"养孩子的时间账按「谁的时间被占掉」算，不按「辛不辛苦」算","s":"18","cat":"family","tags":["kids","time"]},{"id":"18-5","t":"钱账分三段算：0 到 3 岁、义务教育、义务教育之后","s":"18","cat":"family","tags":["kids"]},{"id":"18-6","t":"为长辈生、为婚姻生、为养老生，各记一笔账","s":"18","cat":"family","tags":["marriage","elder"]},{"id":"18-7","t":"打算晚几年再生孩子的，先把女方的年龄这笔账算上：40 岁前后自然怀上的几率、试管婴儿的成功率都明显往下走","s":"18","cat":"family","tags":["kids"]},{"id":"19-1","t":"加班费按 1.5 倍、2 倍、3 倍三档算，不给就投诉劳动监察，逾期不付还要加付 50% 到 100%","s":"19","cat":"work","tags":["office","income","law"]},{"id":"19-2","t":"年休假按累计工龄算 5、10、15 天，没休成的按日工资 300% 折钱","s":"19","cat":"money","tags":["income","office","time"]},{"id":"19-3","t":"试用期有法定上限、工资不得低于 80%，而且只能约定一次","s":"19","cat":"money","tags":["income"]},{"id":"19-4","t":"被裁先算清 N：每满一年一个月工资，不满六个月按半个月","s":"19","cat":"money","tags":["income"]},{"id":"19-5","t":"公司以病后干不了、不胜任或情况大变为由辞退你，没提前 30 天通知的，还要多付一个月工资","s":"19","cat":"money","tags":["income","focus","contract"]},{"id":"19-6","t":"公司违法解除的，赔偿金是经济补偿标准的二倍","s":"19","cat":"money","tags":["income","law"]},{"id":"19-7","t":"不要签「个人原因主动辞职」，那一签就没有 N 了","s":"19","cat":"safety","tags":["contract"]},{"id":"19-8","t":"离职前把工资条、考勤、劳动合同、社保记录和聊天记录先存下来","s":"19","cat":"money","tags":["income","contract","office"]},{"id":"19-9","t":"进有粉尘、噪声、化学品的岗位之前，先看合同里写没写危害；三次职业健康检查由单位安排并掏钱","s":"19","cat":"safety","tags":["contract","time"]},{"id":"19-10","t":"粉尘、噪声、化学毒物造成的损伤不少是不可逆的（比如尘肺、噪声聋）：防护用品单位必须给，没有防护措施的作业可以拒绝","s":"19","cat":"family","tags":["kids","contract"]},{"id":"19-11","t":"上班受伤、上下班路上被撞，第一件事是做工伤认定，单位不报你自己报","s":"19","cat":"money","tags":["income","law"]},{"id":"19-12","t":"别信「撑到工位就算工伤」：突发不适先打 120，不是先赶去打卡","s":"19","cat":"money","tags":["income","habit"]},{"id":"19-13","t":"单位没给你交工伤保险，工伤待遇一样有，由单位按同样的标准全额出","s":"19","cat":"money","tags":["insurance","income"]},{"id":"19-14","t":"伤情稳定后去做劳动能力鉴定，伤残等级直接换算成钱","s":"19","cat":"money","tags":["income","contract"]},{"id":"19-15","t":"工亡的三笔钱要分清：丧葬补助金、供养亲属抚恤金、一次性工亡补助金","s":"19","cat":"money","tags":["income"]},{"id":"19-16","t":"在单位长期被欺负、辱骂、刁难，别硬扛：先记下来留证据，再按性质走投诉、报警或者仲裁","s":"19","cat":"safety","tags":["law","contract"]},{"id":"19-17","t":"离职时找单位要一份离职证明，写明合同期限、离职日期、岗位和工作年限","s":"19","cat":"safety","tags":["law","office","contract"]},{"id":"19-18","t":"拿到离职补偿先看个税：当地上年职工平均工资 3 倍以内免税，超出的部分单独算，不并进当年工资","s":"19","cat":"money","tags":["income","tax","office"]},{"id":"19-19","t":"换城市工作时，把养老和医保关系转到新参保地，缴费年限接着累计，别办退保","s":"19","cat":"money","tags":["insurance","social","elder"]},{"id":"19-20","t":"入职满一个月单位还没和你签书面劳动合同，从第二个月起可以要双倍工资，最多 11 个月；满一年还不签，就算签了无固定期限合同","s":"19","cat":"safety","tags":["contract","law","income"]},{"id":"19-21","t":"单位不交或少交社保，先投诉让它补缴；想因此辞职拿经济补偿，辞职通知里要写明是因为单位没依法缴社保","s":"19","cat":"safety","tags":["law","social","focus"]},{"id":"19-22","t":"离职时公司要你赔违约金，先看是哪一种：只有专项培训的服务期和竞业限制能约定违约金，别的名目法律不许约定","s":"19","cat":"safety","tags":["contract","law","office"]},{"id":"19-23","t":"单位要给你调岗、降薪，你不同意就当场书面提出来，别默不作声按新安排干上一个多月","s":"19","cat":"safety","tags":["contract","law","time"]},{"id":"19-24","t":"被劳务派遣到别家公司干活的，工资要和同类岗位的正式工按同一套办法算，在干活的单位受了损害两家公司一起赔","s":"19","cat":"money","tags":["income","law","contract"]},{"id":"20-1","t":"让婴儿期的孩子仰着睡，睡硬的平面，同房不同床，床上不放任何软东西","s":"20","cat":"family","tags":["kids","vaccine"]},{"id":"20-2","t":"出生后 24 小时内打上乙肝疫苗第一针","s":"20","cat":"health","tags":["vaccine","kids"]},{"id":"20-3","t":"按国家免疫规划把该打的疫苗打齐，全程免费，错过了只补没打完的剂次","s":"20","cat":"health","tags":["vaccine","save","kids"]},{"id":"20-4","t":"前 6 个月只喂母乳，连水都不用喂，6 个月起加辅食并继续母乳","s":"20","cat":"family","tags":["kids"]},{"id":"20-5","t":"冲奶粉用 70 ℃ 以上的水，冲好放凉再喂，喝剩的倒掉","s":"20","cat":"family","tags":["kids"]},{"id":"20-6","t":"不满 1 岁不喂蜂蜜","s":"20","cat":"family","tags":["kids"]},{"id":"20-7","t":"出生时的维生素 K 针一定要打","s":"20","cat":"health","tags":["medicine","doctor"]},{"id":"20-8","t":"不满 3 个月的婴儿体温到 38 ℃ 就直接去医院，不在家观察","s":"20","cat":"health","tags":["doctor","kids"]},{"id":"20-9","t":"无论多累多气都不要摇晃婴儿","s":"20","cat":"family","tags":["kids"]},{"id":"20-10","t":"尿布不看牌子看三件事：合不合身、换得勤不勤、有没有被抽检通报过","s":"20","cat":"family","tags":[]},{"id":"20-11","t":"大件按「借、买二手、买新」的顺序考虑，别一次性配齐","s":"20","cat":"family","tags":["kids"]},{"id":"20-12","t":"孩子有严重湿疹或鸡蛋过敏，别躲着花生，按医生指导早点加上，但绝不能喂整粒","s":"20","cat":"family","tags":["kids","emergency","doctor"]},{"id":"20-13","t":"盯住新生儿黄疸的几个信号：出生 24 小时内就黄、叫不醒不吃奶，就当天去医院；越来越黄、大便发白，就尽快去查","s":"20","cat":"health","tags":["doctor","kids"]},{"id":"20-14","t":"怀孕、喂奶时在吃素，就补维生素 B12 或吃强化食品；孩子的辅食要有动物性食物，非要全素先找医生","s":"20","cat":"family","tags":["kids","doctor","medicine"]},{"id":"20-15","t":"给婴儿添置东西时别买带轮子的学步车，想让他坐着玩就换成没轮子的游戏站台或游戏围栏","s":"20","cat":"family","tags":["kids"]},{"id":"20-16","t":"孩子出生后就每天喂 400 国际单位维生素 D，吃母乳的尤其别漏，足月的 6 个月内一般不用另补钙","s":"20","cat":"family","tags":["kids","medicine"]},{"id":"20-17","t":"给婴儿洗澡先放冷水再兑热水，用手腕内侧或手肘试过再放孩子；能设出水温度的热水器调到 50 ℃ 以下","s":"20","cat":"family","tags":["kids","doctor"]},{"id":"21-1","t":"出发前查一次外交部安全提醒，标了「暂勿前往」的地方就别去","s":"21","cat":"safety","tags":["contract"]},{"id":"21-2","t":"把 12308 和当地使领馆的领保电话存进手机，再抄一份放钱包，别等出事再找","s":"21","cat":"life","tags":["digital"]},{"id":"21-3","t":"知道领事保护能做什么、不能做什么：能探视，不能捞人，费用还得自己付","s":"21","cat":"safety","tags":["law"]},{"id":"21-4","t":"买一份含境外医疗和医疗转运的保险，别只买航班延误险","s":"21","cat":"money","tags":["insurance","doctor"]},{"id":"21-5","t":"「境外高薪招聘」一律当诈骗看，被骗去做电诈回来还可能要被限制出境","s":"21","cat":"safety","tags":["scam","crime","job"]},{"id":"21-6","t":"境外取现一年不能超过 10 万元人民币，是本人名下所有卡合起来算的；随身带现金出入境，人民币每次最多 2 万元，外币超过 5000 美元要向海关申报","s":"21","cat":"life","tags":[]},{"id":"21-7","t":"护照、签证、身份证都拍照存一份在云端，丢了先报警再补旅行证","s":"21","cat":"safety","tags":["law","digital"]},{"id":"21-8","t":"境外自驾先确认当地认不认中国驾照，网上卖的「国际驾照」多数是废纸","s":"21","cat":"safety","tags":["contract","insurance"]},{"id":"21-9","t":"找中介办签证、留学、移民，先问它有没有在移民管理机构备案","s":"21","cat":"safety","tags":["rent","school","legalentity"]},{"id":"21-10","t":"别替陌生人出具邀请函，也别让人借你的名义办出入境手续","s":"21","cat":"life","tags":[]},{"id":"21-11","t":"出境前把行程、住处和同行人发给一位家人，约好多久联系一次","s":"21","cat":"family","tags":["relation"]},{"id":"21-12","t":"出国带药先查目的地规定：含伪麻黄碱、可待因的感冒药和止咳药，安眠药、精神类药和强效止痛药，带原包装、处方或医生证明，只带自用量","s":"21","cat":"health","tags":["medicine","doctor","crime"]},{"id":"21-13","t":"从国外回国入境时别带肉制品（真空包装的火腿、肉干也算）、奶酪、新鲜水果和种子，带了动植物产品就走红色通道申报","s":"21","cat":"health","tags":["diet","vaccine","pet"]},{"id":"22-1","t":"进 KTV、酒吧、密室之前先看一眼安全出口在哪，被锁被堵就换一家","s":"22","cat":"life","tags":[]},{"id":"22-2","t":"点单前要价目表，娱乐场所必须明码标价，不接受「先玩后算」","s":"22","cat":"life","tags":[]},{"id":"22-3","t":"场子里有人递「东西」就立刻走，容留和提供都不是「帮朋友」","s":"22","cat":"safety","tags":["crime"]},{"id":"22-4","t":"不吃陌生人给的糖和零食，不喝离开过视线的饮料，不接别人递的烟弹","s":"22","cat":"health","tags":["diet","crime"]},{"id":"22-5","t":"剧本杀、密室别去开在居民楼里或者地下二层以下的","s":"22","cat":"life","tags":[]},{"id":"22-6","t":"心情差到抑郁的程度，就去走或者跑，抗抑郁的效应量（效果大小）跟强度成正比","s":"22","cat":"health","tags":["mind","sport"]},{"id":"22-7","t":"焦虑到影响生活时，正念减压课的效果不劣于常用的抗焦虑药","s":"22","cat":"health","tags":["mind","medicine"]},{"id":"22-8","t":"当场想缓过来，用 5 分钟「循环叹息」：吸气两段，呼气拉长","s":"22","cat":"health","tags":["mind"]},{"id":"22-9","t":"把「定期和人见面」当成健康支出，别只在心情差时才找人","s":"22","cat":"life","tags":[]},{"id":"22-10","t":"选住处时把周边绿地算进去，但别指望「多去公园」就延寿","s":"22","cat":"life","tags":[]},{"id":"22-11","t":"喝了酒别泡温泉、蒸桑拿，回家也别泡热水澡","s":"22","cat":"health","tags":["checkup","smoke"]},{"id":"22-12","t":"滑雪、滑单板、轮滑、骑山地车时戴头盔","s":"22","cat":"safety","tags":["traffic"]},{"id":"23-1","t":"不满 16 周岁没有「去打工」这个选项：招你的单位每月被罚 5000 元，肯招的都是黑工","s":"23","cat":"money","tags":["income","elder"]},{"id":"23-2","t":"把「读书有没有用」也放进死亡率账里：每多受一年教育，成人死亡风险降约 1.9%","s":"23","cat":"growth","tags":["learn"]},{"id":"23-3","t":"判断「学历是不是贬值了」之前，先看全国的学历结构：每 10 万人里只有 15467 人有大学文化程度（2020 年普查，2025 年抽样推算约 19%）","s":"23","cat":"family","tags":["school"]},{"id":"23-4","t":"「读不起」先按政策算一遍：公办中职学费对农村和困难学生大多已免，助学金 2300 元，助学贷款每年最高 2 万","s":"23","cat":"money","tags":["debt","school"]},{"id":"23-5","t":"没考上普高不等于路断了：中职有贯通招生和单独考试，事业单位技能岗位招聘还可以降学历要求","s":"23","cat":"family","tags":["school","job","learn"]},{"id":"23-6","t":"把「读书还是打工」算成一道题：先去打工早挣的三年工资，对上接着读书换来的、往后几十年的年收入差","s":"23","cat":"money","tags":["income","learn","school"]},{"id":"23-7","t":"先记住基准线：多受一年教育，全球平均的私人回报（落到自己收入上的那部分）约为每年 9%","s":"23","cat":"money","tags":["income"]},{"id":"23-8","t":"花钱考证之前，先查这张证在不在国家职业资格目录或人社部备案的评价机构名单里","s":"23","cat":"work","tags":["legalentity"]},{"id":"23-9","t":"培训优先走政府补贴渠道，别一上来就自费报商业班","s":"23","cat":"money","tags":["save"]},{"id":"23-10","t":"挑技能时优先看「要不要动手、要不要现场判断」，这类最难被自动化顶掉","s":"23","cat":"growth","tags":["learn"]},{"id":"23-11","t":"学之前先确认这个技能有没有等级评价，等级能不能换成钱","s":"23","cat":"growth","tags":["learn"]},{"id":"23-12","t":"别把「网上说工资高」当成缺人，去查当地的紧缺职业目录和补贴目录","s":"23","cat":"money","tags":["income","job"]},{"id":"23-13","t":"同样的钱和时间，优先选能直接上岗的短周期项目","s":"23","cat":"growth","tags":["time","learn"]},{"id":"23-14","t":"学完先合上书自己考一遍，别回头重读","s":"23","cat":"growth","tags":[]},{"id":"23-15","t":"把同样的时间摊到几天，别一次学完","s":"23","cat":"growth","tags":["time","learn"]},{"id":"23-16","t":"别把划重点、反复读、写摘要当成主要学法","s":"23","cat":"growth","tags":["learn"]},{"id":"23-17","t":"几种题型混着练，别一种连做二十道","s":"23","cat":"growth","tags":[]},{"id":"23-18","t":"别按「我是视觉型、他是听觉型」挑学法","s":"23","cat":"growth","tags":["learn"]},{"id":"23-19","t":"要背的内容按将来的用法出题考自己，别原样背一遍就算完","s":"23","cat":"growth","tags":[]},{"id":"23-20","t":"评职称先弄清自己在哪个系列、哪一级，再按单位性质找申报渠道","s":"23","cat":"growth","tags":[]},{"id":"23-21","t":"会计这类初级、中级职称靠全国统考拿，先对照学历和工作年限去报名","s":"23","cat":"family","tags":["school"]},{"id":"23-22","t":"别找中介代评、别买论文代写、别在材料上造假：查实就撤销职称，记诚信档案 3 年","s":"23","cat":"safety","tags":["rent","school"]},{"id":"23-23","t":"拿到职称不等于涨工资：先问清单位是按岗位比例评聘，还是评了不一定聘","s":"23","cat":"money","tags":["income"]},{"id":"23-24","t":"本科毕业要不要接着读硕士：先算学费和少挣的两三年工资，再看自己读的专业多挣不多挣；已经上班的可以读非全日制，证书和全日制效力相同","s":"23","cat":"money","tags":["income","school"]},{"id":"23-25","t":"硕士毕业要不要接着读博士：目标岗位明确要博士才读，读之前把心理负担也算进去","s":"23","cat":"health","tags":["mind","habit"]},{"id":"24-1","t":"常见病先在社区看，经基层逐级转诊上去，住院起付线接着算","s":"24","cat":"health","tags":["doctor"]},{"id":"24-2","t":"同一个统筹地区（医保参保地）里，级别越低报销比例越高，差距约 10 个百分点","s":"24","cat":"money","tags":["social","doctor"]},{"id":"24-3","t":"要去大医院，走基层转诊或者医院的转诊中心，别找号贩子","s":"24","cat":"health","tags":["doctor"]},{"id":"24-4","t":"跨省异地就医之前先在本地问一句，必要性原则上要副主任医师以上评估","s":"24","cat":"health","tags":["doctor"]},{"id":"24-5","t":"每次看完病，把病历、检查报告和影像自己存一份","s":"24","cat":"health","tags":["doctor"]},{"id":"24-6","t":"对诊疗有疑问就当场要求封存病历，双方在场、开清单、各执一份","s":"24","cat":"health","tags":["doctor","law"]},{"id":"24-7","t":"急重的伤病直奔急诊预检分诊台，别去挂号窗口排队","s":"24","cat":"health","tags":["doctor","time"]},{"id":"24-8","t":"没带钱、没带证件、说不清自己是谁，急诊也必须先救","s":"24","cat":"health","tags":["doctor"]},{"id":"24-9","t":"伤残鉴定要等治疗终结或者临床治疗效果稳定之后再做","s":"24","cat":"health","tags":["doctor","income"]},{"id":"24-10","t":"治完之后确实留下功能障碍，去户籍地县级残联申请残疾人证","s":"24","cat":"money","tags":["save"]},{"id":"24-11","t":"谢救过你的医生，走感谢信、锦旗和满意度评价，别走红包：准则禁的是财物，不是谢意","s":"24","cat":"health","tags":["doctor","time"]},{"id":"24-12","t":"种牙之前先问清包干价含哪些项目，优先找承诺参与价格治理的机构，别信低价广告","s":"24","cat":"health","tags":["teeth","doctor"]},{"id":"24-13","t":"医院说国家医保谈判药没货、不进院的，让医生开处方，去医保「双通道」定点药店买，照样按规定报销","s":"24","cat":"health","tags":["doctor","social"]},{"id":"24-14","t":"在医院确诊过、病情稳定的慢性病要续方，可以在这家医院的互联网医院线上复诊开药，第一次看这个病不能在网上看","s":"24","cat":"health","tags":["doctor"]},{"id":"24-15","t":"住院时要来费用清单逐项对，医保不报的自费项目先问清再同意，对不上先找医院价格投诉，再不行向医保部门举报","s":"24","cat":"health","tags":["doctor","law","social"]},{"id":"25-1","t":"人在家里或外面没了，先分清正常死亡还是非正常死亡：意外、死因不明、独居才发现的，立刻报警，遗体和现场不要动","s":"25","cat":"safety","tags":["law"]},{"id":"25-2","t":"死亡证明是后面所有事的钥匙：谁救治谁开，家中正常死亡找社区卫生服务机构，一日内签发","s":"25","cat":"money","tags":["social"]},{"id":"25-3","t":"遗体接运、存放、火化只能走殡仪馆，医院太平间不办殡仪，存放一般不超过 3 日","s":"25","cat":"health","tags":["doctor"]},{"id":"25-4","t":"对死因有异议，48 小时内提出并进行尸检，同时封存病历","s":"25","cat":"health","tags":["doctor"]},{"id":"25-5","t":"给去世的人注销户口有法定时限：城市在安葬前，农村在一个月以内","s":"25","cat":"money","tags":["social"]},{"id":"25-6","t":"殡葬服务分基础项目和非基础项目，基础项目有清单、收费依法制定","s":"25","cat":"family","tags":[]},{"id":"25-7","t":"遇到强制搭售、标价外加价、把一项拆成几项收费，记下来投诉","s":"25","cat":"safety","tags":["law"]},{"id":"25-8","t":"殡葬代理、用品代购、策划主持这类中介，要在县级民政备案","s":"25","cat":"safety","tags":["rent","legalentity"]},{"id":"25-9","t":"分散在各处的钱要逐个去取：公积金余额、社保待遇、工伤待遇","s":"25","cat":"money","tags":["social","income","elder"]},{"id":"25-10","t":"死者的账号和个人信息，近亲属可以要求查阅、复制、更正、删除","s":"25","cat":"safety","tags":["privacy","law"]},{"id":"25-11","t":"亲人去世留下欠债，继承人只用继承到的遗产去还；不想担就在分遗产前书面声明放弃继承","s":"25","cat":"safety","tags":["contract","law"]},{"id":"25-12","t":"家里人去世后办继承，别默认先去公证：一家银行 5 万元以内的存款直接去银行取，房子由全部继承人一起去不动产登记机构办","s":"25","cat":"safety","tags":["contract","elder"]},{"id":"26-1","t":"平台不要自己收钱再转给卖家，让钱走持牌支付机构直接结算","s":"26","cat":"work","tags":[]},{"id":"26-2","t":"收费的网站多数要许可证，自己卖货不让别人入驻的不用，撮合交易的是另一类许可，免费的只要备案","s":"26","cat":"work","tags":["legalentity","save"]},{"id":"26-3","t":"做直播要网络文化经营许可证，做视听节目的那张证民营基本拿不到","s":"26","cat":"work","tags":["legalentity","ecom"]},{"id":"26-4","t":"服务器放境内就要备案，App 和小程序上架前也要备案，接入商必须自己持有增值电信许可","s":"26","cat":"work","tags":["legalentity","ecom"]},{"id":"26-5","t":"让用户上来卖东西，平台就要核验登记、报送信息、留存三年","s":"26","cat":"work","tags":[]},{"id":"26-6","t":"用户发的内容你要管：审核机制、举报入口、发现违法立即停传并报告","s":"26","cat":"work","tags":["legalentity"]},{"id":"26-7","t":"提供信息发布、即时通讯服务，必须要求用户提供真实身份信息","s":"26","cat":"work","tags":["legalentity"]},{"id":"26-8","t":"不给未满 16 周岁的人开直播，打赏按年龄分档处理","s":"26","cat":"money","tags":["spend","ecom","elder"]},{"id":"26-9","t":"接到侵权通知要及时处理，转送声明后 15 日没有下文就恢复","s":"26","cat":"growth","tags":["focus","law"]},{"id":"26-10","t":"用户信息不要随手放到境外，出境有法定条件和人数门槛","s":"26","cat":"safety","tags":["contract"]},{"id":"26-11","t":"选服务器先看停机能不能忍，再看有没有人运维，最后才比价","s":"26","cat":"money","tags":["save","legalentity","contract"]},{"id":"26-12","t":"网站或 App 里的用户信息泄露了，马上补救，通知用户和主管部门，被人攻击的去公安报案","s":"26","cat":"safety","tags":["privacy","focus"]},{"id":"26-13","t":"卖自动续费会员的，开通前和每次扣钱前都要显著提醒用户，取消入口要好找","s":"26","cat":"money","tags":["spend","law"]},{"id":"27-1","t":"准备怀孕就开始每天补 0.4 毫克叶酸，一直吃到孕早期满 3 个月","s":"27","cat":"health","tags":[]},{"id":"27-2","t":"孕 13 周前去社区卫生服务中心建《母子健康手册》，把免费产检额度用掉","s":"27","cat":"money","tags":["save","checkup"]},{"id":"27-3","t":"第一次产检就把艾滋病、梅毒、乙肝三项查掉，查出来艾滋病也有免费的阻断","s":"27","cat":"health","tags":["vaccine","save","kids"]},{"id":"27-4","t":"整个孕期一支烟一口酒都不要，家里人也别在屋里抽","s":"27","cat":"health","tags":["smoke","kids"]},{"id":"27-5","t":"有子痫前期高危因素的，孕 12 周后开始按医嘱每天一片小剂量阿司匹林","s":"27","cat":"health","tags":[]},{"id":"27-6","t":"孕 24 周及以后做一次妊娠期糖尿病筛查，别嫌喝糖水麻烦","s":"27","cat":"health","tags":["checkup"]},{"id":"27-7","t":"背下这张「立刻去医院」的清单，孕期和产后一年内都算数","s":"27","cat":"health","tags":["doctor"]},{"id":"27-8","t":"破水了就地平躺、垫高臀部、打 120，不要走动也不要洗澡","s":"27","cat":"health","tags":["doctor"]},{"id":"27-9","t":"想要无痛分娩就直接说，它不增加剖宫产的风险","s":"27","cat":"health","tags":["doctor"]},{"id":"27-10","t":"没有医学指征就别主动要求剖宫产，也别为了挑日子开刀","s":"27","cat":"health","tags":[]},{"id":"27-11","t":"怀孕前就确认生育保险的参保状态，未就业的配偶也能报生育医疗费用","s":"27","cat":"money","tags":["insurance","social"]},{"id":"27-12","t":"出院前把《出生医学证明》办掉，名字提前想好、别写错字","s":"27","cat":"money","tags":["social","relation"]},{"id":"27-13","t":"新生儿足跟血筛查和听力筛查都别拒绝","s":"27","cat":"health","tags":["checkup"]},{"id":"27-14","t":"拿到出生医学证明就给孩子办居民医保，别等落完户","s":"27","cat":"money","tags":["social","kids"]},{"id":"27-15","t":"孩子出生后一个月以内去派出所申报出生登记","s":"27","cat":"family","tags":["kids","vaccine"]},{"id":"27-16","t":"产后 42 天那次复查别跳过，它在一些地方同时是产后抑郁的筛查","s":"27","cat":"health","tags":["doctor","mind"]},{"id":"27-17","t":"怀孕了不用把猫送走，猫砂换别人每天铲，肉要做熟、碰土戴手套","s":"27","cat":"life","tags":["pet"]},{"id":"27-18","t":"怀孕期间赶上流感季就打一针流感灭活疫苗，孕期哪个阶段都能打，别用鼻喷的","s":"27","cat":"health","tags":["vaccine","doctor"]},{"id":"27-19","t":"怀孕 28 周以后入睡时侧着躺，左侧右侧都行，别仰面躺着睡","s":"27","cat":"health","tags":[]},{"id":"27-20","t":"生完孩子恢复同房就要避孕，喂奶不等于避孕；想要下一胎，至少隔 18 个月再怀","s":"27","cat":"family","tags":["kids"]},{"id":"28-1","t":"不要用极端节食、断食或催吐来控制体重，要减就从运动那一侧减","s":"28","cat":"health","tags":["weight","sport"]},{"id":"28-2","t":"打针、埋线、开刀之前查两样：机构许可证上有没有「医疗美容」，动手的人是不是主诊医师","s":"28","cat":"work","tags":["legalentity","doctor"]},{"id":"28-3","t":"面部填充避开鼻背、眉间、额头这几个部位，更别为省钱找非正规注射","s":"28","cat":"money","tags":["save"]},{"id":"28-4","t":"不要买承诺「快速瘦」的减肥药、减肥咖啡、瘦身糖果和酵素梅（号称泡过酵素的梅子）","s":"28","cat":"health","tags":["weight"]},{"id":"28-5","t":"不要用合成代谢类固醇（「增肌针」「口服药」）来长肌肉","s":"28","cat":"health","tags":["doctor"]},{"id":"28-6","t":"要吃减肥药、打司美格鲁肽这类减重针，就去医院拿处方、按医生安排加量和复查，别在不用处方就发货的网店买，也别去美容院打","s":"28","cat":"health","tags":["doctor","weight","time"]},{"id":"28-7","t":"性激素类药只在医生开方并定期复查的前提下用，不要网购、不要自己加量","s":"28","cat":"health","tags":["doctor"]},{"id":"28-8","t":"如果「觉得自己丑」已经到反复照镜子、反复想改的程度，先做一次体像评估再谈手术","s":"28","cat":"health","tags":["doctor","time"]},{"id":"28-9","t":"矫正牙齿要找有正畸资质的医生当面检查、按时复诊，别网购牙套自己在家戴","s":"28","cat":"health","tags":["teeth","doctor","habit"]},{"id":"28-10","t":"买祛斑美白霜先拿包装上的「国妆特字」编号去国家药监局网站核对，别用微商卖的、美容院自己配的祛斑霜","s":"28","cat":"work","tags":["legalentity"]},{"id":"29-1","t":"亲人刚走的那几天别一个人待着，有心脏病、高血压、糖尿病的照常吃药，胸口压着疼就叫 120","s":"29","cat":"health","tags":["checkup","medicine"]},{"id":"29-2","t":"被告知重病诊断的那一周，别一个人去拿报告，治疗以外的决定往后放","s":"29","cat":"health","tags":["doctor"]},{"id":"29-3","t":"失业之后先把作息、医保和找工作的节奏固定下来，别整天待在家里","s":"29","cat":"money","tags":["social","sleep"]},{"id":"29-4","t":"亲人死于自杀、意外或凶案的，别指望硬扛，主动去找专业帮助","s":"29","cat":"health","tags":["mind","school","doctor"]},{"id":"29-5","t":"丧偶后的头半年，把三餐、睡觉、慢性病的药和复查交给一个固定的人盯着","s":"29","cat":"health","tags":["doctor","elder"]},{"id":"29-6","t":"没有亲人也没有朋友的，把「盯着你的那个人」换成三样东西：能进你家门的邻居、社区的探访名单、手机里的紧急联络","s":"29","cat":"family","tags":["elder","digital","doctor"]},{"id":"29-7","t":"家长去世后，如实告诉孩子、让他参加告别","s":"29","cat":"family","tags":["kids","elder"]},{"id":"29-8","t":"哀伤过了半年还在原地、日子过不下去，去精神科或临床心理科挂号","s":"29","cat":"health","tags":["doctor","mind"]},{"id":"29-9","t":"别一上来就花钱做哀伤咨询，先看自己的哀伤是不是真的卡住了（第 8 条那几条症状）","s":"29","cat":"health","tags":["mind","time"]},{"id":"29-10","t":"分居离婚之后别断医保、别用酒顶着","s":"29","cat":"family","tags":["marriage","social","mind"]},{"id":"29-11","t":"要人陪着说话打 12356，未成年人和青少年打 12355，要看医生挂心理门诊","s":"29","cat":"health","tags":["doctor","mind"]},{"id":"29-12","t":"变故后的头三个月，凡是不可逆的大决定一律往后推","s":"29","cat":"health","tags":["mind","income","elder"]},{"id":"29-13","t":"别拿死当还债的办法：两年内的寿险不赔，工伤不认，债照样先从遗产里扣","s":"29","cat":"money","tags":["insurance","income"]},{"id":"29-14","t":"自己经历车祸、被打、灾难之后，别指望出事后马上做的一次性心理晤谈；过了一个月噩梦、闪回、提心吊胆还很重的，去精神科做创伤聚焦的心理治疗","s":"29","cat":"health","tags":["mind","traffic"]},{"id":"30-1","t":"孩子说突然剧痛、而且越来越重，立刻去医院，不要让他忍到放学","s":"30","cat":"health","tags":["doctor","kids"]},{"id":"30-2","t":"该做的治疗别为了「等考完」往后拖，有些窗口跟着骨龄走，不跟着考试安排走","s":"30","cat":"family","tags":["school","time","doctor"]},{"id":"30-3","t":"孩子被欺凌，当天就报到学校并要求书面处理，涉及打人、抢钱、传谣的直接报警","s":"30","cat":"family","tags":["kids","law","school"]},{"id":"30-4","t":"让孩子每天在户外待够 2 小时，这是目前不花钱、不用药的办法里，唯一有随机试验支持的防近视办法","s":"30","cat":"family","tags":["kids","medicine"]},{"id":"30-5","t":"0 到 3 岁不给屏幕，3 到 6 岁尽量不给，中小学生非学习用途每天不超过 1 小时","s":"30","cat":"family","tags":["kids","learn","digital"]},{"id":"30-6","t":"把近视当成会留下的损伤：度数越深，将来视网膜脱离、黄斑病变、青光眼越多","s":"30","cat":"family","tags":[]},{"id":"30-7","t":"每年那次学生体检的报告单要自己看一遍，异常项当年带去医院查","s":"30","cat":"health","tags":["checkup","weight","kids"]},{"id":"30-8","t":"12 到 18 岁的孩子做一次抑郁筛查，别拿学校的心理测评当诊断","s":"30","cat":"health","tags":["mind","kids","checkup"]},{"id":"30-9","t":"不买号称能「治愈近视」「降低度数」的产品和服务","s":"30","cat":"family","tags":[]},{"id":"30-10","t":"睡眠、作业、体育和排名都有明文规定，学校做不到可以提","s":"30","cat":"family","tags":["kids","school","sleep"]},{"id":"30-11","t":"孩子撑不住了可以休学，学籍学校必须给他留着，最长 1 年","s":"30","cat":"family","tags":["kids","school"]},{"id":"30-12","t":"查出视力不良，去医院做散瞳验光，之后按医生给的间隔复查","s":"30","cat":"health","tags":["doctor","kids","checkup"]},{"id":"30-13","t":"恒磨牙长出来以后做窝沟封闭","s":"30","cat":"health","tags":["teeth","kids"]},{"id":"30-14","t":"孩子爱打游戏，先看睡觉、作业和出门活动有没有被挤掉，别光盯着玩了多久","s":"30","cat":"family","tags":["kids","spend"]},{"id":"30-15","t":"孩子说自己喜欢同性，别骂、别赶出家门、别送去「矫正」：家里的态度和他会不会自杀有关","s":"30","cat":"health","tags":["mind","kids"]},{"id":"30-16","t":"管孩子别动手打，也别吼骂、骂他笨：常挨打挨骂的孩子，行为和情绪问题都更多","s":"30","cat":"health","tags":["mind","kids"]},{"id":"30-17","t":"孩子难管、自己总忍不住打骂，去上一期教具体做法的家长课","s":"30","cat":"family","tags":["kids","mind"]},{"id":"30-18","t":"别把孩子送进封闭管理的「戒网瘾学校」「特训营」：法律禁止用伤害身心的办法戒网瘾，已经有孩子被关死","s":"30","cat":"family","tags":["kids","school"]},{"id":"30-19","t":"教孩子认识身体的隐私部位，被人碰了、被要求保密都要回家说；孩子说了先信、别骂，带去报警和就医","s":"30","cat":"safety","tags":["law","privacy","kids"]},{"id":"30-20","t":"别让不满 12 周岁的孩子骑自行车上路、不满 16 周岁的骑电动自行车上路：撞了人父母赔，自己被撞也可能要担一部分","s":"30","cat":"safety","tags":["traffic","elder","kids"]},{"id":"30-21","t":"孩子运动时撞了头、之后头痛头晕或者发懵，当天别再上场；吐了又吐、越来越困、头痛越来越重，立刻去急诊","s":"30","cat":"health","tags":["sport","kids"]},{"id":"31-1","t":"先把门槛对一遍：十二条路的年龄和学历要求大多都是明文写死的","s":"31","cat":"family","tags":["school"]},{"id":"31-2","t":"十八岁那年 10 月 31 日前要做兵役登记；义务兵服现役就是两年","s":"31","cat":"family","tags":["school"]},{"id":"31-3","t":"应征之后拒服兵役，两年内不准出境或升学复学，还进不了公务员和国企","s":"31","cat":"family","tags":["school"]},{"id":"31-4","t":"大学生当兵最实的两块：学费每年补最高 20000 元，学籍保留到退役后两年、考研有专项计划","s":"31","cat":"family","tags":["school","habit","debt"]},{"id":"31-5","t":"退役后只有六种情况由政府安排工作；自主就业的 30 日内必须报到","s":"31","cat":"growth","tags":["time"]},{"id":"31-6","t":"退役后的三笔账：一次性退役金、军龄算工龄、自己干每年扣减 20000 元税","s":"31","cat":"family","tags":[]},{"id":"31-7","t":"想进体制内不止考公一条：基层服务项目干满两年，能报每年 10% 的定向考录计划","s":"31","cat":"growth","tags":["habit","school","job"]},{"id":"31-8","t":"特岗教师三年服务期满、考核合格又愿意留下的，应当及时入编","s":"31","cat":"family","tags":["school"]},{"id":"31-9","t":"消防员和军队文职是另外两个公开招录的口子，门槛比考公低","s":"31","cat":"family","tags":["school"]},{"id":"31-10","t":"学历不是一锤子买卖：自考不限年龄和已受教育程度，成人高考和开放大学都能补，学历只认学信网查得到的，「免考包过」的学历提升班别报","s":"31","cat":"family","tags":["school","learn"]},{"id":"31-11","t":"不进单位就是灵活就业：养老和医疗要自己在就业地参保，户籍限制已经放开","s":"31","cat":"family","tags":["elder","social","contract"]},{"id":"31-12","t":"送外卖、跑网约车、拉同城货运，平台按单给你交职业伤害保障费，自己不缴","s":"31","cat":"health","tags":["diet","income"]},{"id":"31-13","t":"高考填志愿那天就能基本锁定编制的两条路：公费师范生和定向医学生，代价是 6 年履约","s":"31","cat":"family","tags":["school","contract"]},{"id":"31-14","t":"想出国打工，先查这家公司有没有对外劳务合作经营资格：它不得向你收押金","s":"31","cat":"safety","tags":["rent","contract"]},{"id":"31-15","t":"在家给境外公司远程干活，这笔钱在税法上算境内所得：个税自己报，收汇走「职工报酬」","s":"31","cat":"money","tags":["tax","income"]},{"id":"31-16","t":"不进单位自己干，起步钱先看创业担保贷款：个人最高 30 万、财政贴一半利息","s":"31","cat":"money","tags":["debt","startup","school"]},{"id":"31-17","t":"毕业两年内还想考公务员的，签工作、转档案之前先查招考公告怎么认「应届生」：国考要档案和户口留在学校或人才服务机构","s":"31","cat":"family","tags":["school","job","contract"]},{"id":"32-1","t":"交学费之前先查学校在不在留服中心的认证院校名单里","s":"32","cat":"family","tags":["school"]},{"id":"32-2","t":"盯住美国 F-1 新规的官司：「最长四年、读完 30 天内走」原定 2026 年 9 月 15 日生效，前一天被法院暂停，眼下仍是「读完为止」","s":"32","cat":"safety","tags":["law","school"]},{"id":"32-3","t":"留学打工先查美加英澳各国的打工时数上限，学期、假期和工作类型要分开算","s":"32","cat":"family","tags":["school"]},{"id":"32-4","t":"留学减为非全日制、休学、退学、转学前，先核对打工资格和例外","s":"32","cat":"family","tags":["school","income","learn"]},{"id":"32-5","t":"美国：搬家后 10 天内必须报新地址","s":"32","cat":"family","tags":["school"]},{"id":"32-6","t":"出发前和在读期间，看一眼教育部的留学预警","s":"32","cat":"family","tags":["school"]},{"id":"32-7","t":"澳大利亚：OSHC 必须覆盖全程且中间不能断，落地拿不出保险可能被拒绝入境","s":"32","cat":"money","tags":["insurance","school"]},{"id":"32-8","t":"英国：签证费之外还有一笔按年收的医疗附加费，学生每年 776 英镑，申请时一次付清","s":"32","cat":"family","tags":[]},{"id":"32-9","t":"回国前留出认证时间：留服认证要 10 到 20 个工作日","s":"32","cat":"growth","tags":["time","school"]},{"id":"32-10","t":"报名前在留服中心的公告里搜一次学校名，被「加强审查」的学校认证至少要等 60 个工作日","s":"32","cat":"family","tags":["school","scam"]},{"id":"32-11","t":"美国：毕业后做 OPT 的，把没工作的天数记下来，累计不能超过 90 天，拿到 STEM 延期的合计不能超过 150 天","s":"32","cat":"family","tags":["school"]},{"id":"32-12","t":"加拿大：申请学签之前，先通过学校拿到省级证明信（PAL/TAL），公立大学读硕士、博士的从 2026 年起不用","s":"32","cat":"family","tags":["school","learn"]},{"id":"33-1","t":"脊髓损伤之后突然剧烈头痛、出汗，先扶坐直、松开衣物，同时叫 120","s":"33","cat":"health","tags":["medicine","doctor","law"]},{"id":"33-2","t":"脊髓损伤致残之后的头十年是自杀的高风险期，别当成「想开点」就行的事","s":"33","cat":"health","tags":["mind"]},{"id":"33-3","t":"精神障碍住院以自愿为原则，只有两种情形可以不经本人同意","s":"33","cat":"health","tags":["doctor"]},{"id":"33-4","t":"长期照护家里残疾人的那个人，自己的身体要有人盯着","s":"33","cat":"family","tags":["elder"]},{"id":"33-5","t":"长期坐轮椅的，坐垫换成减压型，每天看一遍坐骨和尾骨","s":"33","cat":"family","tags":["elder"]},{"id":"33-6","t":"别买「能治好瘫痪、失明、耳聋」的疗法和器械","s":"33","cat":"health","tags":[]},{"id":"33-7","t":"残疾人证办下来之后，去县级残联把能申请的东西一次问全","s":"33","cat":"health","tags":[]},{"id":"33-8","t":"孩子不满 7 岁又有残疾或者孤独症的，去县级残联申请康复救助","s":"33","cat":"family","tags":["kids"]},{"id":"33-9","t":"家里的坡道、扶手和浴室改造，可以向县级以上政府申请补贴","s":"33","cat":"safety","tags":["law"]},{"id":"33-10","t":"找工作时主动说明自己持残疾人证，企业招你能抵掉一笔钱","s":"33","cat":"health","tags":[]},{"id":"33-11","t":"残疾人的个人所得税可以减征，减多少打电话问省税务局","s":"33","cat":"money","tags":["tax","legalentity"]},{"id":"33-12","t":"导盲犬可以带进公共场所和公共交通，盲人免费坐市内公交","s":"33","cat":"money","tags":["save","law"]},{"id":"33-13","t":"残疾人参加高考可以申请合理便利，用盲文卷的考试时间加一半","s":"33","cat":"family","tags":["school","time"]},{"id":"33-14","t":"残疾孩子申请入学，学校不得拒收；到不了校的由教育局安排送教上门","s":"33","cat":"family","tags":["school","kids","time"]},{"id":"33-15","t":"右下肢或者双下肢没了也能考驾照，准驾车型叫 C5","s":"33","cat":"safety","tags":["traffic"]},{"id":"33-16","t":"康复在有康复医学科的正规机构做，强度听治疗师的，不是越猛越好（证据来自中风）","s":"33","cat":"safety","tags":["law"]},{"id":"33-17","t":"听力下降就去配助听器，配它的理由是听得见，不是防痴呆","s":"33","cat":"health","tags":[]},{"id":"33-18","t":"说一个成年人「管不了自己的事」，要向法院申请认定，家属说了不算","s":"33","cat":"safety","tags":["law"]},{"id":"33-19","t":"成年人的监护人按法定顺序定；被监护人伤了别人，由监护人赔","s":"33","cat":"family","tags":["elder"]},{"id":"33-20","t":"因为残疾被拒招、不转正、少发钱，可以告，但先把过程成本算清","s":"33","cat":"safety","tags":["law","save","insurance"]},{"id":"33-21","t":"脊髓损伤后尿不出来的，排尿方式和医生一起定，别长期插着尿管不管，终身定期查肾和膀胱","s":"33","cat":"health","tags":["doctor"]},{"id":"34-1","t":"同时吃两种感冒药或止痛药之前，先看成分表，对乙酰氨基酚只能占一种，吃多了没不舒服也当天去医院","s":"34","cat":"health","tags":["medicine","doctor"]},{"id":"34-2","t":"孩子发烧不用阿司匹林、尼美舒利和安乃近，含安乃近的感冒药也不给未成年人吃，液体退烧药用药盒里配的量具量","s":"34","cat":"health","tags":["medicine","kids"]},{"id":"34-3","t":"60 岁以上、胃出过血、在吃抗凝药或激素的人，吃布洛芬这类止痛药之前先问医生","s":"34","cat":"health","tags":["medicine","doctor"]},{"id":"34-4","t":"2 岁以下的孩子感冒，别自己喂复方感冒药和止咳药","s":"34","cat":"health","tags":["medicine","kids"]},{"id":"34-5","t":"怀孕 20 周以后，别自己吃布洛芬这类止痛药","s":"34","cat":"health","tags":["medicine"]},{"id":"34-6","t":"反酸烧心自己买奥美拉唑，最多吃 7 天；吞咽困难、呕血、黑便就直接去医院","s":"34","cat":"health","tags":["doctor"]},{"id":"34-7","t":"普通感冒别找医生要抗生素","s":"34","cat":"health","tags":["medicine","doctor"]},{"id":"34-8","t":"拉肚子先喝口服补液盐补水，5 岁以下的孩子不给止泻药","s":"34","cat":"family","tags":["kids","medicine"]},{"id":"34-9","t":"止痛药一个月别吃超过 15 天，复方止痛药别超过 10 天，不然头痛可能就是药吃出来的","s":"34","cat":"health","tags":["medicine"]},{"id":"34-10","t":"过期药和用不上的剩药定期清出来，连包装投进有害垃圾桶，别留在家里","s":"34","cat":"health","tags":["medicine"]},{"id":"34-11","t":"用头孢、甲硝唑这类抗菌药期间和停药后 7 天内不喝酒，藿香正气水、止咳糖浆这类含酒精的药也不碰","s":"34","cat":"health","tags":["smoke","medicine"]},{"id":"34-12","t":"吃了含氯苯那敏（扑尔敏）、苯海拉明的感冒药或抗过敏药，吃药期间别开车，也别登高干活、别操作机器","s":"34","cat":"health","tags":["medicine","traffic","emergency"]},{"id":"34-13","t":"长期吃降脂药、降压药这类药的，先看说明书里有没有写葡萄柚（西柚），写了就别吃西柚和柚子，也别喝西柚汁","s":"34","cat":"health","tags":["medicine"]}]}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('gd').textContent);
+  var host = document.getElementById('host'), bg = document.getElementById('bg'), tip = document.getElementById('tip');
+  var byTag = {}; D.tags.forEach(function(t){ byTag[t.id] = t; });
+  var items = {}; D.items.forEach(function(i){ items[i.id] = i; });
+
+  var THEMES = {
+    solar:  { name:'太阳系', layout:'solar', bg:'radial-gradient(1200px 800px at 50% 50%, #0b0e20 0%, #04060e 55%, #000003 100%)',
+      fog:0x05070f, cat:0xffd9a0, tag:0x9fc4ff, item:0x7f9fd0, edge:[0.75,0.6,0.35], glow:true, shell:0x334066, planet:true, atmo:0x9fd0ff, solar:true },
+    nebula: { name:'星云', layout:'sphere', bg:'radial-gradient(1200px 800px at 22% 16%, #14264d 0%, #0a1226 45%, #04060c 100%)',
+      fog:0x0a1226, cat:0x6fa8ff, tag:0x4f86d6, item:0x5f8fcf, edge:[0.28,0.45,0.75], glow:true, shell:0x2c5aa0, fancy:true },
+    galaxy: { name:'银河', layout:'spiral', bg:'radial-gradient(1100px 800px at 70% 20%, #2a1240 0%, #150a26 45%, #06040c 100%)',
+      fog:0x080410, cat:0xffc46b, tag:0xd9a7ff, item:0x8f6bd0, edge:[0.55,0.4,0.8], glow:true, shell:0x5a3a8a, planet:true, atmo:0xffd9a0 },
+    globe:  { name:'星球仪', layout:'globe', bg:'radial-gradient(1000px 700px at 50% 8%, #0d1a2e 0%, #070c15 55%, #03060b 100%)',
+      fog:0x050a12, cat:0x9fd0ff, tag:0x6fa8ff, item:0x4f7ab0, edge:[0.35,0.6,0.95], glow:true, shell:0x7fb2ff, shellOp:.16, lat:true, atmo:0x9fd8ff },
+    rings:  { name:'行星环', layout:'rings', bg:'radial-gradient(1000px 700px at 50% 60%, #1c1608 0%, #0d0a05 55%, #050403 100%)',
+      fog:0x0a0805, cat:0xffcf7a, tag:0xe8a860, item:0x8a6a3a, edge:[0.7,0.55,0.3], glow:true, shell:0x5a4520, grid:true, planet:true, atmo:0xffe2a8 },
+    cube:   { name:'立方', layout:'cube', bg:'radial-gradient(1000px 700px at 30% 10%, #0b1c22 0%, #05100f 55%, #020606 100%)',
+      fog:0x04100f, cat:0x66e0d0, tag:0x3fb8aa, item:0x2f8f86, edge:[0.3,0.8,0.75], glow:true, shell:0x2a6f66, grid:true, atmo:0x8ff5e0 },
+    dots:   { name:'点阵', layout:'sphere', bg:'radial-gradient(1000px 700px at 50% 50%, #08080c 0%, #040406 60%, #000 100%)',
+      fog:0x030305, cat:0xffffff, tag:0xc9d6ee, item:0x8fa4c8, edge:[0.5,0.55,0.7], glow:true, shell:0x333a4a, dot:true, atmo:0xdfe8ff },
+    aurora: { name:'极光', layout:'sphere', bg:'radial-gradient(1200px 760px at 30% 10%, #06303a 0%, #041a20 48%, #02080c 100%)',
+      fog:0x030a0e, cat:0x6fe0c8, tag:0xa8f0d8, item:0x2f8a7a, edge:[0.3,0.7,0.65], glow:true, shell:0x1f6a5c, atmo:0x8fffe0 },
+    blueprint:{ name:'蓝图', layout:'sphere', bg:'radial-gradient(900px 700px at 50% 20%, #0a1e3a 0%, #061428 55%, #03080f 100%)',
+      fog:0x061428, cat:0xcfe4ff, tag:0x8fb4e0, item:0x5f86b0, edge:[0.5,0.7,1], glow:false, wire:true, shell:0x2f5680, grid:true, atmo:0xa8d0ff },
+    max:    { name:'极限', layout:'sphere', bg:'radial-gradient(1200px 900px at 50% 40%, #1a0b3a 0%, #0a0620 48%, #02010a 100%)',
+      fog:0x070418, cat:0x9f7bff, tag:0x6ee7ff, item:0xb08cff, edge:[0.8,0.5,1], glow:true, shell:0x6a3aff, atmo:0x9fd0ff, fancy:true, max:true },
+    glass:  { name:'玻璃', layout:'sphere', bg:'radial-gradient(1200px 820px at 24% 12%, #ffffff 0%, #e9eff9 46%, #dfe7f4 100%)',
+      fog:0xe8eef8, cat:0x3f7ae0, tag:0x8ba7cf, item:0xb9c6d8, edge:[0.35,0.5,0.8], glow:false, shell:0xbcd0ea, light:true }
+  };
+  var themeKey = 'solar';
+  try { var s = localStorage.getItem('hltb-nebula-theme'); if (s && THEMES[s]) themeKey = s; } catch(e){}
+
+  var scene, camera, renderer, raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2(-9,-9);
+  var composer = null, bloomPass = null, starField = null, raysPass = null, gradePass = null, trails = [];
+  var domeTexRef = null, domeCanvasRef = null, domeMesh = null;
+  var hoverCat = null;
+  var planetRings = [], eruptions = [], fireball = null;
+  var groups = [], tagObjs = [], catObjs = [], dust = null, labelEls = [], labels = [], halos = [], tagAnims = [], pulses = [], maxRings = [], maxCore = null, solarOrbits = [], blackHole = null, meteors = [], spiralNeb = null, saturns = [], sunMesh = null, sunCorona = null, prominences = [], sunHalos = [], sunFlares = [], wanderers = [], ship = null, shipFlames = [], lastSec = 0;
+  var ORB = { theta: 0.55, phi: 1.16, r: 1750, auto: true };
+  var drag = false, lx = 0, ly = 0;
+
+  function fib(i, n, R, flat){
+    var y = n === 1 ? 0 : 1 - (i / (n - 1)) * 2;
+    var rad = Math.sqrt(Math.max(0, 1 - y * y));
+    var th = Math.PI * (3 - Math.sqrt(5)) * i;
+    return new THREE.Vector3(Math.cos(th) * rad * R, y * R * (flat ? .55 : .92), Math.sin(th) * rad * R);
+  }
+  function rnd(a){ return (Math.random() * 2 - 1) * a; }
+  function layoutPos(T, i, n){
+    if (T.layout === 'spiral') return spiralPos(i, n);
+    if (T.layout === 'solar'){ var a = (i / n) * Math.PI * 2 + rnd(.22); var r = 340 + i * 155 + rnd(70); return new THREE.Vector3(Math.cos(a) * r, rnd(70), Math.sin(a) * r); }
+    if (T.layout === 'rings'){ var a = (i / n) * Math.PI * 2; return new THREE.Vector3(Math.cos(a) * 600, 0, Math.sin(a) * 600); }
+    if (T.layout === 'cube'){ var k = 330; return new THREE.Vector3((i & 1 ? 1 : -1) * k, (i & 2 ? 1 : -1) * k, (i & 4 ? 1 : -1) * k); }
+    if (T.layout === 'globe') return fib(i, n, 620, false);
+    return fib(i, n, 560, false);
+  }
+
+  var PLANETS = [
+    { base:'#2f6f9e', dark:'#16344c', light:'#7cc0d8' },
+    { base:'#c9a25a', dark:'#7d5f28', light:'#f2dda6' },
+    { base:'#a8543a', dark:'#612a19', light:'#dd9670' },
+    { base:'#c08a5e', dark:'#6f4a2c', light:'#efd3ad' },
+    { base:'#6fb7c4', dark:'#356b75', light:'#c2ecf2' },
+    { base:'#3a5fa8', dark:'#1d3465', light:'#88a6e4' },
+    { base:'#8f8f8f', dark:'#4d4d4d', light:'#d2d2d2' },
+    { base:'#d9b97a', dark:'#8a6a35', light:'#f7e7bd' }
+  ];
+  function mulberry(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var galaxyImg = new Image();
+  if (window.BG_GALAXY) galaxyImg.src = window.BG_GALAXY;
+
+  function drawGalaxyIntoDome(ctx, w, h){
+    if (!galaxyImg || !galaxyImg.complete || !galaxyImg.naturalWidth) return false;
+    var gw = 1100, gh = Math.round(1100 * galaxyImg.naturalHeight / galaxyImg.naturalWidth);
+    var tc = document.createElement('canvas'); tc.width = gw; tc.height = gh;
+    var tg = tc.getContext('2d');
+    tg.drawImage(galaxyImg, 0, 0, gw, gh);
+    // 调色：往冷蓝紫压，和深空统一
+    tg.globalCompositeOperation = 'source-atop';
+    tg.fillStyle = 'rgba(120,150,255,0.10)'; tg.fillRect(0, 0, gw, gh);
+    tg.fillStyle = 'rgba(70,40,120,0.08)'; tg.fillRect(0, 0, gw, gh);
+    // 压掉照片自带的高光星点，避免和 3D 星打架
+    tg.fillStyle = 'rgba(0,0,0,0.18)'; tg.fillRect(0, 0, gw, gh);
+    // 羽化边缘
+    tg.globalCompositeOperation = 'destination-in';
+    var rg = tg.createRadialGradient(gw / 2, gh / 2, gw * 0.08, gw / 2, gh / 2, gw * 0.52);
+    rg.addColorStop(0, 'rgba(0,0,0,1)');
+    rg.addColorStop(0.52, 'rgba(0,0,0,0.90)');
+    rg.addColorStop(0.78, 'rgba(0,0,0,0.22)');
+    rg.addColorStop(1, 'rgba(0,0,0,0)');
+    tg.fillStyle = rg; tg.fillRect(0, 0, gw, gh);
+    // 加法混合画进穹顶，像本来就在天上
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = .78;
+    ctx.translate(w * 0.82, h * 0.56);
+    ctx.rotate(0.12);
+    var dw = w * 0.115, dh = dw * gh / gw;
+    ctx.drawImage(tc, -dw / 2, -dh / 2, dw, dh);
+    ctx.restore();
+    return true;
+  }
+
+  var PLANET_KEYS = ['earth','saturn','mars','jupiter','uranus','neptune','mercury','venus'];
+  var planetCache = {};
+  function realPlanetTex(i){
+    if (!window.PLANET_DATA) return null;
+    var key = PLANET_KEYS[i % PLANET_KEYS.length];
+    var url = window.PLANET_DATA[key];
+    if (!url) return null;
+    if (!planetCache[key]) planetCache[key] = new THREE.TextureLoader().load(url);
+    return planetCache[key];
+  }
+  function planetTex(cfg, seed){
+    var w = 512, h = 256, cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    var g = cv.getContext('2d'), rand = mulberry(seed * 977 + 13);
+    g.fillStyle = cfg.base; g.fillRect(0, 0, w, h);
+    var y = 0;
+    while (y < h){
+      var bh = 5 + rand() * 22, t = rand();
+      g.globalAlpha = .22 + rand() * .5;
+      g.fillStyle = t < .34 ? cfg.dark : (t < .68 ? cfg.light : cfg.base);
+      g.fillRect(0, y, w, bh);
+      y += bh;
+    }
+    g.globalAlpha = 1;
+    for (var i = 0; i < 1100; i++){
+      var x = rand() * w, yy = rand() * h, r = .8 + rand() * 2.6;
+      g.fillStyle = rand() < .5 ? 'rgba(0,0,0,.16)' : 'rgba(255,255,255,.10)';
+      g.beginPath(); g.arc(x, yy, r, 0, 6.2832); g.fill();
+    }
+    var tx = new THREE.CanvasTexture(cv);
+    tx.wrapS = THREE.RepeatWrapping;
+    return tx;
+  }
+
+  function cloudTex(seed, baseHex, lightHex){
+    var base = new THREE.Color(baseHex || '#0f2a55'), light = new THREE.Color(lightHex || '#1d4a86');
+    var w = 512, h = 256, cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    var g = cv.getContext('2d'), rand = mulberry(seed * 613 + 7);
+    var grd = g.createLinearGradient(0, 0, 0, h);
+    grd.addColorStop(0, '#' + base.getHexString());
+    grd.addColorStop(.5, '#' + light.getHexString());
+    grd.addColorStop(1, '#' + base.getHexString());
+    g.fillStyle = grd; g.fillRect(0, 0, w, h);
+    var lr = Math.round(light.r * 255), lg = Math.round(light.g * 255), lb = Math.round(light.b * 255);
+    for (var i = 0; i < 110; i++){
+      var x = rand() * w, y = rand() * h, r = 18 + rand() * 78;
+      var rg = g.createRadialGradient(x, y, 0, x, y, r);
+      rg.addColorStop(0, 'rgba(' + lr + ',' + lg + ',' + lb + ',' + (.10 + rand() * .26).toFixed(2) + ')');
+      rg.addColorStop(1, 'rgba(' + lr + ',' + lg + ',' + lb + ',0)');
+      g.fillStyle = rg; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+    }
+    var tx = new THREE.CanvasTexture(cv);
+    tx.wrapS = THREE.RepeatWrapping;
+    return tx;
+  }
+  function atmoMaterial(color, power, opacity){
+    return new THREE.ShaderMaterial({
+      uniforms: { cc: { value: new THREE.Color(color) }, pp: { value: power }, oo: { value: opacity } },
+      vertexShader: 'varying vec3 vN; varying vec3 vV; void main(){ vN = normalize(normalMatrix * normal); vec4 mv = modelViewMatrix * vec4(position,1.0); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }',
+      fragmentShader: 'uniform vec3 cc; uniform float pp; uniform float oo; varying vec3 vN; varying vec3 vV; void main(){ float f = pow(1.0 - abs(dot(vN, vV)), pp); gl_FragColor = vec4(cc, f * oo); }',
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.BackSide
+    });
+  }
+
+  function glowTex(){
+    var s = 128, c = document.createElement('canvas'); c.width = c.height = s;
+    var g = c.getContext('2d'), rg = g.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
+    rg.addColorStop(0, 'rgba(255,255,255,1)'); rg.addColorStop(.28, 'rgba(255,255,255,.7)');
+    rg.addColorStop(.6, 'rgba(255,255,255,.18)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, s, s);
+    return new THREE.CanvasTexture(c);
+  }
+
+  function build(){
+    var T = THEMES[themeKey];
+    bg.style.background = T.bg;
+    document.body.className = 'theme-' + themeKey;
+    document.body.style.color = T.light ? '#12161d' : '#e8eeff';
+    labelEls.forEach(function(e){ e.remove(); }); labelEls = []; labels = [];
+    if (scene) {
+      scene.traverse(function(o){ if (o.geometry) o.geometry.dispose();
+        if (o.material) { (Array.isArray(o.material) ? o.material : [o.material]).forEach(function(m){ if (m.map) m.map.dispose(); m.dispose(); }); } });
+      host.innerHTML = '';
+    }
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(T.fog, T.light ? .00030 : .00034);
+    camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, 1, 40000);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setClearAlpha(0);
+    if (THREE.ACESFilmicToneMapping !== undefined){
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = T.solar ? 0.95 : 1.12;
+    }
+    host.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, T.light ? 1.15 : (T.solar ? .26 : (T.fancy ? .65 : 1.0))));
+    if (T.fancy){ var coreLight = new THREE.PointLight(0x66b0ff, 1.6, 4000); coreLight.position.set(0, 0, 0); scene.add(coreLight); }
+    if (T.solar){ var rim = new THREE.DirectionalLight(0x88b8ff, .3); rim.position.set(-1, .35, -1); scene.add(rim); }
+    var d1 = new THREE.DirectionalLight(0xffffff, T.solar ? .32 : (T.light ? 1.0 : 1.4)); d1.position.set(.8, 1, 1); scene.add(d1);
+    var d2 = new THREE.DirectionalLight(0xaecbff, T.solar ? .16 : .5); d2.position.set(-1, -.6, -.8); scene.add(d2);
+
+    var GT = glowTex();
+
+    var shell = new THREE.Mesh(new THREE.SphereGeometry(T.layout === 'globe' ? 640 : 760, 36, 24),
+      new THREE.MeshBasicMaterial({ color: T.shell, wireframe: true, transparent: true, opacity: T.shellOp || (T.light ? .04 : .05) }));
+    if (!T.solar) scene.add(shell);
+    if (T.lat){
+      var latMat = new THREE.LineBasicMaterial({ color: T.shell, transparent: true, opacity: .22 });
+      for (var la = -60; la <= 60; la += 30){
+        var rad = 640 * Math.cos(la * Math.PI / 180), yy = 640 * Math.sin(la * Math.PI / 180), pts = [];
+        for (var ai = 0; ai <= 72; ai++){
+          var th2 = ai / 72 * Math.PI * 2;
+          pts.push(new THREE.Vector3(Math.cos(th2) * rad, yy, Math.sin(th2) * rad));
+        }
+        scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), latMat));
+      }
+    }
+    if (T.layout === 'solar'){
+      // 远景星云
+      var nebCols = [];
+      for (var nbi = 0; nbi < 14; nbi++){
+        var nb = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: nebCols[nbi % nebCols.length],
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .085 }));
+        var dirN = new THREE.Vector3(rnd(1), rnd(1) * .6, rnd(1)).normalize().multiplyScalar(2600 + Math.random() * 1800);
+        nb.position.copy(dirN);
+        var scN = 1800 + Math.random() * 2200;
+        nb.scale.set(scN, scN * .75, 1);
+        nb.material.fog = false;
+        scene.add(nb);
+      }
+      // 天空穹顶（包住整个场景，避免出现断截）
+      var domeTex = (function(){
+        var w = 3072, h = 1536, cv4 = document.createElement('canvas');
+        cv4.width = w; cv4.height = h;
+        var g4 = cv4.getContext('2d');
+        g4.fillStyle = '#010206'; g4.fillRect(0, 0, w, h);
+        // 星云斑
+        for (var i4 = 0; i4 < 40; i4++){
+          var x4 = Math.random() * w, y4 = Math.random() * h, r4 = 120 + Math.random() * 420;
+          var rg4 = g4.createRadialGradient(x4, y4, 0, x4, y4, r4);
+          var col = ['80,120,200', '110,70,160', '50,110,130', '140,90,160'][i4 % 4];
+          rg4.addColorStop(0, 'rgba(' + col + ',.045)');
+          rg4.addColorStop(1, 'rgba(' + col + ',0)');
+          g4.fillStyle = rg4; g4.beginPath(); g4.arc(x4, y4, r4, 0, 6.2832); g4.fill();
+        }
+        // 银河带
+        var lg4 = g4.createLinearGradient(0, h * .35, 0, h * .78);
+        lg4.addColorStop(0, 'rgba(120,150,220,0)');
+        lg4.addColorStop(.45, 'rgba(150,175,235,.085)');
+        lg4.addColorStop(.5, 'rgba(235,240,255,.22)');
+        lg4.addColorStop(.55, 'rgba(160,130,225,.085)');
+        lg4.addColorStop(1, 'rgba(70,50,130,0)');
+        g4.fillStyle = lg4; g4.fillRect(0, h * .3, w, h * .5);
+        // 旋涡星云（画在天上固定位置）
+        (function(){
+          var cx = w * 0.72, cy = h * 0.34, R = 210;
+          function nblob(x, y, r, col, a){
+            var rg2 = g4.createRadialGradient(x, y, 0, x, y, r);
+            rg2.addColorStop(0, 'rgba(' + col + ',' + a + ')');
+            rg2.addColorStop(1, 'rgba(' + col + ',0)');
+            g4.fillStyle = rg2; g4.beginPath(); g4.arc(x, y, r, 0, 6.2832); g4.fill();
+          }
+          nblob(cx, cy, R, '90,110,200', .20);
+          nblob(cx, cy, R * .6, '150,120,230', .22);
+          for (var arm = 0; arm < 2; arm++){
+            for (var k = 0; k < 260; k++){
+              var t = k / 260;
+              var ang = t * 5.2 + arm * Math.PI + 0.6;
+              var rr = 12 + t * R * .92;
+              var x = cx + Math.cos(ang) * rr + rnd(1) * 7;
+              var y = cy + Math.sin(ang) * rr + rnd(1) * 7;
+              var col = t < .45 ? '200,212,255' : (t < .8 ? '160,155,240' : '130,115,195');
+              nblob(x, y, 5 + t * 9, col, .05 + (1 - t) * .14);
+            }
+          }
+          nblob(cx, cy, 26, '255,246,228', .85);
+          nblob(cx, cy, 11, '255,255,255', .95);
+        })();
+        // 星（细颗粒：大小、亮度、色温都分层）
+        for (var i5 = 0; i5 < 42000; i5++){
+          var x5 = Math.random() * w, y5 = Math.random() * h;
+          var t5 = Math.random();
+          var a5, sz5, tint5;
+          if (t5 < .72){ a5 = .10 + Math.random() * .28; sz5 = .8; tint5 = '255,255,255'; }
+          else if (t5 < .93){ a5 = .28 + Math.random() * .34; sz5 = 1.3; tint5 = Math.random() < .5 ? '214,228,255' : '255,246,232'; }
+          else { a5 = .55 + Math.random() * .4; sz5 = 2.0; tint5 = Math.random() < .5 ? '198,218,255' : '255,236,206'; }
+          g4.fillStyle = 'rgba(' + tint5 + ',' + a5.toFixed(2) + ')';
+          g4.fillRect(x5, y5, sz5, sz5);
+        }
+        // 少量亮星的十字光芒
+        for (var i6 = 0; i6 < 90; i6++){
+          var bx = Math.random() * w, by = Math.random() * h;
+          var grd6 = g4.createRadialGradient(bx, by, 0, bx, by, 9);
+          grd6.addColorStop(0, 'rgba(255,255,255,.85)');
+          grd6.addColorStop(.35, 'rgba(200,220,255,.30)');
+          grd6.addColorStop(1, 'rgba(200,220,255,0)');
+          g4.fillStyle = grd6; g4.beginPath(); g4.arc(bx, by, 9, 0, 6.2832); g4.fill();
+          g4.strokeStyle = 'rgba(230,240,255,.22)'; g4.lineWidth = .8;
+          g4.beginPath(); g4.moveTo(bx - 11, by); g4.lineTo(bx + 11, by);
+          g4.moveTo(bx, by - 11); g4.lineTo(bx, by + 11); g4.stroke();
+        }
+        var t4 = new THREE.CanvasTexture(cv4);
+        t4.wrapS = THREE.RepeatWrapping;
+        domeCanvasRef = cv4; domeTexRef = t4;
+        if (galaxyImg.complete && galaxyImg.naturalWidth){ drawGalaxyIntoDome(g4, w, h); t4.needsUpdate = true; }
+        else { galaxyImg.onload = function(){ var gg = domeCanvasRef.getContext('2d'); drawGalaxyIntoDome(gg, domeCanvasRef.width, domeCanvasRef.height); if (domeTexRef) domeTexRef.needsUpdate = true; }; }
+        return t4;
+      })();
+      // 远处旋涡星云
+      var nebTex = (function(){
+        if (!window.BG_GALAXY) return null;
+        var img = new Image(); img.src = window.BG_GALAXY;
+        var cw = 1024, ch = 1024, cvG = document.createElement('canvas');
+        cvG.width = cw; cvG.height = ch;
+        var gG = cvG.getContext('2d');
+        var tex = new THREE.CanvasTexture(cvG);
+        img.onload = function(){
+          var iw = img.naturalWidth, ih = img.naturalHeight;
+          var sc = Math.max(cw / iw, ch / ih);
+          var dw = iw * sc, dh = ih * sc;
+          gG.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+          gG.globalCompositeOperation = 'source-atop';
+          gG.fillStyle = 'rgba(120,150,255,.20)'; gG.fillRect(0, 0, cw, ch);
+          gG.fillStyle = 'rgba(70,40,120,.16)'; gG.fillRect(0, 0, cw, ch);
+          gG.globalCompositeOperation = 'destination-in';
+          var rg2 = gG.createRadialGradient(cw / 2, ch / 2, cw * .05, cw / 2, ch / 2, cw * .48);
+          rg2.addColorStop(0, 'rgba(0,0,0,1)');
+          rg2.addColorStop(.55, 'rgba(0,0,0,.95)');
+          rg2.addColorStop(.82, 'rgba(0,0,0,.42)');
+          rg2.addColorStop(1, 'rgba(0,0,0,0)');
+          gG.fillStyle = rg2; gG.fillRect(0, 0, cw, ch);
+          tex.needsUpdate = true;
+        };
+        return tex;
+      })();
+      var spiralNeb = new THREE.Sprite(new THREE.SpriteMaterial({ map: nebTex, transparent: true,
+        blending: THREE.AdditiveBlending, depthWrite: false, opacity: .82, fog: false }));
+      spiralNeb.position.set(-2750, 1350, -2700);
+      spiralNeb.scale.set(1900, 1800, 1);
+      spiralNeb.visible = false;
+      scene.add(spiralNeb);
+
+      // 真 3D 星空（有视差、会闪）
+      (function(){
+        var N = 22000, geo = new THREE.BufferGeometry();
+        var pos = new Float32Array(N * 3), siz = new Float32Array(N), pha = new Float32Array(N), col = new Float32Array(N * 3);
+        var tmpC = new THREE.Color();
+        for (var i = 0; i < N; i++){
+          var v = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(2600 + Math.random() * 3400);
+          pos[i * 3] = v.x; pos[i * 3 + 1] = v.y; pos[i * 3 + 2] = v.z;
+          siz[i] = 8 + Math.random() * 16;
+          pha[i] = Math.random() * 6.2832;
+          var t = Math.random();
+          tmpC.setHex(t < .68 ? 0xdfe8ff : (t < .9 ? 0xfff0d6 : 0x9fc0ff));
+          col[i * 3] = tmpC.r; col[i * 3 + 1] = tmpC.g; col[i * 3 + 2] = tmpC.b;
+        }
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        geo.setAttribute('aSize', new THREE.BufferAttribute(siz, 1));
+        geo.setAttribute('aPhase', new THREE.BufferAttribute(pha, 1));
+        geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+        var sm = new THREE.ShaderMaterial({
+          uniforms: { uTime: { value: 0 } },
+          vertexShader: 'attribute float aSize; attribute float aPhase; attribute vec3 aColor;' +
+            'uniform float uTime; varying vec3 vC; varying float vT;' +
+            'void main(){ vC = aColor; vT = 0.72 + 0.28 * sin(uTime * 1.4 + aPhase);' +
+            ' vec4 mv = modelViewMatrix * vec4(position, 1.0);' +
+            ' gl_PointSize = aSize * (300.0 / -mv.z) * vT;' +
+            ' gl_Position = projectionMatrix * mv; }',
+          fragmentShader: 'varying vec3 vC; varying float vT;' +
+            'void main(){ vec2 d = gl_PointCoord - vec2(0.5); float r = length(d);' +
+            ' float a = smoothstep(0.5, 0.0, r);' +
+            ' gl_FragColor = vec4(vC * (0.55 + 0.75 * vT), a); }',
+          transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false });
+        var pts = new THREE.Points(geo, sm);
+        scene.add(pts);
+        starField = pts;
+      })();
+
+      // 近层星点（视差更明显）
+      (function(){
+        var M = 1400, g3 = new THREE.BufferGeometry(), p3 = new Float32Array(M * 3);
+        for (var i3 = 0; i3 < M; i3++){
+          var v3 = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(1500 + Math.random() * 900);
+          p3[i3 * 3] = v3.x; p3[i3 * 3 + 1] = v3.y; p3[i3 * 3 + 2] = v3.z;
+        }
+        g3.setAttribute('position', new THREE.BufferAttribute(p3, 3));
+        scene.add(new THREE.Points(g3, new THREE.PointsMaterial({ color: 0xeaf2ff, size: 7,
+          map: GT, transparent: true, opacity: .55, depthWrite: false,
+          blending: THREE.AdditiveBlending, sizeAttenuation: true, fog: false })));
+      })();
+
+      var dome = new THREE.Mesh(new THREE.SphereGeometry(6500, 64, 40),
+        new THREE.MeshBasicMaterial({ map: domeTex, side: THREE.BackSide, depthWrite: false, fog: false }));
+      scene.add(dome); domeMesh = dome;
+
+      // 黑洞
+      var bh = new THREE.Group();
+      bh.position.set(-1450, 430, -1350);
+      var coreBH = new THREE.Mesh(new THREE.SphereGeometry(88, 40, 28),
+        new THREE.MeshBasicMaterial({ color: 0x000000 }));
+      bh.add(coreBH);
+      var photon = new THREE.Mesh(new THREE.RingGeometry(92, 101, 128),
+        new THREE.MeshBasicMaterial({ color: 0xffd9a0, side: THREE.DoubleSide, transparent: true,
+          opacity: .95, blending: THREE.AdditiveBlending, depthWrite: false }));
+      photon.rotation.x = -Math.PI / 2 + .45;
+      bh.add(photon);
+      // 吸积盘纹理
+      var dcv = document.createElement('canvas'); dcv.width = dcv.height = 512;
+      var dg = dcv.getContext('2d');
+      var drg = dg.createRadialGradient(256, 256, 30, 256, 256, 250);
+      drg.addColorStop(0, 'rgba(255,255,255,0)');
+      drg.addColorStop(.18, 'rgba(255,220,170,.92)');
+      drg.addColorStop(.38, 'rgba(255,150,70,.62)');
+      drg.addColorStop(.68, 'rgba(150,80,200,.28)');
+      drg.addColorStop(1, 'rgba(60,30,90,0)');
+      dg.fillStyle = drg; dg.fillRect(0, 0, 512, 512);
+      for (var di2 = 0; di2 < 260; di2++){
+        var da = Math.random() * 6.2832, dr2 = 55 + Math.random() * 190;
+        var dx2 = 256 + Math.cos(da) * dr2, dy2 = 256 + Math.sin(da) * dr2;
+        dg.globalAlpha = .05 + Math.random() * .18;
+        dg.strokeStyle = Math.random() < .5 ? 'rgba(255,230,190,1)' : 'rgba(190,120,255,1)';
+        dg.lineWidth = 1 + Math.random() * 2;
+        dg.beginPath(); dg.arc(256, 256, dr2, da, da + .09); dg.stroke();
+      }
+      dg.globalAlpha = 1;
+      var dTex = new THREE.CanvasTexture(dcv);
+      var disk = new THREE.Mesh(new THREE.CircleGeometry(400, 128),
+        new THREE.MeshBasicMaterial({ map: dTex, transparent: true, opacity: .95,
+          blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+      disk.rotation.x = -Math.PI / 2 + .45;
+      bh.add(disk);
+      var bhGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xffbe7a,
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .55 }));
+      bhGlow.scale.setScalar(680);
+      bhGlow.material.fog = false;
+      disk.material.fog = false;
+      photon.material.fog = false;
+      bh.add(bhGlow);
+      scene.add(bh);
+      // 被吸进去的物质（螺旋下落）
+      var NPI = 220, pgeo = new THREE.BufferGeometry(), parr = new Float32Array(NPI * 3);
+      var pdat = [];
+      for (var pi2 = 0; pi2 < NPI; pi2++){
+        pdat.push({ a: Math.random() * 6.2832, r: 120 + Math.random() * 320,
+          w: 1.2 + Math.random() * 1.6, s: 26 + Math.random() * 46 });
+        parr[pi2 * 3] = 0; parr[pi2 * 3 + 1] = 0; parr[pi2 * 3 + 2] = 0;
+      }
+      pgeo.setAttribute('position', new THREE.BufferAttribute(parr, 3));
+      var pPts = new THREE.Points(pgeo, new THREE.PointsMaterial({ color: 0xffc48a, size: 7,
+        map: GT, transparent: true, opacity: .75, depthWrite: false,
+        blending: THREE.AdditiveBlending, sizeAttenuation: true, fog: false }));
+      pPts.position.copy(bh.position);
+      scene.add(pPts);
+
+      blackHole = { disk: disk, photon: photon, glow: bhGlow,
+        parts: { pts: pPts, geo: pgeo, arr: parr, dat: pdat }, flare: 0, nextFlare: 12 + Math.random() * 14 };
+      // 星点加密
+      var sp2 = [];
+      for (var si2 = 0; si2 < 4200; si2++){
+        var sv2 = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(2400 + Math.random() * 1600);
+        sp2.push(sv2.x, sv2.y, sv2.z);
+      }
+      var sg2 = new THREE.BufferGeometry();
+      sg2.setAttribute('position', new THREE.Float32BufferAttribute(sp2, 3));
+      scene.add(new THREE.Points(sg2, new THREE.PointsMaterial({ color: 0xcfe0ff, size: 5.2, map: GT, alphaTest: .01,
+        sizeAttenuation: true, transparent: true, opacity: .6, depthWrite: false,
+        blending: THREE.AdditiveBlending })));
+
+      var sunGlowCol = 0xffc46b;
+      var sunTex = (window.PLANET_DATA && window.PLANET_DATA.sun) ? new THREE.TextureLoader().load(window.PLANET_DATA.sun) : null;
+      var sunGeo = new THREE.SphereGeometry(92, 64, 48);
+      var SUN_NOISE = `
+        float h31(vec3 p){ return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+        float n31(vec3 p){
+          vec3 i = floor(p); vec3 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(mix(h31(i), h31(i + vec3(1,0,0)), f.x),
+                         mix(h31(i + vec3(0,1,0)), h31(i + vec3(1,1,0)), f.x), f.y),
+                     mix(mix(h31(i + vec3(0,0,1)), h31(i + vec3(1,0,1)), f.x),
+                         mix(h31(i + vec3(0,1,1)), h31(i + vec3(1,1,1)), f.x), f.y), f.z);
+        }
+        float fbm3(vec3 p){ float s = 0.0, a = 0.5; for (int i = 0; i < 4; i++){ s += a * n31(p); p *= 2.03; a *= 0.5; } return s; }
+      `;
+      var sunMat = new THREE.ShaderMaterial({
+        uniforms: { uTime: { value: 0 } },
+        vertexShader: 'varying vec3 vN; varying vec3 vP;' +
+          'void main(){ vN = normalize(normalMatrix * normal); vec4 mv = modelViewMatrix * vec4(position, 1.0);' +
+          ' vP = mv.xyz; gl_Position = projectionMatrix * mv; }',
+        fragmentShader: SUN_NOISE +
+          'uniform float uTime; varying vec3 vN; varying vec3 vP;' +
+          'void main(){' +
+          ' vec3 n = normalize(vN); vec3 v = normalize(-vP);' +
+          ' float limb = pow(max(dot(n, v), 0.0), 0.42);' +
+          ' vec3 sp = normalize(n);' +
+          ' float f1 = fbm3(sp * 7.5 + vec3(0.0, uTime * 0.10, uTime * 0.06));' +
+          ' float f2 = fbm3(sp * 19.0 - vec3(uTime * 0.14, 0.0, uTime * 0.10));' +
+          ' float gran = f1 * 0.66 + f2 * 0.34;' +
+          ' vec3 cDark = vec3(0.30, 0.05, 0.01);' +
+          ' vec3 cMid  = vec3(1.00, 0.42, 0.05);' +
+          ' vec3 cHot  = vec3(1.00, 0.97, 0.80);' +
+          ' vec3 col = mix(cDark, cMid, smoothstep(0.20, 0.55, gran));' +
+          ' col = mix(col, cHot, smoothstep(0.55, 0.82, gran));' +
+          ' float spot = smoothstep(0.55, 0.72, fbm3(sp * 3.4 + 11.0));' +
+          ' col *= (1.0 - spot * 0.62);' +
+          ' col *= (0.50 + 0.80 * limb);' +
+          ' col += vec3(0.50, 0.16, 0.03) * pow(1.0 - limb, 2.0);' +
+          ' gl_FragColor = vec4(col, 1.0); }'
+      });
+      var sun = new THREE.Mesh(sunGeo, sunMat);
+      scene.add(sun); sunMesh = sun;
+      // 日冕
+      // 太阳外的柔光层已移除（只剩火焰本体 + 辉光后处理）
+      // 行星光环（土星之外也各加一圈）
+      var ringCanvas = document.createElement('canvas');
+      ringCanvas.width = 256; ringCanvas.height = 8;
+      var rctx = ringCanvas.getContext('2d');
+      for (var rx2 = 0; rx2 < 256; rx2++){
+        var a7 = .10 + Math.abs(Math.sin(rx2 * .11)) * .38;
+        if (rx2 < 14 || (rx2 > 120 && rx2 < 134) || rx2 > 244) a7 = 0;
+        rctx.fillStyle = 'rgba(226,232,244,' + a7.toFixed(2) + ')';
+        rctx.fillRect(rx2, 0, 1, 8);
+      }
+      var ringTexShared = new THREE.CanvasTexture(ringCanvas);
+      ringTexShared.wrapS = THREE.RepeatWrapping;
+
+      // 自由漂移的行星（不绕太阳）
+      for (var wi = 0; wi < 2; wi++){
+        var wIdx = 6 + wi;
+        var wtex = realPlanetTex(wIdx) || planetTex(PLANETS[wIdx % PLANETS.length], wIdx + 11);
+        var wmesh = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 24),
+          new THREE.MeshStandardMaterial({ map: wtex, roughness: .82, metalness: .06,
+            bumpMap: wtex, bumpScale: .3 }));
+        var wsc = 22 + Math.random() * 26;
+        wmesh.scale.setScalar(wsc);
+        wmesh.position.set(rnd(1700), rnd(520) - 120, rnd(1700) - 300);
+        scene.add(wmesh);
+        wanderers.push({ mesh: wmesh, vel: new THREE.Vector3(rnd(1), rnd(.35), rnd(1)).normalize()
+          .multiplyScalar(4 + Math.random() * 7), spin: .0015 + Math.random() * .003, r: wsc });
+      }
+
+      // 偶发日珥爆发（3 个循环使用）
+      for (var pe = 0; pe < 3; pe++){
+        var eg = new THREE.TorusGeometry(1, .018, 6, 44, Math.PI * .55);
+        var em = new THREE.MeshBasicMaterial({ color: 0xff7c2c, transparent: true, opacity: 0,
+          blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
+        var er = new THREE.Mesh(eg, em);
+        er.scale.setScalar(102); er.visible = false;
+        scene.add(er);
+        eruptions.push({ mesh: er, t: 0, dur: 2.4, wait: 6 + Math.random() * 12 });
+      }
+
+      // 火流星（带尾迹）
+      (function(){
+        var TRAIL = 26;
+        var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xfff2d8,
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0, fog: false }));
+        sp.scale.setScalar(90); scene.add(sp);
+        var geo = new THREE.BufferGeometry();
+        var arr = new Float32Array(TRAIL * 3);
+        geo.setAttribute('position', new THREE.BufferAttribute(arr, 3));
+        var line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xffb070,
+          transparent: true, opacity: .55, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+        line.frustumCulled = false; scene.add(line);
+        fireball = { sp: sp, line: line, geo: geo, arr: arr, n: TRAIL, t: 0, dur: 4.2,
+          active: false, wait: 7 + Math.random() * 10, vel: new THREE.Vector3(), started: false };
+      })();
+
+      // 火舌（太阳表面喷出的火焰团）
+      for (var fl2 = 0; fl2 < 20; fl2++){
+        var fdir = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize();
+        var fspr = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xff7a24,
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .0, fog: false }));
+        fspr.position.copy(fdir.clone().multiplyScalar(94));
+        fspr.scale.setScalar(70);
+        scene.add(fspr);
+        sunFlares.push({ sp: fspr, dir: fdir, ph: Math.random() * 6.2832, spd: .6 + Math.random() * 1.1 });
+      }
+      // 日珥（0 条弧，保留结构）
+      for (var pr = 0; pr < 0; pr++){
+        var arcLen = Math.PI * (0.35 + Math.random() * 0.35);
+        var pg2 = new THREE.TorusGeometry(106 + pr * 7, 4.5 + Math.random() * 2.2, 8, 48, arcLen);
+        var pm = new THREE.MeshBasicMaterial({ color: 0xff8a36, transparent: true, opacity: .85,
+          blending: THREE.AdditiveBlending, depthWrite: false });
+        var prom = new THREE.Mesh(pg2, pm);
+        prom.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+        prom.position.set(0, 0, 0);
+        scene.add(prom); prominences.push(prom);
+      }
+      var sunHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), color: sunGlowCol,
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .85 }));
+      sunHalo.scale.setScalar(700); sunHalo.material.opacity = .72; sunHalo.material.fog = false; scene.add(sunHalo);
+      scene.add(new THREE.PointLight(0xffe4c0, 2.3, 9000));
+      for (var oi = 0; oi < 0; oi++){
+        var rr4 = 360 + oi * 150, pts4 = [];
+        for (var q4 = 0; q4 <= 160; q4++){ var qa4 = q4 / 160 * Math.PI * 2; pts4.push(new THREE.Vector3(Math.cos(qa4) * rr4, 0, Math.sin(qa4) * rr4)); }
+        scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts4),
+          new THREE.LineBasicMaterial({ color: 0x6f7fb0, transparent: true, opacity: .22 })));
+      }
+    }
+    if (T.layout === 'rings'){
+      var orbMat = new THREE.LineBasicMaterial({ color: T.shell, transparent: true, opacity: .28 });
+      [420, 600, 780].forEach(function(rr){
+        var pp = [];
+        for (var qi = 0; qi <= 128; qi++){ var qa = qi / 128 * Math.PI * 2; pp.push(new THREE.Vector3(Math.cos(qa) * rr, 0, Math.sin(qa) * rr)); }
+        scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pp), orbMat));
+      });
+    }
+    if (T.layout === 'cube'){
+      var boxGeo = new THREE.BoxGeometry(660, 660, 660);
+      var edgeGeo = new THREE.EdgesGeometry(boxGeo);
+      scene.add(new THREE.LineSegments(edgeGeo,
+        new THREE.LineBasicMaterial({ color: T.shell, transparent: true, opacity: .85 })));
+      scene.add(new THREE.LineSegments(edgeGeo,
+        new THREE.LineBasicMaterial({ color: T.cat, transparent: true, opacity: .28, blending: THREE.AdditiveBlending })));
+      // 8 个角的实体角块
+      var cornerGeo = new THREE.BoxGeometry(34, 34, 34);
+      var cornerMat = new THREE.MeshStandardMaterial({ color: T.cat, emissive: T.cat, emissiveIntensity: .8,
+        roughness: .25, metalness: .5, transparent: true, opacity: .92 });
+      for (var cx2 = 0; cx2 < 2; cx2++) for (var cy2 = 0; cy2 < 2; cy2++) for (var cz2 = 0; cz2 < 2; cz2++){
+        var cb = new THREE.Mesh(cornerGeo, cornerMat);
+        cb.position.set((cx2 ? 1 : -1) * 330, (cy2 ? 1 : -1) * 330, (cz2 ? 1 : -1) * 330);
+        scene.add(cb);
+      }
+      // 每个角到地面的落线
+      var dropMat = new THREE.LineBasicMaterial({ color: T.shell, transparent: true, opacity: .28 });
+      for (var dx2 = 0; dx2 < 2; dx2++) for (var dz2 = 0; dz2 < 2; dz2++){
+        var x2 = (dx2 ? 1 : -1) * 330, z2 = (dz2 ? 1 : -1) * 330;
+        scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(x2, -330, z2), new THREE.Vector3(x2, -430, z2)]), dropMat));
+      }
+    }
+    if (T.grid){
+      var gh = new THREE.GridHelper(2400, 48, T.shell, T.shell);
+      gh.material.transparent = true; gh.material.opacity = .18; gh.position.y = T.layout === 'cube' ? -430 : -260;
+      scene.add(gh);
+    }
+
+    var TAG_TEX = T.wire ? null : cloudTex(42, '#' + new THREE.Color(T.tag).multiplyScalar(.45).getHexString(), '#' + new THREE.Color(T.tag).lerp(new THREE.Color(0xffffff), .55).getHexString());
+    var catGeo = new THREE.SphereGeometry(1, 30, 20);
+    var wireCatGeo = new THREE.SphereGeometry(1, 10, 6);
+    var wireTagGeo = new THREE.SphereGeometry(1, 8, 5);
+    var tagGeo = new THREE.SphereGeometry(1, 22, 14);
+    var cats = D.categories;
+    var catPos = {}, catIdx = 0;
+
+    cats.forEach(function(c, ci){
+      var pos = layoutPos(T, ci, cats.length);
+      catPos[c.id] = pos;
+      var pl = PLANETS[ci % PLANETS.length];
+      var mat;
+      var catRadius = (T.solar ? 20 : 18) + Math.sqrt(c.count) * (T.solar ? 1.45 : 1.4);
+      if (T.planet){
+        var realTex = realPlanetTex(ci);
+        var tintC = new THREE.Color(pl.base); tintC.offsetHSL(0, .18, -.02);
+        var pTex = realTex || planetTex(pl, ci + 1);
+        mat = new THREE.MeshStandardMaterial({ map: pTex, color: tintC,
+          roughness: .62, metalness: .04, emissive: new THREE.Color(pl.base), emissiveIntensity: .08,
+          bumpMap: pTex, bumpScale: .35 });
+      } else if (T.fancy){
+        mat = new THREE.MeshStandardMaterial({ map: cloudTex(ci + 1, '#0f2a55', '#4f9ae0'), color: 0xcfe4ff,
+          emissive: 0x143a6b, emissiveIntensity: .28, roughness: .34, metalness: .35 });
+      } else if (T.wire){
+        mat = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(T.cat), emissive: new THREE.Color(T.cat),
+          emissiveIntensity: T.glow ? .3 : .12, roughness: .3, metalness: .25, wireframe: true });
+      } else {
+        var cbase = '#' + new THREE.Color(T.cat).multiplyScalar(.3).getHexString();
+        var clight = '#' + new THREE.Color(T.cat).lerp(new THREE.Color(0xffffff), .5).getHexString();
+        mat = new THREE.MeshStandardMaterial({ map: cloudTex(ci + 1, cbase, clight), color: 0xffffff,
+          emissive: new THREE.Color(T.cat), emissiveIntensity: T.light ? .06 : .32,
+          roughness: .38, metalness: T.light ? .05 : .3 });
+      }
+      var mesh = new THREE.Mesh(T.wire ? wireCatGeo : catGeo, mat);
+      c._pl = pl;
+      mesh.position.copy(pos); mesh.scale.setScalar(catRadius); mesh.userData.baseS = catRadius; mesh.userData.hs = 1;
+      if ((T.atmo || T.fancy) && !T.solar){
+        var atmoCol = T.fancy ? 0x8fd8ff : T.atmo;
+        var atmo = new THREE.Mesh(catGeo, atmoMaterial(atmoCol, T.fancy ? 3.0 : 2.6, T.light ? .5 : .9));
+        atmo.position.copy(pos); atmo.scale.setScalar(catRadius * 1.22);
+        scene.add(atmo);
+        // 内芯光晕已移除
+        var halo = new THREE.Mesh(new THREE.RingGeometry(catRadius * 1.45, catRadius * 1.6, 96),
+          new THREE.MeshBasicMaterial({ color: 0x8fd8ff, side: THREE.DoubleSide, transparent: true,
+            opacity: .5, blending: THREE.AdditiveBlending, depthWrite: false }));
+        halo.position.copy(pos);
+        halo.rotation.set(Math.PI / 2.3, Math.random() * 3, Math.random() * 3);
+        scene.add(halo); halos.push(halo);
+      }
+      mesh.userData = { kind: 'cat', node: c };
+      scene.add(mesh); catObjs.push(mesh);
+
+      if (T.name === '玻璃'){
+        var sh = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0x2d4a78, transparent: true,
+          depthWrite: false, opacity: .16 }));
+        sh.position.copy(pos).add(new THREE.Vector3(0, -catRadius * 1.05, 0));
+        sh.scale.set(catRadius * 2.6, catRadius * 1.1, 1);
+        scene.add(sh);
+      }
+      // 彩色光晕已移除（用户反馈像假的）
+      addLabel(c.name, c.count + ' 条', pos.clone().add(new THREE.Vector3(0, (18 + Math.sqrt(c.count) * 1.4) * 1.6 + 14, 0)), 'cat', 1.0, true);
+      if (T.name === '蓝图'){
+        var rr2 = catRadius * 1.9;
+        var tickMat = new THREE.LineBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: .55 });
+        for (var ti = 0; ti < 4; ti++){
+          var ang = ti * Math.PI / 2 + Math.PI / 4;
+          var p1 = new THREE.Vector3(Math.cos(ang) * rr2, Math.sin(ang) * rr2, 0).add(pos);
+          var p2 = new THREE.Vector3(Math.cos(ang) * rr2 * 1.28, Math.sin(ang) * rr2 * 1.28, 0).add(pos);
+          scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p1, p2]), tickMat));
+        }
+        var circlePts = [];
+        for (var ci2 = 0; ci2 <= 90; ci2++){
+          var ca = ci2 / 90 * Math.PI * 2;
+          circlePts.push(new THREE.Vector3(Math.cos(ca) * rr2, Math.sin(ca) * rr2, 0).add(pos));
+        }
+        scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(circlePts),
+          new THREE.LineBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: .35 })));
+      }
+      if (T.planet && T.layout === 'rings' && c.count > 250){
+        var R = (18 + Math.sqrt(c.count) * 1.4);
+        var ringGeo = new THREE.RingGeometry(R * 1.6, R * 2.5, 96);
+        var ringMat = new THREE.MeshBasicMaterial({ color: 0xf0dfae, side: THREE.DoubleSide,
+          transparent: true, opacity: .34 });
+        var ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.rotation.x = Math.PI / 2.25;
+        ringMesh.position.copy(pos);
+        scene.add(ringMesh);
+      }
+
+      // 标签
+      var tags = c.tags.map(function(id){ return byTag[id]; }).filter(Boolean);
+      var tagGroup = new THREE.Group();
+      tagGroup.position.copy(pos);
+      tags.forEach(function(t, ti){
+        var tR = (T.solar ? 118 : 72) + Math.sqrt(tags.length) * (T.solar ? 15 : 9);
+        var tp = fib(ti, tags.length, tR, false);
+        tp.x += rnd(tR * .22); tp.y += rnd(tR * .42); tp.z += rnd(tR * .22);
+        var sz = 7 + Math.sqrt(t.count) * 1.9;
+        var tagMat;
+        var moonTex = null;
+        if (T.solar && window.PLANET_DATA && window.PLANET_DATA.moon && !window.__MOON_TEX){
+          window.__MOON_TEX = new THREE.TextureLoader().load(window.PLANET_DATA.moon);
+        }
+        if (T.solar) moonTex = window.__MOON_TEX || null;
+        if (moonTex){
+          var moonPal = [0x9aa0aa, 0xb9b4a8, 0xa8b2c6, 0xc4a894, 0x9fb0a6, 0xd8d2c6, 0x8e94a2];
+          var hsh = 0, tid = String(t.id);
+          for (var hi = 0; hi < tid.length; hi++) hsh = (hsh * 31 + tid.charCodeAt(hi)) % 9973;
+          var moonTint = new THREE.Color(moonPal[hsh % moonPal.length]);
+          moonTint.lerp(new THREE.Color(pl.base), hsh % 3 === 0 ? .45 : .18);
+          moonTint.offsetHSL(0, .06, 0);
+          tagMat = new THREE.MeshStandardMaterial({ map: moonTex, color: moonTint,
+            roughness: .84, metalness: .02, emissive: new THREE.Color(pl.base), emissiveIntensity: .12 });
+        } else if (TAG_TEX){
+          var tagTint = new THREE.Color(T.fancy ? pl.light : (T.planet ? pl.light : T.tag)).lerp(new THREE.Color(0xbfd8ff), .6);
+          tagMat = new THREE.MeshStandardMaterial({ map: TAG_TEX, color: tagTint,
+            emissive: new THREE.Color(pl.base), emissiveIntensity: .38, roughness: .38, metalness: .32 });
+        } else {
+          tagMat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(T.planet ? pl.light : T.tag), emissive: new THREE.Color(T.planet ? pl.base : T.tag),
+            emissiveIntensity: T.planet ? .18 : (T.glow ? .3 : .08), roughness: T.planet ? .75 : .32,
+            metalness: T.planet ? .05 : .22, wireframe: !!T.wire });
+        }
+        var tm = new THREE.Mesh(T.wire ? wireTagGeo : tagGeo, tagMat);
+        tm.position.copy(tp); tm.scale.setScalar(sz * (T.solar ? 1.18 : 1));
+        tm.userData = { kind: 'tag', node: t, cat: c };
+        tagGroup.add(tm); tagObjs.push(tm);
+        tm.userData.base = tp.clone(); tm.userData.ph = Math.random() * 6.28; tagAnims.push(tm);
+        if (T.glow) {
+          var tg = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: new THREE.Color(T.fancy ? tagTint : T.tag),
+            transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: T.fancy ? .38 : .3 }));
+          tg.scale.setScalar(sz * (T.fancy ? 4.8 : 4.0)); tg.position.copy(tp); tagGroup.add(tg);
+        }
+        var dir = tp.clone().normalize();
+        (function(grp, lp, dv, size){
+          addLabel(t.name, t.count + '', function(){
+            return grp.localToWorld(lp.clone()).add(dv.clone().multiplyScalar(size + 14));
+          }, 'tag', .82, t.count >= 22);
+        })(tagGroup, tp, dir, sz);
+        t._world = tp.clone().add(pos);
+      });
+      if (T.solar && PLANET_KEYS[ci % PLANET_KEYS.length] !== 'saturn'){
+        var rIn = catRadius * 1.5, rOut = catRadius * (1.95 + Math.random() * .35);
+        var ringM = new THREE.Mesh(new THREE.RingGeometry(rIn, rOut, 96),
+          new THREE.MeshBasicMaterial({ map: ringTexShared, side: THREE.DoubleSide, transparent: true,
+            opacity: .30, depthWrite: false }));
+        ringM.rotation.x = Math.PI / 2 - (.25 + Math.random() * .45);
+        ringM.position.copy(pos);
+        ringM.userData.follow = mesh;
+        scene.add(ringM); planetRings.push(ringM);
+      }
+      if (T.solar && PLANET_KEYS[ci % PLANET_KEYS.length] === 'saturn'){
+        var ringInner = catRadius * 1.35, ringOuter = catRadius * 2.25;
+        var rcv = document.createElement('canvas'); rcv.width = 256; rcv.height = 8;
+        var rgx = rcv.getContext('2d');
+        for (var rx = 0; rx < 256; rx++){
+          var a6 = .15 + Math.abs(Math.sin(rx * .18)) * .45;
+          if (rx < 12 || (rx > 96 && rx < 112) || rx > 236) a6 = 0;
+          rgx.fillStyle = 'rgba(232,214,176,' + a6.toFixed(2) + ')';
+          rgx.fillRect(rx, 0, 1, 8);
+        }
+        var ringTex2 = new THREE.CanvasTexture(rcv);
+        ringTex2.wrapS = THREE.RepeatWrapping;
+        var satRing = new THREE.Mesh(new THREE.RingGeometry(ringInner, ringOuter, 128),
+          new THREE.MeshBasicMaterial({ map: ringTex2, side: THREE.DoubleSide, transparent: true,
+            opacity: .92, depthWrite: false }));
+        satRing.rotation.x = Math.PI / 2 - 0.42;
+        satRing.position.copy(pos);
+        mesh.userData.satRing = satRing;
+        scene.add(satRing); saturns.push(satRing);
+      }
+      if (T.solar){
+        var trailN = 36, tGeo = new THREE.BufferGeometry();
+        var tPos = new Float32Array(trailN * 3);
+        for (var ti2 = 0; ti2 < trailN; ti2++){ tPos[ti2 * 3] = pos.x; tPos[ti2 * 3 + 1] = pos.y; tPos[ti2 * 3 + 2] = pos.z; }
+        tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3));
+        var tMat = new THREE.LineBasicMaterial({ color: new THREE.Color(pl.light),
+          transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false });
+        var trail = new THREE.Line(tGeo, tMat);
+        trail.frustumCulled = false;
+        scene.add(trail);
+        trails.push({ line: trail, geo: tGeo, arr: tPos, n: trailN, mesh: mesh });
+      }
+      if (T.solar){
+        var rrS = pos.length();
+        solarOrbits.push({ mesh: mesh, group: tagGroup, r: rrS, y: pos.y, a: Math.atan2(pos.z, pos.x), baseA: (ci / cats.length) * Math.PI * 2, ph: Math.random() * 6.2832, w: .006 });
+      }
+      tagGroup.userData.spin = 0.02 + Math.random() * 0.03;
+      tagGroup.userData.phase = Math.random() * 6.28;
+      scene.add(tagGroup); groups.push(tagGroup);
+    });
+
+    // 连线：大类 → 标签
+    var lp = [], lc = [], linkCurves = [];
+    var ec = T.edge;
+    D.tags.forEach(function(t){
+      if (T.solar) return;
+      var c = catPos[t.cat]; if (!c || !t._world) return;
+      var mid = c.clone().add(t._world).multiplyScalar(.5);
+      var dir = t._world.clone().sub(c);
+      var side = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize().multiplyScalar(dir.length() * .16);
+      if (!isFinite(side.x)) side.set(0, 0, 0);
+      mid.add(side);
+      var curve = new THREE.QuadraticBezierCurve3(c.clone(), mid, t._world.clone());
+      linkCurves.push(curve);
+      var pts = curve.getPoints(16);
+      for (var i = 0; i < pts.length - 1; i++){
+        lp.push(pts[i].x, pts[i].y, pts[i].z, pts[i + 1].x, pts[i + 1].y, pts[i + 1].z);
+        var f1 = .2 + .8 * (i / (pts.length - 1)), f2 = .2 + .8 * ((i + 1) / (pts.length - 1));
+        lc.push(ec[0] * f1, ec[1] * f1, ec[2] * f1, ec[0] * f2, ec[1] * f2, ec[2] * f2);
+      }
+    });
+    var lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3));
+    lg.setAttribute('color', new THREE.Float32BufferAttribute(lc, 3));
+    scene.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true,
+      opacity: T.light ? .3 : .5, blending: T.glow ? THREE.AdditiveBlending : THREE.NormalBlending })));
+
+    // 条目尘埃
+    var ps = [], cs = [], base = new THREE.Color(T.item);
+    D.items.forEach(function(it){
+      var home = null, spread = 40;
+      if (it.tags.length && byTag[it.tags[0]] && byTag[it.tags[0]]._world) {
+        home = byTag[it.tags[0]]._world; spread = 34;
+      } else {
+        var c = catPos[it.cat]; if (!c) return; home = c; spread = 110;
+      }
+      var v = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(Math.pow(Math.random(), .6) * spread);
+      ps.push(home.x + v.x, home.y + v.y, home.z + v.z);
+      var f = .55 + Math.random() * .45;
+      cs.push(base.r * f, base.g * f, base.b * f);
+    });
+    if (T.layout === 'spiral'){
+      for (var di = 0; di < 900; di++){
+        var arm = di % 3, tt = Math.pow(Math.random(), .7);
+        var aa2 = tt * Math.PI * 2.2 + arm * (Math.PI * 2 / 3) + rnd(.12);
+        var rr3 = 300 + tt * 620 + rnd(40);
+        ps.push(Math.cos(aa2) * rr3, rnd(90), Math.sin(aa2) * rr3);
+        var cc2 = new THREE.Color(0xd9a7ff);
+        cs.push(cc2.r * .7, cc2.g * .7, cc2.b * .7);
+      }
+    }
+    var pg = new THREE.BufferGeometry();
+    pg.setAttribute('position', new THREE.Float32BufferAttribute(ps, 3));
+    pg.setAttribute('color', new THREE.Float32BufferAttribute(cs, 3));
+    dust = new THREE.Points(pg, new THREE.PointsMaterial({ size: T.light ? 6 : 9, map: GT, vertexColors: true,
+      transparent: true, depthWrite: false, opacity: .95, sizeAttenuation: true,
+      blending: T.glow ? THREE.AdditiveBlending : THREE.NormalBlending }));
+    scene.add(dust);
+
+    // 远景星点
+    var starPos = [];
+    for (var si = 0; si < 1600; si++){
+      var sv = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(2200 + Math.random() * 900);
+      starPos.push(sv.x, sv.y, sv.z);
+    }
+    var sg = new THREE.BufferGeometry();
+    sg.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+    scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: T.light ? 0x9fb4d0 : 0x9dc0ff,
+      size: 3.2, sizeAttenuation: true, transparent: true, opacity: T.light ? .35 : .55, depthWrite: false })));
+
+    if (T.fancy){
+      var cloudCols = [0x2a6bb8, 0x1f4f8a, 0x3f8ad8, 0x6f4fa8, 0x2f8f9f];
+      for (var ni = 0; ni < 9; ni++){
+        var cs = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: cloudCols[ni % cloudCols.length],
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .07 }));
+        var dir2 = new THREE.Vector3(rnd(1), rnd(1), rnd(1)).normalize().multiplyScalar(1500 + Math.random() * 900);
+        cs.position.copy(dir2);
+        var sc = 1200 + Math.random() * 1200;
+        cs.scale.set(sc, sc * .8, 1);
+        scene.add(cs);
+      }
+    }
+    if (T.layout === 'sphere' && T.name === '极光'){
+      for (var au = 0; au < 3; au++){
+        var cw = 2600, ch = 1500, cv2 = document.createElement('canvas');
+        cv2.width = 512; cv2.height = 256;
+        var ag = cv2.getContext('2d');
+        var grad = ag.createLinearGradient(0, 0, 0, 256);
+        grad.addColorStop(0, 'rgba(120,255,210,0)');
+        grad.addColorStop(.45, 'rgba(110,240,200,.55)');
+        grad.addColorStop(.75, 'rgba(150,200,255,.35)');
+        grad.addColorStop(1, 'rgba(150,200,255,0)');
+        ag.fillStyle = grad; ag.fillRect(0, 0, 512, 256);
+        for (var wv = 0; wv < 26; wv++){
+          ag.globalAlpha = .06 + Math.random() * .1;
+          ag.fillStyle = 'rgba(180,255,235,1)';
+          var wx = Math.random() * 512;
+          ag.fillRect(wx, 0, 2 + Math.random() * 10, 256);
+        }
+        ag.globalAlpha = 1;
+        var at = new THREE.CanvasTexture(cv2);
+        var plane = new THREE.Mesh(new THREE.PlaneGeometry(cw, ch),
+          new THREE.MeshBasicMaterial({ map: at, transparent: true, opacity: .5, depthWrite: false,
+            blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+        plane.position.set(rnd(500), 150 + au * 120, -1500 - au * 260);
+        plane.rotation.z = rnd(.2);
+        scene.add(plane);
+      }
+    }
+    if (T.max){
+      var coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xb08cff,
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .55 }));
+      coreGlow.scale.setScalar(620); scene.add(coreGlow); maxCore = coreGlow;
+      [700, 830, 960].forEach(function(rr, ri){
+        var torus = new THREE.Mesh(new THREE.TorusGeometry(rr, 1.6, 8, 160),
+          new THREE.MeshBasicMaterial({ color: ri === 0 ? 0x9f7bff : (ri === 1 ? 0x6ee7ff : 0xff6ae0),
+            transparent: true, opacity: .45, blending: THREE.AdditiveBlending, depthWrite: false }));
+        torus.rotation.set(ri * .7 + .3, ri * .5, 0);
+        scene.add(torus); maxRings.push(torus);
+      });
+    }
+    if (T.max && linkCurves.length){
+      for (var pi = 0; pi < Math.min(linkCurves.length, 26); pi++){
+        var psp = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xa8e8ff, transparent: true,
+          blending: THREE.AdditiveBlending, depthWrite: false, opacity: .95 }));
+        psp.scale.setScalar(26);
+        scene.add(psp);
+        pulses.push({ sp: psp, curve: linkCurves[pi], t: Math.random(), speed: .12 + Math.random() * .22 });
+      }
+    }
+    if (T.solar){
+      for (var mi = 0; mi < 7; mi++){
+        var TN = 16;
+        var mt = new THREE.Sprite(new THREE.SpriteMaterial({ map: GT, color: 0xdce9ff,
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0, fog: false }));
+        mt.scale.setScalar(34);
+        scene.add(mt);
+        var tg2 = new THREE.BufferGeometry();
+        var ta = new Float32Array(TN * 3);
+        tg2.setAttribute('position', new THREE.BufferAttribute(ta, 3));
+        var tl = new THREE.Line(tg2, new THREE.LineBasicMaterial({ color: 0xa8ccff, transparent: true,
+          opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+        tl.frustumCulled = false;
+        scene.add(tl);
+        meteors.push({ sp: mt, line: tl, geo: tg2, arr: ta, n: TN,
+          wait: Math.random() * 6, t: 0, started: false,
+          x: rnd(2400), y: 600 + rnd(500), z: rnd(1800) - 900,
+          vx: -900 - Math.random() * 700, vy: -320 - Math.random() * 220 });
+      }
+    }
+    if (THREE.EffectComposer && THREE.UnrealBloomPass){
+      composer = new THREE.EffectComposer(renderer);
+      composer.addPass(new THREE.RenderPass(scene, camera));
+      bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight),
+        T.solar ? 0.5 : 0.42, 0.5, T.light ? 0.85 : 0.82);
+      composer.addPass(bloomPass);
+
+      // 体积光（径向模糊太阳方向的亮部）
+      var RaysShader = {
+        uniforms: { tDiffuse: { value: null }, uSun: { value: new THREE.Vector2(.5, .5) },
+          uIntensity: { value: .62 }, uDecay: { value: .94 } },
+        vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        fragmentShader: 'uniform sampler2D tDiffuse; uniform vec2 uSun; uniform float uIntensity; uniform float uDecay;' +
+          'varying vec2 vUv;' +
+          'void main(){ vec2 dir = (uSun - vUv) * 0.32; float acc = 0.0; float w = 1.0; vec2 uv = vUv;' +
+          ' for (int i = 0; i < 14; i++){ uv += dir; vec3 s = texture2D(tDiffuse, uv).rgb;' +
+          ' acc += max(0.0, dot(s, vec3(0.299, 0.587, 0.114)) - 0.55) * w; w *= uDecay; }' +
+          ' vec3 base = texture2D(tDiffuse, vUv).rgb;' +
+          ' gl_FragColor = vec4(base + vec3(1.0, 0.82, 0.55) * acc * uIntensity * 0.06, 1.0); }'
+      };
+      raysPass = new THREE.ShaderPass(RaysShader);
+      composer.addPass(raysPass);
+
+      // 调色：暗角 + 色差 + 颗粒
+      var GradeShader = {
+        uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) },
+          uVig: { value: .8 }, uGrain: { value: .045 }, uAber: { value: .0016 } },
+        vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        fragmentShader: 'uniform sampler2D tDiffuse; uniform float uTime, uVig, uGrain, uAber; uniform vec2 uRes;' +
+          'varying vec2 vUv;' +
+          'void main(){ vec2 d = vUv - .5; float r2 = dot(d, d);' +
+          ' float ab = uAber * (0.6 + r2 * 3.2);' +
+          ' vec3 col; col.r = texture2D(tDiffuse, vUv + d * ab).r;' +
+          ' col.g = texture2D(tDiffuse, vUv).g; col.b = texture2D(tDiffuse, vUv - d * ab).b;' +
+          ' float vig = smoothstep(0.92, 0.30, length(d) * 1.32);' +
+          ' col *= mix(1.0, vig, uVig);' +
+          ' float g = fract(sin(dot(vUv * uRes + uTime, vec2(12.9898, 78.233))) * 43758.5453);' +
+          ' col += (g - .5) * uGrain;' +
+          ' col = pow(max(col, 0.0), vec3(0.97));' +
+          ' gl_FragColor = vec4(col, 1.0); }'
+      };
+      gradePass = new THREE.ShaderPass(GradeShader);
+      composer.addPass(gradePass);
+    }
+    var ld = document.getElementById('loading');
+    if (ld){ requestAnimationFrame(function(){ setTimeout(function(){ ld.classList.add('off');
+      setTimeout(function(){ ld.style.display = 'none'; }, 700); }, 260); }); }
+    camera.position.set(0, 260, ORB.r);
+    camera.lookAt(0, 0, 0);
+  }
+
+  function spiralPos(i, n){
+    var arm = i % 3, t = i / n;
+    var a = t * Math.PI * 2.2 + arm * (Math.PI * 2 / 3);
+    var r = 300 + t * 620;
+    return new THREE.Vector3(Math.cos(a) * r, rnd(120), Math.sin(a) * r);
+  }
+
+  function addLabel(text, sub, pos, cls, scale, on){
+    var el = document.createElement('div');
+    el.className = 'lbl ' + cls;
+    el.innerHTML = text + (sub ? '<small>' + sub + '</small>' : '');
+    document.body.appendChild(el);
+    labelEls.push(el);
+    labels.push({ el: el, pos: (typeof pos === 'function') ? pos : pos.clone(), cls: cls, scale: scale, on: on, w: 0, h: 0 });
+  }
+
+  var flareEl = document.getElementById('flare');
+  var flareParts = flareEl ? flareEl.querySelectorAll(':scope > div') : [];
+  function updateFlare(){
+    if (!flareEl || !camera) return;
+    if (themeKey !== 'solar'){ flareEl.style.opacity = 0; return; }
+    var v = new THREE.Vector3(0, 0, 0).project(camera);
+    var inView = v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15;
+    if (!inView){ flareEl.style.opacity = 0; return; }
+    var sx = (v.x * .5 + .5) * innerWidth, sy = (-v.y * .5 + .5) * innerHeight;
+    var cx = innerWidth / 2, cy = innerHeight / 2;
+    flareEl.style.transform = 'translate(' + sx + 'px,' + sy + 'px)';
+    var d = Math.hypot(sx - cx, sy - cy) / Math.max(innerWidth, innerHeight);
+    flareEl.style.opacity = Math.max(0, 1 - d * 1.25) * .9;
+    for (var i = 0; i < flareParts.length; i++){
+      var p = flareParts[i];
+      if (!i){ continue; }
+      var k = (i % 4) * .55 + .35;
+      var gx = (cx - sx) * k, gy = (cy - sy) * k;
+      p.style.transform = 'translate(-50%,-50%) translate(' + gx + 'px,' + gy + 'px)';
+    }
+  }
+
+  var fpsAcc = 0, fpsN = 0, lastAdapt = 0, quality = 2;
+  function adaptQuality(dt){
+    fpsAcc += dt; fpsN++;
+    if (fpsAcc < 1.5) return;
+    var fps = fpsN / fpsAcc; fpsAcc = 0; fpsN = 0;
+    if (fps < 34 && quality > 0){
+      quality--;
+      if (quality === 1 && raysPass) raysPass.enabled = false;
+      if (quality === 0){ if (bloomPass) bloomPass.enabled = false; if (starField) starField.visible = false; }
+    }
+  }
+
+  function placeLabels(){
+    var v = new THREE.Vector3(), boxes = [];
+    scene.updateMatrixWorld(true);
+    var list = labels.slice().sort(function(a, b){ return (b.scale - a.scale); });
+    for (var i = 0; i < list.length; i++){
+      var L = list[i];
+      scene.updateMatrixWorld(true);
+      var base = (typeof L.pos === 'function') ? L.pos() : L.pos;
+      v.copy(base).project(camera);
+      if (v.z > 1 || !L.on) { L.el.style.opacity = '0'; continue; }
+      var x = (v.x * .5 + .5) * innerWidth, y = (-v.y * .5 + .5) * innerHeight;
+      L.w = L.el.offsetWidth; L.h = L.el.offsetHeight;
+      if (!L.w) { L.el.style.opacity = '0'; continue; }
+      var box = { l: x - L.w / 2, r: x + L.w / 2, t: y - L.h / 2, b: y + L.h / 2 };
+      var clash = boxes.some(function(b){ return !(box.r < b.l || box.l > b.r || box.b < b.t || box.t > b.b); });
+      if (clash) { L.el.style.opacity = '0'; continue; }
+      boxes.push(box);
+      L.el.style.left = x + 'px'; L.el.style.top = y + 'px';
+      L.el.style.opacity = String(L.scale >= 1 ? .95 : .8);
+    }
+  }
+
+  function tick(t){
+    requestAnimationFrame(tick);
+    var sec = (t || 0) / 1000;
+    if (flyTo){
+      flyTo.t = Math.min(1, flyTo.t + 0.02);
+      var e2 = 1 - Math.pow(1 - flyTo.t, 3);
+      var dTheta = ((flyTo.theta - ORB.theta + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+      ORB.theta += dTheta * e2 * 0.12;
+      ORB.phi += (flyTo.phi - ORB.phi) * e2 * 0.12;
+      ORB.r += (flyTo.r - ORB.r) * e2 * 0.12;
+      if (flyTo.t >= 1) flyTo = null;
+    }
+    if (hoverCat){
+      for (var hc = 0; hc < catObjs.length; hc++){
+        var co = catObjs[hc];
+        var tgt = (co === hoverCat) ? 1.14 : 1.0;
+        var cur = co.userData.hs || 1;
+        co.userData.hs = cur + (tgt - cur) * .12;
+        if (co.userData.baseS) co.scale.setScalar(co.userData.baseS * co.userData.hs);
+      }
+    }
+    if (ORB.auto && !drag) ORB.theta += 0.00042;
+    var sp = Math.sin(ORB.phi), cp = Math.cos(ORB.phi);
+    camera.position.set(ORB.r * sp * Math.sin(ORB.theta), ORB.r * cp, ORB.r * sp * Math.cos(ORB.theta));
+    camera.lookAt(0, 0, 0);
+    for (var i = 0; i < groups.length; i++){
+      var g = groups[i];
+      g.rotation.y = sec * g.userData.spin + g.userData.phase;
+      g.position.y = Math.sin(sec * .5 + g.userData.phase) * 12;
+    }
+    if (catObjs.length){
+      for (var k = 0; k < catObjs.length; k++){
+        var m = catObjs[k], s = 1 + Math.sin(sec * .9 + k) * .04;
+        if (THEMES[themeKey].fancy) m.rotation.y = sec * .12 + k;
+        m.scale.setScalar(m.userData.baseR ? m.userData.baseR * s : m.scale.x);
+      }
+    }
+    for (var h = 0; h < halos.length; h++){ halos[h].rotation.z += 0.004 + h * 0.0004; }
+    for (var q = 0; q < tagAnims.length; q++){
+      var tb = tagAnims[q];
+      tb.position.y = tb.userData.base.y + Math.sin(sec * 1.1 + tb.userData.ph) * 4;
+      tb.rotation.y = sec * .25 + tb.userData.ph;
+    }
+    for (var mo = 0; mo < meteors.length; mo++){
+      var M = meteors[mo];
+      if (M.wait > 0){
+        M.wait -= 0.016;
+        M.sp.material.opacity = 0; M.line.material.opacity = 0;
+        continue;
+      }
+      M.t += 0.016;
+      if (M.t > 3.2){
+        M.t = 0; M.wait = 1.5 + Math.random() * 5; M.started = false;
+        M.x = rnd(2400); M.y = 600 + rnd(500); M.z = rnd(1800) - 900;
+        M.vx = -900 - Math.random() * 700; M.vy = -320 - Math.random() * 220;
+        continue;
+      }
+      M.x += M.vx * 0.016; M.y += M.vy * 0.016;
+      M.sp.position.set(M.x, M.y, M.z);
+      if (!M.started){
+        M.started = true;
+        for (var q5 = 0; q5 < M.n; q5++){ M.arr[q5 * 3] = M.x; M.arr[q5 * 3 + 1] = M.y; M.arr[q5 * 3 + 2] = M.z; }
+      }
+      for (var q6 = M.n - 1; q6 > 0; q6--){
+        M.arr[q6 * 3] = M.arr[(q6 - 1) * 3];
+        M.arr[q6 * 3 + 1] = M.arr[(q6 - 1) * 3 + 1];
+        M.arr[q6 * 3 + 2] = M.arr[(q6 - 1) * 3 + 2];
+      }
+      M.arr[0] = M.x; M.arr[1] = M.y; M.arr[2] = M.z;
+      M.geo.attributes.position.needsUpdate = true;
+      var fade3 = Math.sin(Math.min(1, M.t / 3.2) * Math.PI);
+      M.sp.material.opacity = fade3 * .95;
+      M.line.material.opacity = fade3 * .55;
+      M.sp.scale.setScalar(26 + fade3 * 22);
+    }
+    if (sunMesh){
+      sunMesh.material.uniforms.uTime.value = sec;
+      sunMesh.rotation.y = sec * .05;
+      if (sunCorona){ sunCorona.material.uniforms.uTime.value = sec; sunCorona.rotation.y = -sec * .02; }
+      for (var hs = 0; hs < sunHalos.length; hs++){
+        sunHalos[hs].scale.setScalar((hs ? 980 : 560) * (1 + Math.sin(sec * 1.1 + hs) * .04));
+      }
+      for (var ff = 0; ff < sunFlares.length; ff++){
+        var F = sunFlares[ff];
+        var k2 = (Math.sin(sec * F.spd + F.ph) * .5 + .5);
+        F.sp.position.copy(F.dir).multiplyScalar(94 + k2 * 26);
+        F.sp.scale.setScalar(46 + k2 * 96);
+        F.sp.material.opacity = .10 + k2 * .55;
+      }
+      for (var pp = 0; pp < prominences.length; pp++){
+        var pr2 = prominences[pp];
+        pr2.material.opacity = .55 + Math.sin(sec * 1.6 + pp * 2.1) * .3;
+        pr2.rotation.z += .0006 + pp * .0002;
+      }
+    }
+    adaptQuality(0.016);
+    if (fpsAcc > .5){
+      var fEl = document.getElementById('fps');
+      if (fEl && fEl.style.display !== 'none'){
+        fEl.textContent = 'FPS ' + Math.round(fpsN / fpsAcc) + ' · 图元 ' + renderer.info.render.triangles;
+        fpsAcc = 0; fpsN = 0;
+      }
+    }
+    if (domeMesh) domeMesh.rotation.y = sec * 0.0045;
+    if (starField) starField.material.uniforms.uTime.value = sec;
+    if (spiralNeb){
+      spiralNeb.material.rotation += 0.00035;
+      spiralNeb.material.opacity = .55 + Math.sin(sec * .6) * .08;
+    }
+    if (blackHole){
+      var BH = blackHole;
+      // 塌陷闪光
+      BH.nextFlare -= dt;
+      if (BH.nextFlare <= 0 && BH.flare <= 0){ BH.flare = 2.4; BH.nextFlare = 18 + Math.random() * 20; }
+      if (BH.flare > 0) BH.flare -= dt;
+      var fk = BH.flare > 0 ? Math.sin(Math.min(1, (2.4 - BH.flare) / 2.4) * Math.PI) : 0;
+      BH.disk.material.opacity = .95 + fk * .05;
+      BH.disk.scale.setScalar(1 + fk * .22);
+      BH.glow.scale.setScalar(680 * (1 + fk * .5));
+      BH.photon.material.opacity = .95 + fk * .05;
+      if (BH.parts){
+        var pd = BH.parts.dat, pa = BH.parts.arr;
+        for (var kp = 0; kp < pd.length; kp++){
+          var P3 = pd[kp];
+          P3.r -= P3.s * dt;
+          P3.a += (P3.w * 26 / Math.max(60, P3.r)) * dt;
+          if (P3.r < 95){ P3.r = 120 + Math.random() * 320; P3.a = Math.random() * 6.2832; }
+          pa[kp * 3] = Math.cos(P3.a) * P3.r;
+          pa[kp * 3 + 1] = Math.sin(P3.a) * P3.r * .16;
+          pa[kp * 3 + 2] = Math.sin(P3.a) * P3.r;
+        }
+        BH.parts.geo.attributes.position.needsUpdate = true;
+        BH.parts.pts.material.opacity = .55 + fk * .35;
+      }
+      blackHole.disk.rotation.z += 0.0022;
+      blackHole.photon.rotation.z -= 0.002;
+      blackHole.glow.material.opacity = .45 + Math.sin(sec * 1.3) * .12;
+    }
+    if (typeof lastSec === 'undefined') lastSec = sec;
+    var dt = Math.min(.05, Math.max(.001, sec - lastSec)); lastSec = sec;
+
+    for (var ww = 0; ww < wanderers.length; ww++){
+      var W = wanderers[ww];
+      W.mesh.position.addScaledVector(W.vel, dt);
+      W.mesh.rotation.y += W.spin;
+      if (W.mesh.position.length() > 2600){
+        W.vel.multiplyScalar(-1);
+      }
+    }
+    for (var so = 0; so < solarOrbits.length; so++){
+      var O = solarOrbits[so];
+      O.a = O.baseA + sec * O.w + Math.sin(sec * .13 + O.ph) * .05;
+      O.mesh.position.set(Math.cos(O.a) * O.r, O.y, Math.sin(O.a) * O.r);
+      O.mesh.rotation.y += 0.004;
+      O.group.position.copy(O.mesh.position);
+      if (O.mesh.userData.satRing) O.mesh.userData.satRing.position.copy(O.mesh.position);
+    }
+    for (var pr3 = 0; pr3 < planetRings.length; pr3++){
+      var RR = planetRings[pr3];
+      if (RR.userData.follow) RR.position.copy(RR.userData.follow.position);
+      RR.rotation.z += .0015;
+    }
+    for (var ee = 0; ee < eruptions.length; ee++){
+      var E = eruptions[ee];
+      if (!E.mesh.visible){
+        E.wait -= dt;
+        if (E.wait <= 0){
+          E.mesh.visible = true; E.t = 0;
+          E.mesh.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+        }
+      } else {
+        E.t += dt;
+        var pp2 = E.t / E.dur;
+        E.mesh.material.opacity = Math.sin(Math.min(1, pp2) * Math.PI) * .95;
+        E.mesh.scale.setScalar(100 + pp2 * 26);
+        if (pp2 >= 1){ E.mesh.visible = false; E.wait = 8 + Math.random() * 16; }
+      }
+    }
+
+    if (fireball){
+      var F2 = fireball;
+      if (!F2.active){
+        F2.wait -= dt;
+        if (F2.wait <= 0){
+          F2.active = true; F2.t = 0; F2.started = false;
+          F2.sp.material.opacity = 1;
+        }
+      } else {
+        F2.t += dt;
+        if (!F2.started){
+          F2.started = true;
+          var st = new THREE.Vector3(rnd(1600), 400 + Math.random() * 500, rnd(1400) - 600);
+          F2.sp.position.copy(st);
+          F2.vel.set(-260 - Math.random() * 180, -180 - Math.random() * 120, rnd(120)).normalize().multiplyScalar(900 + Math.random() * 500);
+          for (var q3 = 0; q3 < F2.n; q3++){ F2.arr[q3 * 3] = st.x; F2.arr[q3 * 3 + 1] = st.y; F2.arr[q3 * 3 + 2] = st.z; }
+        }
+        F2.sp.position.addScaledVector(F2.vel, dt);
+        for (var q4 = F2.n - 1; q4 > 0; q4--){
+          F2.arr[q4 * 3] = F2.arr[(q4 - 1) * 3];
+          F2.arr[q4 * 3 + 1] = F2.arr[(q4 - 1) * 3 + 1];
+          F2.arr[q4 * 3 + 2] = F2.arr[(q4 - 1) * 3 + 2];
+        }
+        F2.arr[0] = F2.sp.position.x; F2.arr[1] = F2.sp.position.y; F2.arr[2] = F2.sp.position.z;
+        F2.geo.attributes.position.needsUpdate = true;
+        var fade2 = Math.sin(Math.min(1, F2.t / F2.dur) * Math.PI);
+        F2.sp.material.opacity = fade2;
+        F2.line.material.opacity = fade2 * .55;
+        F2.sp.scale.setScalar(70 + fade2 * 60);
+        if (F2.t >= F2.dur){ F2.active = false; F2.wait = 12 + Math.random() * 18; F2.sp.material.opacity = 0; F2.line.material.opacity = 0; }
+      }
+    }
+
+    for (var tr = 0; tr < trails.length; tr++){
+      var T0 = trails[tr], a0 = T0.arr, nn = T0.n;
+      for (var q2 = nn - 1; q2 > 0; q2--){
+        a0[q2 * 3] = a0[(q2 - 1) * 3];
+        a0[q2 * 3 + 1] = a0[(q2 - 1) * 3 + 1];
+        a0[q2 * 3 + 2] = a0[(q2 - 1) * 3 + 2];
+      }
+      a0[0] = T0.mesh.position.x; a0[1] = T0.mesh.position.y; a0[2] = T0.mesh.position.z;
+      T0.geo.attributes.position.needsUpdate = true;
+    }
+    for (var mr = 0; mr < maxRings.length; mr++){
+      maxRings[mr].rotation.z += 0.0025 + mr * 0.0012;
+      maxRings[mr].rotation.x += 0.0008;
+    }
+    if (maxCore){
+      var ck = 1 + Math.sin(sec * 1.6) * .08;
+      maxCore.scale.setScalar(620 * ck);
+      maxCore.material.opacity = .45 + Math.sin(sec * 1.6) * .12;
+      ORB.r = 1750 + Math.sin(sec * .35) * 90;
+    }
+    for (var pu = 0; pu < pulses.length; pu++){
+      var P0 = pulses[pu];
+      P0.t += P0.speed * 0.016;
+      if (P0.t > 1) P0.t = 0;
+      P0.curve.getPoint(P0.t, P0.sp.position);
+      var sc0 = 18 + Math.sin(P0.t * Math.PI) * 16;
+      P0.sp.scale.setScalar(sc0);
+    }
+    placeLabels();
+    if (raysPass && sunMesh){
+      var sv = new THREE.Vector3(0, 0, 0).project(camera);
+      var on = sv.z < 1 && Math.abs(sv.x) < 1.6 && Math.abs(sv.y) < 1.6;
+      raysPass.uniforms.uSun.value.set(sv.x * .5 + .5, sv.y * .5 + .5);
+      raysPass.uniforms.uIntensity.value = on ? .62 : 0;
+    }
+    if (gradePass){
+      gradePass.uniforms.uTime.value = sec;
+      gradePass.uniforms.uRes.value.set(innerWidth, innerHeight);
+    }
+    updateFlare();
+    if (composer) composer.render(); else renderer.render(scene, camera);
+  }
+
+  // ---- 交互 ----
+  var el;
+  function bind(){
+    el = renderer.domElement;
+    el.addEventListener('pointerdown', function(e){ drag = true; ORB.auto = false; lx = e.clientX; ly = e.clientY; el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointerup', function(e){ drag = false; try { el.releasePointerCapture(e.pointerId); } catch(x){} });
+    el.addEventListener('pointermove', function(e){
+      pointer.x = (e.clientX / innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / innerHeight) * 2 + 1;
+      if (drag){
+        ORB.theta -= (e.clientX - lx) * .005;
+        ORB.phi = Math.max(.25, Math.min(Math.PI - .25, ORB.phi - (e.clientY - ly) * .0045));
+        lx = e.clientX; ly = e.clientY;
+        tip.style.opacity = 0;
+      } else hover(e);
+    });
+    el.addEventListener('wheel', function(e){ e.preventDefault();
+      ORB.r = Math.max(520, Math.min(3200, ORB.r * (1 + Math.sign(e.deltaY) * .08))); }, { passive: false });
+    el.addEventListener('click', function(e){ pick(e, true); });
+    addEventListener('resize', function(){ camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); if (composer) composer.setSize(innerWidth, innerHeight); if (bloomPass) bloomPass.resolution.set(innerWidth, innerHeight); });
+  }
+
+  function hit(e){
+    raycaster.setFromCamera(new THREE.Vector2((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1), camera);
+    var objs = raycaster.intersectObjects(catObjs.concat(tagObjs), false)[0];
+    return objs ? objs.object.userData : null;
+  }
+  function hover(e){
+    var h = hit(e);
+    if (h){
+      tip.textContent = h.kind === 'cat' ? (h.node.name + ' · ' + h.node.count + ' 条') : (h.node.name + ' · ' + h.node.count + ' 条');
+      tip.style.left = (e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 16) + 'px'; tip.style.opacity = 1;
+      el.style.cursor = 'pointer';
+    } else { tip.style.opacity = 0; el.style.cursor = drag ? 'grabbing' : 'grab'; }
+  }
+  function pick(e, show){
+    var h = hit(e); if (!h || !show) return;
+    var panel = document.getElementById('panel');
+    if (h.kind === 'cat'){
+      document.getElementById('pt').textContent = h.node.name;
+      document.getElementById('pc').textContent = h.node.count + ' 条 · 这一大类';
+      var ids = [];
+      h.node.tags.forEach(function(tid){ (byTag[tid].items || []).forEach(function(id){ if (ids.indexOf(id) < 0) ids.push(id); }); });
+      fill(ids);
+    } else {
+      document.getElementById('pt').textContent = h.node.name;
+      document.getElementById('pc').textContent = h.node.count + ' 条 · 标签';
+      fill(h.node.items || []);
+    }
+    panel.style.display = 'block';
+  }
+  function fill(ids){
+    var ol = document.getElementById('pl');
+    ol.innerHTML = ids.slice(0, 60).map(function(id){
+      var it = items[id]; if (!it) return '';
+      return '<li data-img="assets/卡片-' + id + '-无标签-v3.webp"><a href="index.html#e-' + id + '">' + String(it.t).replace(/</g, '&lt;') + '</a></li>';
+    }).join('') + (ids.length > 60 ? '<li style="opacity:.6">……还有 ' + (ids.length - 60) + ' 条</li>' : '');
+  }
+  document.getElementById('px').onclick = function(){ document.getElementById('panel').style.display = 'none'; };
+
+  // 双击行星 → 镜头飞过去
+  var flyTo = null;
+  host.addEventListener('dblclick', function(e){
+    var r = host.getBoundingClientRect();
+    pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    var hit = raycaster.intersectObjects(catObjs, false)[0];
+    if (!hit) return;
+    var p = hit.object.position;
+    var rr = Math.sqrt(p.x * p.x + p.z * p.z);
+    flyTo = { theta: Math.atan2(p.x, p.z), phi: Math.max(.5, Math.min(1.5, 1.05)),
+      r: Math.max(420, rr + 260), t: 0 };
+    ORB.auto = false;
+  });
+  addEventListener('keydown', function(e){
+    if (e.key === 'Escape' || e.key === 'r' || e.key === 'R'){
+      flyTo = { theta: ORB.theta, phi: 1.16, r: 1750, t: 0 };
+      ORB.auto = true;
+    }
+  });
+
+  (function(){
+    var fb = document.getElementById('fs-btn'), fx = document.getElementById('fs-exit');
+    if (!fb || !fx) return;
+    function on(){ document.documentElement.classList.add('fs-mode'); }
+    function off(){ document.documentElement.classList.remove('fs-mode'); }
+    function enter(){
+      var el = document.documentElement;
+      var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if (req){
+        try {
+          var pr = req.call(el);
+          if (pr && pr.then) { pr.then(on).catch(function(){ document.documentElement.classList.add('pseudo-fs'); on(); }); }
+          else { on(); }
+        } catch(e){ document.documentElement.classList.add('pseudo-fs'); on(); }
+      } else {
+        document.documentElement.classList.add('pseudo-fs'); on();
+      }
+    }
+    function exit(){
+      if (document.exitFullscreen) { document.exitFullscreen().catch(function(){}); }
+      else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+      document.documentElement.classList.remove('pseudo-fs');
+      off();
+    }
+    fb.onclick = enter;
+    fx.onclick = exit;
+    document.addEventListener('fullscreenchange', function(){
+      if (document.fullscreenElement) on(); else off();
+    });
+    addEventListener('keydown', function(e){
+      if (e.key === 'f' || e.key === 'F'){ if (!document.documentElement.classList.contains('fs-mode')) enter(); }
+      if (e.key === 'Escape') exit();
+    });
+  })();
+
+  // 「!」说明面板
+  (function(){
+    var btn = document.getElementById('info-btn'), panel = document.getElementById('info-panel');
+    if (!btn || !panel) return;
+    btn.onclick = function(e){ e.stopPropagation(); panel.classList.toggle('on'); };
+    var close = document.getElementById('ip-close');
+    if (close) close.onclick = function(){ panel.classList.remove('on'); };
+    var ib = document.getElementById('ip-bloom');
+    if (ib) ib.onclick = function(){
+      if (!bloomPass) return;
+      bloomPass.enabled = !bloomPass.enabled;
+      ib.textContent = '辉光：' + (bloomPass.enabled ? '开' : '关');
+    };
+  })();
+
+  // H 隐藏文字 / F 帧率 / 空格暂停
+  (function(){
+    var hidden = false;
+    addEventListener('keydown', function(e){
+      if (e.key === 'h' || e.key === 'H'){
+        hidden = !hidden;
+        document.documentElement.classList.toggle('no-labels', hidden);
+      }
+      if (e.key === 'f' || e.key === 'F'){
+        var fp = document.getElementById('fps');
+        if (fp) fp.style.display = fp.style.display === 'none' ? 'block' : 'none';
+      }
+      if (e.code === 'Space'){
+        e.preventDefault();
+        ORB.auto = !ORB.auto;
+      }
+    });
+  })();
+
+  (function(){
+    var bt = document.getElementById('bloom-toggle'); if (!bt) return;
+    bt.onclick = function(){
+      if (!bloomPass) return;
+      bloomPass.enabled = !bloomPass.enabled;
+      bt.textContent = '辉光：' + (bloomPass.enabled ? '开' : '关');
+    };
+  })();
+
+  // 面板里悬停某一条 → 直接弹那张卡片大图
+  (function(){
+    var pv = document.getElementById('imgprev'); if (!pv) return;
+    var pvImg = pv.querySelector('img'), pl = document.getElementById('pl');
+    function place(x, y){
+      var w = pv.offsetWidth, h = pv.offsetHeight;
+      var lx = x - w - 22, ly = y - h / 2;
+      if (lx < 10) lx = x + 24;
+      if (ly < 66) ly = 66;
+      if (ly + h > innerHeight - 12) ly = innerHeight - h - 12;
+      pv.style.transform = 'translate(' + lx + 'px,' + ly + 'px)';
+    }
+    pl.addEventListener('mouseover', function(e){
+      var li = e.target.closest('li'); if (!li || !li.dataset.img) return;
+      pvImg.src = encodeURI(li.dataset.img);
+      pv.classList.add('on');
+      place(e.clientX, e.clientY);
+    });
+    pl.addEventListener('mousemove', function(e){
+      if (!pv.classList.contains('on')) return;
+      place(e.clientX, e.clientY);
+    });
+    pl.addEventListener('mouseout', function(e){
+      if (e.target.closest('li')) pv.classList.remove('on');
+    });
+    pl.addEventListener('scroll', function(){ pv.classList.remove('on'); });
+  })();
+
+  // ---- 风格按钮 ----
+  var box = document.getElementById('themes');
+  Object.keys(THEMES).forEach(function(k){
+    var T = THEMES[k];
+    var b = document.createElement('button');
+    b.className = 'sw'; b.title = T.name; b.setAttribute('aria-label', T.name);
+    b.style.background = T.bg;
+    b.setAttribute('aria-pressed', String(k === themeKey));
+    b.innerHTML = '<span>' + T.name + '</span>';
+    b.onclick = function(){
+      themeKey = k;
+      try { localStorage.setItem('hltb-nebula-theme', k); } catch(e){}
+      [].forEach.call(box.children, function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      tagObjs = []; catObjs = []; groups = []; halos = []; tagAnims = []; pulses = []; maxRings = []; maxCore = null; solarOrbits = []; blackHole = null; meteors = []; spiralNeb = null; saturns = []; planetRings = [], eruptions = [], fireball = null; sunMesh = null; sunCorona = null; prominences = []; sunHalos = [], sunFlares = [], wanderers = [], ship = null, shipFlames = [], lastSec = 0; trails = [];
+      build(); bind();
+    };
+    box.appendChild(b);
+  });
+
+  build();
+  bind();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
