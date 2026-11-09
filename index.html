@@ -124,10 +124,13 @@
   .tool-sub-head b { font-size:14.5px; color:#0f172a; }
   .tool-sub-head span { font-size:12px; color:#94a3b8; }
   .tool-group h4 { font-size:20px; color:#0f172a; margin:0 0 10px; font-weight:800; display:flex; align-items:center; gap:10px; }
-  .plat-badge { display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; padding:4px 10px; border-radius:999px; letter-spacing:.5px; }
-  .plat-badge.pc { background:#2563eb; }
-  .plat-badge.mobile { background:#0e9f6e; }
-  .plat-badge.watch { background:#7c3aed; }
+  .plat-ico { width:38px; height:38px; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .plat-ico svg { width:21px; height:21px; }
+  .plat-ico.pc { background:#e0edff; color:#2563eb; }
+  .plat-ico.mobile { background:#dcfce7; color:#0e9f6e; }
+  .plat-ico.watch { background:#ede9fe; color:#7c3aed; }
+  .plat-txt { font-size:20px; font-weight:800; color:#0f172a; }
+  .plat-sub { font-size:13.5px; font-weight:600; color:#64748b; }
   .tool-card.tool-shot { grid-column:1 / -1; align-items:center; padding:12px 14px; }
   .tool-card.tool-shot img.tshot { width:220px; height:96px; border-radius:10px; object-fit:cover; display:block; flex:0 0 auto; border:1px solid #e2e8f0; }
   .tool-card.tool-shot b { font-size:14px; }
@@ -136,7 +139,7 @@
   .tool-card img { width:34px; height:34px; border-radius:9px; display:block; flex:0 0 auto; }
   .tool-card b { display:block; font-size:12.5px; color:#0f172a; }
   .tool-card span { display:block; margin-top:2px; font-size:10.5px; color:#94a3b8; line-height:1.5; }
-  .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+  .svc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:24px; }
   .svc-card { border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; background:#fbfdff; }
   .svc-card b { font-size:14px; color:#0f172a; }
   .svc-card p { margin-top:8px; font-size:12.5px; color:#64748b; line-height:1.75; min-height:66px; }
@@ -688,7 +691,7 @@
           <div class="pp-thumbs">
             <button type="button" class="pp-th on" data-big="assets/intel-shot1.jpg" data-kind="browser" data-cap="重点情报" data-desc="首页这一列的重点"><img src="assets/intel-shot1.jpg" alt="主界面"><span>重点情报</span></button>
             <button type="button" class="pp-th" data-big="assets/intel-shot2.jpg" data-kind="browser" data-cap="关键词" data-desc="这一周情报在关注什么"><img src="assets/intel-shot2.jpg" alt="流水线"><span>关键词</span></button>
-            <button type="button" class="pp-th" data-big="assets/intel-shot3.jpg" data-kind="browser" data-cap="汇聚图" data-desc="万千信息汇成下一步"><img src="assets/intel-shot3.jpg" alt="数据面板"><span>汇聚图</span></button>
+            <button type="button" class="pp-th" data-big="assets/intel-shot3.jpg" data-kind="browser" data-cap="最热仓库" data-desc="GitHub 最近 30 天最热项目"><img src="assets/intel-shot3.jpg" alt="最热仓库"><span>最热仓库</span></button>
           </div>
         </div>
         <div class="pp-info">
@@ -751,8 +754,8 @@
     <div class="prog-list">
       <div class="prog-row"><div class="pr-name">电商运营系统</div><div class="pr-bar dev"><span style="width:60%"></span></div><em class="badge dev">开发中 60%</em></div>
       <div class="prog-row"><div class="pr-name">AI 个人工作台</div><div class="pr-bar dev"><span style="width:75%"></span></div><em class="badge dev">开发中 75%</em></div>
-      <div class="prog-row"><div class="pr-name">OpCity 数据库</div><div class="pr-bar dev"><span style="width:85%"></span></div><em class="badge dev">开发中 85%</em></div>
       <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar dev"><span style="width:85%"></span></div><em class="badge dev">开发中 85%</em></div>
+      <div class="prog-row"><div class="pr-name">Obsidian 数据库</div><div class="pr-bar dev"><span style="width:95%"></span></div><em class="badge dev">开发中 95%</em></div>
       <div class="prog-row"><div class="pr-name">飞书知识库</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">个人网页</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">高性价比人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
@@ -910,16 +913,16 @@
     </div>
     <div class="tool-groups">
       <div class="tool-group">
-        <h4><span class="plat-badge pc">电脑</span>干活的地方</h4>
+        <h4><span class="plat-ico pc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8 21h8M12 16.5V21"/></svg></span><span class="plat-txt">电脑端</span><span class="plat-sub">干活的地方</span></h4>
         <p class="tool-reason">按「AI 执行 → 图像视频 → 知识效率 → 采集电商 → 浏览器/系统/远程」排，从产出到环境。</p>
-        <div class="tool-sub"><div class="tool-sub-head"><b>AI Agent / 写代码</b><span>替我干活、写脚本、改工作台</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-claudecode.png" alt="Claude Code"><div><b>Claude Code</b><span>长任务 / 复杂改代码</span></div></div><div class="tool-card"><img src="assets/ftool-codex.png" alt="Codex"><div><b>Codex</b><span>写代码 / 改工作台</span></div></div><div class="tool-card"><img src="assets/ftool-grok.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X / 问 AI</span></div></div><div class="tool-card"><img src="assets/ftool-workbuddy.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>派活 / 对话式工作流</span></div></div><div class="tool-card"><img src="assets/ftool-deepseekharness.png" alt="DeepSeek Harness"><div><b>DeepSeek Harness</b><span>AI 干活 / 自动化</span></div></div><div class="tool-card"><img src="assets/ftool-hermes.png" alt="Hermes Agent"><div><b>Hermes Agent</b><span>长任务 / 多步执行</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>图像 / 视频</b><span>出图、出片、剪片</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-comfyui.png" alt="ComfyUI"><div><b>ComfyUI</b><span>AI 绘图工作流</span></div></div><div class="tool-card"><img src="assets/ftool-jimeng.png" alt="即梦 / Seedance"><div><b>即梦 / Seedance</b><span>AI 视频画面</span></div></div><div class="tool-card"><img src="assets/ftool-nanobanana.png" alt="Nano Banana"><div><b>Nano Banana</b><span>图片生成 / 修图</span></div></div><div class="tool-card"><img src="assets/ftool-jianying.png" alt="剪映"><div><b>剪映</b><span>视频剪辑</span></div></div><div class="tool-card"><img src="assets/ftool-eagle.png" alt="Eagle"><div><b>Eagle</b><span>素材图管理</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>知识 / 效率</b><span>资料落盘、秒找、画结构</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-obsidian.png" alt="Obsidian"><div><b>Obsidian</b><span>本地知识库 / 素材池</span></div></div><div class="tool-card"><img src="assets/ftool-notion.png" alt="Notion"><div><b>Notion</b><span>记录 / 数据库</span></div></div><div class="tool-card"><img src="assets/ftool-mindmanager.png" alt="MindManager"><div><b>MindManager</b><span>思维导图</span></div></div><div class="tool-card"><img src="assets/ftool-everything.png" alt="everything"><div><b>everything</b><span>文件秒搜</span></div></div><div class="tool-card tool-shot"><img class="tshot" src="assets/tool-shot-shandianshuo.jpg" alt="闪电说"><div><b>闪电说</b><span>语音输入</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>采集 / 电商</b><span>抓数据、存素材</span></div><div class="tools-grid"><div class="tool-card tool-shot"><img class="tshot" src="assets/tool-shot-octopus.jpg" alt="八爪鱼 RPA"><div><b>八爪鱼 RPA</b><span>网页采集</span></div></div><div class="tool-card"><img src="assets/ftool-baidupan.png" alt="百度网盘"><div><b>百度网盘</b><span>素材 / 备份</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>浏览器 / 系统 / 远程</b><span>环境、远程、备份</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-chrome.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>网页 / 后台</span></div></div><div class="tool-card"><img src="assets/ftool-ego.png" alt="Ego (lite) 浏览器"><div><b>Ego (lite) 浏览器</b><span>自动化浏览器</span></div></div><div class="tool-card"><img src="assets/ftool-uuremote.png" alt="网易 UU 远程"><div><b>网易 UU 远程</b><span>远程电脑</span></div></div><div class="tool-card"><img src="assets/ftool-itab.png" alt="iTab 新标签页"><div><b>iTab 新标签页</b><span>浏览器起始页</span></div></div><div class="tool-card"><img src="assets/ftool-aomei.png" alt="傲梅备份"><div><b>傲梅备份</b><span>系统 / 数据备份</span></div></div></div></div>
+        <div class="tool-sub"><div class="tool-sub-head"><b>AI Agent / 写代码</b><span>替我干活、写脚本、改工作台</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-claudecode.png" alt="Claude Code"><div><b>Claude Code</b><span>长任务 / 复杂改代码</span></div></div><div class="tool-card"><img src="assets/ftool-codex.png" alt="Codex"><div><b>Codex</b><span>写代码 / 改工作台</span></div></div><div class="tool-card"><img src="assets/ftool-grok.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X / 问 AI</span></div></div><div class="tool-card"><img src="assets/ftool-workbuddy.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>派活 / 对话式工作流</span></div></div><div class="tool-card"><img src="assets/ftool-deepseekharness.png" alt="DeepSeek Harness"><div><b>DeepSeek Harness</b><span>AI 干活 / 自动化</span></div></div><div class="tool-card"><img src="assets/ftool-hermes.png" alt="Hermes Agent"><div><b>Hermes Agent</b><span>长任务 / 多步执行</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>图像 / 视频</b><span>出图、出片、剪片</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-comfyui.png" alt="ComfyUI"><div><b>ComfyUI</b><span>AI 绘图工作流</span></div></div><div class="tool-card"><img src="assets/ftool-jimeng.png" alt="即梦 / Seedance"><div><b>即梦 / Seedance</b><span>AI 视频画面</span></div></div><div class="tool-card"><img src="assets/ftool-nanobanana.png" alt="Nano Banana"><div><b>Nano Banana</b><span>图片生成 / 修图</span></div></div><div class="tool-card"><img src="assets/ftool-jianying.png" alt="剪映"><div><b>剪映</b><span>视频剪辑</span></div></div><div class="tool-card"><img src="assets/ftool-eagle.png" alt="Eagle"><div><b>Eagle</b><span>素材图管理</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>知识 / 效率</b><span>资料落盘、秒找、画结构</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-obsidian.png" alt="Obsidian"><div><b>Obsidian</b><span>本地知识库 / 素材池</span></div></div><div class="tool-card"><img src="assets/ftool-notion.png" alt="Notion"><div><b>Notion</b><span>记录 / 数据库</span></div></div><div class="tool-card"><img src="assets/ftool-mindmanager.png" alt="MindManager"><div><b>MindManager</b><span>思维导图</span></div></div><div class="tool-card"><img src="assets/ftool-everything.png" alt="everything"><div><b>everything</b><span>文件秒搜</span></div></div><div class="tool-card"><img src="assets/ftool-shandianshuo.png" alt="闪电说"><div><b>闪电说</b><span>语音输入</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>采集 / 电商</b><span>抓数据、存素材</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-octopus.png" alt="八爪鱼 RPA"><div><b>八爪鱼 RPA</b><span>网页采集</span></div></div><div class="tool-card"><img src="assets/ftool-baidupan.png" alt="百度网盘"><div><b>百度网盘</b><span>素材 / 备份</span></div></div></div></div><div class="tool-sub"><div class="tool-sub-head"><b>浏览器 / 系统 / 远程</b><span>环境、远程、备份</span></div><div class="tools-grid"><div class="tool-card"><img src="assets/ftool-chrome.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>网页 / 后台</span></div></div><div class="tool-card"><img src="assets/ftool-ego.png" alt="Ego (lite) 浏览器"><div><b>Ego (lite) 浏览器</b><span>自动化浏览器</span></div></div><div class="tool-card"><img src="assets/ftool-uuremote.png" alt="网易 UU 远程"><div><b>网易 UU 远程</b><span>远程电脑</span></div></div><div class="tool-card"><img src="assets/ftool-itab.png" alt="iTab 新标签页"><div><b>iTab 新标签页</b><span>浏览器起始页</span></div></div><div class="tool-card"><img src="assets/ftool-aomei.png" alt="傲梅备份"><div><b>傲梅备份</b><span>系统 / 数据备份</span></div></div></div></div>
       </div>
       <div class="tool-group">
-        <h4><span class="plat-badge mobile">手机</span>随时看、派活</h4>
+        <h4><span class="plat-ico mobile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span><span class="plat-txt">手机端</span><span class="plat-sub">随时看、派活</span></h4>
         <div class="tools-grid"><div class="tool-card"><img src="assets/ftool-workbuddy_m.png" alt="WorkBuddy"><div><b>WorkBuddy</b><span>手机上派活</span></div></div><div class="tool-card"><img src="assets/ftool-grok_m.png" alt="Grok Bot"><div><b>Grok Bot</b><span>看 X 一手信息</span></div></div><div class="tool-card"><img src="assets/ftool-claude_m.png" alt="Claude"><div><b>Claude</b><span>手机上问 Claude</span></div></div><div class="tool-card"><img src="assets/ftool-codex_m.png" alt="Codex"><div><b>Codex</b><span>手机上查进度</span></div></div><div class="tool-card"><img src="assets/ftool-x.png" alt="X"><div><b>X</b><span>看海外一手消息</span></div></div><div class="tool-card"><img src="assets/ftool-youtube.png" alt="YouTube"><div><b>YouTube</b><span>学东西 / 看同行</span></div></div><div class="tool-card"><img src="assets/ftool-github.png" alt="GitHub"><div><b>GitHub</b><span>看开源 / 管仓库</span></div></div><div class="tool-card"><img src="assets/ftool-wubianji.png" alt="无边记 / 无边际"><div><b>无边记 / 无边际</b><span>白板 / 随手画</span></div></div><div class="tool-card"><img src="assets/ftool-notion_m.png" alt="Notion"><div><b>Notion</b><span>手机上看资料</span></div></div><div class="tool-card"><img src="assets/ftool-dida.png" alt="滴答清单"><div><b>滴答清单</b><span>待办 / 提醒</span></div></div><div class="tool-card"><img src="assets/ftool-grow.png" alt="GROW"><div><b>GROW</b><span>习惯打卡</span></div></div><div class="tool-card"><img src="assets/ftool-doubao.png" alt="豆包语音"><div><b>豆包语音</b><span>语音输入</span></div></div><div class="tool-card"><img src="assets/ftool-shortcuts.png" alt="快捷指令"><div><b>快捷指令</b><span>一键自动化</span></div></div><div class="tool-card"><img src="assets/ftool-dedao.png" alt="得到"><div><b>得到</b><span>听书 / 课程</span></div></div><div class="tool-card"><img src="assets/ftool-fanshu.png" alt="帆书"><div><b>帆书</b><span>听书</span></div></div><div class="tool-card"><img src="assets/ftool-podcast.png" alt="播客"><div><b>播客</b><span>听播客</span></div></div><div class="tool-card"><img src="assets/ftool-chrome_m.png" alt="Chrome 浏览器"><div><b>Chrome 浏览器</b><span>手机上查资料</span></div></div><div class="tool-card"><img src="assets/ftool-wacai.png" alt="挖财"><div><b>挖财</b><span>记账</span></div></div><div class="tool-card"><img src="assets/ftool-youzhiyouxing.png" alt="有知有行"><div><b>有知有行</b><span>投资学习</span></div></div></div>
       </div>
       <div class="tool-group">
-        <h4><span class="plat-badge watch">手表</span>抬手腕就看</h4>
+        <h4><span class="plat-ico watch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2.5"/><path d="M9 3h6M9 21h6"/></svg></span><span class="plat-txt">手表端</span><span class="plat-sub">抬手腕就看</span></h4>
         <div class="tools-grid"><div class="tool-card"><img src="assets/ftool-dida_w.png" alt="滴答清单"><div><b>滴答清单</b><span>抬手腕看今日</span></div></div><div class="tool-card"><img src="assets/ftool-grow_w.png" alt="GROW"><div><b>GROW</b><span>打卡 / 圆环</span></div></div><div class="tool-card"><img src="assets/ftool-wechat.png" alt="微信"><div><b>微信</b><span>手表上回消息</span></div></div><div class="tool-card"><img src="assets/ftool-qianniu.png" alt="千牛"><div><b>千牛</b><span>订单 / 客服提醒</span></div></div></div>
       </div>
     </div>
@@ -931,12 +934,13 @@
     <div class="sec-head">
       <div class="eyebrow2">Services</div>
       <h2>我能帮你做什么</h2>
-      <p>都是从自己生意里长出来的活，不是纸上谈兵。</p>
+      <p>都是从自己生意里长出来的活，只接能落地、能算账的；电商老板和企业团队优先。</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card"><b>AI 工作台搭建</b><p>把你的流程拆开接上 AI，从选题、生产到发布，一个人干一个团队的活。</p><a href="#message">聊聊 →</a></div>
-      <div class="svc-card"><b>电商内容代运营</b><p>选品、主图、短视频、多平台发布，按结果交付，不卖课。</p><a href="#message">聊聊 →</a></div>
-      <div class="svc-card"><b>AI 短视频批量生产</b><p>脚本、剪辑、八平台分发，一条片子多个平台同步跑。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>电商团队 AI 提效陪跑</b><p>上新慢、主图短视频做不过来、客服回不过来？先挑最痛的一个环节做样板，按省下的人天和产出算账，不做花架子。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>AI 内容流水线搭建 + 培训</b><p>选题、脚本、拍摄、剪辑、八平台发布，搭一条能自动跑的流水线；交付流程、模板、提示词，团队照着就能干。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>企业 AI 工作台 / 流程自动化</b><p>把表格、客服、投放、库存这些重复活拆开接成 Agent；老板少盯人，员工少做重复活，出错率也降下来。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>电商 AI 课程 / 企业内训</b><p>从老板到运营都能上手的实操课：选品、内容、投放、AI 工具一条线讲透；也做团队内训和陪跑营。</p><a href="#message">聊聊 →</a></div>
     </div>
   </div>
 </section>
@@ -949,20 +953,20 @@
     </div>
     <div class="about-rich about-reverse">
       <div class="timeline-mini about-timeline">
-        <div class="tl-row"><b>1986</b><span>出生于湖南怀化一个小镇</span></div>
+        <div class="tl-row"><b>1986</b><span>出生于湖南一小镇</span></div>
         <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学</span></div>
-        <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币，还帮人远程修电脑</span></div>
+        <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币、VIP 论坛会员，还帮人远程修电脑</span></div>
         <div class="tl-row"><b>2010</b><span>开个人工作室，帮人做网站、网络推广，游走在北京各个角落</span></div>
-        <div class="tl-row"><b>2014</b><span>结婚、当爸爸，同一年完成人生两件大事</span></div>
-        <div class="tl-row"><b>2015</b><span>去江苏东海做水晶饰品</span></div>
-        <div class="tl-row"><b>2016</b><span>搬到燕郊，女儿出生，家里多了个小甜心</span></div>
-        <div class="tl-row"><b>2017</b><span>卖春节用品和圣诞用品；燕郊的房子卖掉，拿到第一笔原始积累</span></div>
-        <div class="tl-row"><b>2018</b><span>正式搬家到浙江诸暨产业带</span></div>
-        <div class="tl-row"><b>2021</b><span>生意做大做强后，开始躺平</span></div>
-        <div class="tl-row"><b>2022</b><span>三十几岁开上大奔，感觉人生到达了巅峰</span></div>
-        <div class="tl-row"><b>2024</b><span>遇到变故，消沉了一阵，业绩腰斩；下半年开始用 AI</span></div>
-        <div class="tl-row"><b>2025</b><span>定居杭州；第一次坐游轮，出国去了日本、韩国</span></div>
-        <div class="tl-row"><b>2026</b><span>利用 AI 这次机会，把以前做不了的事情做成，再拼一把</span></div>
+        <div class="tl-row"><b>2014</b><span>结婚生子，完成人生两件大事</span></div>
+        <div class="tl-row"><b>2015</b><span>去江苏连云港东海县做水晶饰品生意</span></div>
+        <div class="tl-row"><b>2016</b><span>女儿出生，家里多了个甜心</span></div>
+        <div class="tl-row"><b>2017</b><span>卖掉燕郊的房子，开始卖春节和圣诞用品</span></div>
+        <div class="tl-row"><b>2018</b><span>搬家到浙江诸暨产业带，开始了卖袜子之旅</span></div>
+        <div class="tl-row"><b>2021</b><span>生意做大做强，渐渐开始躺平</span></div>
+        <div class="tl-row"><b>2022</b><span>手握大把现金流，开上大奔，感觉人生到达了巅峰</span></div>
+        <div class="tl-row"><b>2024</b><span>遇到变故，渐渐消沉，业绩腰斩；下半年开始接触 AI</span></div>
+        <div class="tl-row"><b>2025</b><span>定居杭州，第一次通过坐游轮出了趟国，去了韩国、日本</span></div>
+        <div class="tl-row"><b>2026</b><span>继续用 AI 把以前做不了的事做成，再拼一把</span></div>
       </div>
       
       <div class="about-visual">
@@ -1339,14 +1343,12 @@
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "怀化", year: "1986", desc: "出生于湖南怀化一个小镇", short: "出生", x: 52, y: 268 },
-    { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2009 做网络运维；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 运维 / 工作室", x: 196, y: 58 },
-    { city: "燕郊", year: "2016", desc: "搬到燕郊，成家、女儿出生", short: "成家 / 女儿出生", x: 236, y: 92 },
-    { city: "东海", year: "2015", desc: "去江苏东海做水晶饰品", short: "做水晶饰品", x: 330, y: 168 },
-    { city: "辽源", year: "2018", desc: "去东北辽源做袜业", short: "做袜业", x: 340, y: 22 },
-    { city: "诸暨", year: "2019", desc: "进浙江诸暨袜业产业带（2018 年刚去）", short: "进产业带", x: 380, y: 264 },
-    { city: "长沙", year: "2020", desc: "定居长沙，长沙买房；一年只能回去 7 天", short: "定居 / 买房", x: 92, y: 236 },
-    { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了日本、韩国", short: "定居 / 游轮出国", x: 452, y: 222 }
+    { city: "湖南小镇", year: "1986", desc: "出生于湖南一小镇", short: "出生", x: 52, y: 268 },
+    { city: "北京", year: "2005", desc: "坐绿皮火车来上学；2010 个人工作室，帮人做网站、推广，游走北京各个角落", short: "上学 / 工作室", x: 196, y: 58 },
+    { city: "东海", year: "2015", desc: "去江苏连云港东海县做水晶饰品生意", short: "水晶饰品", x: 330, y: 168 },
+    { city: "燕郊", year: "2016", desc: "女儿出生；2017 卖掉燕郊的房子", short: "女儿出生 / 卖房", x: 236, y: 92 },
+    { city: "诸暨", year: "2018", desc: "搬家到浙江诸暨产业带，开始卖袜子", short: "卖袜子", x: 380, y: 264 },
+    { city: "杭州", year: "2025", desc: "定居杭州；第一次坐游轮，出国去了韩国、日本", short: "定居 / 游轮出国", x: 452, y: 222 }
   ];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
