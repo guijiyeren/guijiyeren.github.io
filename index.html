@@ -107,11 +107,15 @@
   /* 公开项目（单项目卡） */
   .public-project { display:grid; grid-template-columns:1.12fr .88fr; gap:34px; margin-top:32px; background:#fff; border:1px solid var(--line); border-radius:22px; padding:24px; box-shadow:0 20px 50px rgba(15,23,42,.08); align-items:center; }
   .pp-media { min-width:0; }
-  .pp-main { border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:0 12px 30px rgba(15,23,42,.1); background:#0b1020; height:380px; display:flex; align-items:center; justify-content:center; }
-  .pp-main img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; object-fit:contain; }
+  .pp-main { border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:0 12px 30px rgba(15,23,42,.1); background:#0b1020; aspect-ratio:16/10; }
+  .pp-main img { width:100%; height:100%; display:block; object-fit:cover; object-position:top center; }
   .pp-thumbs { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; margin-top:10px; }
-  .pp-thumbs img { width:100%; height:86px; object-fit:contain; display:block; border-radius:10px; border:1px solid var(--line); background:#0b1020; cursor:pointer; opacity:.7; transition:.15s; }
-  .pp-thumbs img:hover, .pp-thumbs img.on { opacity:1; border-color:#bfdbfe; box-shadow:0 6px 16px rgba(37,99,235,.18); }
+  .pp-th { position:relative; padding:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#0b1020; cursor:pointer; display:block; transition:.15s; }
+  .pp-th img { width:100%; aspect-ratio:4/3; object-fit:cover; object-position:top center; display:block; opacity:.82; transition:.15s; }
+  .pp-th span { position:absolute; left:0; right:0; bottom:0; padding:12px 4px 4px; font-size:10px; line-height:1.2; color:#e2e8f0; text-align:center; background:linear-gradient(transparent,rgba(5,10,22,.85)); letter-spacing:.3px; }
+  .pp-th:hover img, .pp-th.on img { opacity:1; }
+  .pp-th:hover, .pp-th.on { border-color:#93c5fd; box-shadow:0 6px 16px rgba(37,99,235,.16); }
+  .pp-th.on { border-color:var(--blue); }
   .pp-info h3 { font-size:22px; margin:10px 0 8px; }
   .pp-info > p { font-size:13.5px; color:var(--ink2); line-height:1.85; }
   .pp-points { margin:14px 0 0; padding-left:18px; color:#475569; font-size:13px; line-height:1.9; }
@@ -246,7 +250,8 @@
     .hero .lead { font-size:15px; }
     .build-grid, .about-rich { grid-template-columns:1fr; }
     .public-project { grid-template-columns:1fr; padding:16px; gap:20px; }
-    .pp-thumbs img { height:70px; }
+    .pp-thumbs { grid-template-columns:1fr 1fr; }
+    .pp-main { aspect-ratio:4/3; }
     .shot-gallery { grid-template-columns:1fr 1fr; }
     .shot.big { grid-column:1 / -1; }
     .nav-links { display:none; }
@@ -363,10 +368,10 @@
       <div class="pp-media">
         <div class="pp-main"><img id="pp-main-img" src="assets/shot-desktop.png" alt="高性价比人生指南 · 行动版"></div>
         <div class="pp-thumbs">
-          <img class="on" data-big="assets/shot-desktop.png" src="assets/shot-desktop.png" alt="桌面版">
-          <img data-big="assets/shot-mobile.png" src="assets/shot-mobile.png" alt="手机版">
-          <img data-big="assets/shot-search.png" src="assets/shot-search.png" alt="搜索结果">
-          <img data-big="assets/shot-graph.png" src="assets/shot-graph.png" alt="3D 星图">
+          <button type="button" class="pp-th on" data-big="assets/shot-desktop.png"><img src="assets/shot-desktop.png" alt="电脑版"><span>电脑版</span></button>
+          <button type="button" class="pp-th" data-big="assets/shot-mobile.png"><img src="assets/shot-mobile.png" alt="手机版"><span>手机版</span></button>
+          <button type="button" class="pp-th" data-big="assets/shot-search.png"><img src="assets/shot-search.png" alt="搜索"><span>搜索</span></button>
+          <button type="button" class="pp-th" data-big="assets/shot-graph.png"><img src="assets/shot-graph.png" alt="3D 星图"><span>3D 星图</span></button>
         </div>
       </div>
       <div class="pp-info">
@@ -863,7 +868,7 @@
 <script>
 (function(){
   var main = document.getElementById('pp-main-img');
-  var thumbs = Array.from(document.querySelectorAll('.pp-thumbs img'));
+  var thumbs = Array.from(document.querySelectorAll('.pp-th'));
   if (!main || !thumbs.length) return;
   thumbs.forEach(function(t){
     t.addEventListener('click', function(){
