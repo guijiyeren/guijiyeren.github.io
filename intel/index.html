@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>情报中枢 · 展示版 · 硅基野人</title>
+<style>
+  :root { --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --blue:#2563eb; --bg:#f6f8fc; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
+  header { background:#0a0f1d; color:#e2e8f0; padding:22px 0 26px; }
+  .hd { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .hd img { width:38px; height:38px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
+  .hd h1 { font-size:20px; }
+  .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
+  .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
+  .notice { margin-top:14px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:12px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
+  .notice b { color:#fff; }
+  main { padding:28px 0 64px; }
+  .sec-head h2 { font-size:20px; letter-spacing:.5px; }
+  .sec-head p { margin-top:6px; font-size:13px; color:#64748b; line-height:1.8; }
+  .shots { display:flex; flex-direction:column; gap:16px; margin-top:22px; }
+  .shot { border-radius:14px; overflow:hidden; border:1px solid var(--line); background:#0b1020; box-shadow:0 16px 40px rgba(15,23,42,.12); }
+  .shot .bar { display:flex; align-items:center; gap:6px; height:26px; padding:0 10px; background:#f1f5f9; border-bottom:1px solid var(--line); }
+  .shot .bar i { width:7px; height:7px; border-radius:50%; background:#e2e8f0; display:block; }
+  .shot .bar em { font-style:normal; margin-left:8px; font-size:9.5px; color:#94a3b8; background:#fff; border-radius:4px; padding:2px 8px; }
+  .shot img { width:100%; display:block; }
+  .cap { margin-top:6px; font-size:11.5px; color:#94a3b8; text-align:center; }
+  .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:26px; }
+  .step { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .step b { display:inline-flex; width:22px; height:22px; border-radius:50%; background:#e0edff; color:#1d4ed8; font-size:12px; align-items:center; justify-content:center; }
+  .step h3 { font-size:14px; margin-top:10px; }
+  .step p { margin-top:5px; font-size:12px; color:#64748b; line-height:1.75; }
+  .cats { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .cats span { font-size:12px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:5px 12px; }
+  footer { border-top:1px solid var(--line); background:#fff; padding:22px 0; font-size:12px; color:#64748b; line-height:1.9; }
+  @media (max-width:820px){ .flow { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="hd">
+      <img src="../assets/logo.png" alt="硅基野人">
+      <h1>情报中枢<span>展示版</span></h1>
+      <a class="back" href="../">← 回首页</a>
+    </div>
+    <div class="notice"><b>这里只展示界面和流程，不展示任何真实情报数据、来源链接或采集结果。</b>这套系统是我个人每天在用的信息筛选工具：多路来源采集 → 去重 → 规则/AI 打分 → 重点线索和待验证区，最后出日报。页面截图经过脱敏处理。</div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="sec-head">
+    <h2>界面一览</h2>
+    <p>桌面端主界面、重点情报区和来源管理，按实际使用流程排列。</p>
+  </div>
+  <div class="shots">
+    <div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><em>情报中枢 · 主界面</em></div><img src="assets/intel-1.jpg" alt="情报中枢主界面"></div>
+      <div class="cap">主界面：多路来源汇成判断，左侧导航 / 中部信号流 / 右侧重点情报</div>
+    </div>
+    <div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><em>情报中枢 · 重点情报</em></div><img src="assets/intel-2.jpg" alt="重点情报区"></div>
+      <div class="cap">重点情报区：近 7 天有效内容，一手发布与待核实线索分开标记</div>
+    </div>
+    <div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><em>情报中枢 · 来源与结构</em></div><img src="assets/intel-3.jpg" alt="来源与结构"></div>
+      <div class="cap">来源管理：分类、有效性、更新节奏统一管理，失败/陈旧自动降级</div>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:34px">
+    <h2>怎么跑起来的</h2>
+    <p>四步流水线，每天自动跑，我只处理留下的信号。</p>
+  </div>
+  <div class="flow">
+    <div class="step"><b>1</b><h3>采集</h3><p>40+ 来源定时抓取，覆盖公众号、电商榜单、AI 工具和行业线索。</p></div>
+    <div class="step"><b>2</b><h3>去重</h3><p>标题/链接/相似度三层去重，同一个事件只留一条。</p></div>
+    <div class="step"><b>3</b><h3>打分</h3><p>规则 + AI 双通道打分：来源权重、时效、关键词、可验证性。</p></div>
+    <div class="step"><b>4</b><h3>输出</h3><p>重点情报进日报，未证实进待验证区，过期自动淘汰。</p></div>
+  </div>
+  <div class="cats"><span>电商</span><span>AI 工具</span><span>内容创作</span><span>商业线索</span><span>规则筛选</span><span>日报推送</span></div>
+
+  <footer style="margin-top:40px">
+    <div class="wrap">
+      情报中枢 · 展示版 · 仅展示界面与流程，不含真实数据。 · <a href="../" style="color:#2563eb">回首页</a> · <a href="../resource/" style="color:#2563eb">资源中心</a>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

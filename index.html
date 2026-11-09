@@ -105,9 +105,11 @@
   .build-card .b-tag.open { color:#166534; background:#dcfce7; }
 
   /* 公开项目（单项目卡） */
-  .public-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:30px; align-items:start; }
-  .public-project { display:flex; flex-direction:column; gap:18px; background:#fff; border:1px solid var(--line); border-radius:22px; padding:20px; box-shadow:0 20px 50px rgba(15,23,42,.08); }
-  .public-project .pp-stage { min-height:340px; }
+  .public-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:30px; align-items:stretch; }
+  .public-project { display:flex; flex-direction:column; gap:18px; background:#fff; border:1px solid var(--line); border-radius:22px; padding:20px; box-shadow:0 20px 50px rgba(15,23,42,.08); height:100%; }
+  .public-project .pp-stage { min-height:330px; }
+  .public-project.wide { grid-column:1 / -1; display:grid; grid-template-columns:1.05fr .95fr; gap:28px; align-items:center; }
+  .public-project.wide .pp-info { padding-right:6px; }
   .pp-media { min-width:0; }
   .pp-stage { position:relative; min-height:430px; border-radius:14px; border:1px solid var(--line); background:linear-gradient(180deg,#ffffff,#f2f6fc); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:22px 20px 18px; overflow:hidden; }
   .pp-stage::before { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(148,163,184,.18) 1px, transparent 1px); background-size:22px 22px; opacity:.6; }
@@ -223,7 +225,12 @@
   .tl-item span { font-size:12.5px; color:#475569; line-height:1.8; }
 
   /* 关注 · 更多入口 */
-  .about-line { display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin-top:16px; padding-top:12px; border-top:1px solid #e8eef7; }
+  .about-rich.about-reverse { display:grid; grid-template-columns:1.08fr .92fr; gap:32px; align-items:stretch; }
+  .about-timeline { padding:20px 26px; display:flex; flex-direction:column; justify-content:center; }
+  .about-timeline .tl-row { padding:11px 0; gap:16px; }
+  .about-timeline .tl-row b { flex:0 0 46px; font-size:13px; }
+  .about-timeline .tl-row span { font-size:13px; color:#475569; }
+  .about-line { display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin-top:22px; padding-top:14px; border-top:1px solid #e8eef7; }
   .about-line b { font-size:13px; color:#0f172a; }
   .about-line span { font-size:10.5px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:2px 8px; }
   .timeline-mini { background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 14px; box-shadow:0 10px 24px rgba(15,23,42,.05); }
@@ -354,7 +361,6 @@
     <div class="nav-links">
       <a href="#projects">公开项目</a><a href="#building">实战项目</a><a href="#kb">知识库</a><a href="#works">最新作品</a><a href="#about">关于我</a><a href="#follow">联系</a>
     </div>
-    <a class="nav-gh" href="https://github.com/guijiyeren" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
 </nav>
 
@@ -393,7 +399,7 @@
     <div class="sec-head">
       <div class="eyebrow2">Public Project</div>
       <h2>公开项目</h2>
-      <p>已经上线、谁都能打开用的项目。现在 2 个，做好一个放一个。</p>
+      <p>已经上线、谁都能打开用的项目。做好一个放一个，不藏私。</p>
     </div>
     <div class="public-grid">
       <article class="public-project">
@@ -424,7 +430,6 @@
           <div class="pp-links">
             <a class="btn btn-primary" href="./rensheng/">打开站点 →</a>
             <a class="btn btn-ghost-dark" href="./rensheng/graph.html">3D 星图</a>
-            <a class="link-a" href="https://github.com/guijiyeren/guijiyeren.github.io" target="_blank" rel="noopener">源码</a>
           </div>
         </div>
       </article>
@@ -434,9 +439,15 @@
           <div class="pp-stage">
             <div class="pp-frame browser">
               <div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/resource</em></div>
-              <img src="assets/res-shot.jpg" alt="资源中心 · 展示版">
+              <img id="res-main-img" src="assets/res-shot1.jpg" alt="资源中心 · 展示版">
             </div>
-            <div class="pp-cap"><b>资源中心 · 展示版</b><span>8 分区 · 91 个二级分类 · 类型/年份/评分筛选</span></div>
+            <div class="pp-cap"><b id="res-cap-t">电脑版</b><span id="res-cap-d">8 分区 · 91 个二级分类 · 类型/年份/评分筛选</span></div>
+          </div>
+          <div class="pp-thumbs">
+            <button type="button" class="pp-th on" data-big="assets/res-shot1.jpg" data-kind="browser" data-cap="电脑版" data-desc="资源列表 + 分区 + 筛选"><img src="assets/res-shot1.jpg" alt="电脑版"><span>电脑版</span></button>
+            <button type="button" class="pp-th" data-big="assets/res-shot2.jpg" data-kind="browser" data-cap="筛选" data-desc="类型 / 年份 / 评分筛选"><img src="assets/res-shot2.jpg" alt="筛选"><span>筛选</span></button>
+            <button type="button" class="pp-th" data-big="assets/res-shot3.jpg" data-kind="browser" data-cap="目录结构" data-desc="点开条目看目录"><img src="assets/res-shot3.jpg" alt="目录结构"><span>目录结构</span></button>
+            <button type="button" class="pp-th" data-big="assets/res-shot4.jpg" data-kind="phone" data-cap="手机版" data-desc="手机打开自动换布局"><img src="assets/res-shot4.jpg" alt="手机版"><span>手机版</span></button>
           </div>
         </div>
         <div class="pp-info">
@@ -450,7 +461,36 @@
           </ul>
           <div class="pp-links">
             <a class="btn btn-primary" href="./resource/">打开资源中心 →</a>
-            <a class="link-a" href="./resource/data/items.json" target="_blank" rel="noopener">数据接口</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="public-project wide">
+        <div class="pp-media">
+          <div class="pp-stage">
+            <div class="pp-frame browser">
+              <div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/intel</em></div>
+              <img id="intel-main-img" src="assets/intel-shot1.jpg" alt="情报中枢 · 展示版">
+            </div>
+            <div class="pp-cap"><b id="intel-cap-t">主界面</b><span id="intel-cap-d">多路来源汇成判断，重点与待验证分开</span></div>
+          </div>
+          <div class="pp-thumbs">
+            <button type="button" class="pp-th on" data-big="assets/intel-shot1.jpg" data-kind="browser" data-cap="主界面" data-desc="多路来源汇成判断"><img src="assets/intel-shot1.jpg" alt="主界面"><span>主界面</span></button>
+            <button type="button" class="pp-th" data-big="assets/intel-shot2.jpg" data-kind="browser" data-cap="重点情报" data-desc="一手发布与待核实分开"><img src="assets/intel-shot2.jpg" alt="重点情报"><span>重点情报</span></button>
+            <button type="button" class="pp-th" data-big="assets/intel-shot3.jpg" data-kind="browser" data-cap="来源管理" data-desc="分类、有效性、更新节奏"><img src="assets/intel-shot3.jpg" alt="来源管理"><span>来源管理</span></button>
+          </div>
+        </div>
+        <div class="pp-info">
+          <div class="tags"><span class="tag">展示版</span><span class="tag">40+ 来源</span><span class="tag">规则 + AI 打分</span><span class="tag">界面脱敏</span></div>
+          <h3>情报中枢 · 展示版</h3>
+          <p>我每天在用的信息筛选工具：40+ 来源定时采集 → 去重 → 规则 + AI 打分 → 重点线索 / 待验证区 → 出日报。展示版只公开界面和流程，不展示真实情报数据或来源链接。</p>
+          <ul class="pp-points">
+            <li>多路来源统一采集，标题 / 链接 / 相似度三层去重</li>
+            <li>规则 + AI 双通道打分，重点与待验证分开</li>
+            <li>失效自动降级，日报只留值得看的信号</li>
+          </ul>
+          <div class="pp-links">
+            <a class="btn btn-primary" href="./intel/">打开展示版 →</a>
           </div>
         </div>
       </article>
@@ -579,30 +619,23 @@
       <div class="eyebrow2">About</div>
       <h2><img class="about-logo" src="assets/logo.png" alt="">关于我</h2>
     </div>
-    <div class="about-rich">
-      <div class="about-text">
-        <p>2013 年正式转做电商，从水晶做到袜子：自己拿货、拍照、上架、发货，后来开店、招人、进产业带，最忙的时候一天要盯五个后台，也扛过房租、工资和库存的压力。</p>
-        <p>2021 年运气不错，踩中一波行情，一年挣出了相当于一套房首付的钱。那是我第一次真切觉得，电商能改命。</p>
-        <p>2024 年碰上点变故，消沉了一阵，店铺业绩也腰斩了。那段时间才想明白：靠人力和经验堆效率，是有上限的。</p>
-        <p>所以从 2024 下半年开始折腾 AI：工作台、情报中枢、内容流水线，把重复的活一件件交给 AI，自己只做判断和拍板。现在一个人带着一群「硅基员工」，成本下来了，产出反而更稳。</p>
-        <p>这个站就是我的记录本，能用的东西顺手公开出来。</p>
-        <p class="about-line"><b>少点废话，多点实战；做成晒结果，翻车晒现场。</b><span>10 年电商</span><span>AI 无人公司</span><span>内容自动化</span><span>边做边公开</span></p>
+    <div class="about-rich about-reverse">
+      <div class="timeline-mini about-timeline">
+        <div class="tl-row"><b>2008</b><span>在网上卖手机充值卡，第一次靠网络赚钱</span></div>
+        <div class="tl-row"><b>2010</b><span>帮别人做网站、做网络推广，靠一台电脑接活</span></div>
+        <div class="tl-row"><b>2013</b><span>正式转做电商，从水晶做到袜子</span></div>
+        <div class="tl-row"><b>2016</b><span>开第一家淘宝店卖袜子，客厅就是仓库</span></div>
+        <div class="tl-row"><b>2018</b><span>搬进浙江袜业产业带，供应链握在自己手里</span></div>
+        <div class="tl-row"><b>2021</b><span>踩中行情，杭州买房，暂时实现财富自由</span></div>
+        <div class="tl-row"><b>2024</b><span>遇到变故，消沉了一阵，业绩腰斩；下半年开始用 AI</span></div>
+        <div class="tl-row"><b>2026</b><span>工作台、情报中枢、内容流水线跑通</span></div>
       </div>
       <div class="about-visual">
         <div class="ip-card"><img src="assets/about-ip.png" alt="硅基野人 IP"></div>
         <div class="sign-card"><img src="assets/about-sign.png" alt="硅基野人 · 品牌署名"></div>
-        <div class="timeline-mini">
-          <div class="tl-row"><b>2008</b><span>网上卖手机充值卡</span></div>
-          <div class="tl-row"><b>2010</b><span>帮人做网站、网络推广</span></div>
-          <div class="tl-row"><b>2013</b><span>正式做电商</span></div>
-          <div class="tl-row"><b>2016</b><span>第一家淘宝店</span></div>
-          <div class="tl-row"><b>2018</b><span>进产业带</span></div>
-          <div class="tl-row"><b>2021</b><span>挣出一套房首付</span></div>
-          <div class="tl-row"><b>2024</b><span>低谷，开始用 AI</span></div>
-          <div class="tl-row"><b>2026</b><span>AI 工作流跑通</span></div>
-        </div>
       </div>
     </div>
+    <p class="about-line"><b>少点废话，多点实战；做成晒结果，翻车晒现场。</b><span>10 年电商</span><span>AI 无人公司</span><span>内容自动化</span><span>边做边公开</span></p>
   </div>
 </section>
 
@@ -647,7 +680,7 @@
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责审核和拍板</div>
-    <div>GitHub：<a href="https://github.com/guijiyeren" target="_blank" rel="noopener">guijiyeren.github.io</a> · 知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
+    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
   </div>
 </footer>
 
@@ -918,29 +951,32 @@
 </script>
 <script>
 (function(){
-  var stage = document.getElementById('pp-stage');
-  var thumbs = Array.from(document.querySelectorAll('.pp-th'));
-  if (!stage || !thumbs.length) return;
-  function render(t){
-    var big = t.getAttribute('data-big');
-    var kind = t.getAttribute('data-kind') || 'browser';
-    var cap = t.getAttribute('data-cap') || '';
-    var desc = t.getAttribute('data-desc') || '';
-    var frame;
-    if (kind === 'phone') {
-      frame = '<div class="pp-frame phone"><img src="' + big + '" alt="' + cap + '"></div>';
-    } else {
-      frame = '<div class="pp-frame browser"><div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io/rensheng</em></div><img src="' + big + '" alt="' + cap + '"></div>';
-    }
-    stage.innerHTML = frame + '<div class="pp-cap"><b id="pp-cap-t">' + cap + '</b><span id="pp-cap-d">' + desc + '</span></div>';
-  }
-  thumbs.forEach(function(t){
-    t.addEventListener('click', function(){
-      render(t);
+  function bindGallery(card){
+    if (!card) return;
+    var stage = card.querySelector('.pp-stage');
+    var thumbs = Array.from(card.querySelectorAll('.pp-th'));
+    if (!stage || !thumbs.length) return;
+    function render(t){
+      var big = t.getAttribute('data-big');
+      var kind = t.getAttribute('data-kind') || 'browser';
+      var cap = t.getAttribute('data-cap') || '';
+      var desc = t.getAttribute('data-desc') || '';
+      var frame;
+      if (kind === 'phone') {
+        frame = '<div class="pp-frame phone"><img src="' + big + '" alt="' + cap + '"></div>';
+      } else {
+        frame = '<div class="pp-frame browser"><div class="pp-chrome"><i></i><i></i><i></i><em>guijiyeren.github.io</em></div><img src="' + big + '" alt="' + cap + '"></div>';
+      }
+      stage.innerHTML = frame + '<div class="pp-cap"><b>' + cap + '</b><span>' + desc + '</span></div>';
       thumbs.forEach(function(x){ x.classList.remove('on'); });
       t.classList.add('on');
-    });
-  });
+    }
+    thumbs.forEach(function(t){ t.addEventListener('click', function(){ render(t); }); });
+  }
+  var cards = document.querySelectorAll('.public-project');
+  bindGallery(cards[0]);
+  bindGallery(cards[1]);
+  bindGallery(cards[2]);
 })();
 </script>
 <script>
