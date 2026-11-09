@@ -130,7 +130,7 @@
   .site-foot .sf-pl:hover img { box-shadow:0 10px 22px rgba(37,99,235,.22); }
   @media (max-width:760px) { .site-foot .sf-row { flex-wrap:wrap; } .site-foot .sf-pl { flex:0 0 22%; } }
 </style>
-<script>(function(){try{
+<script>document.addEventListener('error', function(e){ var t=e.target; if(t && t.tagName==='IMG'){ t.style.visibility='hidden'; } }, true);</script><script>(function(){try{
   var d=new Date(), k=''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
   fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/intel-'+k,{cache:'no-store'}).catch(function(){});
 }catch(e){}})();</script></body></html>
