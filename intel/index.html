@@ -6,65 +6,59 @@
 <meta name="robots" content="noindex,nofollow">
 <title>情报中枢 · 展示版 · 硅基野人</title>
 <style>
-  :root { --bg:#080d18; --panel:#0e1626; --line:#1e2b42; --ink:#e2e8f0; --muted:#8fa3bd; --cyan:#38bdf8; --teal:#5eead4; --blue:#3b82f6; }
+  :root { --bg:#f5f7fb; --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --blue:#2563eb; --panel:#ffffff; }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
-  header { padding:22px 0 20px; border-bottom:1px solid var(--line); }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 22px; }
+  header { background:#0a0f1d; color:#e2e8f0; padding:18px 0 20px; }
   .hd { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
   .hd img { width:36px; height:36px; border-radius:50%; border:1px solid rgba(56,189,248,.4); }
   .hd h1 { font-size:19px; letter-spacing:.5px; }
   .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
-  .banner { margin:18px 0 26px; border:1px solid rgba(56,189,248,.25); background:rgba(56,189,248,.06); border-radius:12px; padding:13px 16px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
-  .banner b { color:#fff; }
-  .dash { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:linear-gradient(180deg,#0b1322,#0a1120); box-shadow:0 24px 60px rgba(0,0,0,.4); }
-  .topbar { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.02); }
-  .topbar .dot { width:8px; height:8px; border-radius:50%; background:#22c55e; box-shadow:0 0 10px #22c55e; }
-  .topbar b { font-size:13px; }
-  .topbar .pill { font-size:10.5px; color:#7dd3fc; border:1px solid rgba(125,211,252,.35); border-radius:999px; padding:2px 8px; }
-  .topbar .right { margin-left:auto; display:flex; gap:14px; font-size:11px; color:var(--muted); }
-  .body { display:grid; grid-template-columns:180px 1fr 250px; gap:0; }
-  .side { border-right:1px solid var(--line); padding:14px 10px; }
-  .side h4 { font-size:9.5px; letter-spacing:1.5px; color:#64748b; margin:0 6px 8px; }
-  .snav { display:flex; align-items:center; gap:8px; font-size:12px; color:#94a3b8; padding:7px 8px; border-radius:8px; }
-  .snav.on { background:rgba(56,189,248,.12); color:#bae6fd; }
-  .snav i { font-style:normal; font-size:10px; color:#475569; margin-left:auto; }
-  .feed { padding:16px 18px; }
-  .feed-head { display:flex; align-items:center; gap:10px; }
-  .feed-head h3 { font-size:14.5px; }
-  .feed-head .tag { font-size:10.5px; color:#5eead4; border:1px solid rgba(94,234,212,.35); border-radius:999px; padding:2px 8px; }
-  .feed-head .muted { margin-left:auto; font-size:11px; color:#64748b; }
-  .cards { display:flex; flex-direction:column; gap:9px; margin-top:12px; }
-  .icard { border:1px solid var(--line); border-radius:11px; padding:11px 13px; background:rgba(255,255,255,.02); }
-  .icard .meta { display:flex; gap:8px; align-items:center; font-size:10.5px; color:#64748b; }
-  .icard .meta .src { color:#7dd3fc; }
-  .icard .score { margin-left:auto; color:#fbbf24; font-weight:700; }
-  .icard h5 { margin-top:6px; font-size:13px; line-height:1.55; font-weight:600; color:#e2e8f0; }
-  .icard p { margin-top:4px; font-size:11.5px; color:#94a3b8; line-height:1.7; }
-  .rightcol { border-left:1px solid var(--line); padding:16px 14px; }
-  .rightcol h4 { font-size:9.5px; letter-spacing:1.5px; color:#64748b; margin-bottom:8px; }
-  .rcard { border:1px solid var(--line); border-radius:10px; padding:10px 11px; margin-bottom:8px; background:rgba(255,255,255,.02); }
-  .rcard b { display:block; font-size:12px; line-height:1.5; }
-  .rcard span { display:block; margin-top:4px; font-size:10.5px; color:#64748b; }
-  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
-  .kpi { border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:var(--panel); }
-  .kpi b { display:block; font-size:9.5px; letter-spacing:1px; color:#64748b; }
-  .kpi .v { font-size:22px; font-weight:800; margin-top:5px; }
-  .kpi .v small { font-size:10.5px; color:#64748b; font-weight:400; margin-left:3px; }
-  .sect { margin-top:40px; }
-  .sect h2 { font-size:19px; letter-spacing:.5px; }
-  .sect > p { margin-top:6px; font-size:12.5px; color:#8fa3bd; }
-  .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:18px; }
-  .step { border:1px solid var(--line); border-radius:13px; padding:16px; background:var(--panel); }
-  .step b { display:inline-flex; width:22px; height:22px; border-radius:50%; background:rgba(56,189,248,.15); color:#7dd3fc; font-size:12px; align-items:center; justify-content:center; }
-  .step h3 { font-size:13.5px; margin-top:10px; }
-  .step p { margin-top:5px; font-size:11.5px; color:#8fa3bd; line-height:1.75; }
-  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-  .chips span { font-size:11.5px; color:#7dd3fc; border:1px solid rgba(125,211,252,.3); border-radius:999px; padding:4px 11px; background:rgba(56,189,248,.06); }
-  footer { margin-top:44px; border-top:1px solid var(--line); padding:20px 0 40px; font-size:11.5px; color:#64748b; line-height:1.9; }
-  @media (max-width:900px){ .body { grid-template-columns:1fr; } .side,.rightcol { display:none; } .kpis { grid-template-columns:1fr 1fr; } .flow { grid-template-columns:1fr 1fr; } }
+  .notice { margin-top:12px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:11px 15px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
+  .notice b { color:#fff; }
+  main { padding:22px 0 0; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:20px 22px; margin-bottom:16px; box-shadow:0 10px 26px rgba(15,23,42,.05); }
+  .panel h2 { font-size:18px; letter-spacing:.3px; }
+  .panel h2 em { font-style:normal; font-size:11.5px; font-weight:500; color:#94a3b8; margin-left:10px; letter-spacing:0; }
+  .panel .sub { margin-top:6px; font-size:12px; color:#94a3b8; }
+  .tag-demo { display:inline-block; font-size:10.5px; color:#b45309; background:#fef3c7; border:1px solid #fde68a; border-radius:999px; padding:1px 8px; margin-left:8px; vertical-align:2px; }
+  .key-list { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+  .k-item { border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start; }
+  .k-item .idx { flex:0 0 26px; width:26px; height:26px; border-radius:8px; background:#e0edff; color:#1d4ed8; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
+  .k-item h3 { font-size:14px; line-height:1.6; font-weight:600; }
+  .k-item p { margin-top:4px; font-size:11.5px; color:#94a3b8; }
+  .k-item .score { margin-left:auto; font-size:11px; color:#f59e0b; font-weight:700; white-space:nowrap; }
+  .cloud { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; margin-top:16px; min-height:120px; border:1px dashed var(--line); border-radius:12px; padding:18px; background:#fbfdff; }
+  .cloud b { color:#334155; font-weight:600; }
+  .cloud b:hover { color:var(--blue); }
+  .cloud i { font-style:normal; font-size:10.5px; color:#94a3b8; margin-left:2px; }
+  .reactor { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-top:16px; align-items:center; }
+  .rgraph { position:relative; border:1px solid var(--line); border-radius:14px; background:radial-gradient(circle at 50% 50%,#eef4ff,#fbfdff 70%); min-height:260px; display:flex; align-items:center; justify-content:center; }
+  .rcenter { width:92px; height:92px; border-radius:50%; background:#0f172a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; letter-spacing:1px; box-shadow:0 14px 30px rgba(15,23,42,.3); z-index:2; }
+  .rnode { position:absolute; font-size:11px; color:#334155; background:#fff; border:1px solid var(--line); border-radius:999px; padding:4px 10px; }
+  .rn1 { left:12%; top:22%; } .rn2 { right:10%; top:18%; } .rn3 { left:16%; bottom:18%; } .rn4 { right:14%; bottom:22%; }
+  .rline { position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,transparent 46%,rgba(148,163,184,.18) 47%,transparent 48%); }
+  .picks { display:flex; flex-direction:column; gap:9px; }
+  .picks .pk { border:1px solid var(--line); border-radius:11px; padding:11px 13px; font-size:12.5px; color:#334155; display:flex; gap:8px; }
+  .picks .pk i { font-style:normal; color:#2563eb; font-weight:700; }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+  .dcol { border:1px solid var(--line); border-radius:13px; padding:14px 15px; }
+  .dcol h3 { font-size:13.5px; display:flex; align-items:center; gap:8px; }
+  .dcol h3 img { width:18px; height:18px; border-radius:4px; }
+  .dcol ul { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+  .dcol li { font-size:12px; color:#475569; line-height:1.6; display:flex; gap:8px; }
+  .dcol li i { font-style:normal; color:#f59e0b; font-weight:700; min-width:26px; }
+  .vid, .repo { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+  .vitem, .ritem { border:1px solid var(--line); border-radius:11px; padding:11px 13px; display:flex; align-items:center; gap:12px; }
+  .vitem .vt, .ritem .rt { flex:1; min-width:0; }
+  .vitem h3, .ritem h3 { font-size:13px; line-height:1.5; }
+  .vitem p, .ritem p { margin-top:3px; font-size:11px; color:#94a3b8; }
+  .vitem .badge { font-size:10.5px; color:#2563eb; background:#e0edff; border-radius:999px; padding:2px 8px; white-space:nowrap; }
+  .ritem .lang { font-size:10.5px; color:#64748b; background:#f1f5f9; border-radius:999px; padding:2px 8px; }
+  @media (max-width:900px) { .reactor, .duo { grid-template-columns:1fr; } .cloud { min-height:90px; } }
 </style>
 </head>
 <body>
@@ -75,71 +69,121 @@
       <h1>情报中枢<span>展示版</span></h1>
       <a class="back" href="../">← 回首页</a>
     </div>
+    <div class="notice"><b>只展示界面结构和流程，不展示真实情报数据、来源链接或采集结果。</b>下面六个板块对应我每天在用的情报中枢首页；内容均为演示占位，不是真实情报。</div>
   </div>
 </header>
-<div class="wrap">
-  <div class="banner"><b>只展示界面和流程，不展示真实情报数据、来源链接或采集结果。</b>这是我每天在用的信息筛选系统：多路来源采集 → 去重 → 规则/AI 打分 → 重点线索与待验证区，最后出日报。下面的示例内容均为演示占位，不是真实情报。</div>
-
-  <div class="dash">
-    <div class="topbar"><span class="dot"></span><b>情报中枢</b><span class="pill">示例演示</span>
-      <div class="right"><span>来源在线 38 / 42</span><span>今日信号 126</span><span>待验证 23</span></div>
-    </div>
-    <div class="body">
-      <div class="side">
-        <h4>导航</h4>
-        <div class="snav on">今日情报 <i>126</i></div>
-        <div class="snav">重点情报 <i>18</i></div>
-        <div class="snav">待验证区 <i>23</i></div>
-        <div class="snav">工具发现 <i>6</i></div>
-        <div class="snav">收藏与记录 <i>52</i></div>
-        <h4 style="margin-top:18px">来源分类</h4>
-        <div class="snav">电商 <i>11</i></div>
-        <div class="snav">AI 工具 <i>9</i></div>
-        <div class="snav">内容创作 <i>12</i></div>
-        <div class="snav">商业线索 <i>10</i></div>
+<main>
+  <div class="wrap">
+    <section class="panel">
+      <h2>重点情报 <em>首页这一列</em><span class="tag-demo">示例数据</span></h2>
+      <div class="sub">近 7 天有效内容 · 一手发布与待核实线索分别标记</div>
+      <div class="key-list">
+        <div class="k-item"><div class="idx">1</div><div><h3>示例：某电商平台调整流量分发规则，一批商家的曝光结构发生变化</h3><p>电商 · 一手发布 · 建议跟进核实</p></div><div class="score">92</div></div>
+        <div class="k-item"><div class="idx">2</div><div><h3>示例：一个开源工具更新了批量处理能力，适合内容团队试用</h3><p>AI 工具 · 待验证 · 保持观察</p></div><div class="score">87</div></div>
+        <div class="k-item"><div class="idx">3</div><div><h3>示例：某类内容形式近期起量，小团队可以低成本测试</h3><p>内容创作 · 一手发布 · 可跟进</p></div><div class="score">81</div></div>
       </div>
-      <div class="feed">
-        <div class="feed-head"><h3>今日情报</h3><span class="tag">近 7 天有效</span><span class="muted">演示数据 · 不代表真实内容</span></div>
-        <div class="cards">
-          <div class="icard"><div class="meta"><span class="src">示例来源 A</span><span>电商</span><span>2 小时前</span><span class="score">92</span></div><h5>示例：某平台新规则调整，影响一批商家的流量分发</h5><p>演示占位内容。真实系统里会展示标题、摘要、来源权重和可验证性标记。</p></div>
-          <div class="icard"><div class="meta"><span class="src">示例来源 B</span><span>AI 工具</span><span>3 小时前</span><span class="score">87</span></div><h5>示例：一个开源工具更新了批量处理能力</h5><p>演示占位内容。重点情报会进入日报，未证实的进入待验证区。</p></div>
-          <div class="icard"><div class="meta"><span class="src">示例来源 C</span><span>内容创作</span><span>5 小时前</span><span class="score">81</span></div><h5>示例：某内容形式近期起量，适合小团队测试</h5><p>演示占位内容。所有来源都会做标题 / 链接 / 相似度三层去重。</p></div>
+    </section>
+
+    <section class="panel">
+      <h2>这一周，情报在关注什么 <em>关键词词云</em><span class="tag-demo">示例数据</span></h2>
+      <div class="sub">字越大 = 包含该词的情报条数越多（数字为示例条数，非搜索量）</div>
+      <div class="cloud">
+        <b style="font-size:30px">AI 工具<i>128</i></b><b style="font-size:26px">电商选品<i>96</i></b><b style="font-size:23px">短视频<i>88</i></b>
+        <b style="font-size:22px">小红书<i>74</i></b><b style="font-size:21px">抖音<i>70</i></b><b style="font-size:19px">供应链<i>52</i></b>
+        <b style="font-size:18px">内容拆解<i>46</i></b><b style="font-size:17px">独立站<i>38</i></b><b style="font-size:16px">投放<i>33</i></b>
+        <b style="font-size:15px">直播<i>28</i></b><b style="font-size:14px">私域<i>24</i></b><b style="font-size:14px">出海<i>22</i></b>
+        <b style="font-size:13px">自动化<i>18</i></b><b style="font-size:12px">选品工具<i>15</i></b><b style="font-size:12px">低粉爆款<i>12</i></b>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>万千信息，汇成你的下一步。<em>汇聚图 · 先看这两条</em><span class="tag-demo">示例数据</span></h2>
+      <div class="reactor">
+        <div class="rgraph">
+          <div class="rline"></div>
+          <div class="rcenter">汇流</div>
+          <div class="rnode rn1">A · 反应堆</div><div class="rnode rn2">B · 星系</div>
+          <div class="rnode rn3">C · 跃迁</div><div class="rnode rn4">D · 汇流</div>
+        </div>
+        <div class="picks">
+          <div class="pk"><i>A</i><span>示例：多条来源指向同一个机会窗口，值得先验证一条链路</span></div>
+          <div class="pk"><i>B</i><span>示例：一个工具类信息连续出现一周，可以放进工具库观察</span></div>
+          <div class="pk"><i>C</i><span>示例：某平台规则变化，先看对现有账号的影响，再决定要不要动</span></div>
         </div>
       </div>
-      <div class="rightcol">
-        <h4>重点情报</h4>
-        <div class="rcard"><b>示例条目 1</b><span>电商 · 已证实 · 建议跟进</span></div>
-        <div class="rcard"><b>示例条目 2</b><span>AI 工具 · 待验证 · 保持观察</span></div>
-        <div class="rcard"><b>示例条目 3</b><span>商业线索 · 一手发布</span></div>
-        <h4 style="margin-top:16px">来源状态</h4>
-        <div class="rcard"><b>来源正常 38</b><span>按最近成功时间判断</span></div>
-        <div class="rcard"><b>失效 / 陈旧 4</b><span>自动降级，不进日报</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>最近一个月抖音、小红书 <em>双平台热点</em><span class="tag-demo">示例数据</span></h2>
+      <div class="duo">
+        <div class="dcol"><h3><img src="../assets/icon-douyin.png" alt="">抖音</h3>
+          <ul>
+            <li><i>01</i><span>示例：某类口播结构最近起量，开头三秒抓人</span></li>
+            <li><i>02</i><span>示例：同城类内容互动率上升，适合本地账号测试</span></li>
+            <li><i>03</i><span>示例：AI 生成画面 + 真人配音组合被反复使用</span></li>
+          </ul>
+        </div>
+        <div class="dcol"><h3><img src="../assets/icon-xiaohongshu.png" alt="">小红书</h3>
+          <ul>
+            <li><i>01</i><span>示例：图文笔记的封面公式近期集中出现</span></li>
+            <li><i>02</i><span>示例：测评类长文收藏率明显高于平均</span></li>
+            <li><i>03</i><span>示例：素人账号用同一模板连续发，起号更快</span></li>
+          </ul>
+        </div>
       </div>
+    </section>
+
+    <section class="panel">
+      <h2>先看视频线索 <em>视频情报</em><span class="tag-demo">示例数据</span></h2>
+      <div class="vid">
+        <div class="vitem"><div class="vt"><h3>示例：一条 3 分钟讲解视频把复杂流程拆成三步</h3><p>视频情报 · 7 天有效 · 建议看完再判断</p></div><span class="badge">视频</span></div>
+        <div class="vitem"><div class="vt"><h3>示例：某账号用同一结构连续更新 10 条，条条有量</h3><p>视频情报 · 一手发布 · 值得拆结构</p></div><span class="badge">视频</span></div>
+        <div class="vitem"><div class="vt"><h3>示例：一条关于平台规则变化的解读，信息密度高</h3><p>视频情报 · 待验证 · 先核对原文</p></div><span class="badge">视频</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>这一个月最热的仓库 <em>工具与项目</em><span class="tag-demo">示例数据</span></h2>
+      <div class="repo">
+        <div class="ritem"><div class="rt"><h3>示例仓库 A：一个自动化内容生产工具</h3><p>近 30 天热度上升 · 适合内容团队</p></div><span class="lang">TypeScript</span></div>
+        <div class="ritem"><div class="rt"><h3>示例仓库 B：一个数据采集与清洗框架</h3><p>近 30 天热度上升 · 适合做情报管道</p></div><span class="lang">Python</span></div>
+        <div class="ritem"><div class="rt"><h3>示例仓库 C：一个可视化图表组件库</h3><p>近 30 天热度上升 · 适合做展示页</p></div><span class="lang">JavaScript</span></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="site-foot">
+  <div class="sf-in">
+    <div class="sf-top">
+      <div class="sf-brand"><img src="../assets/logo.png" alt="硅基野人"><b>硅基野人</b><span>一个碳基老板，带着一群硅基员工</span></div>
+      <a class="sf-back" href="../">← 返回首页</a>
     </div>
+    <div class="sf-sub">关注我 · 联系我</div>
+    <div class="sf-row"><a class="sf-pl" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="../assets/icon-douyin.png" alt="抖音"><span>抖音</span></a><a class="sf-pl" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="../assets/icon-xiaohongshu.png" alt="小红书"><span>小红书</span></a><a class="sf-pl" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="../assets/icon-bilibili.png" alt="B站"><span>B站</span></a><a class="sf-pl" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="../assets/icon-kuaishou.png" alt="快手"><span>快手</span></a><a class="sf-pl" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="../assets/icon-youtube.png" alt="YouTube"><span>YouTube</span></a><a class="sf-pl" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-tiktok.png" alt="TikTok"><span>TikTok</span></a><a class="sf-pl" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="../assets/icon-toutiao.png" alt="今日头条"><span>今日头条</span></a><a class="sf-pl" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="../assets/icon-zhihu.png" alt="知乎"><span>知乎</span></a></div>
+    <div class="sf-mail">合作 · 交流 · 提问：<a href="mailto:154647@qq.com">154647@qq.com</a></div>
   </div>
-
-  <div class="kpis">
-    <div class="kpi"><b>今日接收</b><div class="v">126<small>条</small></div></div>
-    <div class="kpi"><b>重点情报</b><div class="v">18<small>条</small></div></div>
-    <div class="kpi"><b>待验证</b><div class="v">23<small>条</small></div></div>
-    <div class="kpi"><b>来源在线</b><div class="v">38 / 42</div></div>
-  </div>
-
-  <div class="sect">
-    <h2>四步流水线</h2>
-    <p>每天自动跑，只处理留下的信号。</p>
-    <div class="flow">
-      <div class="step"><b>1</b><h3>采集</h3><p>40+ 来源定时抓取，覆盖公众号、电商榜单、AI 工具和行业线索。</p></div>
-      <div class="step"><b>2</b><h3>去重</h3><p>标题 / 链接 / 相似度三层去重，同一事件只留一条。</p></div>
-      <div class="step"><b>3</b><h3>打分</h3><p>规则 + AI 双通道：来源权重、时效、关键词、可验证性。</p></div>
-      <div class="step"><b>4</b><h3>输出</h3><p>重点进日报，未证实进待验证区，失效自动淘汰。</p></div>
-    </div>
-    <div class="chips"><span>电商</span><span>AI 工具</span><span>内容创作</span><span>商业线索</span><span>规则筛选</span><span>日报推送</span></div>
-  </div>
-
-  <footer>
-    情报中枢 · 展示版 · 仅展示界面与流程，示例数据为演示占位，不含真实情报。 · <a href="../" style="color:#7dd3fc">回首页</a> · <a href="../resource/" style="color:#7dd3fc">资源中心</a>
-  </footer>
 </div>
+<style>
+  .site-foot { border-top:1px solid #e2e8f0; background:#fff; padding:26px 22px 34px; margin-top:0; }
+  .site-foot .sf-in { max-width:1120px; margin:0 auto; }
+  .site-foot .sf-top { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .site-foot .sf-brand { display:flex; align-items:center; gap:10px; }
+  .site-foot .sf-brand img { width:34px; height:34px; border-radius:50%; border:1px solid #dbeafe; }
+  .site-foot .sf-brand b { font-size:14px; color:#0f172a; }
+  .site-foot .sf-brand span { font-size:11.5px; color:#94a3b8; }
+  .site-foot .sf-back { margin-left:auto; font-size:12.5px; color:#334155; border:1px solid #e2e8f0; border-radius:999px; padding:7px 16px; text-decoration:none; background:#fff; }
+  .site-foot .sf-back:hover { border-color:#bfdbfe; color:#2563eb; }
+  .site-foot .sf-sub { margin:18px 0 10px; font-size:11px; letter-spacing:1.5px; color:#94a3b8; }
+  .site-foot .sf-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .site-foot .sf-pl { display:flex; flex-direction:column; align-items:center; gap:7px; flex:1 1 0; min-width:0; font-size:11.5px; color:#334155; text-decoration:none; }
+  .site-foot .sf-pl img { width:36px; height:36px; border-radius:10px; box-shadow:0 6px 16px rgba(15,23,42,.12); transition:.15s; }
+  .site-foot .sf-pl:hover { color:#2563eb; transform:translateY(-2px); }
+  .site-foot .sf-pl:hover img { box-shadow:0 10px 22px rgba(37,99,235,.22); }
+  .site-foot .sf-mail { margin-top:16px; font-size:12.5px; color:#64748b; }
+  .site-foot .sf-mail a { color:#2563eb; text-decoration:none; }
+  @media (max-width:760px) { .site-foot .sf-row { flex-wrap:wrap; } .site-foot .sf-pl { flex:0 0 22%; } }
+</style>
+
 </body>
 </html>

@@ -244,8 +244,10 @@
   .tl-item span { font-size:12.5px; color:#475569; line-height:1.8; }
 
   /* 关注 · 更多入口 */
-  .about-rich.about-reverse { display:grid; grid-template-columns:1.08fr .92fr; gap:32px; align-items:start; }
-  .about-rich.about-reverse .about-visual { max-width:100%; margin:0; }
+  .about-rich.about-reverse { display:grid; grid-template-columns:1.02fr .98fr; gap:32px; align-items:stretch; }
+  .about-rich.about-reverse .about-visual { max-width:100%; margin:0; height:100%; display:flex; flex-direction:column; gap:16px; }
+  .about-rich.about-reverse .ip-card { flex:1; display:flex; align-items:center; justify-content:center; }
+  .about-rich.about-reverse .ip-card img { max-height:100%; width:auto; max-width:86%; }
   .about-timeline { padding:20px 26px; display:flex; flex-direction:column; justify-content:center; }
   .about-timeline .tl-row { padding:11px 0; gap:16px; }
   .about-timeline .tl-row b { flex:0 0 46px; font-size:13px; }
@@ -393,8 +395,8 @@
       <h1>一个碳基老板，<br>带着一群<em>硅基员工</em></h1>
       <p class="lead">我叫<b>硅基野人</b>，10 年电商人。<br>现在把选品、上架、写文案、剪视频、做发布，一件件拆给 AI 干。<br>边干边翻车，<b>做成晒结果，翻车晒现场</b>。</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#projects">看看我在做什么 →</a>
-        <a class="btn btn-ghost" href="#building">我在做的系统</a>
+        <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
+        <a class="btn btn-ghost" href="#projects">公开项目</a>
       </div>
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
@@ -496,9 +498,9 @@
             <div class="pp-cap"><b id="intel-cap-t">主界面</b><span id="intel-cap-d">40+ 来源汇成判断，重点与待验证分开</span></div>
           </div>
           <div class="pp-thumbs">
-            <button type="button" class="pp-th on" data-big="assets/intel-shot1.jpg" data-kind="browser" data-cap="主界面" data-desc="多路来源汇成判断"><img src="assets/intel-shot1.jpg" alt="主界面"><span>主界面</span></button>
-            <button type="button" class="pp-th" data-big="assets/intel-shot2.jpg" data-kind="browser" data-cap="流水线" data-desc="采集 / 去重 / 打分 / 输出"><img src="assets/intel-shot2.jpg" alt="流水线"><span>流水线</span></button>
-            <button type="button" class="pp-th" data-big="assets/intel-shot3.jpg" data-kind="browser" data-cap="数据面板" data-desc="接收、重点、待验证、来源在线"><img src="assets/intel-shot3.jpg" alt="数据面板"><span>数据面板</span></button>
+            <button type="button" class="pp-th on" data-big="assets/intel-shot1.jpg" data-kind="browser" data-cap="重点情报" data-desc="首页这一列的重点"><img src="assets/intel-shot1.jpg" alt="主界面"><span>重点情报</span></button>
+            <button type="button" class="pp-th" data-big="assets/intel-shot2.jpg" data-kind="browser" data-cap="关键词" data-desc="这一周情报在关注什么"><img src="assets/intel-shot2.jpg" alt="流水线"><span>关键词</span></button>
+            <button type="button" class="pp-th" data-big="assets/intel-shot3.jpg" data-kind="browser" data-cap="汇聚图" data-desc="万千信息汇成下一步"><img src="assets/intel-shot3.jpg" alt="数据面板"><span>汇聚图</span></button>
           </div>
         </div>
         <div class="pp-info">
@@ -655,10 +657,13 @@
         <div class="tl-row"><b>2008</b><span>在网上卖手机充值卡，第一次靠网络赚钱</span></div>
         <div class="tl-row"><b>2010</b><span>帮别人做网站、做网络推广，靠一台电脑接活</span></div>
         <div class="tl-row"><b>2013</b><span>做电商，从水晶饰品开始</span></div>
-        <div class="tl-row"><b>2016</b><span>卖春节用品和圣诞用品，后来受政策限制，生意下滑</span></div>
-        <div class="tl-row"><b>2018</b><span>转行做袜子，搬进浙江袜业产业带</span></div>
-        <div class="tl-row"><b>2021</b><span>挣了一大笔，暂时实现财务自由</span></div>
+        <div class="tl-row"><b>2014</b><span>结婚成家</span></div>
+        <div class="tl-row"><b>2016</b><span>女儿出生，家里多了个小甜心</span></div>
+        <div class="tl-row"><b>2017</b><span>卖春节用品和圣诞用品；燕郊的房子卖掉，拿到第一笔原始积累</span></div>
+        <div class="tl-row"><b>2018</b><span>搬进浙江诸暨产业带</span></div>
+        <div class="tl-row"><b>2021</b><span>挣了一笔，暂时实现财务自由</span></div>
         <div class="tl-row"><b>2024</b><span>遇到变故，消沉了一阵，业绩腰斩；下半年开始用 AI</span></div>
+        <div class="tl-row"><b>2025</b><span>杭州买房，既有压力，也是动力</span></div>
         <div class="tl-row"><b>2026</b><span>工作台、情报中枢、内容流水线跑通</span></div>
       </div>
       <div class="about-visual">
