@@ -98,7 +98,7 @@
   .num-card span { display:block; margin-top:4px; font-size:12px; color:#64748b; }
   .prog-list { margin-top:24px; display:flex; flex-direction:column; gap:14px; }
   .prog-row { display:grid; grid-template-columns:220px 1fr 110px; gap:16px; align-items:center; font-size:13px; color:#334155; }
-  .prog-row em { font-style:normal; font-size:11.5px; color:#94a3b8; text-align:right; }
+  .prog-row em { font-style:normal; font-size:11.5px; color:#94a3b8; text-align:center; justify-self:center; min-width:76px; }
   .pr-bar { height:9px; background:#e8eef8; border-radius:999px; overflow:hidden; }
   .pr-bar span { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#4ade80); }
   .pr-bar.dev span { background:linear-gradient(90deg,#2563eb,#38bdf8); }
@@ -343,7 +343,7 @@
   .mig-brand { min-width:0; }
   .mig-brand b { display:block; font-size:12.5px; color:#0f172a; }
   .mig-brand span { display:block; font-size:10.5px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .mig-tags { margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .mig-tags { margin-left:auto; display:grid; grid-template-columns:repeat(3,auto); gap:6px; }
   .mig-tags span { font-size:10px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:2px 8px; white-space:nowrap; }
   .mig-node circle { fill:#fff; stroke:#c7d7ee; stroke-width:2; transition:.3s; }
   .mig-node text { font-size:10.5px; fill:#64748b; }
@@ -377,9 +377,9 @@
   .socials { display:flex; flex-wrap:nowrap; justify-content:space-between; gap:8px; margin-top:28px; }
   .socials .social { flex:0 0 auto; padding:8px 10px; font-size:11.5px; gap:6px; }
   .socials .social img { width:16px; height:16px; }
-  @media (max-width:820px) { .socials { flex-wrap:wrap; } }
-  .follow-note { margin-top:18px; font-size:13.5px; color:#64748b; letter-spacing:.3px; display:inline-flex; align-items:center; gap:7px; }
-  .follow-note svg { color:#2563eb; flex:0 0 auto; }
+  @media (max-width:820px) { .socials { flex-wrap:wrap; justify-content:flex-start; gap:10px 12px; } .social { min-height:38px; } }
+  .follow-note { margin-top:20px; font-size:17px; font-weight:700; color:#334155; letter-spacing:.5px; display:inline-flex; align-items:center; gap:8px; }
+  .follow-note svg { color:#2563eb; flex:0 0 auto; width:18px; height:18px; }
   .msg-form { margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 24px; box-shadow:0 14px 34px rgba(15,23,42,.06); max-width:none; }
   .msg-mask { position:fixed; inset:0; background:rgba(8,12,24,.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:120; }
   .msg-mask.on { display:flex; }
@@ -542,16 +542,16 @@
     <div>
       <div class="eyebrow">AI 无人公司 · 实战中</div>
       <h1>一个碳基老板，<br><span class="type-line"><span id="typePre">带着一群</span><em id="typeGrad">硅基员工</em><span class="type-cursor" id="typeCursor" aria-hidden="true"></span></span></h1>
-      <p class="lead">我叫<b>硅基野人</b>，10 年电商人。<br>现在把选品、上架、写文案、剪视频、做发布，一件件拆给 AI 干。<br>边干边翻车，<b>做成晒结果，翻车晒现场</b>。</p>
+      <p class="lead">哈喽，大家好，我叫<b>硅基野人</b>，十年电商人。<br>选品、上架、文案、剪视频、发布，通通 AI 干。<br>少点废话，多点实战；<b>做成晒结果，翻车晒现场</b>。</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
         <a class="btn btn-ghost" href="#projects">公开项目</a>
       </div>
-      <div class="hero-update"><span class="hu-dot"></span>最新更新：11-09 · 新增 实战笔记 / 项目进度 / 工具箱，公开项目截图已换新</div>
+      <div class="hero-update"><span class="hu-dot"></span>最新更新：11-09 · 新增 实战笔记 / 项目进度 / 工具箱</div>
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
-        <div><span class="n">30+</span><span class="l">AI 短视频作品</span></div>
+        <div><span class="n">30+</span><span class="l">短视频作品</span></div>
         <div><span class="n">全免费</span><span class="l">飞书知识库</span></div>
       </div>
     </div>
@@ -582,7 +582,7 @@
       <p>都是站里真实的数据，不编。</p>
     </div>
     <div class="num-grid">
-      <div class="num-card"><b>27</b><span>AI 短视频作品</span></div>
+      <div class="num-card"><b>30+</b><span>短视频作品</span></div>
       <div class="num-card"><b>8</b><span>发布平台</span></div>
       <div class="num-card"><b>10,672</b><span>资源索引</span></div>
       <div class="num-card"><b>767</b><span>人生指南</span></div>
@@ -705,7 +705,7 @@
     <div class="prog-list">
       <div class="prog-row"><div class="pr-name">AI 个人工作台</div><div class="pr-bar dev"><span style="width:75%"></span></div><em class="badge dev">开发中 75%</em></div>
       <div class="prog-row"><div class="pr-name">电商运营系统</div><div class="pr-bar dev"><span style="width:60%"></span></div><em class="badge dev">开发中 60%</em></div>
-      <div class="prog-row"><div class="pr-name">数据库</div><div class="pr-bar dev"><span style="width:45%"></span></div><em class="badge dev">开发中 45%</em></div>
+      <div class="prog-row"><div class="pr-name">OpCity 数据库</div><div class="pr-bar dev"><span style="width:85%"></span></div><em class="badge dev">开发中 85%</em></div>
       <div class="prog-row"><div class="pr-name">飞书知识库</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">个人网页</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">AI 内容流水线</div><div class="pr-bar dev"><span style="width:70%"></span></div><em class="badge dev">开发中 70%</em></div>
@@ -774,7 +774,7 @@
     <div class="sec-head">
       <div class="eyebrow2">Free Knowledge</div>
       <h2>飞书知识库</h2>
-      <p>我搭 AI 个人工作台的全部过程、模板和工作流，都放在这里，免费看。</p>
+      <p>实战全部过程全部放这里，免费看。</p>
     </div>
     <div class="kb-card">
       <div class="kb-icon"><img src="assets/icon-feishu.png" alt="飞书知识库"></div>
@@ -845,7 +845,7 @@
     <div class="sec-head">
       <div class="eyebrow2">Notes</div>
       <h2>实战笔记</h2>
-      <p>把我正在用的方法写下来，持续更新；完整版先在飞书知识库。</p>
+      <p>边实战边记录，持续更新，完整版放在飞书知识库。</p>
     </div>
     <div class="note-grid">
       <a class="note-card" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><div class="nc-cover"><img src="assets/note-1.jpg" alt="AI 工作台"></div><div class="nc-tx"><b>一个人怎么用 AI 跑完选品到发布</b><span>实战 · 11-09 · 8 分钟</span></div></a>
@@ -964,7 +964,7 @@
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar">
-            <div class="mig-brand"><b>硅基野人</b><span>少点废话，多点实战；做成晒结果，翻车晒现场。</span></div>
+            <div class="mig-brand"><b>硅基野人</b></div>
             <div class="mig-tags"><span>10 年电商</span><span>AI 无人公司</span><span>边做边公开</span></div>
           </div>
         </div>
@@ -1068,7 +1068,7 @@
 
 <footer id="page-end">
   <div class="in">
-    <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责审核和拍板</div>
+    <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
     <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书 Wiki</a></div>
   </div>
 </footer>
@@ -1484,14 +1484,18 @@
 (function(){
   var btn = document.getElementById('works-expand');
   if (!btn) return;
-  var open = false;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.work-row'));
+  var total = rows.length, shown = 5;
+  function apply(){
+    rows.forEach(function(el, idx){ el.classList.toggle('work-hide', idx >= shown); });
+    if (shown >= total) btn.textContent = '收起 ↑';
+    else btn.textContent = '加载更多作品（还剩 ' + (total - shown) + ' 条）↓';
+  }
+  apply();
   btn.addEventListener('click', function(){
-    open = !open;
-    document.querySelectorAll('.work-row').forEach(function(el, idx){
-      if (open) el.classList.remove('work-hide');
-      else if (idx >= 5) el.classList.add('work-hide');
-    });
-    btn.textContent = open ? '收起 ↑' : ('展开全部作品（共 ' + document.querySelectorAll('.work-row').length + ' 条）↓');
+    if (shown >= total) { shown = 5; }
+    else { shown = Math.min(total, shown + 5); }
+    apply();
   });
 })();
 
