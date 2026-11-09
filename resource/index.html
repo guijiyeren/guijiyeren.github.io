@@ -17,8 +17,12 @@
   .hd h1 { font-size:19px; letter-spacing:.5px; }
   .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
-  .notice { margin-top:12px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.28); border-radius:12px; padding:11px 15px; font-size:12.5px; line-height:1.9; color:#b8c4d9; }
-  .notice b { color:#fff; }
+  .notice { margin-top:14px; background:linear-gradient(135deg,#fff7ed 0%,#fef2f2 100%); border:1px solid #fdba74; border-left:6px solid #f97316; border-radius:14px; padding:16px 20px; font-size:14.5px; line-height:1.95; color:#7c2d12; box-shadow:0 10px 26px rgba(249,115,22,.12); }
+.notice .nt { font-size:17px; font-weight:800; color:#b45309; letter-spacing:.3px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+.notice p { margin:4px 0 0; }
+.notice b { color:#9a3412; }
+.notice a { color:#b45309; text-decoration:underline; }5px; line-height:1.9; color:#b8c4d9; }
+  
   main { padding:20px 0 60px; display:grid; grid-template-columns:250px 1fr; gap:22px; }
   aside { position:sticky; top:12px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 24px); overflow:auto; }
   aside h3 { font-size:10.5px; letter-spacing:1.5px; color:#94a3b8; margin:2px 4px 8px; }
@@ -125,7 +129,11 @@
       <h1>资源中心<span>展示版</span></h1>
       <a class="back" href="../">← 回首页</a>
     </div>
-    <div class="notice"><b>本站不提供任何资源的下载、转存或分享。</b>这里只是个人整理的一份资料目录，用来展示信息整理和检索技术。所有条目的网盘地址、提取码、来源链接和目录清单都已隐藏；资源版权归原作者及权利人所有。如有侵权，请联系 154647@qq.com，核实后立即删除。</div>
+    <div class="notice">
+      <div class="nt">⚠️ 版权原因 · 不提供下载</div>
+      <p><b>由于版权原因，这些资源无法公开分享；本站不提供任何下载、转存、分享或获取方式。</b></p>
+      <p>所有条目的网盘地址、提取码、来源链接和目录清单均已隐藏。这个页面只用来展示信息整理与检索技术，资源版权归原作者及权利人所有；如有侵权，请联系 <a href="mailto:154647@qq.com">154647@qq.com</a>，核实后立即删除。</p>
+    </div>
   </div>
 </header>
 <main class="wrap">
@@ -174,20 +182,20 @@
   if (n && document.body.firstElementChild !== n) document.body.insertBefore(n, document.body.firstElementChild);
 });</script>
 
-<section class="sp-follow">
-  <div class="sp-wrap">
-    <div class="sp-head">
-      <div class="sp-eyebrow">Follow &amp; Contact</div>
+<section id="follow">
+  <div class="sec-wrap">
+    <div class="sec-head">
+      <div class="eyebrow2">Follow &amp; Contact</div>
       <h2>关注我 · 联系我</h2>
       <p>各个平台同名「硅基野人」，内容同步更新。</p>
     </div>
-    <div class="sp-socials"><a class="sp-social" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="../assets/icon-douyin.png" alt="抖音"><span>抖音</span></a><a class="sp-social" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="../assets/icon-xiaohongshu.png" alt="小红书"><span>小红书</span></a><a class="sp-social" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="../assets/icon-bilibili.png" alt="B站"><span>B站</span></a><a class="sp-social" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="../assets/icon-kuaishou.png" alt="快手"><span>快手</span></a><a class="sp-social" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="../assets/icon-youtube.png" alt="YouTube"><span>YouTube</span></a><a class="sp-social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-tiktok.png" alt="TikTok"><span>TikTok</span></a><a class="sp-social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="../assets/icon-toutiao.png" alt="今日头条"><span>今日头条</span></a><a class="sp-social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="../assets/icon-zhihu.png" alt="知乎"><span>知乎</span></a><a class="sp-social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="../assets/icon-feishu.png" alt="飞书知识库"><span>飞书知识库</span></a><a class="sp-social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-github.png" alt="GitHub"><span>GitHub</span></a><a class="sp-social" href="javascript:void(0)" data-mail><img src="../assets/icon-qqmail.png" alt="邮箱"><span>邮箱</span></a></div>
-    <p class="sp-note">合作交流，一起搞钱</p>
+    <div class="socials"><a class="social" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="../assets/icon-douyin.png" alt="抖音">抖音</a><a class="social" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="../assets/icon-xiaohongshu.png" alt="小红书">小红书</a><a class="social" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="../assets/icon-bilibili.png" alt="B站">B站</a><a class="social" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="../assets/icon-kuaishou.png" alt="快手">快手</a><a class="social" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="../assets/icon-youtube.png" alt="YouTube">YouTube</a><a class="social" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-tiktok.png" alt="TikTok">TikTok</a><a class="social" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="../assets/icon-toutiao.png" alt="今日头条">今日头条</a><a class="social" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="../assets/icon-zhihu.png" alt="知乎">知乎</a><a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="../assets/icon-feishu.png" alt="飞书知识库">飞书知识库</a><a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-github.png" alt="GitHub">GitHub</a><a class="social" href="javascript:void(0)" data-mail><img src="../assets/icon-qqmail.png" alt="邮箱">邮箱</a></div>
+    <p class="follow-note">合作交流，一起搞钱</p>
   </div>
 </section>
 
-<footer class="sp-copy">
-  <div class="sp-copy-in">
+<footer id="page-end">
+  <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责审核和拍板</div>
     <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书知识库</a></div>
   </div>
@@ -248,26 +256,26 @@
   .sp-nav .sp-links { display:flex; gap:16px; flex-wrap:wrap; }
   .sp-nav .sp-links a { font-size:12.5px; color:#93a4c0; }
   .sp-nav .sp-links a:hover { color:#7dd3fc; }
-  .sp-follow { background:#f6f9ff; border-top:1px solid #e2e8f0; padding:54px 22px 40px; }
-  .sp-wrap { max-width:1120px; margin:0 auto; }
-  .sp-eyebrow { font-size:12px; letter-spacing:2px; color:#2563eb; font-weight:700; text-transform:uppercase; }
-  .sp-head h2 { font-size:26px; margin-top:8px; color:#0f172a; letter-spacing:.4px; }
-  .sp-head p { margin-top:9px; font-size:14px; color:#64748b; }
-  .sp-socials { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
-  .sp-social { display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border-radius:999px; background:#fff; border:1px solid #e2e8f0; color:#334155; font-size:12.5px; transition:.16s; }
-  .sp-social img { width:18px; height:18px; border-radius:5px; display:block; }
-  .sp-social:hover { color:#2563eb; border-color:#bfdbfe; transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.12); }
-  .sp-note { margin-top:18px; font-size:13px; color:#64748b; }
-  .sp-copy { background:#fff; border-top:1px solid #e2e8f0; padding:20px 22px; }
-  .sp-copy-in { max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; font-size:12px; color:#94a3b8; }
-  .sp-copy-in a { color:#2563eb; }
-  @media (max-width:760px) {
-    .sp-nav .sp-links { gap:12px; }
-    .sp-head h2 { font-size:22px; }
-    .sp-follow { padding:38px 18px 30px; }
-    .sp-social span { display:none; }
-    .sp-social { padding:8px; }
-    .sp-social img { width:22px; height:22px; }
+  section#follow { padding:64px 0; background:#f6f9ff; border-top:1px solid #e2e8f0; }
+  .sec-wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
+  .sec-head .eyebrow2 { font-size:12.5px; letter-spacing:2px; color:#2563eb; font-weight:700; text-transform:uppercase; }
+  .sec-head h2 { font-size:29px; letter-spacing:.5px; margin:8px 0 0; color:#0f172a; }
+  .sec-head p { margin-top:10px; color:#64748b; font-size:14.5px; line-height:1.8; max-width:640px; }
+  .socials { display:flex; flex-wrap:nowrap; justify-content:space-between; gap:8px; margin-top:28px; }
+  .social { display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px; background:#fff; border:1px solid #e2e8f0; color:#334155; font-size:11.5px; transition:.16s; }
+  .social img { width:16px; height:16px; border-radius:4px; display:block; }
+  .social:hover { color:#2563eb; border-color:#bfdbfe; transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.12); }
+  .follow-note { margin-top:18px; font-size:13px; color:#64748b; letter-spacing:.3px; }
+  footer#page-end { background:#070b16; color:#7f8da6; padding:26px 22px; font-size:12px; }
+  footer#page-end .in { max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  footer#page-end b { color:#fff; }
+  footer#page-end a { color:#7dd3fc; }
+  @media (max-width:820px) {
+    .socials { flex-wrap:wrap; justify-content:flex-start; gap:10px; }
+    .social { padding:7px 10px; }
+    .social img { width:16px; height:16px; }
+    section#follow { padding:44px 0; }
+    .sec-head h2 { font-size:23px; }
   }
 </style>
 
@@ -435,7 +443,7 @@ function render(){
       var idx = it._i;
       return '<div class="lrow" data-i="' + idx + '">' +
         '<div class="lic" style="background:linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')">' + esc(it.e) + '</div>' +
-        '<div class="lmain"><h4>' + esc(it.t) + '</h4><p>' + esc(it.zo || '未分区') + ' · ' + esc(it.c || '未分类') + (it.g.length ? ' · ' + esc(it.g.slice(0, 3).join(' / ')) : '') + '</p></div>' +
+        '<div class="lmain"><h4>' + esc(cleanName(it.t)) + '</h4><p>' + esc(it.zo || '未分区') + ' · ' + esc(it.c || '未分类') + (it.g.length ? ' · ' + esc(it.g.slice(0, 3).join(' / ')) : '') + '</p></div>' +
         '<div class="lright"><span class="star">' + stars(it.r) + '</span></div></div>';
     }).join('') + '</div>';
   } else {
@@ -444,7 +452,7 @@ function render(){
       var idx = it._i;
       return '<div class="card" data-i="' + idx + '" style="background:linear-gradient(135deg,' + it.c1 + ',' + it.c2 + ')">' +
         '<div class="top">' + (it.r ? '<span class="star">' + stars(it.r) + '</span>' : '') + '<span>' + esc(it.zo || '未分区') + '</span></div>' +
-        '<div class="emoji">' + esc(it.e) + '</div><div class="t">' + esc(it.t) + '</div>' +
+        '<div class="t">' + esc(cleanName(it.t)) + '</div>' +
         '<div class="meta"><span>' + esc(it.c || '未分类') + '</span>' + (it.z ? '<span>' + esc(it.z) + '</span>' : '') + '</div></div>';
     }).join('');
   }
@@ -471,19 +479,38 @@ function loadDirs(it){
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
 function fmtSize(n){ if (n == null) return ''; return n < 1024 ? n + ' KB' : (n / 1024).toFixed(1) + ' MB'; }
+// 目录里夹杂的联系方式/广告/说明，一律隐藏
+var JUNK = /(微信|QQ群|qq群|公众号|联系方式|联系我|加群|进群|交流群|客服|助理|vx|VX|v信|每天更新|每日更新|小白资源|终身学习|资源整理|整理于网络|广告勿信|重要提示|风险提醒|风险提示|免责|声明|网盘|提取码|下载地址|转存|获取方式|扫码|二维码|课程顾问|付费|涨价|原价|优惠|领取|网址|链接)/i;
+var JUNK_EXT = /\.(url|lnk|exe|apk|txt)$/i;
+function cleanName(name){
+  var n = String(name == null ? '' : name);
+  n = n.replace(/^[\s\u{1F300}-\u{1FAFF}\u2600}-\u27BF\uFE0F\u200D]+/gu, '');
+  return n.trim();
+}
+function isJunkRow(row){
+  var raw = String(row[1] == null ? '' : row[1]);
+  var name = cleanName(raw);
+  if (!name) return true;
+  if (row[0] !== 'd' && JUNK_EXT.test(name)) return true;
+  if (JUNK.test(name) || JUNK.test(raw)) return true;
+  return false;
+}
 function showDir(lines){
   var box = document.getElementById('m-dir');
   if (!lines || !lines.length) { box.innerHTML = '<div class="tip">这条没有采集到目录</div>'; return; }
+  var kept = lines.filter(function(row){ return !isJunkRow(row); });
+  if (!kept.length) { box.innerHTML = '<div class="tip">目录里是来源说明 / 广告等内容，已隐藏</div>'; return; }
   var LIMIT = 120;
-  var html = lines.slice(0, LIMIT).map(function(row){
-    if (row[0] === 'd') return '<div class="fd">📁 ' + esc(row[1]) + '</div>';
-    return '<div class="fl">· ' + esc(row[1]) + '<i>' + fmtSize(row[2]) + '</i></div>';
+  var html = kept.slice(0, LIMIT).map(function(row){
+    var name = cleanName(row[1]);
+    if (row[0] === 'd') return '<div class="fd">📁 ' + esc(name) + '</div>';
+    return '<div class="fl">· ' + esc(name) + '<i>' + fmtSize(row[2]) + '</i></div>';
   }).join('');
-  if (lines.length > LIMIT) html += '<div class="tip">仅显示前 ' + LIMIT + ' 项，共 ' + lines.length + ' 项</div>';
+  if (kept.length > LIMIT) html += '<div class="tip">仅显示前 ' + LIMIT + ' 项，共 ' + kept.length + ' 项</div>';
   box.innerHTML = html;
 }
 function openModal(it){
-  document.getElementById('m-title').textContent = it.t;
+  document.getElementById('m-title').textContent = cleanName(it.t);
   document.getElementById('m-zone').textContent = it.zo || '未分区';
   document.getElementById('m-cat').textContent = it.c || '未分类';
   document.getElementById('m-tags').textContent = it.g.length ? it.g.join(' · ') : '无';
