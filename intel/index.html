@@ -62,7 +62,7 @@
       <div class="sf-brand"><img src="../assets/logo.png" alt="硅基野人"><b>硅基野人</b><span>一个碳基老板，带着一群硅基员工</span></div>
       <a class="sf-back" href="../">← 返回首页</a>
     </div>
-    <div class="sf-sub">关注我 · 联系我 · 一起赚钱</div>
+    <div class="sf-sub">关注我 · 联系我 · 一起搞钱</div>
     <div class="sf-row"><a class="sf-pl" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="../assets/icon-douyin.png" alt="抖音"><span>抖音</span></a><a class="sf-pl" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="../assets/icon-xiaohongshu.png" alt="小红书"><span>小红书</span></a><a class="sf-pl" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="../assets/icon-bilibili.png" alt="B站"><span>B站</span></a><a class="sf-pl" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="../assets/icon-kuaishou.png" alt="快手"><span>快手</span></a><a class="sf-pl" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="../assets/icon-youtube.png" alt="YouTube"><span>YouTube</span></a><a class="sf-pl" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="../assets/icon-tiktok.png" alt="TikTok"><span>TikTok</span></a><a class="sf-pl" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="../assets/icon-toutiao.png" alt="今日头条"><span>今日头条</span></a><a class="sf-pl" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="../assets/icon-zhihu.png" alt="知乎"><span>知乎</span></a><a class="sf-pl" href="javascript:void(0)" data-mail><img src="../assets/icon-qqmail.png" alt="邮件"><span>邮件</span></a></div>
   </div>
 </div>
@@ -133,4 +133,24 @@
 <script>document.addEventListener('error', function(e){ var t=e.target; if(t && t.tagName==='IMG'){ t.style.visibility='hidden'; } }, true);</script><script>(function(){try{
   var d=new Date(), k=''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
   fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/intel-'+k,{cache:'no-store'}).catch(function(){});
-}catch(e){}})();</script></body></html>
+}catch(e){}})();</script><style>
+  nav.section-nav, #auth, #reading-desk, #video-radar, #newsnow, #tophub-desk, #aihot-desk,
+  #github, #free-rank, #douyin, #research, #library, #source-control, #my-news-sources,
+  #focus, #hot-section, .credit-line, .restored-source-directory, .restored-source-group,
+  #quick-find, #refresh, #settings, #sync, #ai-assist, #collection-info, #candidates,
+  #import-direct, #motion-toggle, #recommendation-basis, section.metrics, .notice { display:none !important; }
+  .page-head .actions { display:none !important; }
+  .snap-badge { display:inline-block; margin-left:8px; font-size:11px; color:#2563eb; background:#e0edff; border-radius:999px; padding:2px 9px; vertical-align:middle; }
+</style>
+<script>(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var h = document.querySelector('.page-head .title-line');
+    if (h && !h.querySelector('.snap-badge')) {
+      var b = document.createElement('span'); b.className='snap-badge'; b.textContent='展示版'; h.appendChild(b);
+    }
+    setTimeout(function(){
+      // 隐藏残留的“原封面暂不可用”占位（图片已本地化，若仍失败的图隐藏）
+      document.querySelectorAll('img').forEach(function(img){ if (img.complete && img.naturalWidth === 0) img.style.visibility='hidden'; });
+    }, 2500);
+  });
+})();</script></body></html>
