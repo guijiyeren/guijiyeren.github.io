@@ -72,7 +72,7 @@
           <span class="dy-cover"><img src="data/media/hot/3xe9ydcw2ubxhr6.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 5.2万</span></span>
           <span class="dy-body"><span class="dy-title">Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速</span><span class="dy-author">万有引言 · 快手</span></span>
         </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3x3nh5gjpr8wdfq">
-          <span class="dy-cover"><video class="dy-hover" muted loop playsinline preload="none" poster="" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
+          <span class="dy-cover"><img src="data/media/hot/3x3nh5gjpr8wdfq.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3x3nh5gjpr8wdfq.jpg" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
           <span class="dy-body"><span class="dy-title">漫画家的工作台和他们的作品风格完全一致 #漫画 #漫画家 #二次元 #画画</span><span class="dy-author">游娱小玩子 · 快手</span></span>
         </button><button class="dy-card" type="button" data-url="https://www.xiaohongshu.com/search_result/6ae1d3750000000020008fed?xsec_token=AB_Hk6KhMc6AXRUhjGqfq8G1uRVf6lrSc6CjisDUxZeyg=&amp;xsec_source=">
           <span class="dy-cover"><img src="data/media/hot/6ae1d3750000000020008fed.webp" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 31.3万</span></span>
@@ -99,7 +99,7 @@
           <span class="dy-cover"><img src="data/media/hot/3xe9ydcw2ubxhr6.jpg" alt="" loading="lazy"><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 5.2万</span></span>
           <span class="dy-body"><span class="dy-title">Vibe知识大赏 | 蚂蚁乱走万步后竟修起高速</span><span class="dy-author">万有引言 · 快手</span></span>
         </button><button class="dy-card" type="button" data-url="https://www.kuaishou.com/short-video/3x3nh5gjpr8wdfq">
-          <span class="dy-cover"><video class="dy-hover" muted loop playsinline preload="none" poster="" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
+          <span class="dy-cover"><img src="data/media/hot/3x3nh5gjpr8wdfq.jpg" alt="" loading="lazy"><video class="dy-hover" muted loop playsinline preload="none" poster="data/media/hot/3x3nh5gjpr8wdfq.jpg" src="data/media/hot/3x3nh5gjpr8wdfq.mp4"></video><span class="dy-play" aria-hidden="true">▶</span><span class="dy-like">♥ 4.8万</span></span>
           <span class="dy-body"><span class="dy-title">漫画家的工作台和他们的作品风格完全一致 #漫画 #漫画家 #二次元 #画画</span><span class="dy-author">游娱小玩子 · 快手</span></span>
         </button></div></div>
 </section><section id="home-video-focus" class="home-video-static">
@@ -123,13 +123,6 @@
             <div class="home-video-cover"><img src="data/media/hot/vline-2.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/x.png" alt="" loading="lazy" decoding="async"></span><span class="home-video-number">03</span><span class="home-video-play">▶</span></div>
             <h3>中文标题整理中</h3>
             <p>Claude @claudeai · 555.1 万 浏览</p>
-            <span class="home-video-read">悬停预览 · 点击播放 →</span>
-          </button>
-        </article><article class="home-video-card">
-          <button class="home-video-open" type="button" data-embed="" data-url="https://x.com/TuyetloanP81840/status/2119588762636468435">
-            <div class="home-video-cover"><img src="data/media/hot/vline-3.jpg" alt="" loading="lazy"><span class="home-video-logo"><img src="assets/logos/x.png" alt="" loading="lazy" decoding="async"></span><span class="home-video-number">04</span><span class="home-video-play">▶</span></div>
-            <h3>用这篇 50 万+浏览的 AI 短剧教程，我从头到尾跑了一条完整短片 👇  《夏日无事》1 分半 ✍️ 剧本：Claud</h3>
-            <p>Miller @TuyetloanP81840 · 8.3 万 浏览</p>
             <span class="home-video-read">悬停预览 · 点击播放 →</span>
           </button>
         </article><article class="home-video-card">
@@ -569,22 +562,6 @@ html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
       var b = document.createElement('span'); b.className='snap-badge'; b.textContent='展示版'; h.appendChild(b);
     }
     FIX();
-    function hideConnection(){
-      ['atlas-connection-state','auth'].forEach(function(id){
-        var el=document.getElementById(id); if(el) el.remove();
-      });
-      document.querySelectorAll('#connection').forEach(function(el){
-        if(/未连接|等待本机|连接本地/.test(el.textContent||'')) el.remove();
-      });
-      document.querySelectorAll('body *').forEach(function(el){
-        if(el.children.length===0 && /尚未连接本机|连接本地情报库/.test(el.textContent||'')){
-          var box=el.closest('.notice')||el.parentElement; if(box) box.remove();
-        }
-      });
-    }
-    hideConnection();
-    setTimeout(hideConnection, 600);
-    setTimeout(hideConnection, 2500);
     setInterval(FIX, 1200);
     setTimeout(function(){
       document.querySelectorAll('img').forEach(function(img){ if (img.complete && img.naturalWidth === 0) img.style.visibility='hidden'; });
