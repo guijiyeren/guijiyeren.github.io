@@ -2679,7 +2679,7 @@ document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !TIP.hid
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
-    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="../daily/">RSS</a></div>
+    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="../daily/" data-rss-preview="../daily/preview.html">RSS</a></div>
   </div>
 </footer>
 
@@ -2887,7 +2887,7 @@ html[data-theme="night"] .msg-box h3 { color:#f1f5f9 !important; }
 html[data-theme="night"] .msg-box p { color:#a8b7cc !important; }
 html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
 </style>
-<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报 RSS 预览"></iframe></div></div>
+<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报预览"></iframe></div></div>
 <script>(function(){
   var html=document.documentElement, btn=document.getElementById('themeBtn');
   var saved=null; try{ saved=localStorage.getItem('guiji_theme'); }catch(e){}
@@ -2900,11 +2900,17 @@ html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
   });
   var mask=document.getElementById('rssMask'), frame=document.getElementById('rssFrame');
   function close(){ if(mask) mask.classList.remove('on'); if(frame) frame.src='about:blank'; }
-  document.querySelectorAll('a[href$="daily/"]').forEach(function(a){
+  document.querySelectorAll('a[data-rss-preview],a[href$="daily/"]').forEach(function(a){
     a.addEventListener('click', function(e){
-      if(location.pathname.indexOf('/daily/')>=0) return;
+      var preview=a.getAttribute('data-rss-preview');
+      if(!preview){
+        var h=a.getAttribute('href')||'';
+        preview=h.replace(/daily\/?$/, 'daily/preview.html');
+        if(preview===h) preview=null;
+      }
+      if(!preview && location.pathname.indexOf('/daily/')>=0) return;
       if(!mask||!frame) return;
-      e.preventDefault(); frame.src=a.getAttribute('href'); mask.classList.add('on');
+      e.preventDefault(); frame.src=preview||a.getAttribute('href'); mask.classList.add('on');
     });
   });
   var cl=document.getElementById('rssClose'); if(cl) cl.addEventListener('click', close);

@@ -1,6 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI 日报 · 2026-11-10 · 硅基野人</title>
 <meta name="description" content="今天最明显的信号是低成本系列题材继续起量，印地语土豆、走读生、火柴人都出现了小号爆款。生产端也在提速，Claude 新模型、H3 工业管线和自动做影片的开源工具值得马上试。">
+<link rel="alternate" type="application/rss+xml" title="硅基野人 AI 日报" href="rss.xml">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b16;color:#e2e8f0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
 .top{max-width:1080px;margin:0 auto;padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -22,7 +23,7 @@ h1{font-size:34px;margin:10px 0 8px;color:#fff} .hero p{color:#94a3b8;font-size:
 </style></head><body>
 <div class="top"><a href="../">← 返回首页</a><div class="brand">硅基野人 · AI 日报</div><a href="../intel/">情报中枢 →</a></div>
 <header class="hero"><div class="eyebrow">DAILY BRIEF · 2026-11-10</div><h1>AI 情报站 · 11 月 10 日（第 19 期）</h1><p>今天最明显的信号是低成本系列题材继续起量，印地语土豆、走读生、火柴人都出现了小号爆款。生产端也在提速，Claude 新模型、H3 工业管线和自动做影片的开源工具值得马上试。</p>
-<div class="meta">数据来源：情报中枢雷达快照 · <a href="rss.xml">RSS 订阅</a> · <a href="../intel/">看完整情报中枢 →</a></div></header>
+<div class="meta">数据来源：情报中枢雷达快照 · <a href="preview.html" target="_blank" rel="noopener">日报预览</a> · <a href="../intel/">看完整情报中枢 →</a></div></header>
 <main class="grid"><article class="day-card">
       <div class="dc-no">01</div>
       <div class="dc-body">
@@ -212,7 +213,7 @@ h1{font-size:34px;margin:10px 0 8px;color:#fff} .hero p{color:#94a3b8;font-size:
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
-    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="../daily/">RSS</a></div>
+    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="../daily/" data-rss-preview="../daily/preview.html">RSS</a></div>
   </div>
 </footer>
 
@@ -420,7 +421,7 @@ html[data-theme="night"] .msg-box h3 { color:#f1f5f9 !important; }
 html[data-theme="night"] .msg-box p { color:#a8b7cc !important; }
 html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
 </style>
-<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报 RSS 预览"></iframe></div></div>
+<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报预览"></iframe></div></div>
 <script>(function(){
   var html=document.documentElement, btn=document.getElementById('themeBtn');
   var saved=null; try{ saved=localStorage.getItem('guiji_theme'); }catch(e){}
@@ -433,11 +434,17 @@ html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
   });
   var mask=document.getElementById('rssMask'), frame=document.getElementById('rssFrame');
   function close(){ if(mask) mask.classList.remove('on'); if(frame) frame.src='about:blank'; }
-  document.querySelectorAll('a[href$="daily/"]').forEach(function(a){
+  document.querySelectorAll('a[data-rss-preview],a[href$="daily/"]').forEach(function(a){
     a.addEventListener('click', function(e){
-      if(location.pathname.indexOf('/daily/')>=0) return;
+      var preview=a.getAttribute('data-rss-preview');
+      if(!preview){
+        var h=a.getAttribute('href')||'';
+        preview=h.replace(/daily\/?$/, 'daily/preview.html');
+        if(preview===h) preview=null;
+      }
+      if(!preview && location.pathname.indexOf('/daily/')>=0) return;
       if(!mask||!frame) return;
-      e.preventDefault(); frame.src=a.getAttribute('href'); mask.classList.add('on');
+      e.preventDefault(); frame.src=preview||a.getAttribute('href'); mask.classList.add('on');
     });
   });
   var cl=document.getElementById('rssClose'); if(cl) cl.addEventListener('click', close);
