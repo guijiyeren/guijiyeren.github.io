@@ -1,0 +1,134 @@
+{
+  "updated_at": "2026-11-10 22:15",
+  "source_count": 7,
+  "items": [
+    {
+      "source": "Hacker News",
+      "title": "Foldable Flight: The Best Paper Airplanes",
+      "url": "https://www.foldableflight.com",
+      "summary": "",
+      "score": "1103 points",
+      "time": "2026-11-09"
+    },
+    {
+      "source": "GitHub",
+      "title": "morluto/rea — Reverse engineer anything with agents, from app behavior down to native binaries.",
+      "url": "https://github.com/morluto/rea",
+      "summary": "",
+      "score": "★ 448886",
+      "time": "2026-04-14"
+    },
+    {
+      "source": "arXiv",
+      "title": "HiVe-Mem: Interleaving Horizontal Memory Expansion and Vertical Evidence Composition for Multimodal Agents",
+      "url": "http://arxiv.org/abs/2611.12872v1",
+      "summary": "As multimodal agents accumulate increasingly long interaction histories, effectively retrieving and utilizing past information becomes critical for long-term interaction. Existing ",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "OpenAI",
+      "title": "Helping caregivers use AI in everyday life",
+      "url": "https://openai.com/index/helping-caregivers-use-ai-in-everyday-life",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Google AI",
+      "title": "We’re bringing Adobe’s creative and productivity tools closer to your everyday Google apps.",
+      "url": "https://blog.google/company-news/inside-google/company-announcements/adobe-google-partnership-integration/",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Simon Willison",
+      "title": "Introducing Our Smallest, Most Efficient Model: Muse Ember",
+      "url": "https://simonwillison.net/2026/Nov/10/muse-ember/",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Hugging Face",
+      "title": "Nemotron-Personas-Finance-Japan: A Synthetic Dataset Capturing Japan's Demographics and Financial Context",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-personas-finance-japan",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Hacker News",
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "summary": "",
+      "score": "712 points",
+      "time": "2026-11-09"
+    },
+    {
+      "source": "GitHub",
+      "title": "mattpocock/skills — Skills for Real Engineers. Straight from my .agents directory.",
+      "url": "https://github.com/mattpocock/skills",
+      "summary": "",
+      "score": "★ 320431",
+      "time": "2026-02-03"
+    },
+    {
+      "source": "arXiv",
+      "title": "Shortcuts and Boundaries: Verifiable RL Misalignment and Contextual Safety Learning",
+      "url": "http://arxiv.org/abs/2611.12865v1",
+      "summary": "Reinforcement learning (RL) can improve an agent's task capability while reinforcing behavior that violates contextual execution requirements. We study this reward-driven misalignm",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "OpenAI",
+      "title": "Closing the AI guidance gap in education",
+      "url": "https://openai.com/index/closing-ai-guidance-gap-education",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Google AI",
+      "title": "Google Cloud launches Gemini for healthcare.",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Simon Willison",
+      "title": "Quoting Prompting Claude Fable 5.2",
+      "url": "https://simonwillison.net/2026/Nov/10/prompting-claude-fable-52/",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Hugging Face",
+      "title": "Your Experts Have Partners. There's HOPE for Keeping Them Together",
+      "url": "https://huggingface.co/blog/amazon/higher-order-pruning-experts",
+      "summary": "",
+      "score": "",
+      "time": ""
+    },
+    {
+      "source": "Hacker News",
+      "title": "USPS now offers official ZIP Code boundary polygons",
+      "url": "https://postalpro.usps.com/zcb",
+      "summary": "",
+      "score": "668 points",
+      "time": "2026-11-09"
+    },
+    {
+      "source": "GitHub",
+      "title": "affaan-m/ECC — The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and b",
+      "url": "https://github.com/affaan-m/ECC",
+      "summary": "",
+      "score": "★ 300541",
+      "time": "2026-01-18"
+    }
+  ]
+}
