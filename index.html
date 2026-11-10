@@ -392,7 +392,7 @@
   .mig-stage svg { width:100%; height:100%; display:block; }
   .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
   .mig-sub { font-size:11px; color:#94a3b8; }
-  .mig-tip { position:absolute; z-index:4; width:max-content; max-width:120px; padding:6px 10px; border-radius:9px; background:#fff; border:1px solid #bfdbfe; box-shadow:0 8px 22px rgba(15,23,42,.18); transform:translate(-50%,-100%) translateY(-7px) scale(.96); opacity:0; pointer-events:none; transition:opacity .16s, transform .16s; white-space:nowrap; text-align:center; }
+  .mig-tip { position:absolute; z-index:4; width:max-content; max-width:120px; padding:6px 10px; border-radius:9px; background:#fff; border:1px solid #bfdbfe; box-shadow:0 8px 22px rgba(15,23,42,.18); transform:translate(-50%,-100%) translateY(-7px) scale(.96); opacity:0; pointer-events:none; transition:opacity .08s, transform .08s; white-space:nowrap; text-align:center; }
   .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-9px) scale(1); }
   .mig-tip b { display:block; font-size:12px; font-weight:800; color:#1d4ed8; letter-spacing:.5px; }
   html[data-theme="night"] .mig-tip { background:#111a2b !important; border-color:#243247 !important; }
@@ -2537,6 +2537,24 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   prog.style.strokeDasharray = total;
   prog.style.strokeDashoffset = total;
 
+  // 每个城市在路径上的精确长度：光点一到节点，气泡就切，不再按比例估算
+  var stopLens = (function(){
+    var samples = [], step = Math.max(1, Math.floor(total / 900));
+    for (var len = 0; len <= total; len += step) {
+      var p = prog.getPointAtLength(len);
+      samples.push({ len: len, x: p.x, y: p.y });
+    }
+    return STOPS.map(function(st){
+      var best = 0, bestD = Infinity;
+      for (var i = 0; i < samples.length; i++) {
+        var dx = samples[i].x - st.x, dy = samples[i].y - st.y;
+        var d = dx * dx + dy * dy;
+        if (d < bestD) { bestD = d; best = samples[i].len; }
+      }
+      return best;
+    });
+  })();
+
   var t0 = performance.now(), dur = 14000, paused = false, pausedAt = 0, raf = null, lastActive = -1;
 
   function pointAt(ratio){ return prog.getPointAtLength(total * ratio); }
@@ -2547,11 +2565,11 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     prog.style.strokeDashoffset = total * (1 - ratio);
     var pt = pointAt(ratio);
     dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-    // 当前应该亮的节点：按路径长度近似
+    // 当前节点：按光点实际走过的路径长度判断
+    var curLen = total * ratio;
     var active = 0;
     for (var i = 0; i < STOPS.length; i++) {
-      var seg = i / (STOPS.length - 1);
-      if (ratio >= seg - 0.02) active = i;
+      if (curLen >= stopLens[i] - 1.5) active = i;
     }
     if (active !== lastActive) {
       lastActive = active;
