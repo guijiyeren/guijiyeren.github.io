@@ -1007,7 +1007,7 @@
       
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我走过的城市</b><span class="mig-sub">7 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我走过的城市</b><span class="mig-sub">8 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
             <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
@@ -1015,10 +1015,10 @@
                   <stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/>
                 </linearGradient>
               </defs>
-              <path id="migBase" d="" fill="none" stroke="#dbe7f6" stroke-width="2" stroke-dasharray="4 6"/>
-              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="2.5" stroke-linecap="round"/>
+              <path id="migBase" d="" fill="none" stroke="#cfe0f3" stroke-width="2.5" stroke-dasharray="5 7"/>
+              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3.5" stroke-linecap="round"/>
               <g id="migNodes"></g>
-              <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
+              <circle id="migDot" r="5.5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
             <div class="mig-tip" id="migTip"><b id="migTipCity"></b></div>
             <div class="mig-cap"><b id="migCity">湖南小镇</b><span id="migDesc">出生</span></div>
@@ -2446,13 +2446,14 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "湖南小镇", short: "出生", x: 58, y: 252 },
-    { city: "北京", short: "求学", x: 212, y: 74 },
-    { city: "江苏东海", short: "水晶生意", x: 330, y: 162 },
-    { city: "燕郊", short: "卖房转行", x: 248, y: 104 },
-    { city: "浙江诸暨", short: "袜子生意", x: 402, y: 226 },
-    { city: "湖南长沙", short: "买房", x: 118, y: 268 },
-    { city: "浙江杭州", short: "定居", x: 446, y: 214 }
+    { city: "湖南小镇", short: "出生", x: 45, y: 250 },
+    { city: "北京", short: "求学", x: 205, y: 65 },
+    { city: "燕郊", short: "卖房转行", x: 250, y: 115 },
+    { city: "江苏东海", short: "水晶生意", x: 335, y: 170 },
+    { city: "东北辽源", short: "做袜业", x: 350, y: 80 },
+    { city: "浙江诸暨", short: "袜子生意", x: 395, y: 250 },
+    { city: "湖南长沙", short: "买房", x: 110, y: 285 },
+    { city: "浙江杭州", short: "定居", x: 455, y: 170 }
   ];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
