@@ -564,7 +564,15 @@
     .pp-stage { min-height:360px; padding:16px 12px 14px; }
     .shot-gallery { grid-template-columns:1fr 1fr; }
     .shot.big { grid-column:1 / -1; }
-    .nav-links { display:none; }
+    .nav-in { flex-wrap:wrap; row-gap:8px; padding-bottom:8px; }
+    .nav-links { display:flex; flex-wrap:wrap; order:3; flex:0 0 100%; width:100%; margin:0; gap:6px 14px; overflow:visible; padding:8px 0 0; border-top:1px solid rgba(148,163,184,.16); font-size:12px; white-space:nowrap; }
+    .nav-links a { flex:none; }
+    .nav-theme { margin-left:auto; }
+    .chip-b { right:6px; }
+    .chip-c { left:6px; }
+    .chip-d { right:18px; }
+    .kb-card, .kb-card * { min-width:0; }
+    .kb-card { max-width:100%; overflow:hidden; }
     .work-row { flex-direction:column; align-items:flex-start; }
     .work-row .w-cover { flex-basis:auto; width:100%; height:auto; aspect-ratio:4/3; }
     .w-links { justify-content:flex-start; }

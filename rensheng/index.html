@@ -711,8 +711,15 @@ html.view-grid .shuffle-btn{display:inline-flex}
   .content { padding-left: 12px !important; padding-right: 12px !important; }
   .doc { width: 100% !important; max-width: 100% !important; margin: 0 !important; }
   .doc-head { margin-bottom: 22px !important; }
+  img:not([src]) { display:none !important; }
   html.view-grid .content { padding-left: 12px !important; padding-right: 12px !important; }
   .content > .doc { padding-left: 0 !important; padding-right: 0 !important; }
+}
+@media (max-width: 640px) {
+  .nav-page-icon { display:none !important; }
+  .search { flex:1 1 auto !important; min-width:0 !important; max-width:none !important; margin-left:0 !important; }
+  .search input { width:100% !important; }
+  .search kbd { display:none !important; }
 }
 @media (max-width: 430px) {
   .content { padding-left: 10px !important; padding-right: 10px !important; }

@@ -564,6 +564,8 @@ html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
       });
     }
     hideConn();
+    function dedupeVideo(){ var list=document.querySelectorAll('#home-video-focus'); for(var i=1;i<list.length;i++){ list[i].remove(); } }
+    dedupeVideo(); setTimeout(dedupeVideo, 700); setTimeout(dedupeVideo, 1800);
     setTimeout(hideConn, 600);
     setTimeout(hideConn, 2500);
     setInterval(FIX, 1200);
