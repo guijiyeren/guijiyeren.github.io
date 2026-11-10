@@ -402,6 +402,12 @@
   .mig-head button:hover { border-color:#bfdbfe; color:var(--blue); }
   .mig-stage { position:relative; flex:1; min-height:340px; border-radius:14px; background:radial-gradient(120% 120% at 70% 10%, #eef5ff 0%, #f8fbff 55%, #ffffff 100%); overflow:hidden; }
   .mig-stage::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 22% 18%, rgba(56,189,248,.10), transparent 34%), radial-gradient(circle at 80% 78%, rgba(37,99,235,.07), transparent 38%); }
+  .mig-star { animation:migTwinkle 3.2s ease-in-out infinite alternate; }
+  @keyframes migTwinkle { from { opacity:.12; } to { opacity:.75; } }
+  .mig-node:hover circle { fill:#2563eb; stroke:#1d4ed8; }
+  .mig-node:hover text { fill:#1d4ed8; font-weight:700; }
+  .mig-card { transition:transform .25s ease, box-shadow .25s ease; }
+  @media (hover:hover) { .mig-card:hover { box-shadow:0 20px 46px rgba(15,23,42,.12); } }
   #migProg { filter:drop-shadow(0 0 4px rgba(37,99,235,.55)); }
   #migDot { filter:drop-shadow(0 0 7px rgba(56,189,248,.95)); }
   .mig-node.on circle { filter:drop-shadow(0 0 5px rgba(37,99,235,.75)); }
@@ -1040,13 +1046,14 @@
               <path id="migGlow" d="" fill="none" stroke="url(#migGrad)" stroke-width="10" opacity=".16" filter="url(#migBlur)"/>
               <path id="migBase" d="" fill="none" stroke="#cfe0f3" stroke-width="2.5" stroke-dasharray="5 7"/>
               <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3.5" stroke-linecap="round"/>
+              <g id="migStars"></g>
               <g id="migTrail"></g>
               <g id="migNodes"></g>
               <circle id="migRing" cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0"/>
               <circle id="migDot" r="5.5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
             <div class="mig-tip" id="migTip"><b id="migTipCity"></b></div>
-            <div class="mig-cap"><b id="migCity">怀化小镇</b><span id="migDesc">出生</span></div>
+            <div class="mig-cap"><b id="migCity">湖南怀化</b><span id="migDesc">出生</span></div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar" loading="lazy" decoding="async">
@@ -2533,7 +2540,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "怀化小镇", short: "出生", x: 45, y: 250 },
+    { city: "湖南怀化", short: "出生", x: 45, y: 250 },
     { city: "北京", short: "求学", x: 205, y: 65 },
     { city: "东海县", short: "水晶电商", x: 335, y: 170 },
     { city: "燕郊", short: "买房", x: 250, y: 115 },
@@ -2617,7 +2624,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     void tipEl.offsetWidth;
     tipEl.classList.add("on");
     clearTimeout(tipTimer);
-    tipTimer = setTimeout(function(){ tipEl.classList.remove("on"); }, i === STOPS.length - 1 ? 4400 : 3200);
+    tipTimer = setTimeout(function(){ tipEl.classList.remove("on"); }, i === STOPS.length - 1 ? 3400 : 3200);
   }
 
   var glow = document.getElementById("migGlow");
@@ -2631,6 +2638,19 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     tc.setAttribute("opacity", String(.42 - ti * .06));
     trailG.appendChild(tc); trail.push(tc);
   }
+  var starsG = document.getElementById("migStars");
+  for (var si = 0; si < 26; si++) {
+    var sc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    sc.setAttribute("cx", String(14 + Math.random() * 492));
+    sc.setAttribute("cy", String(16 + Math.random() * 328));
+    sc.setAttribute("r", String(0.7 + Math.random() * 1.2));
+    sc.setAttribute("fill", si % 3 ? "#7dd3fc" : "#bfdbfe");
+    sc.setAttribute("class", "mig-star");
+    sc.style.animationDelay = (Math.random() * 3).toFixed(1) + "s";
+    sc.style.animationDuration = (2.4 + Math.random() * 2.4).toFixed(1) + "s";
+    starsG.appendChild(sc);
+  }
+
   var total = prog.getTotalLength();
   prog.style.strokeDasharray = total;
   prog.style.strokeDashoffset = total;
@@ -2658,7 +2678,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 
   function pointAt(ratio){ return prog.getPointAtLength(total * ratio); }
 
-  var hold = 4000;
+  var hold = 3000;
   function frame(now){
     if (paused) return;
     var cycle = dur + hold;
@@ -2716,6 +2736,18 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     playBtn.style.display = "none";
   } else {
     raf = requestAnimationFrame(frame);
+  }
+
+  // 轻微 3D 跟随（只在桌面鼠标）
+  var card = document.querySelector(".mig-card");
+  if (card && window.matchMedia("(hover:hover)").matches) {
+    card.addEventListener("mousemove", function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - .5;
+      var py = (e.clientY - r.top) / r.height - .5;
+      card.style.transform = "perspective(900px) rotateX(" + (-py * 3.2).toFixed(2) + "deg) rotateY(" + (px * 3.2).toFixed(2) + "deg)";
+    });
+    card.addEventListener("mouseleave", function(){ card.style.transform = ""; });
   }
 })();
 </script>
