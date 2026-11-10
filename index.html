@@ -392,10 +392,9 @@
   .mig-stage svg { width:100%; height:100%; display:block; }
   .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
   .mig-sub { font-size:11px; color:#94a3b8; }
-  .mig-tip { position:absolute; z-index:3; width:180px; max-width:45%; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.97); border:1px solid #dbeafe; box-shadow:0 12px 30px rgba(15,23,42,.16); transform:translate(-50%,-100%) translateY(-8px) scale(.96); opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; }
-  .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-10px) scale(1); }
-  .mig-tip b { display:block; font-size:12.5px; color:#1d4ed8; }
-  .mig-tip span { display:block; margin-top:3px; font-size:10.5px; line-height:1.6; color:#475569; }
+  .mig-tip { position:absolute; z-index:4; width:max-content; max-width:120px; padding:6px 10px; border-radius:9px; background:#fff; border:1px solid #bfdbfe; box-shadow:0 8px 22px rgba(15,23,42,.18); transform:translate(-50%,-100%) translateY(-7px) scale(.96); opacity:0; pointer-events:none; transition:opacity .16s, transform .16s; white-space:nowrap; text-align:center; }
+  .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-9px) scale(1); }
+  .mig-tip b { display:block; font-size:12px; font-weight:800; color:#1d4ed8; letter-spacing:.5px; }
   html[data-theme="night"] .mig-tip { background:#111a2b !important; border-color:#243247 !important; }
   html[data-theme="night"] .mig-tip b { color:#7dd3fc !important; }
   html[data-theme="night"] .mig-tip span { color:#a8b7cc !important; }
@@ -993,24 +992,22 @@
       <div class="timeline-mini about-timeline">
         <div class="tl-row"><b>1986</b><span>出生于湖南一小镇</span></div>
         <div class="tl-row"><b>2005</b><span>坐绿皮火车去北京上学，第一次出省</span></div>
-        <div class="tl-row"><b>2008</b><span>网上卖充值卡、Q 币、VIP 论坛会员，还帮人远程修电脑</span></div>
-        <div class="tl-row"><b>2010</b><span>开个人工作室，帮人做网站、跑网络推广，北京城到处跑</span></div>
-        <div class="tl-row"><b>2014</b><span>结婚生子，完成人生两件大事</span></div>
+        <div class="tl-row"><b>2008</b><span>网上卖手机充值卡、Q 币、VIP 论坛会员，还帮人远程修电脑</span></div>
+        <div class="tl-row"><b>2010</b><span>开个人工作室，帮人做网站、网络推广，游走在北京各个角落</span></div>
+        <div class="tl-row"><b>2014</b><span>结婚生子，一年里完成两件人生大事</span></div>
         <div class="tl-row"><b>2015</b><span>去江苏连云港东海县做水晶饰品生意</span></div>
-
-        <div class="tl-row"><b>2016</b><span>女儿出生，家里多了个甜心</span></div>
-        <div class="tl-row"><b>2017</b><span>卖掉燕郊房子，开始卖春节和圣诞用品</span></div>
+        <div class="tl-row"><b>2017</b><span>卖掉燕郊的房子，开始卖春节和圣诞用品</span></div>
         <div class="tl-row"><b>2018</b><span>搬家到浙江诸暨产业带，开始了卖袜子之旅</span></div>
         <div class="tl-row"><b>2021</b><span>生意做大做强，渐渐开始躺平</span></div>
-        <div class="tl-row"><b>2022</b><span>手握现金流，开上大奔，自诩人生到达了巅峰</span></div>
+        <div class="tl-row"><b>2022</b><span>手握大把现金流，开上大奔，感觉人生到达了巅峰</span></div>
         <div class="tl-row"><b>2024</b><span>遇到变故，渐渐消沉，业绩腰斩；下半年开始接触 AI</span></div>
-        <div class="tl-row"><b>2025</b><span>定居杭州，第一次坐邮轮出了趟国，到了韩国、日本</span></div>
+        <div class="tl-row"><b>2025</b><span>定居杭州，第一次坐邮轮出了趟国，去了韩国、日本</span></div>
         <div class="tl-row"><b>2026</b><span>继续用 AI 把以前做不了的事做成，再拼一把</span></div>
       </div>
       
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我走过的城市</b><span class="mig-sub">1986—2025 · 7 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我走过的城市</b><span class="mig-sub">7 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
             <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
@@ -1023,8 +1020,8 @@
               <g id="migNodes"></g>
               <circle id="migDot" r="5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
             </svg>
-            <div class="mig-tip" id="migTip"><b id="migTipCity"></b><span id="migTipDesc"></span></div>
-            <div class="mig-cap"><b id="migCity">湖南小镇 · 1986</b><span id="migDesc">出生在湖南一个小镇</span></div>
+            <div class="mig-tip" id="migTip"><b id="migTipCity"></b></div>
+            <div class="mig-cap"><b id="migCity">湖南小镇</b><span id="migDesc">出生</span></div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar" loading="lazy" decoding="async">
@@ -2449,13 +2446,13 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 /* ---------- 关于我：迁徙路线动画 ---------- */
 (function(){
   var STOPS = [
-    { city: "湖南小镇", year: "1986", desc: "出生在湖南一个小镇", x: 58, y: 252 },
-    { city: "北京", year: "2005", desc: "坐绿皮火车去北京上学，第一次出省", x: 212, y: 74 },
-    { city: "江苏东海", year: "2015", desc: "去江苏连云港东海县做水晶饰品生意", x: 330, y: 162 },
-    { city: "燕郊", year: "2017", desc: "卖掉燕郊的房子，转做春节和圣诞用品", x: 248, y: 104 },
-    { city: "浙江诸暨", year: "2018", desc: "搬到诸暨产业带，开始卖袜子", x: 402, y: 226 },
-    { city: "湖南长沙", year: "2020", desc: "在长沙市买房", x: 118, y: 268 },
-    { city: "浙江杭州", year: "2025", desc: "定居杭州，第一次坐邮轮出国", x: 446, y: 214 }
+    { city: "湖南小镇", short: "出生", x: 58, y: 252 },
+    { city: "北京", short: "求学", x: 212, y: 74 },
+    { city: "江苏东海", short: "水晶生意", x: 330, y: 162 },
+    { city: "燕郊", short: "卖房转行", x: 248, y: 104 },
+    { city: "浙江诸暨", short: "袜子生意", x: 402, y: 226 },
+    { city: "湖南长沙", short: "买房", x: 118, y: 268 },
+    { city: "浙江杭州", short: "定居", x: 446, y: 214 }
   ];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
@@ -2503,9 +2500,9 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   function showStop(i){
     if (!mask || !modalCity) return;
     var st = STOPS[i];
-    modalYear.textContent = st.year || "";
+    modalYear.textContent = "";
     modalCity.textContent = st.city;
-    modalDesc.textContent = st.desc;
+    modalDesc.textContent = st.short;
     mask.classList.add("on");
   }
   function closeStop(){
@@ -2523,10 +2520,9 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   function showTip(i){
     if (!tipEl || !tipCity) return;
     var st = STOPS[i];
-    tipCity.textContent = st.city + (st.year ? " · " + st.year : "");
-    tipDesc.textContent = st.desc;
-    var left = Math.max(18, Math.min(80, st.x / 520 * 100));
-    var top = Math.max(10, st.y / 360 * 100 - 18);
+    tipCity.textContent = st.short;
+    var left = st.x / 520 * 100;
+    var top = st.y / 360 * 100;
     tipEl.style.left = left + "%";
     tipEl.style.top = top + "%";
     tipEl.classList.remove("on");
@@ -2560,7 +2556,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
       lastActive = active;
       nodeEls.forEach(function(g, i){ g.classList.toggle("on", i <= active); });
       cityEl.textContent = STOPS[active].city;
-      descEl.textContent = (STOPS[active].year ? STOPS[active].year + " · " : "") + STOPS[active].desc;
+      descEl.textContent = STOPS[active].short;
       showTip(active);
     }
     raf = requestAnimationFrame(frame);
@@ -2582,7 +2578,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   if (reduce) {
     prog.style.strokeDashoffset = 0;
     nodeEls.forEach(function(g){ g.classList.add("on"); });
-    cityEl.textContent = "浙江杭州"; descEl.textContent = "2025 · 定居杭州"; showTip(STOPS.length - 1);
+    cityEl.textContent = "浙江杭州"; descEl.textContent = "定居"; showTip(STOPS.length - 1);
     playBtn.style.display = "none";
   } else {
     raf = requestAnimationFrame(frame);
