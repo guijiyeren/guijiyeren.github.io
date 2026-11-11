@@ -91,7 +91,19 @@
   body.theme-glass #panel{background:rgba(255,255,255,.94);color:#16202e;border-color:rgba(20,30,46,.12)}
   body.theme-glass #panel ol{color:rgba(20,30,46,.85)}
 </style>
-<style>#imgprev img:not([src]){display:none}</style></head>
+<style>
+#imgprev img:not([src]){display:none}
+@media (max-width:640px){
+  .bar{left:10px;right:10px;top:10px;gap:8px;align-items:flex-start;flex-wrap:wrap}
+  .bar a.back{flex:0 0 auto;white-space:nowrap;padding:6px 10px;font-size:12px}
+  .bar .t{flex:0 0 auto;font-size:14px;white-space:nowrap}
+  .themes{order:3;flex:0 0 100%;margin-left:0;gap:6px;overflow-x:auto;padding:2px 0 5px;scrollbar-width:none}
+  .themes::-webkit-scrollbar{display:none}
+  .themes .sw{flex:0 0 26px;width:26px;height:26px}
+  .hint{left:12px;bottom:12px;font-size:11px}
+  #fs-btn{right:12px;bottom:46px}
+}
+</style></head>
 <body>
 <div id="bg"></div>
 <div id="host"></div>
