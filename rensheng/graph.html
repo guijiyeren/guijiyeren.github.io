@@ -1256,6 +1256,8 @@
       var clash = boxes.some(function(b){ return !(box.r < b.l || box.l > b.r || box.b < b.t || box.t > b.b); });
       if (clash) { L.el.style.opacity = '0'; continue; }
       boxes.push(box);
+      var _topSafe = innerWidth <= 640 ? 128 : 70;
+      if (x - L.w / 2 < 6 || x + L.w / 2 > innerWidth - 6 || y - L.h / 2 < _topSafe || y + L.h / 2 > innerHeight - 8) { L.el.style.opacity = '0'; continue; }
       L.el.style.left = x + 'px'; L.el.style.top = y + 'px';
       L.el.style.opacity = String(L.scale >= 1 ? .95 : .8);
     }
