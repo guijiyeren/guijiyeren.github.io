@@ -108,6 +108,8 @@ html.dark {
   .seg button.on { background:#e0edff; color:#1d4ed8; font-weight:700; }
   .tbtn { border:1px solid var(--line); background:#fff; font:inherit; font-size:12.5px; color:#475569; border-radius:10px; padding:8px 13px; cursor:pointer; }
   .tbtn:hover { border-color:#bfdbfe; color:var(--blue); }
+  .tbtn-new { position:relative; }
+  .new-mini { position:absolute; top:-7px; right:-7px; background:#ef4444; color:#fff; font-size:8.5px; font-weight:800; line-height:1; letter-spacing:.4px; padding:2px 4px; border-radius:6px; box-shadow:0 2px 7px rgba(239,68,68,.5); }
   .cnt { font-size:12px; color:#64748b; }
   .clear { border:0; background:none; font:inherit; font-size:12px; color:#94a3b8; cursor:pointer; }
   .clear:hover { color:var(--blue); }
@@ -253,7 +255,7 @@ html.dark {
       </label>
       <div class="seg" id="seg"><button data-v="grid" class="on">▦ 图墙</button><button data-v="list">☰ 列表</button></div>
       <button class="tbtn" id="sizeBtn">▭ 标准</button>
-      <button class="tbtn" id="latestBtn">最新</button>
+      <button class="tbtn tbtn-new" id="latestBtn">最新<span class="new-mini">NEW</span></button>
       <span class="cnt" id="count"></span>
       <button class="clear" id="clear">清除筛选</button>
     </div>
@@ -679,7 +681,7 @@ function dirRowsFor(it, cb){
   var f = (META.dirs || {})[it.zo];
   if (!f) { cb(null); return; }
   if (dirCache[f]) { cb(dirCache[f][String(it._i)]); return; }
-  fetch('data/dirs/' + f + '?v=20261113g').then(function(r){ return r.json(); }).then(function(mp){ dirCache[f] = mp; cb(mp[String(it._i)]); }).catch(function(){ cb(null); });
+  fetch('data/dirs/' + f + '?v=20261113h').then(function(r){ return r.json(); }).then(function(mp){ dirCache[f] = mp; cb(mp[String(it._i)]); }).catch(function(){ cb(null); });
 }
 function placeDirTip(el){
   if (!tipEl) return;
@@ -728,7 +730,7 @@ document.addEventListener('mouseout', function(e){
 window.addEventListener('scroll', hideDirTip, true);
 
 
-fetch('data/items.json?v=20261113g').then(function(r){ return r.json(); }).then(function(d){
+fetch('data/items.json?v=20261113h').then(function(r){ return r.json(); }).then(function(d){
   ITEMS = d.items;
   ITEMS.forEach(function(it, i){ it._i = i; });
   META = d.meta;
@@ -902,7 +904,7 @@ function loadDirs(it){
   var idx = String(it._i);
   if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
   box.innerHTML = '<div class="tip">目录加载中…</div>';
-  fetch('data/dirs/' + fname + '?v=20261113g').then(function(r){ return r.json(); }).then(function(mp){
+  fetch('data/dirs/' + fname + '?v=20261113h').then(function(r){ return r.json(); }).then(function(mp){
     dirCache[fname] = mp; showDir(mp[idx]);
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
