@@ -1,0 +1,15 @@
+/* 全站统一顶部导航（主站 + 子页面，2026-11-13） */
+.site-nav{position:relative;z-index:80;background:#0a0f1d;color:#cbd5e1;box-shadow:0 1px 0 rgba(148,163,184,.16);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif}
+.site-nav *{box-sizing:border-box}
+.site-nav-in{max-width:1200px;margin:0 auto;padding:0 24px;min-height:46px;display:flex;align-items:center;gap:18px}
+.site-nav a{color:#cbd5e1!important;text-decoration:none;white-space:nowrap}
+.site-nav a:hover{color:#fff!important}
+.site-nav .sn-brand{display:inline-flex;align-items:center;gap:8px;color:#fff!important;font-size:14px;font-weight:800;letter-spacing:.3px;flex:0 0 auto}
+.site-nav .sn-brand img{width:24px;height:24px;border-radius:50%;display:block;border:1px solid rgba(56,189,248,.45)}
+.site-nav .sn-links{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:12.5px;min-width:0}
+.site-nav .sn-links a{padding:4px 0}
+@media (max-width:760px){
+  .site-nav-in{padding:8px 14px;min-height:0;flex-wrap:wrap;gap:6px 12px}
+  .site-nav .sn-brand{font-size:13px}
+  .site-nav .sn-links{order:2;flex:0 0 100%;width:100%;margin:4px 0 0;gap:8px 14px;flex-wrap:wrap;white-space:normal;font-size:11.5px;line-height:1.8}
+}
