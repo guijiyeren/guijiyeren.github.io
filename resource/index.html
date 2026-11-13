@@ -562,7 +562,7 @@ var state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', vi
 var TAG_OPEN = false;
 var dirCache = {};
 
-fetch('data/items.json').then(function(r){ return r.json(); }).then(function(d){
+fetch('data/items.json?v=20261113c').then(function(r){ return r.json(); }).then(function(d){
   ITEMS = d.items;
   ITEMS.forEach(function(it, i){ it._i = i; });
   META = d.meta;
@@ -735,7 +735,7 @@ function loadDirs(it){
   var idx = String(it._i);
   if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
   box.innerHTML = '<div class="tip">目录加载中…</div>';
-  fetch('data/dirs/' + fname).then(function(r){ return r.json(); }).then(function(mp){
+  fetch('data/dirs/' + fname + '?v=20261113c').then(function(r){ return r.json(); }).then(function(mp){
     dirCache[fname] = mp; showDir(mp[idx]);
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
