@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -211,7 +211,8 @@
   .sub-form input[type="email"] { flex:1 1 320px; border:1px solid #cbd8ea; border-radius:12px; padding:13px 16px; font-size:14px; color:#0f172a; background:#fbfdff; }
   .sub-note { margin-top:12px; font-size:12px; color:#16a34a; min-height:18px; }
   .sub-note.err { color:#dc2626; }
-  .pp-updated { margin-top:10px; font-size:11px; color:#94a3b8; }
+  .pp-updated { margin-top:10px; font-size:11px; color:#94a3b8; display:flex; align-items:center; gap:8px; }
+  .pp-updated .new-pill { display:inline-flex; align-items:center; background:#ef4444; color:#fff; font-size:9.5px; font-weight:800; letter-spacing:.8px; padding:2px 7px; border-radius:999px; box-shadow:0 2px 8px rgba(239,68,68,.4); }
   @media (max-width:900px) {
     .num-grid { grid-template-columns:repeat(3,1fr); }
     .note-grid, .svc-grid { grid-template-columns:1fr; }
@@ -776,7 +777,7 @@
             <li>类型 / 年份 / 评分筛选 + 标题搜索</li>
             <li>点开看目录结构，不含网盘与提取码</li>`n            <li>「最新」按钮：近 30 天新收录按日排</li>
           </ul>
-          <div class="pp-updated">最近更新：11-13</div>
+          <div class="pp-updated">最近更新：11-13<span class="new-pill">NEW</span></div>
           <div class="pp-links">
             <a class="btn btn-primary" href="./resource/" target="_blank" rel="noopener">打开站点 →</a>
           </div>
