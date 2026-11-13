@@ -139,6 +139,24 @@
   .lrow .star { color:#f59e0b; letter-spacing:-1px; font-size:11px; }
 
   .more { display:flex; justify-content:center; margin-top:18px; }
+  /* 最新采集弹层 */
+  .latest-modal { width:min(900px,96vw) !important; }
+  .latest-list { margin-top:12px; max-height:62vh; overflow:auto; }
+  .latest-list .lg { display:flex; justify-content:space-between; align-items:baseline; font-size:12px; color:#94a3b8; padding:10px 2px 4px; border-bottom:1px dashed var(--line); margin-bottom:2px; }
+  .latest-list .lg span { font-size:11px; opacity:.85; }
+  .latest-list .lr { display:flex; gap:10px; align-items:center; padding:7px 2px; border-bottom:1px solid #f1f5f9; cursor:pointer; }
+  .latest-list .lr:hover { background:#f8fafc; }
+  .latest-list .lr .d { flex:none; width:74px; font-size:11px; color:#94a3b8; }
+  .latest-list .lr .t { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12.5px; color:#0f172a; }
+  .latest-list .lr .z { flex:none; font-size:11px; color:#94a3b8; max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  @media (prefers-color-scheme: dark) {
+    .latest-modal { background:#131c2b !important; }
+    .latest-list .lr { border-color:#22304a !important; }
+    .latest-list .lr:hover { background:#1b263a !important; }
+    .latest-list .lr .t { color:#e7edf7 !important; }
+    .latest-list .lr .d, .latest-list .lr .z { color:#8fa3bf !important; }
+    .latest-list .lg { color:#93a4c0 !important; border-color:#2a3446 !important; }
+  }
   .more button { border:1px solid var(--line); background:#fff; color:#334155; font:600 13px/1 inherit; border-radius:999px; padding:11px 24px; cursor:pointer; box-shadow:0 8px 22px rgba(15,23,42,.06); }
   .more button:hover { border-color:#bfdbfe; color:var(--blue); }
   .empty { padding:40px; text-align:center; color:#94a3b8; font-size:13px; }
@@ -211,6 +229,7 @@
       </label>
       <div class="seg" id="seg"><button data-v="grid" class="on">▦ 图墙</button><button data-v="list">☰ 列表</button></div>
       <button class="tbtn" id="sizeBtn">▭ 标准</button>
+      <button class="tbtn" id="latestBtn">最新</button>
       <span class="cnt" id="count"></span>
       <button class="clear" id="clear">清除筛选</button>
     </div>
@@ -611,6 +630,13 @@ html[data-theme="night"] .msg-form label { color:#94a3b8 !important; }
     <button class="close" id="m-close">知道了</button>
   </div>
 </div>
+<div class="mask" id="latestMask">
+  <div class="modal latest-modal">
+    <h2>最新采集 · 近 30 天</h2>
+    <div class="latest-list" id="latestList"></div>
+    <button class="close" id="latestClose">关闭</button>
+  </div>
+</div>
 <script>
 var META = {"count": 10247, "generated": "2026-11-13", "zones": [{"name": "实战项目区", "count": 3479, "cats": [["虚拟项目", 904], ["AI人工智能", 700], ["短视频运营", 479], ["其它资料", 301], ["跨境电商", 139], ["国外项目", 121], ["最新收录", 110], ["小红书", 102], ["直播玩法", 101], ["国内电商", 100], ["创业项目", 69], ["设计教程", 56], ["投资理财", 55], ["引流涨粉", 46], ["热门给力项目", 45], ["新媒体", 39], ["无货源", 29], ["营销-成交", 28], ["抖音小店", 21], ["文案写作", 19], ["CPA CPS", 13], ["公众号", 1], ["淘客项目", 1]]}, {"name": "搞钱技能区", "count": 3366, "cats": [["自媒体与短视频", 751], ["AI 与智能体", 693], ["编程与开发", 681], ["设计剪辑", 471], ["电商与营销", 396], ["职场技能", 249], ["软件工具", 86], ["投资与商业", 24], ["最新收录", 12], ["GitHub", 1], ["职场智慧", 1], ["辣条教程", 1]]}, {"name": "个人成长区", "count": 1061, "cats": [["知识付费", 781], ["名人访谈", 141], ["自我提升", 88], ["有声书", 38], ["最新收录", 5], ["SEO", 1], ["全流程拆解", 1], ["处世智慧", 1], ["实战课", 1], ["沟通方法", 1], ["训练营", 1], ["语音识别", 1], ["零基础入门", 1]]}, {"name": "其他杂烩区", "count": 888, "cats": [["其他课程", 305], ["阅读书单", 147], ["编程开发", 105], ["运动健身", 61], ["教育学习", 46], ["情感恋爱", 44], ["餐饮美食", 39], ["兴趣才艺", 32], ["职场商业", 27], ["生活技能", 23], ["软件工具", 16], ["安全测试", 14], ["玄学命理", 14], ["外语学习", 10], ["生活兴趣", 4], ["设计剪辑", 1]]}, {"name": "升学考证区", "count": 751, "cats": [["幼儿启蒙", 180], ["初中", 164], ["考公考编", 93], ["高中", 83], ["小学", 81], ["职业与学历", 39], ["外语", 38], ["家庭教育", 38], ["其他教育", 35]]}, {"name": "健康生活区", "count": 498, "cats": [["情感沟通", 178], ["健康养生", 159], ["生活兴趣", 145], ["心理与关系", 16]]}, {"name": "电商课程区", "count": 190, "cats": [["AI电商", 37], ["最新收录", 31], ["综合运营", 27], ["直通车", 18], ["抖音教程", 17], ["淘宝天猫", 17], ["拼多多教程", 13], ["美工设计", 9], ["小红书教程", 6], ["京东教程", 3], ["直播主播", 3], ["跨境教程", 3], ["选品爆款", 3], ["剪辑拍摄", 2], ["无货源店群", 1]]}, {"name": "家庭教育区", "count": 14, "cats": [["家庭教育", 14]]}], "bigs": [{"name": "成长", "count": 4725}, {"name": "实战项目", "count": 3479}, {"name": "搞钱", "count": 1509}, {"name": "健康", "count": 277}, {"name": "电商课程", "count": 190}, {"name": "家庭", "count": 67}], "years": [{"label": "全部年份", "count": 10247, "v": ""}, {"label": "2026", "count": 3571, "v": "2026"}, {"label": "2025", "count": 80, "v": "2025"}, {"label": "2024 及更早", "count": 34, "v": "2024"}, {"label": "未标注", "count": 6562, "v": "未标注"}], "rates": [{"v": "5", "count": 1998}, {"v": "4", "count": 4862}, {"v": "3", "count": 1401}, {"v": "2", "count": 1718}, {"v": "1", "count": 268}], "tags": [{"name": "百度网盘", "count": 3597}, {"name": "2026", "count": 3571}, {"name": "实战项目", "count": 3440}, {"name": "未标注", "count": 3314}, {"name": "虚拟项目", "count": 904}, {"name": "未分类", "count": 884}, {"name": "AI人工智能", "count": 700}, {"name": "AI大模型智能体", "count": 505}, {"name": "短视频运营", "count": 479}, {"name": "设计素材模板", "count": 383}, {"name": "电商跨境选品", "count": 370}, {"name": "B站", "count": 334}, {"name": "AI", "count": 320}, {"name": "编程", "count": 311}, {"name": "短视频直播运营", "count": 309}, {"name": "职场效率写作", "count": 305}, {"name": "其它资料", "count": 301}, {"name": "小红书", "count": 267}, {"name": "编程自动化数据", "count": 266}, {"name": "得到", "count": 210}, {"name": "生活技能兴趣", "count": 201}, {"name": "小学", "count": 177}, {"name": "初中", "count": 164}, {"name": "卖家视频", "count": 159}, {"name": "最新收录", "count": 141}, {"name": "跨境电商", "count": 139}, {"name": "设计", "count": 127}, {"name": "英语", "count": 124}, {"name": "国外项目", "count": 121}, {"name": "自媒体", "count": 105}, {"name": "混沌", "count": 102}, {"name": "直播玩法", "count": 101}, {"name": "国内电商", "count": 100}, {"name": "电商", "count": 98}, {"name": "创业", "count": 97}, {"name": "剪辑后期素材", "count": 96}, {"name": "副业", "count": 91}, {"name": "抖音", "count": 88}, {"name": "自媒体涨粉变现", "count": 86}, {"name": "职场", "count": 84}, {"name": "2025", "count": 80}, {"name": "樊登", "count": 78}, {"name": "国学传统文化养生", "count": 76}, {"name": "视频号", "count": 76}, {"name": "快手", "count": 75}, {"name": "高考", "count": 73}, {"name": "创业项目", "count": 69}, {"name": "心理学", "count": 68}, {"name": "数学", "count": 64}, {"name": "剪辑", "count": 61}, {"name": "TikTok", "count": 60}, {"name": "语文", "count": 58}, {"name": "投资理财", "count": 57}, {"name": "设计教程", "count": 56}, {"name": "已验活", "count": 54}, {"name": "知识付费", "count": 54}, {"name": "两性", "count": 53}, {"name": "有声", "count": 52}, {"name": "软件", "count": 51}, {"name": "引流涨粉", "count": 46}, {"name": "亲子", "count": 45}, {"name": "热门给力项目", "count": 45}, {"name": "2023 及更早", "count": 43}, {"name": "新媒体", "count": 39}, {"name": "办公", "count": 38}, {"name": "AI电商", "count": 37}, {"name": "投资", "count": 36}, {"name": "高中", "count": 36}, {"name": "动漫", "count": 35}, {"name": "2024", "count": 34}, {"name": "算法", "count": 31}, {"name": "无货源", "count": 29}, {"name": "营销-成交", "count": 28}, {"name": "幼儿", "count": 27}, {"name": "私域", "count": 27}, {"name": "综合运营", "count": 27}, {"name": "摄影", "count": 26}, {"name": "简历", "count": 23}, {"name": "养生", "count": 23}, {"name": "网络安全", "count": 21}, {"name": "抖音小店", "count": 21}, {"name": "直播", "count": 20}, {"name": "数据库", "count": 19}, {"name": "文案写作", "count": 19}, {"name": "直通车", "count": 18}, {"name": "中考", "count": 17}, {"name": "抖音教程", "count": 17}, {"name": "淘宝天猫", "count": 17}, {"name": "电影", "count": 15}, {"name": "考证学历", "count": 15}, {"name": "考公", "count": 14}, {"name": "CPA CPS", "count": 13}, {"name": "拼多多教程", "count": 13}, {"name": "餐饮", "count": 12}, {"name": "纪录片", "count": 9}, {"name": "SEO搜索流量", "count": 9}, {"name": "美工设计", "count": 9}, {"name": "升级版", "count": 8}, {"name": "健康生活", "count": 8}, {"name": "健身", "count": 8}, {"name": "素材", "count": 8}, {"name": "夸克网盘", "count": 8}, {"name": "名师讲座", "count": 7}, {"name": "商业认知", "count": 7}, {"name": "音乐", "count": 6}, {"name": "模板", "count": 6}, {"name": "电子书", "count": 6}, {"name": "合同", "count": 6}, {"name": "小红书教程", "count": 6}, {"name": "喜马拉雅", "count": 5}, {"name": "短剧", "count": 4}, {"name": "京东教程", "count": 3}, {"name": "直播主播", "count": 3}, {"name": "跨境教程", "count": 3}, {"name": "选品爆款", "count": 3}, {"name": "AI搜索优化", "count": 2}, {"name": "语言考试", "count": 2}, {"name": "教资", "count": 2}, {"name": "韩语", "count": 2}, {"name": "剪辑拍摄", "count": 2}, {"name": "电商课程", "count": 2}, {"name": "SEO", "count": 1}, {"name": "Google排名", "count": 1}, {"name": "搜索排名优化", "count": 1}, {"name": "全流程拆解", "count": 1}, {"name": "自媒体变现", "count": 1}, {"name": "多赛道玩法", "count": 1}, {"name": "自媒体实战", "count": 1}, {"name": "葛剑雄", "count": 1}, {"name": "郦波", "count": 1}, {"name": "钱文忠", "count": 1}, {"name": "处世智慧", "count": 1}, {"name": "中国谋略", "count": 1}, {"name": "以史为鉴", "count": 1}, {"name": "博弈智慧", "count": 1}, {"name": "实战课", "count": 1}, {"name": "全能实战", "count": 1}, {"name": "多场景落地", "count": 1}, {"name": "WorkBuddy玩法", "count": 1}, {"name": "名著解读", "count": 1}, {"name": "杜素娟", "count": 1}, {"name": "文学鉴赏", "count": 1}, {"name": "人文通识", "count": 1}, {"name": "经典阅读", "count": 1}, {"name": "爵士", "count": 1}, {"name": "沟通方法", "count": 1}, {"name": "说话技巧", "count": 1}, {"name": "人际沟通", "count": 1}, {"name": "措辞分寸", "count": 1}, {"name": "Codex", "count": 1}, {"name": "王力宏", "count": 1}, {"name": "飞书", "count": 1}, {"name": "壁纸", "count": 1}, {"name": "训练营", "count": 1}, {"name": "Obsidian实战", "count": 1}, {"name": "个人知识管理", "count": 1}, {"name": "语音识别", "count": 1}, {"name": "语音转文字", "count": 1}, {"name": "语音输入", "count": 1}, {"name": "零基础入门", "count": 1}, {"name": "AI推荐率", "count": 1}, {"name": "GEO实战", "count": 1}, {"name": "电视剧", "count": 1}, {"name": "日语", "count": 1}, {"name": "公众号", "count": 1}, {"name": "淘客项目", "count": 1}, {"name": "沈奕斐", "count": 1}, {"name": "知乎", "count": 1}, {"name": "GitHub", "count": 1}, {"name": "小白教程", "count": 1}, {"name": "GitHub入门", "count": 1}, {"name": "提效工具", "count": 1}, {"name": "网赚副业", "count": 1}, {"name": "jpop", "count": 1}, {"name": "职场智慧", "count": 1}, {"name": "职场权谋", "count": 1}, {"name": "晋升博弈", "count": 1}, {"name": "辣条教程", "count": 1}, {"name": "辣条配方", "count": 1}, {"name": "辣条技术", "count": 1}, {"name": "无货源店群", "count": 1}], "dirs": {"实战项目区": "d0.json", "搞钱技能区": "d1.json", "个人成长区": "d2.json", "其他杂烩区": "d3.json", "升学考证区": "d4.json", "健康生活区": "d5.json", "电商课程区": "d6.json", "家庭教育区": "d7.json"}};
 var ITEMS = [];
@@ -618,7 +644,7 @@ var state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', vi
 var TAG_OPEN = false;
 var dirCache = {};
 
-fetch('data/items.json?v=20261113d').then(function(r){ return r.json(); }).then(function(d){
+fetch('data/items.json?v=20261113e').then(function(r){ return r.json(); }).then(function(d){
   ITEMS = d.items;
   ITEMS.forEach(function(it, i){ it._i = i; });
   META = d.meta;
@@ -791,7 +817,7 @@ function loadDirs(it){
   var idx = String(it._i);
   if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
   box.innerHTML = '<div class="tip">目录加载中…</div>';
-  fetch('data/dirs/' + fname + '?v=20261113d').then(function(r){ return r.json(); }).then(function(mp){
+  fetch('data/dirs/' + fname + '?v=20261113e').then(function(r){ return r.json(); }).then(function(mp){
     dirCache[fname] = mp; showDir(mp[idx]);
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
@@ -840,6 +866,36 @@ function openModal(it){
   loadDirs(it);
   document.getElementById('mask').classList.add('on');
 }
+/* ===== 最新采集（近 30 天，按日期倒序，不含任何链接） ===== */
+function buildLatest(){
+  var d30 = new Date(Date.now() - 29 * 864e5).toISOString().slice(0, 10);
+  var list = ITEMS.filter(function(it){ return String(it.a || '').slice(0, 10) >= d30; })
+    .sort(function(a, b){ return String(b.a || '').localeCompare(String(a.a || '')); });
+  var CAP = 400, total = list.length;
+  list = list.slice(0, CAP);
+  var html = '', cur = '';
+  list.forEach(function(it){
+    var d = String(it.a || '').slice(0, 10) || '未标注';
+    if (d !== cur) {
+      cur = d;
+      var n = list.filter(function(x){ return (String(x.a || '').slice(0, 10) || '未标注') === d; }).length;
+      html += '<div class="lg">' + d + '<span>' + n + ' 条</span></div>';
+    }
+    html += '<div class="lr" data-i="' + it._i + '"><span class="d">' + d + '</span><span class="t">' + esc(cleanName(it.t)) + '</span><span class="z">' + esc(it.zo || '') + '</span></div>';
+  });
+  if (!list.length) html = '<div class="tip">最近 30 天还没有收录新条目</div>';
+  if (total > CAP) html += '<div class="tip">共 ' + total + ' 条，这里显示最近 ' + CAP + ' 条</div>';
+  document.getElementById('latestList').innerHTML = html;
+  document.getElementById('latestMask').classList.add('on');
+}
+document.getElementById('latestBtn').addEventListener('click', buildLatest);
+document.getElementById('latestClose').addEventListener('click', function(){ document.getElementById('latestMask').classList.remove('on'); });
+document.getElementById('latestMask').addEventListener('click', function(e){ if (e.target.id === 'latestMask') document.getElementById('latestMask').classList.remove('on'); });
+document.getElementById('latestList').addEventListener('click', function(e){
+  var el = e.target.closest('[data-i]'); if (!el) return;
+  document.getElementById('latestMask').classList.remove('on');
+  openModal(ITEMS[parseInt(el.dataset.i, 10)]);
+});
 </script>
 <script>(function(){try{
   if (location.pathname.indexOf('/stats/') >= 0) return;
