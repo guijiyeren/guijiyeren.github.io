@@ -36,8 +36,10 @@
   .nav-in { max-width:1200px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:18px; }
   .brand { display:flex; align-items:center; gap:10px; color:#f1f5f9; font-weight:800; font-size:16px; letter-spacing:.5px; }
   .brand img { width:32px; height:32px; border-radius:50%; border:1px solid rgba(56,189,248,.45); }
-  .nav-links { display:flex; gap:22px; margin-left:auto; font-size:13.5px; color:#cbd5e1; }
+  .nav-links { display:flex; gap:16px; margin-left:auto; font-size:13px; color:#cbd5e1; white-space:nowrap; }
   .nav-links a:hover { color:#fff; }
+  section[id] { scroll-margin-top:82px; }
+  @media (max-width:1180px) { .nav-links { gap:10px; font-size:12.5px; } }
   .nav-theme { margin-left:16px; border-color:rgba(148,163,184,.5); background:rgba(255,255,255,.1); } .nav-theme .knob { background:#0f172a; } .nav-theme svg { fill:#cbd5e1; }
   .nav-theme:hover { background:rgba(56,189,248,.18); }
   .nav-gh { border:1px solid rgba(148,163,184,.35); border-radius:999px; padding:6px 14px; font-size:13px; color:#e2e8f0; }
@@ -342,12 +344,13 @@
   #kb::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.5; background-image:radial-gradient(rgba(148,163,184,.14) 1px,transparent 1px); background-size:28px 28px; mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 80%); }
   .kb2 { position:relative; z-index:1; display:grid; grid-template-columns:1.08fr .92fr; gap:64px; align-items:center; }
   .kb2-visual { position:relative; min-width:0; }
-  .kb2-browser { border-radius:18px; overflow:hidden; border:1px solid rgba(148,163,184,.26); background:#0b1224; box-shadow:0 30px 80px rgba(0,0,0,.48),0 0 0 1px rgba(125,211,252,.06) inset; transform:perspective(1200px) rotateY(-2deg) rotateX(1deg); transform-origin:50% 50%; }
+  .kb2-browser { position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(148,163,184,.26); background:#0b1224; box-shadow:0 30px 80px rgba(0,0,0,.48),0 0 0 1px rgba(125,211,252,.06) inset; transform:perspective(1200px) rotateY(-2deg) rotateX(1deg); transform-origin:50% 50%; }
   .kb2-browser-bar { height:38px; display:flex; align-items:center; gap:7px; padding:0 14px; background:#0d1a2e; border-bottom:1px solid rgba(148,163,184,.16); }
   .kb2-browser-bar i { width:9px; height:9px; border-radius:50%; background:#334155; display:block; }
   .kb2-browser-bar i:nth-child(1){ background:#f87171; } .kb2-browser-bar i:nth-child(2){ background:#fbbf24; } .kb2-browser-bar i:nth-child(3){ background:#34d399; }
   .kb2-browser-bar span { margin-left:10px; font-size:11px; color:#94a3b8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .kb2-browser img { width:100%; aspect-ratio:1280/800; object-fit:cover; display:block; }
+  .kb2-browser img { width:100%; aspect-ratio:1144/900; object-fit:cover; display:block; }
+  .kb2-browser::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px; pointer-events:none; background:linear-gradient(180deg,rgba(11,18,36,0),#0b1224 92%); }
   .kb2-float { position:absolute; left:22px; bottom:-17px; display:flex; align-items:center; gap:8px; background:#0b1224; color:#bae6fd; border:1px solid rgba(125,211,252,.32); padding:9px 14px; border-radius:999px; font-size:12px; box-shadow:0 14px 34px rgba(0,0,0,.35); }
   .kb2-float .dot { width:6px; height:6px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px #22d3ee; }
   .kb2-main { min-width:0; }
@@ -662,6 +665,8 @@
   /* 实战项目：总台同款封面 */
   .build-card .cover { position:relative; aspect-ratio:4/3; overflow:hidden; background:#0b1020; }
   .build-card .cover canvas { display:block; }
+  .wuxian-live-host { position:relative; overflow:hidden; background:url("assets/covers/wuxian.jpg") center/cover no-repeat; }
+  .wuxian-live-host canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
   .img-cover { display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 50% 40%,#13203a,#0b1020); }
   .img-cover img { width:100%; height:100%; object-fit:contain; display:block; }
   @keyframes imgKen { 0% { transform:scale(1.02); } 100% { transform:scale(1.1); } }
@@ -712,7 +717,7 @@
   <div class="nav-in">
     <a class="brand" href="#top"><img src="assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">硅基野人</a>
     <div class="nav-links">
-      <a href="#projects">公开项目</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#works">最新作品</a><a href="#about">关于我</a><a href="#follow">联系</a>
+      <a href="#projects">公开项目</a><a href="#progress">项目进度</a><a href="#building">实战项目</a><a href="#kb">知识库</a><a href="#works">最新作品</a><a href="#notes">实战笔记</a><a href="#tools">常用工具</a><a href="#about">关于我</a><a href="#faq">常见问题</a><a href="#follow">联系方式</a><a href="#message">留言</a>
     </div>
     <button class="theme-switch nav-theme" id="themeBtn" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button>
   </div>
@@ -728,7 +733,7 @@
         <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
         <a class="btn btn-ghost" href="#projects">公开项目</a>
       </div>
-      <div class="hero-update"><span class="hu-dot"></span>最新更新：11-13 · 资源中心展示版同步 10,247 条 / 新增「最新」入口</div>
+      <div class="hero-update"><span class="hu-dot"></span>最新更新：11-13 · 资源中心 10,672 条 / 每日拆卡已更新</div>
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
@@ -812,11 +817,11 @@
           </div>
         </div>
         <div class="pp-info">
-          <div class="tags"><span class="tag">已上线</span><span class="tag">10,247 条</span><span class="tag">免登录</span><span class="tag">可看目录</span></div>
+          <div class="tags"><span class="tag">已上线</span><span class="tag">10,672 条</span><span class="tag">免登录</span><span class="tag">可看目录</span></div>
           <h3>资源中心 · 展示版</h3>
           <p>个人整理的资料目录：8 个分区、91 个二级分类，按类型 / 年份 / 评分筛选，点开任意条目能看到这个资源的目录结构。只展示标题与结构，不提供任何下载或转存入口。</p>
           <ul class="pp-points">
-            <li>10,247 条索引，8 分区 90 个二级分类</li>
+            <li>10,672 条索引，8 分区 91 个二级分类</li>
             <li>类型 / 年份 / 评分筛选 + 标题搜索</li>
             <li>点开看目录结构，不含网盘与提取码</li>`n            <li>「最新」按钮：近 30 天新收录按日排</li>
           </ul>
@@ -881,7 +886,7 @@
             <li>电商 / AI / 做生意，图多字少</li>
             <li>点开直接跳飞书，免费看</li>
           </ul>
-          <div class="pp-updated">更新频率：每天</div>
+          <div class="pp-updated">最近更新：11-13<span class="new-pill">NEW</span></div>
           <div class="pp-links">
             <a class="btn btn-primary" href="https://guijiyeren.feishu.cn/wiki/HXjTwExuMixbmkkLFHBceN6SnMk" target="_blank" rel="noopener">打开站点 →</a>
           </div>
@@ -962,14 +967,14 @@
         </div>
       </article>
       <article class="build-card">
-        <div class="cover"><img src="assets/kb-shot.jpg" alt="飞书知识库" decoding="async"></div>
+        <div class="cover"><img src="assets/kb-shot-wide.jpg" alt="飞书知识库" decoding="async"></div>
         <div class="b-body">
           <div class="b-top"><h3>飞书知识库</h3><span class="b-tag open">已公开</span></div>
           <p>AI 个人工作台的完整实战过程，免费公开、持续更新。</p>
         </div>
       </article>
       <article class="build-card">
-        <div class="cover"><img src="assets/covers/wuxian.jpg" alt="无限画布" decoding="async"></div>
+        <div class="cover wuxian-live-host" data-wuxian-cover aria-label="无限画布动态封面"></div>
         <div class="b-body">
           <div class="b-top"><h3>无限画布</h3><span class="b-tag">内部系统</span></div>
           <p>把想法、素材和流程铺在一张可无限缩放的画布上。</p>
@@ -985,7 +990,7 @@
       <div class="kb2-visual">
         <div class="kb2-browser">
           <div class="kb2-browser-bar"><i></i><i></i><i></i><span>bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span></div>
-          <img src="assets/kb-shot.jpg" alt="飞书知识库 · 硅基野人首页" loading="lazy" decoding="async">
+          <img src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 硅基野人首页" loading="lazy" decoding="async">
         </div>
         <div class="kb2-float"><span class="dot"></span>免费公开 · 持续更新</div>
       </div>
@@ -2991,6 +2996,7 @@ html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
   if(mask) mask.addEventListener('click', function(e){ if(e.target===mask) close(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
 })();</script>
+<script src="assets/wuxian-card.js" defer></script>
 </body>
 </html>
 
