@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>资源中心 · 展示版 · 硅基野人</title>
+<script>(function(){try{var g=localStorage.getItem('guiji_theme');var t=localStorage.getItem('theme');var night=g?g==='night':(t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches);var h=document.documentElement;if(night){h.classList.add('dark');h.setAttribute('data-theme','night');}else{h.setAttribute('data-theme','day');}}catch(e){}})();</script>
 <style>
   :root { --ink:#0f172a; --ink2:#475569; --line:#e2e8f0; --blue:#2563eb; --bg:#f6f8fc; }
   * { box-sizing:border-box; margin:0; padding:0; }
@@ -17,6 +18,14 @@
   .hd h1 { font-size:19px; letter-spacing:.5px; }
   .hd h1 span { font-size:12px; font-weight:400; color:#7dd3fc; border:1px solid rgba(125,211,252,.4); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px; }
   .hd .back { margin-left:auto; font-size:12.5px; color:#94a3b8; border:1px solid rgba(148,163,184,.3); border-radius:999px; padding:6px 14px; }
+  .theme-switch { position:relative; width:40px; height:22px; border-radius:11px; border:1px solid #cbd5e1; background:#f1f5f9; flex:0 0 auto; cursor:pointer; margin-left:auto; padding:0; }
+  .theme-switch .knob { position:absolute; top:1px; left:1px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(15,23,42,.2); display:flex; align-items:center; justify-content:center; transition:transform .18s ease; }
+  .theme-switch svg { width:12px; height:12px; fill:#64748b; display:block; }
+  .theme-switch .sun { display:block; } .theme-switch .moon { display:none; }
+  html.dark .theme-switch { background:#1e293b; border-color:#334155; }
+  html.dark .theme-switch .knob { transform:translateX(18px); background:#0f172a; }
+  html.dark .theme-switch svg { fill:#cbd5e1; }
+  html.dark .theme-switch .sun { display:none; } html.dark .theme-switch .moon { display:block; }
   .notice { margin-top:14px; background:linear-gradient(135deg,#fff7ed 0%,#fef2f2 100%); border:1px solid #fdba74; border-left:6px solid #f97316; border-radius:14px; padding:16px 20px; font-size:14.5px; line-height:1.95; color:#7c2d12; box-shadow:0 10px 26px rgba(249,115,22,.12); }
 .notice .nt { font-size:17px; font-weight:800; color:#b45309; letter-spacing:.3px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
 .notice p { margin:4px 0 0; }
@@ -25,7 +34,7 @@
 .notice .upd { margin-top:8px; font-size:13px; color:#9a3412; }
 .notice .upd b { color:#7c2d12; }
 /* ===== 深色模式（跟随系统） ===== */
-@media (prefers-color-scheme: dark) {
+html.dark {
   :root { --ink:#e7edf7; --ink2:#aebbd0; --line:#2a3446; --blue:#60a5fa; --bg:#0b1220; }
   body { background:#0b1220; color:#e7edf7; }
   header { background:#070d18; }
@@ -149,7 +158,7 @@
   .latest-list .lr .d { flex:none; width:74px; font-size:11px; color:#94a3b8; }
   .latest-list .lr .t { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12.5px; color:#0f172a; }
   .latest-list .lr .z { flex:none; font-size:11px; color:#94a3b8; max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  @media (prefers-color-scheme: dark) {
+  html.dark {
     .latest-modal { background:#131c2b !important; }
     .latest-list .lr { border-color:#22304a !important; }
     .latest-list .lr:hover { background:#1b263a !important; }
@@ -206,6 +215,7 @@
     <div class="hd">
       <img src="../assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">
       <h1>资源中心<span>展示版</span></h1>
+      <button class="theme-switch" id="themeBtn" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"/></svg></span></button>
     </div>
     <div class="notice">
       <div class="nt">⚠️ 仅供技术交流 · 不提供任何资源下载</div>
@@ -644,7 +654,7 @@ var state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', vi
 var TAG_OPEN = false;
 var dirCache = {};
 
-fetch('data/items.json?v=20261113e').then(function(r){ return r.json(); }).then(function(d){
+fetch('data/items.json?v=20261113f').then(function(r){ return r.json(); }).then(function(d){
   ITEMS = d.items;
   ITEMS.forEach(function(it, i){ it._i = i; });
   META = d.meta;
@@ -817,7 +827,7 @@ function loadDirs(it){
   var idx = String(it._i);
   if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
   box.innerHTML = '<div class="tip">目录加载中…</div>';
-  fetch('data/dirs/' + fname + '?v=20261113e').then(function(r){ return r.json(); }).then(function(mp){
+  fetch('data/dirs/' + fname + '?v=20261113f').then(function(r){ return r.json(); }).then(function(mp){
     dirCache[fname] = mp; showDir(mp[idx]);
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
@@ -895,6 +905,16 @@ document.getElementById('latestList').addEventListener('click', function(e){
   var el = e.target.closest('[data-i]'); if (!el) return;
   document.getElementById('latestMask').classList.remove('on');
   openModal(ITEMS[parseInt(el.dataset.i, 10)]);
+});
+/* 白天 / 黑夜切换（和人生指南、情报中枢共用一套本地设置） */
+document.getElementById('themeBtn').addEventListener('click', function(){
+  var h = document.documentElement;
+  var night = h.classList.toggle('dark');
+  h.setAttribute('data-theme', night ? 'night' : 'day');
+  try {
+    localStorage.setItem('guiji_theme', night ? 'night' : 'day');
+    localStorage.setItem('theme', night ? 'dark' : 'light');
+  } catch (e) {}
 });
 </script>
 <script>(function(){try{
