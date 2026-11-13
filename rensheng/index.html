@@ -2691,6 +2691,13 @@ document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !TIP.hid
   .sp-nav .sp-links { display:flex; gap:16px; flex-wrap:wrap; }
   .sp-nav .sp-links a { font-size:12.5px; color:#93a4c0; }
   .sp-nav .sp-links a:hover { color:#7dd3fc; }
+  @media (max-width:760px) {
+    .sp-nav-in { flex-wrap:nowrap; overflow-x:auto; gap:10px; padding:8px 12px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .sp-nav-in::-webkit-scrollbar { display:none; }
+    .sp-nav .sp-home { flex:none; font-size:12px; padding:6px 11px; }
+    .sp-nav .sp-links { flex-wrap:nowrap; gap:12px; }
+    .sp-nav .sp-links a { font-size:11.5px; white-space:nowrap; }
+  }
   section#follow { padding:64px 0; background:#f6f9ff; border-top:1px solid #e2e8f0; }
   .sec-wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
   .sec-head .eyebrow2 { font-size:12.5px; letter-spacing:2px; color:#2563eb; font-weight:700; text-transform:uppercase; }

@@ -22,6 +22,52 @@
 .notice p { margin:4px 0 0; }
 .notice b { color:#9a3412; }
 .notice a { color:#b45309; text-decoration:underline; }
+.notice .upd { margin-top:8px; font-size:13px; color:#9a3412; }
+.notice .upd b { color:#7c2d12; }
+/* ===== 深色模式（跟随系统） ===== */
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#e7edf7; --ink2:#aebbd0; --line:#2a3446; --blue:#60a5fa; --bg:#0b1220; }
+  body { background:#0b1220; color:#e7edf7; }
+  header { background:#070d18; }
+  .notice { background:linear-gradient(135deg,#2a1a0c 0%,#2a1010 100%); border-color:#a16207; border-left-color:#f97316; color:#fde3c3; }
+  .notice .nt { color:#fbbf24; }
+  .notice b { color:#fed7aa; }
+  .notice a { color:#fbbf24; }
+  .notice .upd { color:#fcd34d; }
+  aside, .filters, .topbar, .card, .lrow, .modal .box, .more button, .search { background:#131c2b !important; border-color:#2a3446 !important; }
+  aside h3, .meta, .lrow .p, .cnt, .tip, .empty { color:#93a4c0 !important; }
+  .zone-btn, .cat-btn { color:#c7d2e3 !important; }
+  .zone-btn:hover, .cat-btn:hover { background:#1b263a !important; }
+  .zone-btn.on { background:#1e3a5f !important; color:#93c5fd !important; }
+  .cats { background:#131c2b !important; border-color:#2a3446 !important; }
+  .search input { color:#e7edf7 !important; }
+  .seg button, .tbtn, .clear, .chip, .tag-toggle, .more button { background:#131c2b !important; border-color:#2a3446 !important; color:#c7d2e3 !important; }
+  .seg button.on, .chip.on { background:#1e3a5f !important; border-color:#2563eb !important; color:#bfdbfe !important; }
+  .card .t, .lrow h4, .zone-btn span { color:#e7edf7 !important; }
+  .card .meta span { color:#93a4c0 !important; }
+  .mask { background:rgba(0,0,0,.68) !important; }
+  .modal { background:#131c2b !important; color:#e7edf7 !important; }
+  .modal h2 { color:#e7edf7 !important; }
+  .modal .rows { color:#c7d2e3 !important; }
+  .modal .rows b { color:#e7edf7 !important; }
+  .modal .dir { background:#0f1827 !important; border-color:#2a3446 !important; }
+  .modal .dir .fd { color:#e7edf7 !important; }
+  .modal .dir .fl { color:#c7d2e3 !important; }
+  .modal .dir .fl i { color:#8fa3bf !important; }
+  .modal .dir .tip { color:#8fa3bf !important; }
+  .modal .hide-note { background:#1b263a !important; color:#aebbd0 !important; }
+  .modal .close { background:#e7edf7 !important; color:#0b1220 !important; }
+}
+/* ===== 手机版：分区导航收起 ===== */
+.zone-toggle { display:none; }
+@media (max-width:900px) {
+  .zone-toggle { display:flex; align-items:center; justify-content:space-between; width:100%; margin:0 0 10px; padding:10px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; color:#334155; font:600 13.5px/1 inherit; cursor:pointer; }
+  .zone-toggle b { font-weight:600; }
+  .zone-toggle i { font-style:normal; color:#94a3b8; font-size:12px; }
+  aside.zone-panel { display:none; position:static; max-height:none; }
+  aside.zone-panel.open { display:flex; flex-direction:column; gap:2px; margin-bottom:12px; }
+}
+
   
   main { padding:20px 0 60px; display:grid; grid-template-columns:250px 1fr; gap:22px; }
   aside { position:sticky; top:12px; align-self:start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; max-height:calc(100vh - 24px); overflow:auto; }
@@ -147,11 +193,13 @@
       <div class="nt">⚠️ 仅供技术交流 · 不提供任何资源下载</div>
       <p><b>本页只展示资源整理与检索方式，仅供技术交流，不提供任何资源下载、转存或分享。</b></p>
       <p>网盘地址和提取码全部隐藏；有疑问或侵权，<a href="../#message">点这里给我留言</a>。</p>
+      <p class="upd">最近更新：<b>2026-11-13</b> · 共 <b>10,247</b> 条（只含已收录到目录的条目）</p>
     </div>
   </div>
 </header>
 <main class="wrap">
-  <aside>
+  <button type="button" class="zone-toggle" id="zoneToggle"><b>分区 · 分类</b><i id="zoneToggleTxt">展开 ▾</i></button>
+  <aside class="zone-panel" id="zonePanel">
     <h3>分区 · 分类</h3>
     <div id="zone-tree"></div>
   </aside>
@@ -179,6 +227,7 @@
     <div class="more" id="more" hidden><button id="more-btn">加载更多</button></div>
   </section>
 </main>
+<script>(function(){var b=document.getElementById('zoneToggle');if(!b)return;b.onclick=function(){var p=document.getElementById('zonePanel');var on=p.classList.toggle('open');document.getElementById('zoneToggleTxt').textContent=on?'收起 ▴':'展开 ▾';};})();</script>
 <div class="sp-nav" id="spNav">
   <div class="sp-nav-in">
     <a class="sp-home" href="../">← 返回首页</a>
@@ -313,6 +362,13 @@
   .sp-nav .sp-links { display:flex; gap:16px; flex-wrap:wrap; }
   .sp-nav .sp-links a { font-size:12.5px; color:#93a4c0; }
   .sp-nav .sp-links a:hover { color:#7dd3fc; }
+  @media (max-width:760px) {
+    .sp-nav-in { flex-wrap:nowrap; overflow-x:auto; gap:10px; padding:8px 12px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .sp-nav-in::-webkit-scrollbar { display:none; }
+    .sp-nav .sp-home { flex:none; font-size:12px; padding:6px 11px; }
+    .sp-nav .sp-links { flex-wrap:nowrap; gap:12px; }
+    .sp-nav .sp-links a { font-size:11.5px; white-space:nowrap; }
+  }
   section#follow { padding:64px 0; background:#f6f9ff; border-top:1px solid #e2e8f0; }
   .sec-wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
   .sec-head .eyebrow2 { font-size:12.5px; letter-spacing:2px; color:#2563eb; font-weight:700; text-transform:uppercase; }
@@ -562,7 +618,7 @@ var state = { zone: '', cat: '', big: '', year: '', star: '', tag: '', q: '', vi
 var TAG_OPEN = false;
 var dirCache = {};
 
-fetch('data/items.json?v=20261113c').then(function(r){ return r.json(); }).then(function(d){
+fetch('data/items.json?v=20261113d').then(function(r){ return r.json(); }).then(function(d){
   ITEMS = d.items;
   ITEMS.forEach(function(it, i){ it._i = i; });
   META = d.meta;
@@ -735,7 +791,7 @@ function loadDirs(it){
   var idx = String(it._i);
   if (dirCache[fname]) { showDir(dirCache[fname][idx]); return; }
   box.innerHTML = '<div class="tip">目录加载中…</div>';
-  fetch('data/dirs/' + fname + '?v=20261113c').then(function(r){ return r.json(); }).then(function(mp){
+  fetch('data/dirs/' + fname + '?v=20261113d').then(function(r){ return r.json(); }).then(function(mp){
     dirCache[fname] = mp; showDir(mp[idx]);
   }).catch(function(){ box.innerHTML = '<div class="tip">目录加载失败</div>'; });
 }
