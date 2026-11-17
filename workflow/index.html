@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作台流程 · 硅基野人</title>
+<link rel="stylesheet" href="../assets/site-directories.css">
+<style>
+.flow-main pre { white-space:normal; }
+.flow-main .directory-group h2 { margin-bottom:10px; }
+.flow-toc { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
+.flow-toc a { padding:6px 11px; border:1px solid var(--edge); border-radius:8px; text-decoration:none; color:var(--accent); background:var(--panel); }
+.flow-stages { list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; padding:0; margin:0 0 9px; counter-reset:step; }
+.flow-stages li { display:flex; align-items:center; gap:8px; border:1px solid var(--edge); border-radius:10px; background:var(--panel); min-height:52px; padding:9px 11px; }
+.flow-stages li::before { counter-increment:step; content:counter(step); display:grid; place-items:center; color:var(--accent); background:color-mix(in srgb,var(--accent) 10%,var(--panel)); width:24px; height:24px; flex:0 0 24px; border-radius:50%; font-weight:700; font-size:12px; }
+.flow-cluster { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.flow-cluster article { border:1px solid var(--edge); border-radius:12px; background:var(--panel); padding:15px; }
+.flow-cluster h3 { margin:0 0 8px; }
+.flow-cluster ol { margin-block:0; padding-left:1.3rem; }
+.flow-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:10px; padding:0; margin:0; list-style:none; }
+.flow-list li { border:1px solid var(--edge); border-radius:10px; background:var(--panel); padding:10px; }
+.flow-list strong,.flow-list span { display:block; }
+.flow-list span { color:var(--soft); font-size:13px; }
+@media (max-width:640px) {.flow-cluster{grid-template-columns:1fr}}
+@media (prefers-color-scheme:dark) {
+ :root { color-scheme:dark; --bg:#151b26; --panel:#202a39; --ink:#eef3fc; --soft:#bfcee4; --edge:#41516a; --accent:#a0c7ff; }
+}
+</style></head>
+<body>
+<header class="directory-top"><div class="directory-wrap"><a class="directory-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><nav class="directory-nav" aria-label="站点导航"><a href="../">首页</a><a href="../projects/#workspace-modules">工作台模块</a></nav></div></header>
+<main class="directory-wrap directory-main flow-main">
+  <div class="directory-heading"><h1>工作台流程</h1><p>查任务怎么交、各项目怎么走，以及兵器和版本怎么管。</p></div>
+  <nav class="flow-toc" aria-label="本页目录"><a href="#tasks">任务流转</a><a href="#project-flows">项目流程</a><a href="#daily-jobs">兵器</a><a href="#versions">版本管理</a></nav>
+  <section class="directory-group" id="tasks"><h2>任务流转</h2>
+    <ol class="flow-stages"><li>收到任务</li><li>明确内容与归属</li><li>认领并推进</li><li>需要时等待确认</li><li>回填结果和位置</li></ol>
+    <p>试片、成品、审片与发布按项目开关执行。遇到需要确认的步骤，留在「等你处理」，确认后继续原任务。</p>
+    <p>需要多个 AI 一起判断时，先确定议题，各自提交意见，由主持人汇总结论与下一步。</p>
+  </section>
+  <section class="directory-group" id="project-flows"><h2>项目流程</h2><div class="flow-cluster">
+    <article><h3>硅基野人</h3><ol><li>选题</li><li>制作视频、贴图和文章</li><li>确认后发布</li><li>飞书知识库沉淀</li></ol></article>
+<article><h3>电商运营</h3><ol><li>看选品线索</li><li>采集到仓库</li><li>核对素材和上架包</li><li>上架后看推广与复盘</li></ol></article>
+<article><h3>情报中枢</h3><ol><li>选择公开来源</li><li>同步并检查各来源</li><li>查看榜单和线索</li><li>公开情报更新到网站</li></ol></article>
+<article><h3>资源中心</h3><ol><li>登记新来源</li><li>更新本地索引</li><li>在资源中心筛选</li><li>同步脱敏展示版</li></ol></article>
+<article><h3>无限画布</h3><ol><li>放入素材并接节点</li><li>选择模型和规格</li><li>询价或模拟</li><li>生成后查看结果</li></ol></article>
+<article><h3>剪辑工厂</h3><ol><li>导入录音或选已有工程</li><li>做试片</li><li>修改字幕与剪辑</li><li>查看并导出</li></ol></article>
+  </div></section>
+  <section class="directory-group" id="daily-jobs"><h2>兵器：五项日常任务</h2>
+    <ul class="flow-list"><li><strong>每日复盘</strong><span>核对记录，整理候选，选中后再写。</span></li><li><strong>每日卡片</strong><span>选学习卡、核对重复与隐私，再按流程发布。</span></li><li><strong>每日串门</strong><span>找相关内容、准备互动草稿、登记结果。</span></li><li><strong>每日巡检</strong><span>检查网站、知识库和对外入口，记录实际异常。</span></li><li><strong>每日采集</strong><span>更新公开情报、爆款和作品数据，核对采集结果。</span></li></ul>
+    <p>早晚各留实际执行回执，日报集中汇报。异常按发生的事项回查原记录。</p>
+  </section>
+  <section class="directory-group" id="versions"><h2>版本管理</h2>
+    <p>最近一次存档：V2.7（2026-11-16）</p>
+    <ol class="flow-stages"><li>决定存档版本</li><li>核对纳入范围与差异</li><li>提交并打版本标签</li><li>登记版本信息</li></ol>
+    <p>需要回退时，先看差异和影响，再确认恢复范围。</p>
+  </section>
+</main>
+<footer class="directory-bottom"><div class="directory-wrap"><a href="../#progress">返回项目进度</a></div></footer>
+</body></html>
