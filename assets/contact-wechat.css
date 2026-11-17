@@ -14,4 +14,10 @@
 .wechat-account strong { margin-left:.35em; color:#153e2a; letter-spacing:.025em; user-select:all; }
 .graph-contact { position:fixed; right:12px; bottom:12px; z-index:10; }
 
-#follow .socials-main{gap:10px}#follow .socials-main .social{gap:9px;min-height:52px;padding:9px 14px;align-items:center;justify-content:center}#follow .socials-main .social :is(img,svg){width:25px;height:25px;flex:0 0 25px;object-fit:contain}@media(max-width:600px){#follow .socials-main .social{padding:7px 10px;min-height:46px}#follow .socials-main .social :is(img,svg){width:23px;height:23px;flex-basis:23px}}
+#follow .socials-main { gap:12px; }
+#follow .socials-main .social { gap:10px; min-height:56px; padding:10px 15px; align-items:center; justify-content:center; }
+#follow .socials-main .social :is(img,svg) { width:32px; height:32px; flex:0 0 32px; object-fit:contain; }
+@media (max-width:600px) {
+  #follow .socials-main .social { min-height:48px; padding:7px 10px; }
+  #follow .socials-main .social :is(img,svg) { width:28px; height:28px; flex-basis:28px; }
+}
