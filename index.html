@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>硅基野人 · 一个碳基老板，带着一群硅基员工</title>
-<meta name="description" content="硅基野人，10 年电商人，正在实战 AI 无人公司。开源项目：高性价比人生指南 · 行动版；免费知识库：AI 个人工作台实战教程与模板。">
+<meta name="description" content="硅基野人，10 年电商人，正在实战 AI 无人公司。开源项目：高性价比人生指南 · 行动版；AI 个人工作台实战教程与模板。">
 <meta name="keywords" content="硅基野人,AI 无人公司,电商,AI 工作台,开源项目,高性价比人生指南">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="硅基野人">
 <meta property="og:title" content="硅基野人 · 一个碳基老板，带着一群硅基员工">
-<meta property="og:description" content="10 年电商人，正在实战 AI 无人公司。把选品、上架、文案、剪辑、发布拆成流程交给 AI。开源项目与免费知识库都在这里。">
+<meta property="og:description" content="10 年电商人，正在实战 AI 无人公司。把选品、上架、文案、剪辑、发布拆成流程交给 AI。公开项目与知识库都在这里。">
 <meta property="og:url" content="https://guijiyeren.github.io/">
 <meta property="og:image" content="https://guijiyeren.github.io/og.png">
 <meta property="og:image:width" content="1200">
@@ -324,7 +324,7 @@
   .b-tag { margin-left:auto; font-size:10.5px; color:#64748b; background:#f1f5f9; border-radius:999px; padding:2px 8px; white-space:nowrap; }
   .b-body p { margin-top:8px; font-size:13px; color:var(--ink2); line-height:1.8; }
 
-  /* 免费知识库 */
+  /* 知识库 */
   #kb { background:#fff; border-top:1px solid var(--line); }
   .kb-card { position:relative; overflow:hidden; margin-top:30px; border-radius:24px; padding:32px 34px; background:linear-gradient(120deg,#0b1224 0%,#10203f 55%,#123a6b 100%); color:#e2e8f0; display:flex; align-items:center; gap:24px; box-shadow:0 24px 60px rgba(15,23,42,.18); }
   .kb-card::after { content:""; position:absolute; right:-80px; top:-80px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle,rgba(56,189,248,.35),transparent 65%); }
@@ -710,7 +710,34 @@
   .b-tag.doing { color:#1d4ed8; background:#e0edff; }
   .plat.home i { font-style:normal; font-size:10px; color:#94a3b8; margin-left:1px; }
 </style>
-  <link rel="alternate" type="application/rss+xml" title="硅基野人 · 每日早报" href="https://guozhengxin.github.io/rss-feed/rss.xml">
+<link rel="stylesheet" href="assets/contact-wechat.css?v=contact-2">
+<style>
+.about-spread { --about-pad:clamp(18px,3.1vw,38px); --about-gap:clamp(24px,4vw,52px); background:#fff; border:1px solid var(--line); border-radius:22px; padding:var(--about-pad); }
+#about .about-rich, .about-supplement { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--about-gap); margin:0; align-items:start; }
+#about .about-timeline, #about .mig-card { background:transparent; border:0; box-shadow:none; border-radius:0; padding:0; justify-content:flex-start; min-width:0; }
+.about-left-heading { margin-bottom:20px; }
+.about-left-heading h2 { margin:0 0 7px; display:flex; align-items:center; gap:8px; font-size:clamp(25px,4vw,34px); line-height:1.2; }
+.about-left-title { margin:0 0 6px; font-size:17px; }
+.about-left-intro { margin:0; color:#52627a; font-size:14px; }
+.about-history { max-height:298px; overflow:auto; overscroll-behavior:contain; padding-right:10px; scrollbar-width:thin; scrollbar-color:#cad5e5 transparent; }
+#about .about-timeline .tl-row { padding:8px 0; }
+#about .about-visual { align-self:stretch; }
+#about .mig-card { min-height:0; }
+#about .mig-stage { min-height:290px; }
+.about-supplement { margin-top:28px; padding-top:24px; border-top:1px solid var(--line); }
+.about-supplement-media, .about-supplement-details { min-width:0; }
+.about-supplement h3 { margin:0 0 10px; font-size:17px; line-height:1.4; }
+.about-supplement-media video { display:block; width:100%; aspect-ratio:16/9; object-fit:contain; background:#0b1323; border-radius:12px; }
+.about-supplement-details { display:grid; gap:22px; }
+.about-note + .about-note { border-top:1px solid var(--line); padding-top:18px; }
+.about-note ul { margin:0; padding-left:1.1em; display:grid; gap:6px; }
+.about-note p { margin:0; }
+.about-note ul, .about-note p { color:#52627a; line-height:1.7; font-size:14px; }
+html[data-theme="night"] .about-spread { background:#111827; }
+html[data-theme="night"] #about .about-spread .about-timeline, html[data-theme="night"] #about .about-spread .mig-card { background:transparent !important; }
+html[data-theme="night"] .about-left-intro, html[data-theme="night"] .about-note ul, html[data-theme="night"] .about-note p { color:#a9b9cc; }
+@media(max-width:760px) { #about .about-rich, .about-supplement { grid-template-columns:1fr; gap:22px; } #about .mig-stage { min-height:240px; } .about-supplement { margin-top:22px; padding-top:20px; } .about-history { max-height:250px; } }
+</style>
 </head>
 <body>
 
@@ -734,12 +761,12 @@
         <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
         <a class="btn btn-ghost" href="#projects">公开项目</a>
       </div>
-      <div class="hero-update"><span class="hu-dot"></span>最新更新：11-13 · 资源中心 12,357 条 / 每日拆卡已更新</div>
+      <div class="hero-update"><span class="hu-dot"></span>最近同步：<span data-site-value="latest">11-17</span> · 资源中心 <span data-site-value="resource.count">10,247</span> 条 · 每日拆卡 <span data-site-value="daily.date">11-17</span></div>
       <div class="hero-stats">
         <div><span class="n">10 年</span><span class="l">电商实战</span></div>
         <div><span class="n">9 个</span><span class="l">内容平台</span></div>
         <div><span class="n">33 条</span><span class="l">短视频作品</span></div>
-        <div><span class="n">全免费</span><span class="l">飞书知识库</span></div>
+        <div><span class="n">公开</span><span class="l">飞书知识库</span></div>
       </div>
     </div>
     <div class="hero-visual">
@@ -768,7 +795,7 @@
     <div class="sec-head">
       <div class="eyebrow2">Public Project</div>
       <h2>公开项目</h2>
-      <p>4 个公开项目，全部免费、谁都能打开用。做好一个放一个，不藏私。</p>
+      <p>4 个公开项目，谁都能打开用。做好一个放一个，不藏私。</p>
     </div>
     <div class="public-grid">
       <article class="public-project">
@@ -788,7 +815,7 @@
         </div>
         <div class="pp-info">
           <div class="tags"><span class="tag">已上线</span><span class="tag">767 条</span><span class="tag">手机适配</span><span class="tag">3D 星图</span></div>
-          <h3>高性价比人生指南 · 行动版</h3>
+          <h3>人生指南</h3>
           <p>把开源书《高性价比人生指南》做成能动手的网页：767 条按钱、时间、毅力筛选，可以把每条标成「待做 / 已做到 / 暂不适合」，进度只存在自己的浏览器里。另带一个能拖动、能换颜色的 3D 标签星云。</p>
           <ul class="pp-points">
             <li>767 条建议，按成本、证据等级、适用人群筛选</li>
@@ -808,7 +835,7 @@
             <div class="pp-frame browser">
               <img id="res-main-img" src="assets/res-shot1.jpg" alt="资源中心 · 展示版" loading="lazy" decoding="async">
             </div>
-            <div class="pp-cap"><b id="res-cap-t">电脑版</b><span id="res-cap-d">8 分区 · 91 个二级分类 · 类型/年份/评分筛选</span></div>
+            <div class="pp-cap"><b id="res-cap-t">电脑版</b><span id="res-cap-d">8 分区 · 93 个二级分类 · 类型/年份/评分筛选</span></div>
           </div>
           <div class="pp-thumbs">
             <button type="button" class="pp-th on" data-big="assets/res-shot1.jpg" data-kind="browser" data-cap="电脑版" data-desc="资源列表 + 分区 + 筛选"><img src="assets/res-shot1.jpg" alt="电脑版" loading="lazy" decoding="async"><span>电脑版</span></button>
@@ -818,15 +845,15 @@
           </div>
         </div>
         <div class="pp-info">
-          <div class="tags"><span class="tag">已上线</span><span class="tag">12,357 条</span><span class="tag">免登录</span><span class="tag">可看目录</span></div>
+          <div class="tags"><span class="tag">已上线</span><span class="tag"><span data-site-value="resource.count">10,247</span> 条</span><span class="tag">免登录</span><span class="tag">可看目录</span></div>
           <h3>资源中心 · 展示版</h3>
-          <p>个人整理的资料目录：8 个分区、91 个二级分类，按类型 / 年份 / 评分筛选，点开任意条目能看到这个资源的目录结构。只展示标题与结构，不提供任何下载或转存入口。</p>
+          <p>个人整理的资料目录：8 个分区、93 个二级分类，按类型 / 年份 / 评分筛选，点开任意条目能看到这个资源的目录结构。只展示标题与结构，不提供任何下载或转存入口。</p>
           <ul class="pp-points">
-            <li>12,357 条索引，8 分区 91 个二级分类</li>
+            <li><span data-site-value="resource.count">10,247</span> 条索引，8 分区 93 个二级分类</li>
             <li>类型 / 年份 / 评分筛选 + 标题搜索</li>
             <li>点开看目录结构，不含网盘与提取码</li>`n            <li>「最新」按钮：近 30 天新收录按日排</li>
           </ul>
-          <div class="pp-updated">最近更新：11-13<span class="new-pill">NEW</span></div>
+          <div class="pp-updated">最近同步：<span data-site-value="resource.date">11-17</span></div>
           <div class="pp-links">
             <a class="btn btn-primary" href="./resource/" target="_blank" rel="noopener">打开站点 →</a>
           </div>
@@ -856,7 +883,7 @@
             <li>规则 + AI 双通道打分，重点与待验证分开</li>
             <li>失效自动降级，日报只留值得看的信号</li>
           </ul>
-          <div class="pp-updated">最近更新：11-09</div>
+          <div class="pp-updated">公开榜单：<span data-site-value="intel.date">11-17</span></div>
           <div class="pp-links">
             <a class="btn btn-primary" href="./intel/" target="_blank" rel="noopener">打开站点 →</a>
           </div>
@@ -869,7 +896,7 @@
             <div class="pp-frame browser">
               <img src="assets/daily-shot1.jpg" alt="每日拆卡" loading="lazy" decoding="async">
             </div>
-            <div class="pp-cap"><b>飞书页面</b><span>每天早 6 点更新一张</span></div>
+            <div class="pp-cap"><b>飞书页面</b><span>按日期查看已发布卡片</span></div>
           </div>
           <div class="pp-thumbs">
             <button type="button" class="pp-th on" data-big="assets/daily-shot1.jpg" data-kind="browser" data-cap="页面" data-desc="每天一张知识卡"><img src="assets/daily-shot1.jpg" alt="页面" loading="lazy" decoding="async"><span>页面</span></button>
@@ -879,17 +906,18 @@
           </div>
         </div>
         <div class="pp-info">
-          <div class="tags"><span class="tag">每日更新</span><span class="tag">免费</span><span class="tag">手机看</span><span class="tag">飞书</span></div>
+          <div class="tags"><span class="tag">每日更新</span><span class="tag">手机看</span><span class="tag">飞书</span></div>
           <h3>每日拆卡 · 行动卡</h3>
-          <p>每天一张手机壁纸大小的知识卡：只讲一件事，看图就能懂。电商、AI、做生意少绕弯的办法，每天早 6 点更新；哪天没更新，就是那天没 Token 了。</p>
+          <p>每天一张手机壁纸大小的知识卡：只讲一件事，看图就能懂。电商、AI、做生意少绕弯的办法，最新日期以飞书实际发布为准。</p>
           <ul class="pp-points">
-            <li>每天 6:00 更新，一张卡只讲一件事</li>
+            <li>一张卡只讲一件事</li>
             <li>电商 / AI / 做生意，图多字少</li>
-            <li>点开直接跳飞书，免费看</li>
+            <li>点开直接跳飞书</li>
           </ul>
-          <div class="pp-updated">最近更新：11-13<span class="new-pill">NEW</span></div>
+          <div class="pp-updated">最新发布：<span data-site-value="daily.date">11-17</span></div>
           <div class="pp-links">
-            <a class="btn btn-primary" href="https://guijiyeren.feishu.cn/wiki/HXjTwExuMixbmkkLFHBceN6SnMk" target="_blank" rel="noopener">打开站点 →</a>
+            <a class="btn btn-primary" href="https://guijiyeren.feishu.cn/wiki/HXjTwExuMixbmkkLFHBceN6SnMk" target="_blank" rel="noopener">打开卡片列表 →</a>
+            <a class="btn" data-latest-card href="https://guijiyeren.feishu.cn/wiki/HXjTwExuMixbmkkLFHBceN6SnMk#doxcng8nCNxPee53Qz8osoZehud" target="_blank" rel="noopener" title="让 AI 学你的改稿，先把原稿和终稿配对">查看最新卡片 →</a>
           </div>
         </div>
       </article>
@@ -905,14 +933,15 @@
       <p>不需要天天汇报，进度条会说话。</p>
     </div>
     <div class="prog-list">
-      <div class="prog-row"><div class="pr-name">无线画布搭建</div><div class="pr-bar dev"><span style="width:80%"></span></div><em class="badge dev">开发中 80%</em></div>
-      <div class="prog-row"><div class="pr-name">电商全自动化</div><div class="pr-bar dev"><span style="width:95%"></span></div><em class="badge dev">开发中 95%</em></div>
+      <div class="prog-row"><div class="pr-name">剪辑工厂搭建</div><div class="pr-bar dev"><span style="width:80%"></span></div><em class="badge dev">开发中 80%</em></div>
+      <div class="prog-row"><div class="pr-name">无限画布搭建</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">电商全自动化</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">AI个人工作台</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">AI 穿搭工作流</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">电商模特穿搭</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">飞书知识库</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
-      <div class="prog-row"><div class="pr-name">个人主页上架</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
-      <div class="prog-row"><div class="pr-name">高性价比人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">个人主页</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
+      <div class="prog-row"><div class="pr-name">人生指南</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">资源中心</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
       <div class="prog-row"><div class="pr-name">情报中枢</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
     </div>
@@ -928,7 +957,7 @@
     </div>
     <div class="build-grid">
       <article class="build-card">
-        <div class="cover"><img src="assets/covers/commerce.jpg" alt="电商运营流程：选品、上架、推广" loading="lazy" decoding="async"></div>
+        <div class="cover" data-cover="commerce"></div>
         <div class="b-body">
           <div class="b-top"><h3>电商运营</h3><span class="b-tag">内部系统</span></div>
           <p>从选品、上架到推广，全流程台账与核验。</p>
@@ -959,7 +988,7 @@
         <div class="cover" data-cover="rc"></div>
         <div class="b-body">
           <div class="b-top"><h3>资源中心</h3><span class="b-tag open">已公开</span></div>
-          <p>1.2 万条资源索引，分类、封面、检索一体。</p>
+          <p><span data-site-value="resource.count">10,247</span> 条资源索引，可按分类检索。</p>
         </div>
       </article>
 <article class="build-card">
@@ -973,7 +1002,7 @@
         <div class="cover"><img src="assets/kb-shot-wide.jpg" alt="飞书知识库" decoding="async"></div>
         <div class="b-body">
           <div class="b-top"><h3>飞书知识库</h3><span class="b-tag open">已公开</span></div>
-          <p>AI 个人工作台的完整实战过程，免费公开、持续更新。</p>
+          <p>AI 个人工作台的完整实战过程，持续更新。</p>
         </div>
       </article>
       <article class="build-card">
@@ -981,6 +1010,13 @@
         <div class="b-body">
           <div class="b-top"><h3>无限画布</h3><span class="b-tag">内部系统</span></div>
           <p>把想法、素材和流程铺在一张可无限缩放的画布上。</p>
+        </div>
+      </article>
+      <article class="build-card">
+        <div class="cover"><img src="assets/covers/editing-factory.webp" alt="剪辑工厂动画封面" width="548" height="412" loading="lazy" decoding="async"></div>
+        <div class="b-body">
+          <div class="b-top"><h3>剪辑工厂</h3><span class="b-tag">开发中</span></div>
+          <p>把脚本、配音、字幕和改片接到同一条视频制作流程里。</p>
         </div>
       </article>
     </div>
@@ -995,10 +1031,10 @@
           <div class="kb2-browser-bar"><i></i><i></i><i></i><span>bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span></div>
           <img src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 硅基野人首页" loading="lazy" decoding="async">
         </div>
-        <div class="kb2-float"><span class="dot"></span>免费公开 · 持续更新</div>
+        <div class="kb2-float"><span class="dot"></span>持续更新</div>
       </div>
       <div class="kb2-main">
-        <div class="eyebrow2">FREE KNOWLEDGE</div>
+        <div class="eyebrow2">OPEN KNOWLEDGE</div>
         <h2>把整套 AI 工作台<br><em>拆开给你看</em></h2>
         <p>从 0 搭一套能用的 AI 工作台：怎么拆流程、怎么派活给 AI、怎么验收。不是讲概念，是直接抄作业。</p>
         <div class="kb2-meta">
@@ -1009,7 +1045,7 @@
         <div class="kb2-chips"><span>新手教程</span><span>流程模板</span><span>提示词</span><span>持续更新</span></div>
         <div class="kb2-actions">
           <a class="kb2-go" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">进入知识库 <span>→</span></a>
-          <span class="kb2-note">飞书文档 · 免费阅读</span>
+          <span class="kb2-note">飞书文档</span>
         </div>
       </div>
     </div>
@@ -1092,28 +1128,36 @@
 
 <section id="about">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow2">About</div>
-      <h2><img class="about-logo" src="assets/logo.png" alt="" loading="lazy" decoding="async">关于我</h2>
-    </div>
+    <div class="about-spread">
     <div class="about-rich about-reverse">
       <div class="timeline-mini about-timeline">
-        <div class="tl-row"><b>1986</b><span>湖南怀化小镇出生</span></div>
-        <div class="tl-row"><b>2005</b><span>绿皮火车去北京上学，第一次出省</span></div>
-        <div class="tl-row"><b>2008</b><span>卖充值卡、Q币、论坛会员，远程修电脑</span></div>
-        <div class="tl-row"><b>2010</b><span>开工作室做网站和网络推广，满北京跑</span></div>
-        <div class="tl-row"><b>2014</b><span>结婚生子，完成人生两件大事</span></div>
-        <div class="tl-row"><b>2015</b><span>去东海县做水晶电商</span></div>
-        <div class="tl-row"><b>2016</b><span>女儿出生，前一天还在打包圣诞用品</span></div>
-        <div class="tl-row"><b>2017</b><span>燕郊房子崩盘前卖掉</span></div>
-        <div class="tl-row"><b>2018</b><span>到浙江诸暨，从启航公寓起步，卖袜子</span></div>
-        <div class="tl-row"><b>2021</b><span>生意顺了，节奏慢下来</span></div>
-        <div class="tl-row"><b>2022</b><span>有余钱，买房换车，日子向上</span></div>
-        <div class="tl-row"><b>2024</b><span>遇变故，业绩腰斩；下半年接触AI</span></div>
-        <div class="tl-row"><b>2025</b><span>定居杭州，第一次邮轮出境去韩国、日本</span></div>
-        <div class="tl-row"><b>2026</b><span>借AI把以前做不成的事落地，再拼一把</span></div>
+        <div class="about-left-heading">
+          <h2><img class="about-logo" src="assets/logo.png" alt="" loading="lazy" decoding="async">关于我</h2>
+          <p class="about-left-intro">湖南人，在杭州，做电商，靠 AI 解锁可能。</p>
+        </div>
+        <h3 class="about-left-title">我这一路</h3>
+        <div class="about-history" tabindex="0" aria-label="人生时间线">
+          <div class="tl-row"><b>1986</b><span>湖南怀化出生</span></div>
+          <div class="tl-row"><b>2005</b><span>绿皮火车去北京上学</span></div>
+          <div class="tl-row"><b>2008</b><span>卖充值卡，Q币，远程修电脑</span></div>
+          <div class="tl-row"><b>2009</b><span>北大青鸟培训</span></div>
+          <div class="tl-row"><b>2010</b><span>开个人工作室做网站和网络推广</span></div>
+          <div class="tl-row"><b>2013</b><span>燕郊买房</span></div>
+          <div class="tl-row"><b>2014</b><span>结婚生子，完成人生两件大事</span></div>
+          <div class="tl-row"><b>2015</b><span>东海水晶微商</span></div>
+          <div class="tl-row"><b>2016</b><span>女儿出生，卖圣诞用品</span></div>
+          <div class="tl-row"><b>2017</b><span>燕郊卖房全国巡游</span></div>
+          <div class="tl-row"><b>2018</b><span>浙江诸暨做袜子电商</span></div>
+          <div class="tl-row"><b>2019</b><span>长沙买房</span></div>
+          <div class="tl-row"><b>2020</b><span>换了间大仓库</span></div>
+          <div class="tl-row"><b>2021</b><span>生意顺了，节奏慢下来</span></div>
+          <div class="tl-row"><b>2022</b><span>有余钱，买房换车，日子向上</span></div>
+          <div class="tl-row"><b>2023</b><span>去三亚潜水</span></div>
+          <div class="tl-row"><b>2024</b><span>遇变故，业绩腰斩；下半年接触AI</span></div>
+          <div class="tl-row"><b>2025</b><span>定居杭州</span></div>
+          <div class="tl-row"><b>2026</b><span>借AI把以前做不成的事落地</span></div>
+        </div>
       </div>
-      
       <div class="about-visual">
         <div class="mig-card">
           <div class="mig-head"><b>我的迁徙路线</b><span class="mig-sub">8 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
@@ -1147,9 +1191,25 @@
         </div>
       </div>
     </div>
+    <div class="about-supplement">
+      <div class="about-supplement-media">
+        <h3>个人介绍视频</h3>
+        <video controls playsinline preload="none" aria-label="个人介绍视频" poster="assets/about-introduction-poster.jpg" src="assets/about-introduction.mp4"></video>
+      </div>
+      <div class="about-supplement-details">
+        <div class="about-note">
+          <h3>最近在做什么</h3>
+          <ul><li>电商全自动化、AI 穿搭工作流</li><li>个人 AI 工作台、自媒体全自动</li></ul>
+        </div>
+        <div class="about-note">
+          <h3>想和什么样的人交流</h3>
+          <p>创业电商人、内容创作者、行业工作台开发者、穿搭从业者。</p>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </section>
-
 <section id="services" style="background:#fff;border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
@@ -1175,15 +1235,10 @@
     </div>
     <div class="faq-list faq-grid">
       <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="eager"><span class="faq-q">这网站是怎么做出来的？</span><span class="faq-num">01</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="eager"><p>站不是我一行行写的。我提需求、定结构和验收，AI 帮我搭页面、改代码。不过里面的项目、作品、工具和数据都是真的。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">「公开项目」真的免费吗？要注册登录吗？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>免费，不用注册、不用登录。人生指南打开就能用；资源中心和情报中枢是展示版，只开放目录、样例和界面。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">资源中心为什么只有目录，没有下载链接？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>不是失效问题，失效我早排查过了。主要是版权：不少资源不适合公开下载，所以只公开分类、封面和检索方式，完整库和网盘地址我自己用。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">情报中枢为什么只能看展示版？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>公开的是脱敏快照，避免把来源站内容、账号和未核实数据直接搬出来；日报每天更新，先把方法和界面给你看。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">最新作品为什么只放几条？其他平台在哪看？</span><span class="faq-num">05</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>首页只放跟我业务、跟正在做的事相关的作品；其他不太相关的就没放。要看更多，去抖音、小红书、B站、快手等主页，底部有平台入口。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">你推荐的工具有广告或返利吗？</span><span class="faq-num">06</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>没有。全是我自己每天在用的，链接直达官网；绿格是我真实使用频率，不是给钱排的。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能找你合作吗？都接什么？</span><span class="faq-num">07</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>接电商 AI 提效、内容流水线、企业工作台、内训陪跑；先留言说清需求，按能落地的结果报价。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">为什么不能直接加微信？</span><span class="faq-num">08</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>先不留微信，主要是避免广告和骚扰。有意向先留言，留言会直接发到我邮箱，我都会看；需要进一步接触时再加。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能转载或搬运你的内容吗？</span><span class="faq-num">09</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>注明出处可以转载；商用、改编、切片分发先留言聊一下，别直接搬。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">网站会一直更新吗？</span><span class="faq-num">10</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>会。公开项目做好一个放一个，工具和知识库跟着更新；页面上的「最新更新」和飞书知识库会同步，但不照搬。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">最新作品为什么只放几条？其他平台在哪看？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>首页只放跟我业务、跟正在做的事相关的作品；其他不太相关的就没放。要看更多，去抖音、小红书、B站、快手等主页，底部有平台入口。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能找你合作吗？都接什么？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>接电商 AI 提效、内容流水线、企业工作台、内训陪跑；先留言说清需求，按能落地的结果报价。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能转载或搬运你的内容吗？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>注明出处可以转载；商用、改编、切片分发先留言聊一下，别直接搬。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">网站会一直更新吗？</span><span class="faq-num">05</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>会。公开项目做好一个放一个，工具和知识库跟着更新；页面上的「最新更新」和飞书知识库会同步，但不照搬。</p></div></div>
     
     </div>
   </div>
@@ -1199,7 +1254,7 @@
       <p>各个平台同名「硅基野人」，内容同步更新。</p>
     </div>
     <div class="socials socials-main">
-      <a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-github.png" alt="" loading="lazy" decoding="async">个人主页</a><a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="assets/icon-feishu.png" alt="" loading="lazy" decoding="async">飞书知识库</a><a class="social" href="#" data-mail="49,53,52,54,52,55,64,113,113,46,99,111,109"><img src="assets/icon-qqmail.png" alt="" loading="lazy" decoding="async">QQ邮箱</a><a class="social" href="#message"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H5L3 22v-6.5A8.5 8.5 0 0 1 12.5 3.5h0A8.5 8.5 0 0 1 21 12z"/></svg>留言</a>
+      <a class="social" href="https://github.com/guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-github.png" alt="" loading="lazy" decoding="async">个人主页</a><a class="social" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="assets/icon-feishu.png" alt="" loading="lazy" decoding="async">飞书知识库</a><a class="social" href="#" data-mail="49,53,52,54,52,55,64,113,113,46,99,111,109"><img src="assets/icon-qqmail.png" alt="" loading="lazy" decoding="async">QQ邮箱</a><a class="social" href="#message"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H5L3 22v-6.5A8.5 8.5 0 0 1 12.5 3.5h0A8.5 8.5 0 0 1 21 12z"/></svg>留言</a><button type="button" class="social wechat-button" data-wechat-contact aria-haspopup="dialog"><img src="assets/ftool-wechat.png" alt="" width="18" height="18">微信</button>
     </div>
     <div class="socials socials-videos" aria-label="视频平台">
       <a class="social social-icon" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener" title="抖音"><img src="assets/icon-douyin.png" alt="抖音" loading="lazy" decoding="async"></a>
@@ -1304,7 +1359,7 @@
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
-    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="https://guozhengxin.github.io/rss-feed/" data-rss-preview="https://guozhengxin.github.io/rss-feed/">每日早报</a> · <a href="https://guozhengxin.github.io/rss-feed/rss.xml">RSS 订阅</a></div>
+    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a></div>
   </div>
 </footer>
 
@@ -2863,11 +2918,6 @@ html[data-theme="night"] .theme-switch { background:#1e293b; border-color:#33415
 html[data-theme="night"] .theme-switch .knob { transform:translateX(18px); background:#0f172a; box-shadow:0 2px 8px rgba(0,0,0,.5); }
 html[data-theme="night"] .theme-switch svg { fill:#cbd5e1; }
 html[data-theme="night"] .theme-switch .sun { display:none; } html[data-theme="night"] .theme-switch .moon { display:block; }
-.rss-mask { position:fixed; inset:0; background:rgba(5,10,22,.66); z-index:200; display:none; align-items:center; justify-content:center; padding:18px; }
-.rss-mask.on { display:flex; }
-.rss-box { position:relative; width:min(1080px,94vw); height:min(82vh,860px); background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,.45); }
-.rss-box iframe { width:100%; height:100%; border:0; display:block; }
-.rss-close { position:absolute; right:10px; top:10px; z-index:2; width:32px; height:32px; border:0; border-radius:50%; background:#0f172a; color:#fff; font-size:20px; cursor:pointer; }
 html[data-theme="night"] body { background:#070b16 !important; color:#dbeafe !important; }
 html[data-theme="night"] section, html[data-theme="night"] main { background-color:#0b1220 !important; color:#dbeafe !important; }
 html[data-theme="night"] .panel, html[data-theme="night"] .card, html[data-theme="night"] article,
@@ -2876,7 +2926,6 @@ html[data-theme="night"] .input, html[data-theme="night"] input, html[data-theme
 html[data-theme="night"] h1, html[data-theme="night"] h2, html[data-theme="night"] h3, html[data-theme="night"] b { color:#f1f5f9 !important; }
 html[data-theme="night"] p, html[data-theme="night"] span, html[data-theme="night"] .muted { color:#94a3b8 !important; }
 html[data-theme="night"] a { color:#7dd3fc; }
-@media (max-width:760px) { .rss-box { width:96vw; height:78vh; } }
 
 html[data-theme="night"] body { background:#070b16 !important; color:#dbeafe !important; }
 html[data-theme="night"] section, html[data-theme="night"] .wrap, html[data-theme="night"] .sec-wrap,
@@ -2973,7 +3022,8 @@ html[data-theme="night"] .skin-panel * { color:#cbd5e1 !important; }
 html[data-theme="night"] img { background-color:#111a2b !important; }
 html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
 </style>
-<div class="rss-mask" id="rssMask"><div class="rss-box"><button class="rss-close" id="rssClose" type="button" aria-label="关闭">×</button><iframe id="rssFrame" title="日报预览"></iframe></div></div>
+
+<script src="assets/wuxian-card.js" defer></script>
 <script>(function(){
   var html=document.documentElement, btn=document.getElementById('themeBtn');
   var saved=null; try{ saved=localStorage.getItem('guiji_theme'); }catch(e){}
@@ -2984,22 +3034,9 @@ html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
     html.setAttribute('data-theme', next);
     try{ localStorage.setItem('guiji_theme', next); }catch(e){}
   });
-  var mask=document.getElementById('rssMask'), frame=document.getElementById('rssFrame');
-  function close(){ if(mask) mask.classList.remove('on'); if(frame) frame.src='about:blank'; }
-  document.querySelectorAll('a[data-rss-preview],a[href$="daily/"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var preview=a.getAttribute('data-rss-preview');
-      if(!preview){ var h=a.getAttribute('href')||''; preview=h.replace(/daily\/?$/, 'daily/preview.html'); if(preview===h) preview=null; }
-      if(!preview && location.pathname.indexOf('/daily/')>=0) return;
-      if(!mask||!frame) return;
-      e.preventDefault(); frame.src=preview||a.getAttribute('href'); mask.classList.add('on');
-    });
-  });
-  var cl=document.getElementById('rssClose'); if(cl) cl.addEventListener('click', close);
-  if(mask) mask.addEventListener('click', function(e){ if(e.target===mask) close(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
 })();</script>
-<script src="assets/wuxian-card.js" defer></script>
+<script src="assets/contact-wechat.js?v=contact-2"></script>
+<script src="assets/site-freshness.js"></script>
 </body>
 </html>
 

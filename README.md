@@ -21,6 +21,10 @@ og.png                首页分享图
 
 本地重新生成后推送本仓库，GitHub Pages 会自动更新（约 1 分钟）。
 
+## 首页的更新日期
+
+情报中枢使用 NewsNow 公开快照时间，资源中心使用脱敏导出时间，每日拆卡使用飞书已经发布的日期。执行 python scripts/update_site_freshness.py 可核对网站日期，已登录飞书 CLI 时可加 --refresh-daily。确认数据来源后加 --write，更新工作目录里的 site-updates.json。
+
 ## 联系
 
-联系：到首页「给我留言」
+联系：到首页「给我留言」或点旁边的微信按钮。

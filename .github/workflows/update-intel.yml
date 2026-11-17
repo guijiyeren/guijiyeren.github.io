@@ -26,13 +26,15 @@ jobs:
           python-version: "3.11"
 
       - name: Refresh NewsNow public boards
-        run: python scripts/update_newsnow.py
+        run: |
+          python scripts/update_newsnow.py
+          python scripts/update_site_freshness.py --write
 
       - name: Commit refreshed snapshot
         run: |
           git config user.name "guijiyeren-bot"
           git config user.email "guijiyeren-bot@users.noreply.github.com"
-          git add intel/data/api/newsnow.json
+          git add intel/data/api/newsnow.json site-updates.json
           if git diff --cached --quiet; then
             echo "No data changes"
             exit 0
