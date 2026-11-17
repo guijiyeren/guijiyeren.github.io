@@ -758,6 +758,13 @@ html[data-theme="night"] .about-left-intro, html[data-theme="night"] .about-note
 html[data-theme="night"] .notes-entry,html[data-theme="night"] .tool-preview-list a{background:#111b2b;color:#e2e8f0}html[data-theme="night"] .notes-projects a{background:#182d4a;color:#bfdcff;border-color:#273e5e}
 @media(max-width:760px){.notes-latest{grid-template-columns:1fr}.tool-preview-row{grid-template-columns:1fr;gap:7px}.tool-preview-list{grid-auto-columns:minmax(128px,1fr)}}
 </style>
+<style>
+#daily-brief-dialog{box-sizing:border-box;width:min(960px,calc(100vw - 28px));height:min(740px,calc(100dvh - 28px));max-height:none;border:0;border-radius:16px;padding:0;background:var(--paper,#fff);color:inherit}
+#daily-brief-dialog::backdrop{background:rgba(15,23,42,.55)}
+#daily-brief-dialog[open]{display:flex;flex-direction:column}
+.daily-brief-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--bg,#f8fafc)}
+#daily-brief-dialog iframe{flex:1;min-height:0;width:100%;border:0}
+</style>
 </head>
 <body>
 
@@ -1354,7 +1361,7 @@ html[data-theme="night"] .notes-entry,html[data-theme="night"] .tool-preview-lis
 <footer id="page-end">
   <div class="in">
     <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
-    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a></div>
+    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="./daily/" data-daily-brief>每日早报</a></div>
   </div>
 </footer>
 
@@ -3032,6 +3039,25 @@ html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
 })();</script>
 <script src="assets/contact-wechat.js?v=contact-2"></script>
 <script src="assets/site-freshness.js?v=fresh-2"></script>
+<dialog id="daily-brief-dialog" aria-labelledby="daily-brief-title">
+  <div class="daily-brief-head"><strong id="daily-brief-title">每日早报</strong><form method="dialog"><button autofocus>关闭</button></form></div>
+  <iframe title="每日早报展示" data-src="https://guozhengxin.github.io/rss-feed/"></iframe>
+</dialog>
+<script>
+(() => {
+  const opener = document.querySelector("[data-daily-brief]");
+  const dialog = document.querySelector("#daily-brief-dialog");
+  if (!opener || !dialog || typeof dialog.showModal !== "function") return;
+  const frame = dialog.querySelector("iframe");
+  opener.addEventListener("click", (event) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (!frame.hasAttribute("src")) frame.src = frame.dataset.src;
+    dialog.showModal();
+  });
+  dialog.addEventListener("close", () => opener.focus());
+})();
+</script>
 </body>
 </html>
 
