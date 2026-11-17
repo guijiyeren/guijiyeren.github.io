@@ -2,3 +2,5 @@ https://guijiyeren.github.io/
 https://guijiyeren.github.io/rensheng/
 https://guijiyeren.github.io/rensheng/graph.html
 https://guijiyeren.github.io/intel/
+https://guijiyeren.github.io/projects/
+https://guijiyeren.github.io/tools/

@@ -1,0 +1,19 @@
+:root{color-scheme:light;--bg:#f6f8fd;--panel:#fff;--ink:#152338;--soft:#52627a;--edge:#dbe4f2;--accent:#1455a5}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--bg);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}a{color:inherit}
+.directory-top{background:#101929;color:#e4eeff}.directory-top .directory-wrap{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.directory-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:700;text-decoration:none}.directory-brand img{width:36px;height:36px;border-radius:50%}
+.directory-nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.directory-nav a{display:inline-flex;text-decoration:none;color:#e4eeff;font-size:13px}
+.directory-wrap{width:min(1120px,calc(100% - 44px));margin-inline:auto}.directory-main{padding-block:clamp(40px,7vw,84px)}
+.directory-heading{max-width:640px;padding-bottom:25px;border-bottom:1px solid var(--edge);margin-bottom:28px}.directory-heading h1{font-size:clamp(34px,6vw,58px);line-height:1.16;margin:0 0 .5rem;letter-spacing:-.035em}.directory-heading p{margin:0;color:var(--soft)}
+.directory-group{margin:34px 0}.directory-group h2{display:flex;align-items:baseline;gap:.65em;margin:0 0 15px;font-size:22px}.directory-group h2 span{color:var(--soft);font-size:13px;font-weight:400}
+.directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.directory-entry,.directory-grid .tool-card{display:flex;gap:13px;align-items:flex-start;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:13px;padding:15px;min-height:95px;text-decoration:none}
+.directory-entry:hover,.directory-grid .tool-card:hover{border-color:#8aace0}.directory-entry b,.directory-grid b{display:block;font-size:15px}.directory-entry p,.directory-grid .t-desc{margin:4px 0 0;font-size:13px;color:var(--soft);line-height:1.5}
+.directory-grid .tool-card img{width:39px;height:39px;object-fit:contain;flex-shrink:0;border-radius:8px}.directory-grid .tool-card .t-role{display:block;color:var(--accent);font-size:12px}.directory-grid .tool-card .t-desc{display:block}
+.directory-grid .t-freq{display:none}.directory-entry .entry-state{margin-left:auto;color:var(--accent);font-size:12px;white-space:nowrap}
+.directory-bottom{border-top:1px solid var(--edge);padding-block:24px;color:var(--soft)}.directory-bottom .directory-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.directory-bottom .wechat-button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--edge);border-radius:10px;background:var(--panel);color:var(--ink);padding:7px 12px;font:inherit;cursor:pointer}.directory-bottom .wechat-button img{width:22px;height:22px}
+:is(a,button):focus-visible{outline:2px solid #3982d6;outline-offset:3px}
+@media(max-width:840px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.directory-wrap{width:calc(100% - 26px)}.directory-grid{grid-template-columns:1fr}.directory-top .directory-wrap{min-height:60px}.directory-brand img{width:30px;height:30px}}
+
+.directory-new{font-size:10px;font-weight:750;color:#a82c30;background:#ffeded;border-radius:999px;padding:2px 6px;vertical-align:1px}.directory-new[hidden]{display:none}
