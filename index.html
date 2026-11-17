@@ -787,6 +787,8 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   .about-note { padding:14px 15px; }
 }
 </style>
+<link rel="stylesheet" href="assets/public-workflow.css">
+<script src="assets/public-workflow.js" defer></script>
 </head>
 <body>
 
@@ -794,7 +796,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   <div class="nav-in">
     <a class="brand" href="#top"><img src="assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">硅基野人</a>
     <div class="nav-links">
-      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#progress">项目进度</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#works">最新作品</a><a href="#tools">常用工具</a><a href="#follow">联系方式</a>
+      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#workbench-flow">工作台流程</a><a href="#progress">项目进度</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#works">最新作品</a><a href="#tools">常用工具</a><a href="#follow">联系方式</a>
     </div>
     <button class="theme-switch nav-theme" id="themeBtn" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button>
   </div>
@@ -974,6 +976,17 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   </div>
 </section>
 
+<section id="workbench-flow" aria-labelledby="workbench-flow-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="workbench-flow-title">工作台流程</h2>
+      <p>点项目或分支，查看它的步骤。</p>
+    </div>
+    <div class="public-flow" data-workflow-map="home"></div>
+    <p class="tools-all-link public-flow-open"><a href="./workflow/">查看完整工作台流程 →</a></p>
+  </div>
+</section>
+
 <section id="progress" style="background:#fff;border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
@@ -995,20 +1008,14 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       <div class="prog-row"><div class="pr-name">情报中枢</div><div class="pr-bar"><span style="width:100%"></span></div><em class="badge online">已上线</em></div>
     </div>
     <section class="workbench-progress" aria-labelledby="workbench-progress-title">
-      <h3 id="workbench-progress-title">工作台模块与内容</h3>
+      <h3 id="workbench-progress-title">工作台模块</h3>
       <div class="workbench-progress-grid">
-        <article class="workbench-progress-card"><h4><a href="./workflow/#daily-jobs">兵器：五项日常任务 ↗</a></h4><p><span class="entry-status">已接入</span> · 统一管理定时、执行和回执。</p></article>
-        <article class="workbench-progress-card"><h4>每日复盘</h4><p>核对记录，整理复盘候选。</p></article>
-        <article class="workbench-progress-card"><h4>每日卡片</h4><p>筛选学习卡并做发布核验。</p></article>
-        <article class="workbench-progress-card"><h4>每日串门</h4><p>找相关内容，准备互动草稿。</p></article>
-        <article class="workbench-progress-card"><h4>每日巡检</h4><p>核对对外入口和知识库，记录异常。</p></article>
-        <article class="workbench-progress-card"><h4>每日采集</h4><p>更新公开情报、爆款和作品数据。</p></article>
-        <article class="workbench-progress-card"><h4><a href="./workflow/">工作台流程与开关 ↗</a></h4><p><span class="entry-status">使用中</span> · 在项目里设置试片、审片、归档和发布确认。</p></article>
-        <article class="workbench-progress-card"><h4>多 AI 开会</h4><p><span class="entry-status">已试跑</span> · AI 分别提交意见，主持人汇总交付。</p></article>
-        <article class="workbench-progress-card"><h4>每日毒打</h4><p><span class="entry-status">内容系列</span> · 回看哪里做得好、哪里需要改。</p></article>
-        <article class="workbench-progress-card"><h4><a href="./workflow/#versions">版本管理 ↗</a></h4><p><span class="entry-status">使用中</span> · 保存版本、查看差异、确认后回退。</p></article>
+        <article class="workbench-progress-card"><h4>多 AI 开会</h4><p>各自提交意见，主持人汇总结论。</p></article>
+        <article class="workbench-progress-card"><h4>每日毒打</h4><p>回看当天结果，找出卡点和改进项。</p></article>
+        <article class="workbench-progress-card"><h4>每日巡检</h4><p>核对网站和知识库，只标需要处理的异常。</p></article>
+        <article class="workbench-progress-card"><h4>每日复盘</h4><p>核对工作记录，整理可写的复盘候选。</p></article>
       </div>
-      <p class="tools-all-link"><a href="./projects/#workspace-modules">查看更多项目与工作台模块 →</a></p>
+      <p class="tools-all-link"><a href="./projects/#workspace-modules">查看更多工作台模块 →</a></p>
     </section>
   </div>
 </section>
@@ -1405,6 +1412,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
 
 <nav class="side-nav" id="sideNav" aria-label="页面目录">
   <a href="#projects" data-sec="projects"><i></i><span>公开项目</span></a>
+  <a href="#workbench-flow" data-sec="workbench-flow"><i></i><span>工作台流程</span></a>
   <a href="#progress" data-sec="progress"><i></i><span>项目进度</span></a>
   <a href="#building" data-sec="building"><i></i><span>实战项目</span></a>
   <a href="#works" data-sec="works"><i></i><span>最新作品</span></a>
