@@ -1,4 +1,4 @@
-/* 全站子页面公用底部挂载器：关于我 / 联系方式 / 给我留言 / 页脚 */
+/* 全站子页面公用底部挂载器：关于我 / 联系方式 / 给我留言 / 页脚（含居中每日早报弹窗） */
 (function () {
   var host = document.querySelector('[data-site-footer]');
   if (!host) return;
@@ -48,11 +48,12 @@
           '</form>' +
         '</div>' +
       '</section>' +
-      '<footer id="page-end"><div class="in"><div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div><div>知识库：<a href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="' + base + '">返回首页</a></div></div></footer>' +
+      '<footer id="page-end"><div class="in"><div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div><div>知识库：<a href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="' + base + 'daily/" data-sf-daily>每日早报</a> · <a href="' + base + '">返回首页</a></div></div></footer>' +
     '</div>' +
     '<div class="mail-mask" id="mailMask"><div class="mail-box"><img src="' + base + 'assets/email-card.png" alt="邮箱" loading="lazy" decoding="async"><div class="mail-actions"><button type="button" class="mail-copy" id="mailCopy">一键复制邮箱</button><button type="button" class="mail-close" id="mailClose">关闭</button></div><p class="mail-tip">邮箱用图片显示，避免被爬虫采集；需要发信时点「复制」。</p></div></div>' +
     '<div class="msg-mask" id="msgMask"><div class="msg-box"><div class="msg-check">✓</div><h3>感谢你的留言</h3><p>我们会第一时间查看。<br>祝您生活愉快，工作顺利！</p><button type="button" class="msg-ok" id="msgOk">关闭</button></div></div>' +
-    '<div class="msg-mask" id="msgWarnMask"><div class="msg-box warn"><div class="msg-check warn">!</div><h3>留言未发送</h3><p id="msgWarnText">内容里含有疑似广告信息，换个说法再发。</p><button type="button" class="msg-ok warn" id="msgWarnOk">我知道了</button></div></div>';
+    '<div class="msg-mask" id="msgWarnMask"><div class="msg-box warn"><div class="msg-check warn">!</div><h3>留言未发送</h3><p id="msgWarnText">内容里含有疑似广告信息，换个说法再发。</p><button type="button" class="msg-ok warn" id="msgWarnOk">我知道了</button></div></div>' +
+    '<div class="msg-mask" id="sfDailyMask" aria-hidden="true"><div style="width:min(1040px,94vw);height:min(84vh,780px);background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 90px rgba(0,0,0,.45)"><div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#0a0f1d;color:#f1f5f9"><strong style="font-size:15px">每日早报</strong><div style="display:flex;align-items:center;gap:12px"><a href="https://guozhengxin.github.io/rss-feed/" target="_blank" rel="noopener" style="color:#7dd3fc;font-size:12.5px;text-decoration:none">新窗口打开 ↗</a><button type="button" id="sfDailyClose" style="border:0;border-radius:999px;padding:6px 14px;background:rgba(255,255,255,.14);color:#fff;font:600 13px/1 inherit;cursor:pointer">✕ 关闭</button></div></div><iframe id="sfDailyFrame" title="每日早报" data-src="https://guozhengxin.github.io/rss-feed/" style="flex:1;width:100%;border:0;background:#fff"></iframe></div></div>';
 
   // Bind mail popup
   var mask = document.getElementById('mailMask');
@@ -75,7 +76,25 @@
     });
   }
 
-  // Load msg-form.js if not already loaded
+  // Bind daily brief centered modal
+  var dMask = document.getElementById('sfDailyMask');
+  var dFrame = document.getElementById('sfDailyFrame');
+  var dOpen = document.querySelector('[data-sf-daily]');
+  var dClose = document.getElementById('sfDailyClose');
+  if (dMask && dFrame && dOpen) {
+    function closeDaily() { dMask.classList.remove('on'); dMask.setAttribute('aria-hidden', 'true'); }
+    dOpen.addEventListener('click', function (ev) {
+      if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      if (!dFrame.getAttribute('src')) dFrame.src = dFrame.getAttribute('data-src');
+      dMask.classList.add('on');
+      dMask.setAttribute('aria-hidden', 'false');
+    });
+    if (dClose) dClose.addEventListener('click', closeDaily);
+    dMask.addEventListener('click', function (ev) { if (ev.target === dMask) closeDaily(); });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && dMask.classList.contains('on')) closeDaily(); });
+  }
+
   if (!document.querySelector('script[src*="msg-form.js"]')) {
     var s = document.createElement('script');
     s.src = base + 'assets/msg-form.js';

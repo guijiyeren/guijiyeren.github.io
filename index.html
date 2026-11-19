@@ -253,8 +253,8 @@
   .public-project .pp-frame.browser { width:92%; height:292px; }
   .public-project .pp-frame.phone { width:126px; height:246px; }
   .public-project .pp-frame { height:292px; display:flex; align-items:center; justify-content:center; background:#fff; }
-  .public-project .pp-frame img { width:100%; height:100%; max-height:none; object-fit:contain; }
-  .public-project .pp-frame.browser img { height:100%; }
+  .public-project .pp-frame img { width:100%; height:100%; max-height:none; object-fit:cover; object-position:center; }
+  .public-project .pp-frame.browser img { height:100%; object-fit:cover; object-position:center; }
   .public-project .pp-frame.phone img { height:calc(246px - 14px); width:100%; object-fit:contain; }
   .public-project .pp-cap { height:44px; display:flex; flex-direction:column; justify-content:center; }
   .public-project .pp-cap { margin-top:10px; text-align:center; width:100%; }
@@ -796,7 +796,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   <div class="nav-in">
     <a class="brand" href="#top"><img src="assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">硅基野人</a>
     <div class="nav-links">
-      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#workbench-flow">工作台流程</a><a href="#progress">项目进度</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#works">最新作品</a><a href="#tools">常用工具</a><a href="#follow">联系方式</a>
+      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#workbench-flow">工作台流程</a><a href="#building">实战项目</a><a href="#kb">飞书知识库</a><a href="#about">关于我</a><a href="#follow">联系方式</a>
     </div>
     <button class="theme-switch nav-theme" id="themeBtn" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button>
   </div>
@@ -1181,11 +1181,15 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     </div>
     
     <div class="works-platforms">
-      <div class="wp-head">更多作品，在下面这四个平台的主页看</div>
+      <div class="wp-head">更多作品，在下面这些平台的主页看</div>
       <div class="wp-row"><a class="wp-item" href="https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_" target="_blank" rel="noopener"><img src="assets/icon-douyin.png" alt="抖音" loading="lazy" decoding="async"><span>抖音</span></a>
 <a class="wp-item" href="https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2" target="_blank" rel="noopener"><img src="assets/icon-xiaohongshu.png" alt="小红书" loading="lazy" decoding="async"><span>小红书</span></a>
 <a class="wp-item" href="https://space.bilibili.com/504784256" target="_blank" rel="noopener"><img src="assets/icon-bilibili.png" alt="B站" loading="lazy" decoding="async"><span>B站</span></a>
-<a class="wp-item" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="快手" loading="lazy" decoding="async"><span>快手</span></a></div>
+<a class="wp-item" href="https://www.kuaishou.com/profile/3x837cneqdzidis" target="_blank" rel="noopener"><img src="assets/icon-kuaishou.png" alt="快手" loading="lazy" decoding="async"><span>快手</span></a>
+<a class="wp-item" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="YouTube" loading="lazy" decoding="async"><span>YouTube</span></a>
+<a class="wp-item" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="TikTok" loading="lazy" decoding="async"><span>TikTok</span></a>
+<a class="wp-item" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="今日头条" loading="lazy" decoding="async"><span>今日头条</span></a>
+<a class="wp-item" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="知乎" loading="lazy" decoding="async"><span>知乎</span></a></div>
     </div>
   </div>
 </section>
@@ -3126,23 +3130,51 @@ html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
 })();</script>
 
 <script src="assets/site-freshness.js?v=fresh-2"></script>
-<dialog id="daily-brief-dialog" aria-labelledby="daily-brief-title">
-  <div class="daily-brief-head"><strong id="daily-brief-title">每日早报</strong><form method="dialog"><button autofocus>关闭</button></form></div>
-  <iframe title="每日早报展示" data-src="https://guozhengxin.github.io/rss-feed/"></iframe>
-</dialog>
+<style>
+#daily-brief-mask { position:fixed; inset:0; z-index:260; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(7,11,22,.68); backdrop-filter:blur(6px); }
+#daily-brief-mask.on { display:flex; }
+#daily-brief-box { width:min(1040px,94vw); height:min(84vh,780px); background:#fff; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 32px 90px rgba(0,0,0,.45); border:1px solid rgba(148,163,184,.28); }
+.daily-brief-head { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; background:#0a0f1d; color:#f1f5f9; }
+.daily-brief-head strong { font-size:15px; color:#fff !important; }
+.daily-brief-actions { display:flex; align-items:center; gap:12px; }
+.daily-brief-actions a { color:#7dd3fc !important; font-size:12.5px; text-decoration:none; }
+.daily-brief-close { border:0 !important; border-radius:999px; padding:6px 14px; background:rgba(255,255,255,.15) !important; color:#fff !important; font:600 13px/1 inherit; cursor:pointer; }
+.daily-brief-close:hover { background:rgba(255,255,255,.26) !important; }
+#daily-brief-box iframe { flex:1; width:100%; border:0; background:#fff; }
+</style>
+<div id="daily-brief-mask" aria-hidden="true" role="dialog" aria-labelledby="daily-brief-title">
+  <div id="daily-brief-box">
+    <div class="daily-brief-head">
+      <strong id="daily-brief-title">每日早报</strong>
+      <div class="daily-brief-actions">
+        <a href="https://guozhengxin.github.io/rss-feed/" target="_blank" rel="noopener">新窗口打开 ↗</a>
+        <button type="button" class="daily-brief-close" id="dailyBriefClose">✕ 关闭</button>
+      </div>
+    </div>
+    <iframe title="每日早报展示" data-src="https://guozhengxin.github.io/rss-feed/"></iframe>
+  </div>
+</div>
 <script>
 (() => {
   const opener = document.querySelector("[data-daily-brief]");
-  const dialog = document.querySelector("#daily-brief-dialog");
-  if (!opener || !dialog || typeof dialog.showModal !== "function") return;
-  const frame = dialog.querySelector("iframe");
+  const mask = document.querySelector("#daily-brief-mask");
+  const closeBtn = document.querySelector("#dailyBriefClose");
+  if (!opener || !mask) return;
+  const frame = mask.querySelector("iframe");
+  function close() {
+    mask.classList.remove("on");
+    mask.setAttribute("aria-hidden", "true");
+  }
   opener.addEventListener("click", (event) => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     if (!frame.hasAttribute("src")) frame.src = frame.dataset.src;
-    dialog.showModal();
+    mask.classList.add("on");
+    mask.setAttribute("aria-hidden", "false");
   });
-  dialog.addEventListener("close", () => opener.focus());
+  if (closeBtn) closeBtn.addEventListener("click", close);
+  mask.addEventListener("click", (event) => { if (event.target === mask) close(); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && mask.classList.contains("on")) close(); });
 })();
 </script>
 </body>
