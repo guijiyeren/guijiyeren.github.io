@@ -1,33 +1,30 @@
-/* 全站动态工作台流程图 + 三台电脑协同拓扑 */
+/* 全站动态工作台全景流程图：三台电脑完整流程（默认依次全展，点击单机聚焦） */
 .public-flow {
-  --wire: #6487b0;
+  --wire: #5c82ad;
   --flow-panel: #ffffff;
   --flow-surface: #f5f8fd;
   --flow-ink: #172d48;
   --flow-muted: #5b708b;
   --flow-line: #cedbed;
   --flow-link: #1d4ed8;
-  --beam-a: #2563eb;
-  --beam-b: #0ea5e9;
-  --beam-c: #10b981;
   color: var(--flow-ink);
 }
 
-/* 三台电脑动态协同拓扑 */
+/* 顶部三台电脑实时协同控制器 */
 .pf-cluster {
   position: relative;
   border: 1px solid var(--flow-line);
   border-radius: 16px;
   background: radial-gradient(640px 220px at 50% 0%, rgba(37,99,235,.08), transparent 72%), var(--flow-panel);
-  padding: 18px 18px 16px;
-  margin-bottom: 14px;
+  padding: 16px 18px 16px;
+  margin-bottom: 16px;
   overflow: hidden;
 }
 .pf-cluster-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 14px;
   flex-wrap: wrap;
 }
@@ -47,33 +44,51 @@
   box-shadow: 0 0 0 0 rgba(34,197,94,.55);
   animation: pf-pulse 2s infinite;
 }
-.pf-cluster-sub { font-size: 12px; color: var(--flow-muted); }
+.pf-view-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--flow-line);
+  background: var(--flow-surface);
+  color: var(--flow-ink);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .16s;
+}
+.pf-pill:hover { border-color: #60a5fa; color: var(--flow-link); }
+.pf-pill[aria-pressed="true"] {
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  border-color: #1d4ed8;
+  color: #fff !important;
+  box-shadow: 0 6px 16px rgba(37,99,235,.25);
+}
 
 .pf-machines {
   display: grid;
   grid-template-columns: 1fr 48px 1fr 48px 1fr;
   align-items: stretch;
-  gap: 0;
 }
 .pf-machine {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  padding: 14px 15px;
+  gap: 6px;
+  padding: 13px 14px;
   border-radius: 13px;
   border: 1.5px solid var(--flow-line);
   background: var(--flow-surface);
   text-align: left;
   cursor: pointer;
-  transition: transform .18s, border-color .18s, box-shadow .18s;
+  transition: transform .18s, border-color .18s, box-shadow .18s, opacity .18s;
 }
 .pf-machine:hover,
 .pf-machine[aria-pressed="true"] {
   transform: translateY(-2px);
   border-color: var(--m-accent, #2563eb);
-  box-shadow: 0 12px 26px rgba(37,99,235,.14);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--m-accent, #2563eb) 18%, transparent);
 }
+.pf-machine.is-dim { opacity: .58; }
 .pf-machine[data-m="main"] { --m-accent: #2563eb; }
 .pf-machine[data-m="drawing"] { --m-accent: #7c3aed; }
 .pf-machine[data-m="listing"] { --m-accent: #059669; }
@@ -81,29 +96,20 @@
 .pf-m-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-size: 11px;
   font-weight: 700;
-  padding: 3px 9px;
+  padding: 2px 9px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--m-accent) 12%, transparent);
+  background: color-mix(in srgb, var(--m-accent) 13%, transparent);
   color: var(--m-accent);
 }
-.pf-m-name { font-size: 15.5px; font-weight: 800; color: var(--flow-ink); }
-.pf-m-role { font-size: 12.5px; color: var(--flow-muted); line-height: 1.55; }
-.pf-m-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
-.pf-m-tags span {
-  font-size: 11px;
-  padding: 2px 7px;
-  border-radius: 6px;
-  background: var(--flow-panel);
-  border: 1px solid var(--flow-line);
-  color: var(--flow-ink);
-}
+.pf-m-count { font-size: 11px; color: var(--flow-muted); font-weight: 600; }
+.pf-m-name { font-size: 15px; font-weight: 800; color: var(--flow-ink); }
+.pf-m-role { font-size: 12px; color: var(--flow-muted); line-height: 1.5; }
 
 /* 电脑间流动光束连线 */
 .pf-beam {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,48 +128,104 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -40%;
+  left: -45%;
   width: 45%;
   height: 100%;
   background: linear-gradient(90deg, transparent, #38bdf8, #2563eb, transparent);
   animation: pf-beam-flow 1.8s linear infinite;
 }
 .pf-beam-track.rev::after {
-  animation: pf-beam-rev 2.2s linear infinite;
+  animation: pf-beam-rev 2.1s linear infinite;
   background: linear-gradient(90deg, transparent, #10b981, #38bdf8, transparent);
 }
-.pf-beam-label {
-  font-size: 10px;
+.pf-beam-label { font-size: 10px; font-weight: 700; color: var(--flow-muted); white-space: nowrap; }
+
+/* 竖向机间流转连接桥 */
+.pf-stack { display: flex; flex-direction: column; gap: 0; }
+.pf-bridge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+}
+.pf-bridge-line {
+  width: 2.5px;
+  height: 16px;
+  background: linear-gradient(to bottom, #2563eb 0 30%, transparent 50%, #0ea5e9 75%);
+  background-size: 2.5px 14px;
+  animation: public-flow-travel 1s linear infinite;
+}
+.pf-bridge-pill {
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--flow-muted);
-  white-space: nowrap;
+  color: var(--flow-link);
+  background: var(--flow-surface);
+  border: 1px solid var(--flow-line);
+  border-radius: 999px;
+  padding: 3px 12px;
 }
 
-/* 全景树状流程图 */
-.public-flow-tree {
-  border: 1px solid var(--flow-line);
+/* 单台电脑完整流程图面板 */
+.pf-panel {
+  border: 1.5px solid var(--flow-line);
   border-radius: 16px;
   background: var(--flow-panel);
-  padding: 18px 16px 14px;
+  padding: 18px 16px 16px;
+  position: relative;
+  animation: pf-fade .24s ease-out;
 }
+.pf-panel[data-panel="main"] { --p-accent: #2563eb; }
+.pf-panel[data-panel="drawing"] { --p-accent: #7c3aed; }
+.pf-panel[data-panel="listing"] { --p-accent: #059669; }
+.pf-panel[hidden] { display: none !important; }
+.pf-bridge[hidden] { display: none !important; }
+
+.pf-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--flow-line);
+}
+.pf-panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 16px;
+  font-weight: 850;
+  color: var(--flow-ink);
+}
+.pf-panel-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--p-accent) 12%, transparent);
+  color: var(--p-accent);
+}
+.pf-panel-desc { font-size: 12.5px; color: var(--flow-muted); }
+
+/* 树状根 + 流动枝干 */
 .public-flow button { appearance: none; font: inherit; cursor: pointer; border: 0; color: inherit; background: transparent; text-align: start; }
 .public-flow button:focus-visible { outline: 2px solid var(--flow-link); outline-offset: 2px; }
+.pf-root-wrap { text-align: center; }
 .public-flow .public-flow-root {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 0 auto 22px;
-  padding: 8px 18px;
+  margin: 0 auto 20px;
+  padding: 7px 16px;
   font-weight: 800;
-  font-size: 14.5px;
-  border: 1.5px solid var(--wire);
+  font-size: 13.5px;
+  border: 1.5px solid var(--p-accent, var(--wire));
   border-radius: 999px;
-  color: var(--flow-link);
-  background: var(--flow-surface);
-  box-shadow: 0 6px 16px rgba(37,99,235,.08);
+  color: var(--p-accent, var(--flow-link));
+  background: color-mix(in srgb, var(--p-accent, var(--wire)) 8%, var(--flow-panel));
 }
-.pf-root-wrap { text-align: center; }
 .public-flow-root::after {
   content: "";
   position: absolute;
@@ -171,54 +233,84 @@
   top: 100%;
   left: 50%;
   width: 2px;
-  height: 23px;
-  background: var(--wire);
+  height: 21px;
+  background: var(--p-accent, var(--wire));
 }
 .public-flow-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  border-top: 2px solid var(--wire);
+  gap: 13px;
+  border-top: 2px solid color-mix(in srgb, var(--p-accent, var(--wire)) 55%, var(--flow-line));
 }
-.public-flow-column { position: relative; min-width: 0; padding-top: 14px; --branch: #2563eb; }
-.public-flow-column:nth-child(2) { --branch: #059669; }
-.public-flow-column:nth-child(3) { --branch: #b45309; }
-.public-flow-column::before { content: ""; position: absolute; top: 0; left: 50%; width: 2px; height: 14px; background: var(--wire); }
-.public-flow-group { margin: 0 0 8px; text-align: center; font-size: 14px; font-weight: 800; color: var(--branch); }
+.public-flow-columns.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.public-flow-column { position: relative; min-width: 0; padding-top: 13px; --branch: var(--p-accent, #2563eb); }
+.pf-panel[data-panel="main"] .public-flow-column:nth-child(2) { --branch: #059669; }
+.pf-panel[data-panel="main"] .public-flow-column:nth-child(3) { --branch: #b45309; }
+.pf-panel[data-panel="drawing"] .public-flow-column:nth-child(1) { --branch: #2563eb; }
+.pf-panel[data-panel="drawing"] .public-flow-column:nth-child(2) { --branch: #7c3aed; }
+.pf-panel[data-panel="listing"] .public-flow-column:nth-child(1) { --branch: #059669; }
+.pf-panel[data-panel="listing"] .public-flow-column:nth-child(2) { --branch: #0284c7; }
+.pf-panel[data-panel="listing"] .public-flow-column:nth-child(3) { --branch: #d97706; }
+
+.public-flow-column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 13px;
+  background: var(--branch);
+}
+.public-flow-group { margin: 0 0 8px; text-align: center; font-size: 13.5px; font-weight: 800; color: var(--branch); }
 .public-flow-projects { display: grid; gap: 8px; }
 .public-flow-project {
   min-width: 0;
   position: relative;
-  padding: 7px 8px 7px 12px;
+  padding: 7px 9px 7px 12px;
   border-inline-start: 2.5px solid var(--branch);
   border-radius: 0 9px 9px 0;
   background: var(--flow-surface);
-  transition: box-shadow .18s, background .18s;
-}
-.public-flow-project.is-highlight {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--branch) 45%, transparent);
 }
 .public-flow-project::before { content: ""; position: absolute; top: 18px; left: 0; width: 8px; height: 1.5px; background: var(--branch); }
-.public-flow .public-flow-project-name { padding: 2px 4px; font-weight: 760; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.public-flow .public-flow-project-name { padding: 2px 4px; font-weight: 760; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px; }
 .public-flow-project-name::before { content: ""; display: inline-block; width: 4px; height: 11px; border-radius: 3px; background: var(--branch); }
-.pf-proj-host {
-  font-size: 10.5px;
-  font-weight: 600;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--branch) 12%, transparent);
-  color: var(--branch);
+.public-flow-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.public-flow-branches.single-col { grid-template-columns: 1fr; }
+.public-flow .public-flow-branch {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 26px;
+  width: 100%;
+  overflow-wrap: anywhere;
+  padding: 3px 6px;
+  font-size: 12.5px;
+  border-radius: 6px;
+  line-height: 1.4;
 }
-.public-flow-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 4px; margin: 2px 0 0; padding: 0; list-style: none; }
-.public-flow .public-flow-branch { display: flex; gap: 5px; align-items: center; min-height: 27px; width: 100%; overflow-wrap: anywhere; padding: 2px 5px; font-size: 12.5px; border-radius: 6px; }
 .public-flow-branch::before { content: ""; width: 6px; height: 2px; flex: none; border-radius: 1px; background: var(--branch); }
-.public-flow button:is(:hover,[aria-pressed="true"]) { background: color-mix(in srgb, var(--wire) 16%, var(--flow-panel)); }
-.public-flow-relations { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 12px; font-size: 13px; }
-.public-flow .public-flow-relation { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--flow-line); background: var(--flow-surface); color: var(--flow-link); font-weight: 600; font-size: 12.5px; }
-.public-flow-selection { margin-top: 12px; padding: 14px 16px; border: 1.5px solid color-mix(in srgb, var(--flow-link) 35%, var(--flow-line)); border-radius: 12px; background: var(--flow-surface); }
-.public-flow-selection-title { margin: 0 0 8px; font-size: 15px; color: var(--flow-ink); }
+.public-flow .public-flow-branch:is(:hover,[aria-pressed="true"]),
+.public-flow .public-flow-project-name:is(:hover,[aria-pressed="true"]) {
+  background: color-mix(in srgb, var(--branch) 14%, var(--flow-panel));
+  border-radius: 6px;
+}
+
+/* 底部步骤明细条 */
+.public-flow-relations { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 14px; font-size: 13px; }
+.public-flow .public-flow-relation { padding: 5px 11px; border-radius: 999px; border: 1px solid var(--flow-line); background: var(--flow-surface); color: var(--flow-link); font-weight: 600; font-size: 12.5px; }
+.public-flow .public-flow-relation:hover,
+.public-flow .public-flow-relation[aria-pressed="true"] { border-color: var(--flow-link); background: color-mix(in srgb, var(--flow-link) 12%, var(--flow-panel)); }
+
+.public-flow-selection {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid color-mix(in srgb, var(--flow-link) 40%, var(--flow-line));
+  border-radius: 12px;
+  background: var(--flow-surface);
+}
+.public-flow-selection-title { margin: 0 0 8px; font-size: 14.5px; color: var(--flow-ink); }
 .public-flow-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin: 0; padding: 0; list-style: none; }
-.public-flow-steps li { display: flex; gap: 8px; align-items: center; font-size: 13px; padding: 4px 10px; border-radius: 8px; background: var(--flow-panel); border: 1px solid var(--flow-line); }
+.public-flow-steps li { display: flex; gap: 8px; align-items: center; font-size: 12.5px; padding: 5px 10px; border-radius: 8px; background: var(--flow-panel); border: 1px solid var(--flow-line); }
 .public-flow-steps li + li::before { content: "→"; color: var(--flow-link); font-weight: 800; }
 
 html[data-theme="night"] .public-flow,
@@ -231,17 +323,11 @@ html.dark .public-flow {
   --flow-line: #2a3c56;
   --flow-link: #7dd3fc;
 }
-html[data-theme="night"] .public-flow-column,
-html.dark .public-flow-column { --branch: #60a5fa; }
-html[data-theme="night"] .public-flow-column:nth-child(2),
-html.dark .public-flow-column:nth-child(2) { --branch: #34d399; }
-html[data-theme="night"] .public-flow-column:nth-child(3),
-html.dark .public-flow-column:nth-child(3) { --branch: #fbbf24; }
 
 @media (prefers-reduced-motion: no-preference) {
   .public-flow-root::after,
   .public-flow-column::before {
-    background: linear-gradient(to bottom, var(--wire) 0 26%, var(--flow-panel) 49%, var(--wire) 65%);
+    background: linear-gradient(to bottom, var(--branch, var(--wire)) 0 28%, var(--flow-panel) 50%, var(--branch, var(--wire)) 72%);
     background-size: 2px 16px;
     animation: public-flow-travel 1.2s linear infinite;
   }
@@ -255,7 +341,7 @@ html.dark .public-flow-column:nth-child(3) { --branch: #fbbf24; }
     animation: public-flow-travel 1.4s linear infinite;
   }
   .public-flow-project:nth-child(even) { animation-delay: -.35s; }
-  .public-flow-selection.is-updated { animation: public-flow-reveal .25s ease-out; }
+  .public-flow-selection.is-updated { animation: public-flow-reveal .22s ease-out; }
 }
 @keyframes pf-pulse {
   0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
@@ -266,14 +352,17 @@ html.dark .public-flow-column:nth-child(3) { --branch: #fbbf24; }
 @keyframes pf-beam-rev { 0% { left: 105%; } 100% { left: -45%; } }
 @keyframes public-flow-travel { to { background-position-y: 18px; } }
 @keyframes public-flow-reveal { from { opacity: .65; transform: translateY(3px); } }
+@keyframes pf-fade { from { opacity: .65; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 @media (max-width: 860px) {
   .pf-machines { grid-template-columns: 1fr; gap: 8px; }
-  .pf-beam { flex-direction: row; height: 26px; }
+  .pf-beam { flex-direction: row; height: 24px; }
   .pf-beam-track { width: 42px; }
-  .public-flow-columns { grid-template-columns: 1fr; gap: 10px; }
+  .public-flow-columns,
+  .public-flow-columns.cols-2 { grid-template-columns: 1fr; gap: 10px; }
   .public-flow-root::after, .public-flow-column::before { display: none; }
   .public-flow-group { text-align: start; }
+  .public-flow-branches { grid-template-columns: 1fr; }
 }
 
 #workbench-flow { border-top: 1px solid var(--line); }
