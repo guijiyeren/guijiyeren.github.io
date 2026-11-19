@@ -10,17 +10,16 @@
 <link rel="stylesheet" href="../assets/site-footer.css">
 <script src="../assets/site-nav.js" defer></script>
 <style>
-  :root { --ink:#0f172a; --line:#e2e8f0; --blue:#2563eb; --bg:#f6f8fc; --card:#ffffff; --muted:#64748b; }
+  :root { --ink:#0f172a; --line:#e2e8f0; --blue:#2563eb; --green:#10b981; --bg:#f6f8fc; --card:#ffffff; --muted:#64748b; }
   html[data-theme="night"], html.dark { --ink:#f1f5f9; --line:#243247; --bg:#0b1220; --card:#111a2b; --muted:#94a3b8; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
-  .wrap { max-width:1020px; margin:0 auto; padding:34px 22px 48px; }
+  .wrap { max-width:1040px; margin:0 auto; padding:34px 22px 48px; }
 
   /* 密码门禁 */
-  .gate-card { max-width:440px; margin:64px auto 80px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 28px; text-align:center; box-shadow:0 20px 50px rgba(15,23,42,.08); }
-  .gate-ico { width:56px; height:56px; margin:0 auto 14px; border-radius:16px; background:rgba(37,99,235,.1); color:#2563eb; display:grid; place-items:center; font-size:26px; }
-  .gate-card h1 { font-size:21px; margin-bottom:8px; }
-  .gate-card p { font-size:13px; color:var(--muted); line-height:1.7; margin-bottom:20px; }
+  .gate-card { max-width:420px; margin:72px auto 90px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 28px; text-align:center; box-shadow:0 20px 50px rgba(15,23,42,.08); }
+  .gate-ico { width:54px; height:54px; margin:0 auto 14px; border-radius:16px; background:rgba(37,99,235,.1); color:#2563eb; display:grid; place-items:center; font-size:25px; }
+  .gate-card h1 { font-size:21px; margin-bottom:20px; }
   .gate-form { display:flex; gap:10px; }
   .gate-form input { flex:1; padding:11px 14px; border-radius:11px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; font-size:15px; letter-spacing:2px; outline:none; }
   .gate-form input:focus { border-color:#2563eb; }
@@ -30,41 +29,66 @@
   /* 统计仪表盘 */
   .dash-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
   .dash-head h1 { font-size:25px; letter-spacing:.5px; }
-  .lock-btn { border:1px solid var(--line); background:var(--card); color:var(--muted); border-radius:999px; padding:7px 14px; font-size:12.5px; font-weight:600; cursor:pointer; }
-  .lock-btn:hover { border-color:#ef4444; color:#ef4444; }
+  .dash-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .pill-btn { border:1px solid var(--line); background:var(--card); color:var(--muted); border-radius:999px; padding:7px 14px; font-size:12.5px; font-weight:600; cursor:pointer; }
+  .pill-btn.on { border-color:#10b981; color:#059669; background:rgba(16,185,129,.1); }
+  .pill-btn.danger:hover { border-color:#ef4444; color:#ef4444; }
   .sub { margin-top:8px; color:var(--muted); font-size:13px; line-height:1.8; }
+
   .panel { margin-top:20px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px; }
   .panel-top { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
   .panel h2 { font-size:15.5px; margin:0; }
   .row { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px; }
-  .row-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); }
   .cell { border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
   .cell b { display:block; font-size:12px; color:var(--muted); font-weight:700; }
   .cell .line { display:flex; align-items:baseline; gap:6px; margin-top:6px; }
-  .cell .num { font-size:28px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .cell .num { font-size:27px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .cell .num.uv { color:var(--green); }
+  .cell .num.pv { color:var(--blue); }
   .cell .num small { font-size:12px; color:var(--muted); font-weight:500; }
   .cell .tag { font-size:11.5px; color:var(--muted); margin-top:4px; }
-  .cell .tag em { font-style:normal; color:var(--ink); font-weight:700; margin-left:4px; }
+  .cell .tag em { font-style:normal; color:var(--ink); font-weight:700; margin-left:3px; }
 
-  /* 历史趋势折线图 */
+  /* 双曲线折线图 + 曲线上悬浮跟随提示框 */
   .chart-tabs { display:flex; flex-wrap:wrap; gap:6px; }
   .chart-tab { border:1px solid var(--line); background:var(--bg); color:var(--muted); border-radius:999px; padding:4px 11px; font-size:12px; font-weight:600; cursor:pointer; }
   .chart-tab.on { background:#2563eb; border-color:#2563eb; color:#fff; }
-  .chart-box { position:relative; width:100%; overflow-x:auto; padding-top:6px; }
-  .chart-box svg { width:100%; height:240px; display:block; min-width:560px; }
-  .chart-tip { margin-top:10px; font-size:12.5px; color:var(--muted); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
-  .chart-tip strong { color:var(--ink); }
+  .chart-legend { display:flex; align-items:center; gap:16px; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  .chart-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .chart-legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .chart-wrap { position:relative; width:100%; overflow-x:auto; }
+  .chart-wrap svg { width:100%; height:260px; display:block; min-width:560px; }
+  .chart-float-tip {
+    position:absolute;
+    pointer-events:none;
+    display:none;
+    min-width:158px;
+    padding:10px 13px;
+    border-radius:12px;
+    background:rgba(10,15,29,.94);
+    color:#f1f5f9;
+    font-size:12.5px;
+    line-height:1.7;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    border:1px solid rgba(56,189,248,.35);
+    z-index:10;
+    transform:translate(-50%, -108%);
+    white-space:nowrap;
+  }
+  .chart-float-tip.on { display:block; }
+  .chart-float-tip .t-date { font-weight:800; color:#fff; margin-bottom:2px; border-bottom:1px solid rgba(148,163,184,.25); padding-bottom:3px; }
+  .chart-float-tip .t-row { display:flex; justify-content:space-between; gap:14px; }
+  .chart-float-tip .t-uv { color:#34d399; font-weight:700; }
+  .chart-float-tip .t-pv { color:#60a5fa; font-weight:700; }
 
-  /* 14 天明细表 */
-  .hist-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:12.5px; }
+  .hist-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:12.5px; }
   .hist-table th, .hist-table td { padding:9px 10px; border-bottom:1px solid var(--line); text-align:right; font-variant-numeric:tabular-nums; }
   .hist-table th:first-child, .hist-table td:first-child { text-align:left; font-weight:700; }
   .hist-table th { color:var(--muted); font-weight:700; }
   .table-scroll { overflow-x:auto; }
-  .note { margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.9; }
   @media (max-width: 760px) {
     .wrap { padding:24px 16px 36px; }
-    .row, .row-3 { grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; }
+    .row { grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; }
   }
 </style>
 </head>
@@ -72,11 +96,9 @@
 <nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#workbench-flow">工作台流程</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#about">关于我</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav>
 
 <div class="wrap">
-  <!-- 密码验证门禁（SHA-256 加盐校验，绝无明文密码） -->
   <div class="gate-card" id="gateCard">
     <div class="gate-ico">🔒</div>
-    <h1>站点访问统计 · 验证进入</h1>
-    <p>请输入管理员访问口令，验证后加载全站实时访问数据与近 14 天历史趋势曲线。</p>
+    <h1>站点访问统计</h1>
     <form class="gate-form" id="gateForm">
       <input type="password" id="gateInput" inputmode="numeric" autocomplete="off" placeholder="输入口令" required>
       <button type="submit">进入</button>
@@ -84,30 +106,39 @@
     <div class="gate-err" id="gateErr"></div>
   </div>
 
-  <!-- 解锁后才渲染的数据面板 -->
   <div id="dashRoot" hidden>
     <div class="dash-head">
       <h1>站点访问统计</h1>
-      <button type="button" class="lock-btn" id="lockBtn">🔒 锁定退出</button>
+      <div class="dash-actions">
+        <button type="button" class="pill-btn" id="ignoreSelfBtn">🛡️ 忽略本机访问</button>
+        <button type="button" class="pill-btn danger" id="lockBtn">🔒 锁定退出</button>
+      </div>
     </div>
-    <p class="sub">全站 8 个页面真实打开次数（PV），数据源 <code>abacus.jasoncameron.dev</code>（每真实打开一次 +1，本统计页本身不计数）。</p>
+    <p class="sub">同时统计<b>访问人数（UV，同设备每日去重）</b>与<b>访问次数（PV）</b>；已自动开启「忽略本机访问」，你自己刷新页面不会计入统计。</p>
 
     <div class="panel">
-      <div class="panel-top"><h2>全站合计</h2></div>
-      <div class="row row-3">
-        <div class="cell"><b>今日总打开</b><div class="line"><span class="num" id="all-today">-</span><small>次</small></div></div>
-        <div class="cell"><b>近 14 天合计</b><div class="line"><span class="num" id="all-14d">-</span><small>次</small></div></div>
-        <div class="cell"><b>历史累计总打开</b><div class="line"><span class="num" id="all-all">-</span><small>次</small></div></div>
+      <div class="panel-top"><h2>全站核心指标</h2></div>
+      <div class="row">
+        <div class="cell"><b>今日访问人数 (UV)</b><div class="line"><span class="num uv" id="uv-today">-</span><small>人</small></div><div class="tag">累计<em id="uv-all">-</em> 人次</div></div>
+        <div class="cell"><b>今日访问次数 (PV)</b><div class="line"><span class="num pv" id="pv-today">-</span><small>次</small></div><div class="tag">累计<em id="pv-all">-</em> 次</div></div>
+        <div class="cell"><b>近 14 天访问人数</b><div class="line"><span class="num uv" id="uv-14d">-</span><small>人</small></div></div>
+        <div class="cell"><b>近 14 天访问次数</b><div class="line"><span class="num pv" id="pv-14d">-</span><small>次</small></div></div>
       </div>
     </div>
 
     <div class="panel">
       <div class="panel-top">
-        <h2>近 14 天历史趋势曲线</h2>
+        <h2>近 14 天访问趋势（鼠标移到曲线上直接看人数与次数）</h2>
         <div class="chart-tabs" id="chartTabs"></div>
       </div>
-      <div class="chart-box" id="chartBox"></div>
-      <div class="chart-tip"><span id="chartHover">把鼠标移到曲线节点上查看当天精确数据</span><span>单位：页面打开次数（次/天）</span></div>
+      <div class="chart-legend">
+        <span><i style="background:#2563eb"></i>访问次数 (PV)</span>
+        <span><i style="background:#10b981"></i>访问人数 (UV)</span>
+      </div>
+      <div class="chart-wrap" id="chartWrap">
+        <div id="chartBox"></div>
+        <div class="chart-float-tip" id="chartTip"></div>
+      </div>
     </div>
 
     <div class="panel">
@@ -118,13 +149,9 @@
     <div class="panel">
       <div class="panel-top"><h2>近 14 天每日访问明细表</h2></div>
       <div class="table-scroll">
-        <table class="hist-table" id="histTable"><thead><tr><th>日期</th><th>全站合计</th><th>首页</th><th>会动网页</th><th>人生指南</th><th>资源中心</th><th>情报中枢</th><th>其他子页</th></tr></thead><tbody></tbody></table>
+        <table class="hist-table" id="histTable"><thead><tr><th>日期</th><th>全站人数(UV)</th><th>全站次数(PV)</th><th>首页</th><th>会动网页</th><th>人生指南</th><th>资源中心</th><th>情报中枢</th><th>其他子页</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
-
-    <p class="note">
-      提示：这是基于 Abacus 计数器的实时打开次数（PV）。如需看独立访客（UV）、来源渠道与地区热力图，可免费接入 Cloudflare Web Analytics 或 Microsoft Clarity，在官方独立后台查看。
-    </p>
   </div>
 </div>
 
@@ -142,6 +169,18 @@
   var gateInput = document.getElementById('gateInput');
   var gateErr = document.getElementById('gateErr');
   var lockBtn = document.getElementById('lockBtn');
+  var ignoreBtn = document.getElementById('ignoreSelfBtn');
+
+  function syncIgnoreBtn() {
+    var on = localStorage.getItem('guiji_ignore_self') === '1';
+    ignoreBtn.classList.toggle('on', on);
+    ignoreBtn.textContent = on ? '🛡️ 忽略本机访问：已开启' : '🛡️ 忽略本机访问：已关闭';
+  }
+  ignoreBtn.addEventListener('click', function () {
+    var on = localStorage.getItem('guiji_ignore_self') === '1';
+    localStorage.setItem('guiji_ignore_self', on ? '0' : '1');
+    syncIgnoreBtn();
+  });
 
   async function sha256Hex(str) {
     var buf = new TextEncoder().encode(str);
@@ -150,14 +189,16 @@
   }
 
   function unlock() {
+    if (localStorage.getItem('guiji_ignore_self') === null) {
+      localStorage.setItem('guiji_ignore_self', '1');
+    }
+    syncIgnoreBtn();
     gateCard.hidden = true;
     dashRoot.hidden = false;
     loadDashboard();
   }
 
-  if (sessionStorage.getItem(SESS_KEY) === TARGET) {
-    unlock();
-  }
+  if (sessionStorage.getItem(SESS_KEY) === TARGET) unlock();
 
   gateForm.addEventListener('submit', async function (ev) {
     ev.preventDefault();
@@ -170,7 +211,7 @@
       gateInput.value = '';
       unlock();
     } else {
-      gateErr.textContent = '口令不正确，请重新输入。';
+      gateErr.textContent = '口令不正确';
       gateInput.select();
     }
   });
@@ -199,20 +240,15 @@
       { id: 'tools', label: '常用工具' }
     ];
 
-    // 渲染 8 个页面卡片骨架
-    var cardsEl = document.getElementById('pageCards');
-    cardsEl.innerHTML = pages.map(function (p) {
-      return '<div class="cell"><b>' + p.label + '</b><div class="line"><span class="num" id="t-' + p.id + '">-</span><small>次</small></div><div class="tag">累计<em id="a-' + p.id + '">-</em> 次</div></div>';
+    document.getElementById('pageCards').innerHTML = pages.map(function (p) {
+      return '<div class="cell"><b>' + p.label + '</b><div class="line"><span class="num pv" id="pv-' + p.id + '">-</span><small>次</small></div><div class="tag">今日人数<em id="uv-' + p.id + '">-</em> 人 · 累计<em id="all-' + p.id + '">-</em> 次</div></div>';
     }).join('');
 
-    // 生成近 14 天日期序列（从旧到新）
     var days = [];
     var now = new Date();
     for (var i = 13; i >= 0; i--) {
       var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-      var y = d.getFullYear();
-      var m = ('0' + (d.getMonth() + 1)).slice(-2);
-      var dd = ('0' + d.getDate()).slice(-2);
+      var y = d.getFullYear(), m = ('0' + (d.getMonth() + 1)).slice(-2), dd = ('0' + d.getDate()).slice(-2);
       days.push({ key: '' + y + m + dd, short: m + '-' + dd, full: y + '-' + m + '-' + dd });
     }
 
@@ -223,53 +259,55 @@
         .catch(function () { return 0; });
     }
 
-    // 拉取全量累计 + 近 14 天每日数据
-    var series = { total: new Array(days.length).fill(0) };
-    pages.forEach(function (p) { series[p.id] = new Array(days.length).fill(0); });
-
-    var allTotals = {};
-    var tasks = [];
-
+    var pvSeries = { total: new Array(days.length).fill(0) };
+    var uvSeries = { total: new Array(days.length).fill(0) };
     pages.forEach(function (p) {
-      tasks.push(getVal(p.id + '-all').then(function (v) { allTotals[p.id] = v; }));
+      pvSeries[p.id] = new Array(days.length).fill(0);
+      uvSeries[p.id] = new Array(days.length).fill(0);
+    });
+    var pvAll = {}, uvSiteAll = 0;
+    var tasks = [getVal('uv-site-all').then(function (v) { uvSiteAll = v; })];
+
+    days.forEach(function (day, di) {
+      tasks.push(getVal('uv-site-' + day.key).then(function (v) { uvSeries.total[di] = v; }));
+    });
+    pages.forEach(function (p) {
+      tasks.push(getVal(p.id + '-all').then(function (v) { pvAll[p.id] = v; }));
       days.forEach(function (day, di) {
-        tasks.push(getVal(p.id + '-' + day.key).then(function (v) {
-          series[p.id][di] = v;
-        }));
+        tasks.push(getVal(p.id + '-' + day.key).then(function (v) { pvSeries[p.id][di] = v; }));
+        tasks.push(getVal('uv-' + p.id + '-' + day.key).then(function (v) { uvSeries[p.id][di] = v; }));
       });
     });
 
     Promise.all(tasks).then(function () {
-      var sumToday = 0, sum14 = 0, sumAll = 0;
+      var sumPv14 = 0, sumUv14 = 0, sumPvAll = 0;
       for (var di = 0; di < days.length; di++) {
-        var daySum = 0;
-        pages.forEach(function (p) { daySum += series[p.id][di]; });
-        series.total[di] = daySum;
-        sum14 += daySum;
+        var dayPv = 0;
+        pages.forEach(function (p) { dayPv += pvSeries[p.id][di]; });
+        pvSeries.total[di] = dayPv;
+        sumPv14 += dayPv;
+        sumUv14 += uvSeries.total[di];
       }
+      var lastIdx = days.length - 1;
       pages.forEach(function (p) {
-        var tv = series[p.id][days.length - 1];
-        var av = allTotals[p.id] || 0;
-        sumToday += tv;
-        sumAll += av;
-        var te = document.getElementById('t-' + p.id);
-        var ae = document.getElementById('a-' + p.id);
-        if (te) te.textContent = tv;
-        if (ae) ae.textContent = av;
+        sumPvAll += (pvAll[p.id] || 0);
+        document.getElementById('pv-' + p.id).textContent = pvSeries[p.id][lastIdx];
+        document.getElementById('uv-' + p.id).textContent = uvSeries[p.id][lastIdx];
+        document.getElementById('all-' + p.id).textContent = pvAll[p.id] || 0;
       });
-      document.getElementById('all-today').textContent = sumToday;
-      document.getElementById('all-14d').textContent = sum14;
-      document.getElementById('all-all').textContent = sumAll;
+      document.getElementById('pv-today').textContent = pvSeries.total[lastIdx];
+      document.getElementById('uv-today').textContent = uvSeries.total[lastIdx];
+      document.getElementById('pv-14d').textContent = sumPv14;
+      document.getElementById('uv-14d').textContent = sumUv14;
+      document.getElementById('pv-all').textContent = sumPvAll;
+      document.getElementById('uv-all').textContent = uvSiteAll;
 
-      // 填充 14 天明细表（倒序，最新在最上）
-      var tbody = document.querySelector('#histTable tbody');
-      tbody.innerHTML = days.slice().reverse().map(function (day, idx) {
-        var di = days.length - 1 - idx;
-        var others = series.workflow[di] + series.projects[di] + series.tools[di];
-        return '<tr><td>' + day.full + '</td><td><b>' + series.total[di] + '</b></td><td>' + series.home[di] + '</td><td>' + series.huidong[di] + '</td><td>' + series.rensheng[di] + '</td><td>' + series.resource[di] + '</td><td>' + series.intel[di] + '</td><td>' + others + '</td></tr>';
+      document.querySelector('#histTable tbody').innerHTML = days.slice().reverse().map(function (day, idx) {
+        var di = lastIdx - idx;
+        var others = pvSeries.workflow[di] + pvSeries.projects[di] + pvSeries.tools[di];
+        return '<tr><td>' + day.full + '</td><td style="color:#10b981;font-weight:700">' + uvSeries.total[di] + '</td><td style="color:#2563eb;font-weight:700">' + pvSeries.total[di] + '</td><td>' + pvSeries.home[di] + '</td><td>' + pvSeries.huidong[di] + '</td><td>' + pvSeries.rensheng[di] + '</td><td>' + pvSeries.resource[di] + '</td><td>' + pvSeries.intel[di] + '</td><td>' + others + '</td></tr>';
       }).join('');
 
-      // 折线图切换标签
       var tabDefs = [{ id: 'total', label: '全站合计' }].concat(pages);
       var tabsEl = document.getElementById('chartTabs');
       var activeId = 'total';
@@ -288,23 +326,28 @@
       }
 
       function renderChart(cid) {
-        var vals = series[cid] || [];
-        var maxV = Math.max.apply(null, vals.concat([5]));
-        var W = 760, H = 220, padL = 38, padR = 18, padT = 18, padB = 30;
+        var pvs = pvSeries[cid] || [];
+        var uvs = uvSeries[cid] || [];
+        var maxV = Math.max.apply(null, pvs.concat(uvs, [5]));
+        var W = 820, H = 240, padL = 40, padR = 20, padT = 24, padB = 30;
         var cw = W - padL - padR, ch = H - padT - padB;
-        var pts = vals.map(function (v, i) {
-          var x = padL + (cw * i / Math.max(1, vals.length - 1));
-          var y = padT + ch - (ch * (v / maxV));
-          return { x: x, y: y, v: v, day: days[i] };
+        var pts = days.map(function (day, i) {
+          var x = padL + (cw * i / Math.max(1, days.length - 1));
+          return {
+            x: x,
+            yPv: padT + ch - (ch * (pvs[i] / maxV)),
+            yUv: padT + ch - (ch * (uvs[i] / maxV)),
+            pv: pvs[i], uv: uvs[i], day: day
+          };
         });
-        var lineD = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
-        var areaD = lineD + ' L' + pts[pts.length - 1].x.toFixed(1) + ',' + (padT + ch) + ' L' + pts[0].x.toFixed(1) + ',' + (padT + ch) + ' Z';
+        var pvLine = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.yPv.toFixed(1); }).join(' ');
+        var pvArea = pvLine + ' L' + pts[pts.length - 1].x.toFixed(1) + ',' + (padT + ch) + ' L' + pts[0].x.toFixed(1) + ',' + (padT + ch) + ' Z';
+        var uvLine = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.yUv.toFixed(1); }).join(' ');
 
         var gridLines = [0, 0.5, 1].map(function (r) {
           var gy = padT + ch * (1 - r);
-          var gv = Math.round(maxV * r);
           return '<line x1="' + padL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + gy.toFixed(1) + '" stroke="currentColor" stroke-opacity="0.12" stroke-dasharray="3 3"/>' +
-                 '<text x="' + (padL - 6) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.55">' + gv + '</text>';
+                 '<text x="' + (padL - 6) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.55">' + Math.round(maxV * r) + '</text>';
         }).join('');
 
         var xLabels = pts.map(function (p, i) {
@@ -312,37 +355,59 @@
           return '<text x="' + p.x.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.6">' + p.day.short + '</text>';
         }).join('');
 
-        var dots = pts.map(function (p, i) {
-          return '<g class="c-pt" data-i="' + i + '" style="cursor:pointer">' +
-                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="10" fill="transparent"/>' +
-                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="4.2" fill="#2563eb" stroke="#fff" stroke-width="2"/>' +
+        var hitCols = pts.map(function (p, i) {
+          var colW = cw / Math.max(1, pts.length - 1);
+          return '<g class="c-col" data-i="' + i + '" style="cursor:pointer">' +
+                 '<rect x="' + (p.x - colW / 2).toFixed(1) + '" y="' + padT + '" width="' + colW.toFixed(1) + '" height="' + ch + '" fill="transparent"/>' +
+                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.yPv.toFixed(1) + '" r="4.2" fill="#2563eb" stroke="#fff" stroke-width="2"/>' +
+                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.yUv.toFixed(1) + '" r="4.2" fill="#10b981" stroke="#fff" stroke-width="2"/>' +
                  '</g>';
         }).join('');
 
         var box = document.getElementById('chartBox');
+        var tip = document.getElementById('chartTip');
+        var wrap = document.getElementById('chartWrap');
         box.innerHTML =
-          '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
-            '<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.28"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"/></linearGradient></defs>' +
+          '<svg viewBox="0 0 ' + W + ' ' + H + '">' +
+            '<defs><linearGradient id="pvAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.22"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"/></linearGradient></defs>' +
             gridLines +
-            '<path d="' + areaD + '" fill="url(#areaGrad)"/>' +
-            '<path d="' + lineD + '" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>' +
-            xLabels + dots +
+            '<line id="cGuide" x1="0" y1="' + padT + '" x2="0" y2="' + (padT + ch) + '" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="3 3" opacity="0"/>' +
+            '<path d="' + pvArea + '" fill="url(#pvAreaGrad)"/>' +
+            '<path d="' + pvLine + '" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>' +
+            '<path d="' + uvLine + '" fill="none" stroke="#10b981" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>' +
+            xLabels + hitCols +
           '</svg>';
 
-        var hoverEl = document.getElementById('chartHover');
+        var svg = box.querySelector('svg');
+        var guide = box.querySelector('#cGuide');
         var tabName = (tabDefs.find(function (x) { return x.id === cid; }) || {}).label || cid;
-        box.querySelectorAll('.c-pt').forEach(function (g) {
-          var idx = Number(g.getAttribute('data-i'));
+
+        function showTip(idx) {
           var p = pts[idx];
-          g.addEventListener('mouseenter', function () {
-            hoverEl.innerHTML = '<strong>' + p.day.full + '</strong> · ' + tabName + '：<strong>' + p.v + ' 次</strong>';
-          });
-          g.addEventListener('click', function () {
-            hoverEl.innerHTML = '<strong>' + p.day.full + '</strong> · ' + tabName + '：<strong>' + p.v + ' 次</strong>';
-          });
+          var rect = svg.getBoundingClientRect();
+          var px = (p.x / W) * rect.width;
+          var py = (Math.min(p.yPv, p.yUv) / H) * rect.height;
+          guide.setAttribute('x1', p.x.toFixed(1));
+          guide.setAttribute('x2', p.x.toFixed(1));
+          guide.setAttribute('opacity', '0.85');
+          tip.innerHTML =
+            '<div class="t-date">' + p.day.full + ' · ' + tabName + '</div>' +
+            '<div class="t-row"><span>访问人数 (UV)</span><span class="t-uv">' + p.uv + ' 人</span></div>' +
+            '<div class="t-row"><span>访问次数 (PV)</span><span class="t-pv">' + p.pv + ' 次</span></div>';
+          tip.style.left = Math.max(90, Math.min(rect.width - 90, px)) + 'px';
+          tip.style.top = Math.max(64, py) + 'px';
+          tip.classList.add('on');
+        }
+
+        box.querySelectorAll('.c-col').forEach(function (g) {
+          var idx = Number(g.getAttribute('data-i'));
+          g.addEventListener('mouseenter', function () { showTip(idx); });
+          g.addEventListener('click', function () { showTip(idx); });
         });
-        var last = pts[pts.length - 1];
-        hoverEl.innerHTML = '<strong>' + last.day.full + '（今日）</strong> · ' + tabName + '：<strong>' + last.v + ' 次</strong>';
+        wrap.addEventListener('mouseleave', function () {
+          tip.classList.remove('on');
+          guide.setAttribute('opacity', '0');
+        });
       }
 
       renderTabs();

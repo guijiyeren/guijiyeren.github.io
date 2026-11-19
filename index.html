@@ -105,10 +105,29 @@
   .prog-row em { font-style:normal; font-size:11.5px; color:#94a3b8; text-align:center; justify-self:center; min-width:76px; }
   .pr-bar { height:9px; background:#e8eef8; border-radius:999px; overflow:hidden; }
   .pr-bar span { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#4ade80); }
-  .pr-bar.dev span { background:linear-gradient(90deg,#2563eb,#38bdf8); }
+  .pr-bar.dev span {
+    position:relative;
+    overflow:hidden;
+    background:repeating-linear-gradient(-45deg, #2563eb 0 10px, #38bdf8 10px 20px);
+    background-size:28px 28px;
+    animation:devStripe 1.1s linear infinite;
+    box-shadow:0 0 12px rgba(56,189,248,.45);
+  }
+  .pr-bar.dev span::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:translateX(-100%);
+    animation:devShine 2.2s ease-in-out infinite;
+  }
+  @keyframes devStripe { to { background-position:28px 0; } }
+  @keyframes devShine { 0% { transform:translateX(-100%); } 60%,100% { transform:translateX(120%); } }
   .badge { font-style:normal; font-size:11px; border-radius:999px; padding:3px 9px; text-align:center; }
   .badge.online { color:#15803d; background:#dcfce7; }
-  .badge.dev { color:#1d4ed8; background:#e0edff; }
+  .badge.dev { color:#1d4ed8; background:#e0edff; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
+  .badge.dev::before { content:""; width:6px; height:6px; border-radius:50%; background:#2563eb; animation:devDot 1.6s ease-in-out infinite; }
+  @keyframes devDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.35; transform:scale(.75); } }
   .note-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
   .note-card { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; transition:.16s; }
   .note-card:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(15,23,42,.1); }
@@ -1061,7 +1080,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     </div>
     <div class="build-grid">
       <article class="build-card">
-        <div class="cover" data-cover="commerce"></div>
+        <div class="cover"><img src="assets/covers/commerce.webp" alt="电商运营动态封面" width="548" height="412" loading="lazy" decoding="async"></div>
         <div class="b-body">
           <div class="b-top"><h3>电商运营</h3><span class="b-tag">内部系统</span></div>
           <p>从选品、上架到推广，全流程台账与核验。</p>
@@ -1189,7 +1208,10 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
 <a class="wp-item" href="https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/" target="_blank" rel="noopener"><img src="assets/icon-youtube.png" alt="YouTube" loading="lazy" decoding="async"><span>YouTube</span></a>
 <a class="wp-item" href="https://www.tiktok.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-tiktok.png" alt="TikTok" loading="lazy" decoding="async"><span>TikTok</span></a>
 <a class="wp-item" href="https://www.toutiao.com/c/user/token/Cit5tXYvrwsbZfmY6s7OzeYX2Y4PRoZ8uymp72bLmauQADf2LYrUWQRL_eXkGkkKPAAAAAAAAAAAAABRGpLi0o8lEFRxOUxAlOWC3DhuWbyBYSFF9yB-RZXffPqXOaOtmKb8NHKqw8tmNMh-5xCX6KAOGMPFg-oEIgEDpMR8WQ==/" target="_blank" rel="noopener"><img src="assets/icon-toutiao.png" alt="今日头条" loading="lazy" decoding="async"><span>今日头条</span></a>
-<a class="wp-item" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="知乎" loading="lazy" decoding="async"><span>知乎</span></a></div>
+<a class="wp-item" href="https://www.zhihu.com/people/guozhengxin" target="_blank" rel="noopener"><img src="assets/icon-zhihu.png" alt="知乎" loading="lazy" decoding="async"><span>知乎</span></a>
+<a class="wp-item" href="https://weibo.com/u/7384276693" target="_blank" rel="noopener"><img src="assets/icon-weibo.png" alt="微博" loading="lazy" decoding="async"><span>微博</span></a>
+<a class="wp-item" href="https://www.instagram.com/guozhengxinguo/" target="_blank" rel="noopener"><img src="assets/icon-instagram.png" alt="Instagram" loading="lazy" decoding="async"><span>Instagram</span></a>
+<a class="wp-item" href="https://www.threads.com/@guijiyeren" target="_blank" rel="noopener"><img src="assets/icon-threads.png" alt="Threads" loading="lazy" decoding="async"><span>Threads</span></a></div>
     </div>
   </div>
 </section>
@@ -2765,8 +2787,20 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 <script>(function(){try{
   if (location.pathname.indexOf('/stats/') >= 0) return;
   var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+  if (localStorage.getItem('guiji_ignore_self') === '1') return;
   var p = location.pathname.indexOf('/resource/') >= 0 ? 'resource' : (location.pathname.indexOf('/rensheng/') >= 0 ? 'rensheng' : 'home');
-  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-' + k, {cache: 'no-store'}).catch(function(){});
+  fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + p + '-all', {cache: 'no-store'}).catch(function(){});
+  if (!localStorage.getItem('guiji_uv_' + p + '_' + k)) {
+    localStorage.setItem('guiji_uv_' + p + '_' + k, '1');
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-' + p + '-' + k, {cache: 'no-store'}).catch(function(){});
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-' + p + '-all', {cache: 'no-store'}).catch(function(){});
+  }
+  if (!localStorage.getItem('guiji_uv_site_' + k)) {
+    localStorage.setItem('guiji_uv_site_' + k, '1');
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-' + k, {cache: 'no-store'}).catch(function(){});
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-all', {cache: 'no-store'}).catch(function(){});
+  }
 }catch(e){}})();</script>
 <script>
 /* ---------- 关于我：迁徙路线动画 ---------- */

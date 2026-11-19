@@ -1,4 +1,4 @@
-/* 全站子页面顶栏：高度同步 + 白天/夜晚开关 + 全站自动访客计数 */
+/* 全站子页面顶栏：高度同步 + 白天/夜晚开关 + 全站自动访客人数(UV)与访问次数(PV)统计 + 防护脚本 */
 (function () {
   var html = document.documentElement;
 
@@ -40,21 +40,33 @@
   function trackVisit() {
     try {
       if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+      if (localStorage.getItem('guiji_ignore_self') === '1') return;
       var p = location.pathname;
       if (p.indexOf('/stats/') >= 0 || window.__guijiHitTracked) return;
       window.__guijiHitTracked = true;
-      var page = 'home';
-      if (p.indexOf('/rensheng/') >= 0) page = 'rensheng';
-      else if (p.indexOf('/resource/') >= 0) page = 'resource';
-      else if (p.indexOf('/intel/') >= 0) page = 'intel';
-      else if (p.indexOf('/huidong/') >= 0) page = 'huidong';
-      else if (p.indexOf('/workflow/') >= 0) page = 'workflow';
-      else if (p.indexOf('/projects/') >= 0) page = 'projects';
-      else if (p.indexOf('/tools/') >= 0) page = 'tools';
+
+      var segs = p.replace(/^\/+|\/+$/g, '').split('/');
+      var page = (segs[0] && segs[0] !== 'index.html') ? segs[0] : 'home';
       var d = new Date();
       var k = '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+
+      // 1. 访问次数 (PV)
       fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + page + '-' + k, { cache: 'no-store' }).catch(function () {});
       fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/' + page + '-all', { cache: 'no-store' }).catch(function () {});
+
+      // 2. 访问人数 (UV)：同浏览器当天该页只计 1 次，全站当天只计 1 次
+      var uvPageKey = 'guiji_uv_' + page + '_' + k;
+      if (!localStorage.getItem(uvPageKey)) {
+        localStorage.setItem(uvPageKey, '1');
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-' + page + '-' + k, { cache: 'no-store' }).catch(function () {});
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-' + page + '-all', { cache: 'no-store' }).catch(function () {});
+      }
+      var uvSiteKey = 'guiji_uv_site_' + k;
+      if (!localStorage.getItem(uvSiteKey)) {
+        localStorage.setItem(uvSiteKey, '1');
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-' + k, { cache: 'no-store' }).catch(function () {});
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-all', { cache: 'no-store' }).catch(function () {});
+      }
     } catch (e) {}
   }
 
@@ -64,7 +76,7 @@
     trackVisit();
     if (!document.querySelector('script[src*="site-guard.js"]')) {
       var gs = document.createElement('script');
-      gs.src = (location.pathname === '/' || location.pathname.endsWith('/index.html') && location.pathname.split('/').length <= 2) ? 'assets/site-guard.js' : '../assets/site-guard.js';
+      gs.src = (location.pathname === '/' || (location.pathname.endsWith('/index.html') && location.pathname.split('/').length <= 2)) ? 'assets/site-guard.js' : '../assets/site-guard.js';
       gs.defer = true;
       document.body.appendChild(gs);
     }
