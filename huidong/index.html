@@ -1549,13 +1549,13 @@
       openSource: ITEMS.filter(x => x.openSource).length,
       postersReady: ITEMS.length
     };
-    const syncCmd = `node "I:\\项目\\会动网页\\构建\\sync.mjs"`;
-    const agentPrompt = `请先读 I:\\项目\\个人工作台\\ThreeJS案例库\\CLAUDE.md，然后运行 node "I:\\项目\\会动网页\\构建\\sync.mjs" 增量同步 https://threejs.cc 的最新案例与封面图。`;
+    const syncCmd = `node ./构建/sync.mjs`;
+    const agentPrompt = `请先读工作台「会动网页」说明文档，然后运行同步脚本增量拉取最新案例与封面图。`;
 
     const box = document.getElementById("syncBox");
     box.innerHTML = `
       <div class="mhead">
-        <h2>🔄 Three.js 案例库 · 增量同步与 AI 交接说明</h2>
+        <h2>🔄 会动网页 · 增量同步与 AI 交接说明</h2>
         <button class="btn" id="closeSyncBtn">✕ 关闭</button>
       </div>
       <div style="padding:18px 22px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:14px">
@@ -1575,9 +1575,9 @@
         </div>
 
         <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px">
-          <div style="font-weight:700;margin-bottom:6px">1. 以后原站（threejs.cc）更新了新案例，怎么同步？</div>
+          <div style="font-weight:700;margin-bottom:6px">1. 以后如何增量同步新案例？</div>
           <div style="font-size:12.5px;color:var(--ink2);margin-bottom:8px">
-            数据源接口已固定写在构建脚本里（拉取 <code>https://threejs.cc/data/items.js</code> 并增量补齐 <code>assets/posters/</code> 下缺失的封面图，只增不删）。在终端跑一行命令即可：
+            数据源接口已固定写在构建脚本里（增量拉取新案例并补齐缺失封面图，只增不删）。在项目目录运行一行命令即可：
           </div>
           <div class="code-box" style="background:var(--card)">
             <code>${esc(syncCmd)}</code>
@@ -1586,9 +1586,9 @@
         </div>
 
         <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px">
-          <div style="font-weight:700;margin-bottom:6px">2. 让任何 AI Agent（Claude Code / Codex / DeepSeek）帮你同步或拉源码</div>
+          <div style="font-weight:700;margin-bottom:6px">2. 让任意 AI Agent 帮你同步或发布</div>
           <div style="font-size:12.5px;color:var(--ink2);margin-bottom:8px">
-            所有规则与数据地址都已经写进工作台说明书 <code>I:\\项目\\个人工作台\\ThreeJS案例库\\CLAUDE.md</code>，直接复制下面这句话发给任意 AI 即可：
+            所有规则与数据地址都已经写进本地工作台说明文档，直接复制下面这句话发给任意 AI 即可：
           </div>
           <div class="code-box" style="background:var(--card)">
             <code>${esc(agentPrompt)}</code>
