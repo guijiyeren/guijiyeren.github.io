@@ -734,8 +734,79 @@
   }
   .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
+
+<link rel="icon" href="../assets/logo.png">
+<link rel="stylesheet" href="../assets/site-nav.css">
+<script src="../assets/site-nav.js" defer></script>
+<style>
+  :root { --site-nav-h: 60px; }
+  .wb-header { top: var(--site-nav-h) !important; z-index: 60 !important; }
+  .side-col, .sidebar, aside.side { top: calc(var(--site-nav-h) + 56px) !important; }
+  html[data-theme="night"] .site-footer-band,
+  body.skin-C .site-footer-band,
+  body.skin-G .site-footer-band { --sf-bg:#0b1220; --sf-bg2:#0f172a; --sf-card:#111a2b; --sf-line:#243247; --sf-ink:#f1f5f9; --sf-muted:#94a3b8; }
+  .site-footer-band { --sf-bg:#f6f9ff; --sf-bg2:#ffffff; --sf-card:#ffffff; --sf-line:#e2e8f0; --sf-ink:#0f172a; --sf-muted:#64748b; margin-top: 32px; }
+  .site-footer-band .sec-wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+  .site-footer-band .sec-head .eyebrow2 { font-size: 12.5px; letter-spacing: 2px; color: #2563eb; font-weight: 700; text-transform: uppercase; }
+  .site-footer-band .sec-head h2 { font-size: 28px; letter-spacing: .5px; margin: 8px 0 0; color: var(--sf-ink); }
+  .site-footer-band .sec-head p { margin-top: 10px; color: var(--sf-muted); font-size: 14.5px; line-height: 1.8; max-width: 680px; }
+  .site-footer-band section#about-brief { padding: 54px 0; background: var(--sf-bg2); border-top: 1px solid var(--sf-line); }
+  .about-brief-card { display: flex; align-items: center; gap: 22px; background: var(--sf-card); border: 1px solid var(--sf-line); border-radius: 18px; padding: 24px 26px; box-shadow: 0 12px 30px rgba(15,23,42,.06); flex-wrap: wrap; }
+  .about-brief-card img { width: 64px; height: 64px; border-radius: 50%; border: 2px solid rgba(56,189,248,.45); flex: 0 0 auto; }
+  .about-brief-body { flex: 1 1 320px; }
+  .about-brief-body h3 { margin: 0 0 6px; font-size: 19px; color: var(--sf-ink); }
+  .about-brief-body p { margin: 0; font-size: 14px; line-height: 1.8; color: var(--sf-muted); }
+  .about-brief-go { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 999px; background: linear-gradient(135deg,#1e40af,#1d4ed8); color: #fff !important; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .about-brief-go:hover { filter: brightness(1.08); }
+  .site-footer-band section#follow { padding: 56px 0; background: var(--sf-bg); border-top: 1px solid var(--sf-line); }
+  .site-footer-band .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 24px; }
+  .site-footer-band .social { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 14px; background: var(--sf-card); border: 1px solid var(--sf-line); color: var(--sf-ink); font-size: 14.5px; transition: .16s; text-decoration: none; }
+  .site-footer-band .social img { width: 18px; height: 18px; border-radius: 4px; display: block; }
+  .site-footer-band .social:hover { color: #2563eb; border-color: #93c5fd; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(37,99,235,.12); }
+  .mail-mask { position: fixed; inset: 0; background: rgba(10,15,29,.55); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 200; }
+  .mail-mask.on { display: flex; }
+  .mail-mask .mail-box { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 30px 80px rgba(0,0,0,.35); max-width: 600px; width: 100%; }
+  .mail-mask .mail-box img { width: 100%; display: block; border-radius: 12px; }
+  .mail-mask .mail-actions { display: flex; gap: 10px; margin-top: 14px; }
+  .mail-mask button { border: 0; border-radius: 999px; padding: 11px 20px; font: 600 13px/1 inherit; cursor: pointer; }
+  .mail-mask .mail-copy { background: #1d4ed8; color: #fff; }
+  .mail-mask .mail-close { background: #f1f5f9; color: #334155; }
+  .mail-mask .mail-tip { margin-top: 10px; font-size: 11.5px; color: #94a3b8; line-height: 1.7; }
+  .site-footer-band section#message { padding: 56px 0; background: var(--sf-bg2); border-top: 1px solid var(--sf-line); }
+  .site-footer-band .msg-form { margin-top: 20px; background: var(--sf-card); border: 1px solid var(--sf-line); border-radius: 18px; padding: 22px 24px; box-shadow: 0 14px 34px rgba(15,23,42,.06); }
+  .site-footer-band .msg-form .mf-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .site-footer-band .msg-form .mf-row label { flex: 1 1 220px; }
+  .site-footer-band .msg-form label { display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--sf-muted); font-weight: 600; margin-top: 10px; }
+  .site-footer-band .msg-form input,
+  .site-footer-band .msg-form textarea { font: inherit; font-size: 14px; color: var(--sf-ink); border: 1px solid var(--sf-line); border-radius: 10px; padding: 11px 13px; background: var(--sf-bg); outline: none; }
+  .site-footer-band .msg-form textarea { resize: vertical; min-height: 110px; }
+  .site-footer-band .mf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .site-footer-band .mf-foot { display: flex; align-items: center; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+  .site-footer-band .mf-note { font-size: 11.5px; color: var(--sf-muted); }
+  .site-footer-band .mf-foot .btn-primary { margin-left: auto; border: 0; border-radius: 999px; padding: 12px 26px; font: 700 13px/1 inherit; color: #fff; background: linear-gradient(135deg,#1e40af,#1d4ed8); cursor: pointer; }
+  .site-footer-band .mf-status { margin-top: 10px; font-size: 12.5px; color: #16a34a; min-height: 18px; }
+  .site-footer-band .mf-status.err { color: #dc2626; }
+  .msg-mask { position: fixed; inset: 0; background: rgba(8,12,24,.6); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 220; }
+  .msg-mask.on { display: flex; }
+  .msg-box { width: min(640px,94vw); background: #fff; color: #0f172a; border-radius: 20px; padding: 34px 36px; text-align: center; box-shadow: 0 30px 80px rgba(0,0,0,.4); }
+  .msg-check { width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: #dcfce7; color: #16a34a; font-size: 28px; line-height: 56px; font-weight: 800; }
+  .msg-box h3 { font-size: 22px; margin: 0; }
+  .msg-box p { margin-top: 12px; font-size: 14.5px; line-height: 1.8; color: #64748b; }
+  .msg-ok { margin-top: 22px; border: 0; border-radius: 999px; padding: 12px 34px; font: 700 14px/1 inherit; color: #fff; background: linear-gradient(135deg,#1e40af,#1d4ed8); cursor: pointer; }
+  .msg-box.warn { width: min(460px,92vw); padding: 30px 28px; }
+  .msg-check.warn { background: #fef3c7; color: #b45309; }
+  .msg-ok.warn { background: linear-gradient(135deg,#b45309,#d97706); }
+  footer#page-end { background: #070b16; color: #7f8da6; padding: 26px 22px; font-size: 12px; }
+  footer#page-end .in { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  footer#page-end b { color: #fff; }
+  footer#page-end a { color: #7dd3fc; text-decoration: none; }
+</style>
+
 </head>
 <body class="skin-A">
+
+<nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#progress">项目进度</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#works">最新作品</a><a href="../#tools">常用工具</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav>
+
 
 <!-- ================= 工作台三合一全局顶栏（已去掉与总台重复的项目标题） ================= -->
 <header class="wb-header">
@@ -1749,5 +1820,139 @@
   renderAll();
 })();
 </script>
+
+<div class="site-footer-band">
+  <section id="about-brief">
+    <div class="sec-wrap">
+      <div class="sec-head" style="margin-bottom:18px">
+        <div class="eyebrow2">About Me</div>
+        <h2>关于我</h2>
+      </div>
+      <div class="about-brief-card">
+        <img src="../assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">
+        <div class="about-brief-body">
+          <h3>硅基野人 · 10 年电商人，正在实战 AI 无人公司</h3>
+          <p>一个碳基老板，带着一群硅基员工。把选品、上架、文案、剪辑、发布拆成流程交给 AI，同时把路上攒下的好工具、好案例与全套工作台拆开公开分享。</p>
+        </div>
+        <a class="about-brief-go" href="../#about">查看完整关于我 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="follow">
+    <div class="sec-wrap">
+      <div class="sec-head">
+        <div class="eyebrow2">Follow &amp; Contact</div>
+        <h2>关注我 · 联系我</h2>
+        <p>各个平台同名「硅基野人」，内容同步更新。</p>
+      </div>
+      <div class="socials">
+        <a class="social" href="../"><img src="../assets/icon-github.png" alt="" loading="lazy" decoding="async">个人主页</a>
+        <a class="social" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="../assets/icon-feishu.png" alt="" loading="lazy" decoding="async">飞书知识库</a>
+        <a class="social" href="#" id="mailLink" data-mail="49,53,52,54,52,55,64,113,113,46,99,111,109"><img src="../assets/icon-qqmail.png" alt="" loading="lazy" decoding="async">QQ邮箱</a>
+        <a class="social" href="#message"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H5L3 22v-6.5A8.5 8.5 0 0 1 12.5 3.5h0A8.5 8.5 0 0 1 21 12z"/></svg>给我留言</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="message">
+    <div class="sec-wrap">
+      <div class="sec-head">
+        <div class="eyebrow2">Message</div>
+        <h2>给我留言</h2>
+        <p>有问题、想推荐酷站或聊合作，直接写。提交后会发到我的邮箱，不公开展示。</p>
+      </div>
+      <form class="msg-form" id="msgForm" novalidate>
+        <div class="mf-row">
+          <label>怎么称呼你<input name="name" maxlength="40" placeholder="称呼"></label>
+          <label>邮箱（方便回复）<input name="contact" maxlength="80" placeholder="可以不填"></label>
+        </div>
+        <label>留言内容<textarea name="message" rows="4" maxlength="1000" placeholder="想说的话、想推荐的会动网页或合作…" required></textarea></label>
+        <input type="text" name="_honey" class="mf-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="mf-foot">
+          <span class="mf-note">提交后直接进邮箱，不会公开显示。</span>
+          <button class="btn-primary" type="submit" id="msgSubmit">发送留言 →</button>
+        </div>
+        <p class="mf-status" id="msgStatus" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer id="page-end">
+    <div class="in">
+      <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
+      <div>知识库：<a href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="../">返回首页</a></div>
+    </div>
+  </footer>
+</div>
+
+<div class="mail-mask" id="mailMask">
+  <div class="mail-box">
+    <img src="../assets/email-card.png" alt="邮箱" loading="lazy" decoding="async">
+    <div class="mail-actions">
+      <button type="button" class="mail-copy" id="mailCopy">一键复制邮箱</button>
+      <button type="button" class="mail-close" id="mailClose">关闭</button>
+    </div>
+    <p class="mail-tip">邮箱用图片显示，避免被爬虫采集；需要发信时点「复制」。</p>
+  </div>
+</div>
+
+<div class="msg-mask" id="msgMask">
+  <div class="msg-box">
+    <div class="msg-check">✓</div>
+    <h3>感谢你的留言</h3>
+    <p>我们会第一时间查看。<br>祝您生活愉快，工作顺利！</p>
+    <button type="button" class="msg-ok" id="msgOk">关闭</button>
+  </div>
+</div>
+<div class="msg-mask" id="msgWarnMask">
+  <div class="msg-box warn">
+    <div class="msg-check warn">!</div>
+    <h3>留言未发送</h3>
+    <p id="msgWarnText">内容里含有疑似广告信息，换个说法再发。</p>
+    <button type="button" class="msg-ok warn" id="msgWarnOk">我知道了</button>
+  </div>
+</div>
+<script src="../assets/msg-form.js" defer></script>
+<script>(function(){
+  var mask = document.getElementById('mailMask');
+  if (mask) {
+    function openM(){ mask.classList.add('on'); }
+    function closeM(){ mask.classList.remove('on'); }
+    document.querySelectorAll('[data-mail]').forEach(function(el){
+      el.addEventListener('click', function(ev){ ev.preventDefault(); openM(); });
+    });
+    document.getElementById('mailClose').addEventListener('click', closeM);
+    mask.addEventListener('click', function(ev){ if (ev.target === mask) closeM(); });
+    document.getElementById('mailCopy').addEventListener('click', function(){
+      var addr = String.fromCharCode(49,53,52,54,52,55,64,113,113,46,99,111,109);
+      var b = this;
+      function done(){ b.textContent = '已复制'; setTimeout(function(){ b.textContent = '一键复制邮箱'; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(done).catch(done);
+      } else {
+        var ta = document.createElement('textarea'); ta.value = addr; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+  }
+  // 顶栏白天/夜晚切换同步会动网页皮肤
+  var obs = new MutationObserver(function(){
+    var night = document.documentElement.getAttribute('data-theme') === 'night';
+    if (night && !document.body.classList.contains('skin-C') && !document.body.classList.contains('skin-G')) {
+      document.body.className = document.body.className.replace(/\bskin-[A-G]\b/g, '').trim() + ' skin-C';
+    } else if (!night && (document.body.classList.contains('skin-C') || document.body.classList.contains('skin-G'))) {
+      document.body.className = document.body.className.replace(/\bskin-[A-G]\b/g, '').trim() + ' skin-A';
+    }
+  });
+  obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  try {
+    var d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/huidong-' + k, {cache:'no-store'}).catch(function(){});
+    fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/huidong-all', {cache:'no-store'}).catch(function(){});
+  } catch(e) {}
+})();</script>
+
 </body>
 </html>
