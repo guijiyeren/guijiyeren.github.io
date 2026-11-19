@@ -34491,5 +34491,429 @@ globalThis.CATALOG_ITEMS = [
     "repo": "",
     "license": "",
     "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-reactflow-nodes",
+    "slug": "live-reactflow-nodes",
+    "name": "React Flow",
+    "displayNameZh": "React Flow · 交互式节点工作流画布",
+    "displayNameEn": "React Flow",
+    "category": "tools",
+    "summaryZh": "可拖拽、缩放、连线的节点流程图引擎，做 AI Agent 编排画布与自动化工作台的首选参考。",
+    "summaryEn": "可拖拽、缩放、连线的节点流程图引擎，做 AI Agent 编排画布与自动化工作台的首选参考。",
+    "url": "https://reactflow.dev/",
+    "image": "assets/posters/live-reactflow-nodes.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "tools",
+      "Node Graph",
+      "Workflow",
+      "React"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "xyflow",
+    "sourceUrl": "https://reactflow.dev/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://reactflow.dev/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Node Graph",
+        "Workflow",
+        "React"
+      ],
+      "zh": {
+        "description": [
+          "可拖拽、缩放、连线的节点流程图引擎，做 AI Agent 编排画布与自动化工作台的首选参考。"
+        ]
+      },
+      "en": {
+        "description": [
+          "可拖拽、缩放、连线的节点流程图引擎，做 AI Agent 编排画布与自动化工作台的首选参考。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-excalidraw-board",
+    "slug": "live-excalidraw-board",
+    "name": "Excalidraw",
+    "displayNameZh": "Excalidraw · 手绘风架构白板",
+    "displayNameEn": "Excalidraw",
+    "category": "tools",
+    "summaryZh": "打开即画的极简手绘风格协作白板，画 AI 工作流架构图、自动化流程图和拆解图一秒出图。",
+    "summaryEn": "打开即画的极简手绘风格协作白板，画 AI 工作流架构图、自动化流程图和拆解图一秒出图。",
+    "url": "https://excalidraw.com/",
+    "image": "assets/posters/live-excalidraw-board.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "tools",
+      "Whiteboard",
+      "Canvas",
+      "Diagram"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Excalidraw Team",
+    "sourceUrl": "https://excalidraw.com/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://excalidraw.com/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Whiteboard",
+        "Canvas",
+        "Diagram"
+      ],
+      "zh": {
+        "description": [
+          "打开即画的极简手绘风格协作白板，画 AI 工作流架构图、自动化流程图和拆解图一秒出图。"
+        ]
+      },
+      "en": {
+        "description": [
+          "打开即画的极简手绘风格协作白板，画 AI 工作流架构图、自动化流程图和拆解图一秒出图。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-google-model-viewer",
+    "slug": "live-google-model-viewer",
+    "name": "Google Model Viewer",
+    "displayNameZh": "Model Viewer · 3D 商品交互与 AR 展示台",
+    "displayNameEn": "Google Model Viewer",
+    "category": "ecom3d",
+    "summaryZh": "Google 开源的网页 3D 商品组件，一行代码就能让电商商品支持 360° 旋转、打光调色与手机 AR 试摆。",
+    "summaryEn": "Google 开源的网页 3D 商品组件，一行代码就能让电商商品支持 360° 旋转、打光调色与手机 AR 试摆。",
+    "url": "https://modelviewer.dev/",
+    "image": "assets/posters/live-google-model-viewer.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "ecom3d",
+      "WebGL",
+      "3D Commerce",
+      "WebXR / AR"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Google",
+    "sourceUrl": "https://modelviewer.dev/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://modelviewer.dev/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "WebGL",
+        "3D Commerce",
+        "WebXR / AR"
+      ],
+      "zh": {
+        "description": [
+          "Google 开源的网页 3D 商品组件，一行代码就能让电商商品支持 360° 旋转、打光调色与手机 AR 试摆。"
+        ]
+      },
+      "en": {
+        "description": [
+          "Google 开源的网页 3D 商品组件，一行代码就能让电商商品支持 360° 旋转、打光调色与手机 AR 试摆。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-spline-3d-design",
+    "slug": "live-spline-3d-design",
+    "name": "Spline 3D",
+    "displayNameZh": "Spline · 浏览器 AI 交互式 3D 设计台",
+    "displayNameEn": "Spline 3D",
+    "category": "showcase",
+    "summaryZh": "在浏览器里直接建模、加物理交互并一键嵌入网页的 3D 设计工具，支持 AI 辅助生成 3D 场景。",
+    "summaryEn": "在浏览器里直接建模、加物理交互并一键嵌入网页的 3D 设计工具，支持 AI 辅助生成 3D 场景。",
+    "url": "https://spline.design/",
+    "image": "assets/posters/live-spline-3d-design.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "showcase",
+      "3D Design",
+      "WebGL",
+      "Interactive"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Spline",
+    "sourceUrl": "https://spline.design/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://spline.design/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "3D Design",
+        "WebGL",
+        "Interactive"
+      ],
+      "zh": {
+        "description": [
+          "在浏览器里直接建模、加物理交互并一键嵌入网页的 3D 设计工具，支持 AI 辅助生成 3D 场景。"
+        ]
+      },
+      "en": {
+        "description": [
+          "在浏览器里直接建模、加物理交互并一键嵌入网页的 3D 设计工具，支持 AI 辅助生成 3D 场景。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-motion-dev-anim",
+    "slug": "live-motion-dev-anim",
+    "name": "Motion",
+    "displayNameZh": "Motion · 网页弹簧动效与滚动交互引擎",
+    "displayNameEn": "Motion",
+    "category": "tools",
+    "summaryZh": "专为现代网页与自媒体展示页打造的硬件加速动画库，内置弹簧物理、滚动视差与手势交互演示。",
+    "summaryEn": "专为现代网页与自媒体展示页打造的硬件加速动画库，内置弹簧物理、滚动视差与手势交互演示。",
+    "url": "https://motion.dev/",
+    "image": "assets/posters/live-motion-dev-anim.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "tools",
+      "Animation",
+      "Spring Physics",
+      "Scroll"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Matt Perry",
+    "sourceUrl": "https://motion.dev/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://motion.dev/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Animation",
+        "Spring Physics",
+        "Scroll"
+      ],
+      "zh": {
+        "description": [
+          "专为现代网页与自媒体展示页打造的硬件加速动画库，内置弹簧物理、滚动视差与手势交互演示。"
+        ]
+      },
+      "en": {
+        "description": [
+          "专为现代网页与自媒体展示页打造的硬件加速动画库，内置弹簧物理、滚动视差与手势交互演示。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-shadertoy-webgl",
+    "slug": "live-shadertoy-webgl",
+    "name": "Shadertoy",
+    "displayNameZh": "Shadertoy · 实时 GPU 着色器视觉实验室",
+    "displayNameEn": "Shadertoy",
+    "category": "art",
+    "summaryZh": "全球最硬核的实时 GLSL 着色器社区，数万个流体、霓虹、分形与赛博光效全在浏览器 GPU 实时渲染。",
+    "summaryEn": "全球最硬核的实时 GLSL 着色器社区，数万个流体、霓虹、分形与赛博光效全在浏览器 GPU 实时渲染。",
+    "url": "https://www.shadertoy.com/",
+    "image": "assets/posters/live-shadertoy-webgl.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "art",
+      "GLSL",
+      "WebGL",
+      "GPU Shader"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Inigo Quilez & Pol Jeremias",
+    "sourceUrl": "https://www.shadertoy.com/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://www.shadertoy.com/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "GLSL",
+        "WebGL",
+        "GPU Shader"
+      ],
+      "zh": {
+        "description": [
+          "全球最硬核的实时 GLSL 着色器社区，数万个流体、霓虹、分形与赛博光效全在浏览器 GPU 实时渲染。"
+        ]
+      },
+      "en": {
+        "description": [
+          "全球最硬核的实时 GLSL 着色器社区，数万个流体、霓虹、分形与赛博光效全在浏览器 GPU 实时渲染。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-threejs-tshirt-customizer",
+    "slug": "live-threejs-tshirt-customizer",
+    "name": "Three.js T-Shirt Customizer",
+    "displayNameZh": "3D T 恤实时换色贴图定制台",
+    "displayNameEn": "Three.js T-Shirt Customizer",
+    "category": "ecom3d",
+    "summaryZh": "基于 Three.js 的服装 3D 定制演示，支持实时切换面料颜色、上传 Logo 贴花与全幅纹理预览，直击 AI 穿搭与电商定制场景。",
+    "summaryEn": "基于 Three.js 的服装 3D 定制演示，支持实时切换面料颜色、上传 Logo 贴花与全幅纹理预览，直击 AI 穿搭与电商定制场景。",
+    "url": "https://threejs-tshirt-customizer.vercel.app/",
+    "image": "assets/posters/live-threejs-tshirt-customizer.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "ecom3d",
+      "Three.js",
+      "3D Apparel",
+      "Customizer"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Three.js Community",
+    "sourceUrl": "https://threejs-tshirt-customizer.vercel.app/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://threejs-tshirt-customizer.vercel.app/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Three.js",
+        "3D Apparel",
+        "Customizer"
+      ],
+      "zh": {
+        "description": [
+          "基于 Three.js 的服装 3D 定制演示，支持实时切换面料颜色、上传 Logo 贴花与全幅纹理预览，直击 AI 穿搭与电商定制场景。"
+        ]
+      },
+      "en": {
+        "description": [
+          "基于 Three.js 的服装 3D 定制演示，支持实时切换面料颜色、上传 Logo 贴花与全幅纹理预览，直击 AI 穿搭与电商定制场景。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
+  },
+  {
+    "id": "live-oklch-color-picker",
+    "slug": "live-oklch-color-picker",
+    "name": "OKLCH Color Picker",
+    "displayNameZh": "OKLCH · 3D 广色域感知配色器",
+    "displayNameEn": "OKLCH Color Picker",
+    "category": "tools",
+    "summaryZh": "可视化展示 L/C/H 曲线与 3D 广色域立体的现代配色工具，做穿搭色卡、电商品牌色与 UI 配色精准不偏色。",
+    "summaryEn": "可视化展示 L/C/H 曲线与 3D 广色域立体的现代配色工具，做穿搭色卡、电商品牌色与 UI 配色精准不偏色。",
+    "url": "https://oklch.com/",
+    "image": "assets/posters/live-oklch-color-picker.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave6",
+      "tools",
+      "Color Science",
+      "3D Gamut",
+      "Design Tool"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Evil Martians",
+    "sourceUrl": "https://oklch.com/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://oklch.com/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Color Science",
+        "3D Gamut",
+        "Design Tool"
+      ],
+      "zh": {
+        "description": [
+          "可视化展示 L/C/H 曲线与 3D 广色域立体的现代配色工具，做穿搭色卡、电商品牌色与 UI 配色精准不偏色。"
+        ]
+      },
+      "en": {
+        "description": [
+          "可视化展示 L/C/H 曲线与 3D 广色域立体的现代配色工具，做穿搭色卡、电商品牌色与 UI 配色精准不偏色。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "主业方向精选扩充"
   }
 ];
