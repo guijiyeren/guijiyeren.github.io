@@ -1011,6 +1011,7 @@
     });
   }
 
+  const ORIG3D_KEYS = new Set(["art", "sim", "science", "site", "tools", "showcase", "city"]);
   function getFiltered() {
     const q = state.q.trim().toLowerCase();
     return ITEMS.filter(it => {
@@ -1019,8 +1020,9 @@
       if (state.cat === "os" && !it.openSource) return false;
       if (state.cat === "gh" && !it.curatedSource) return false;
       if (state.cat === "fable" && !it._isFable) return false;
+      if (state.cat === "orig3d" && !ORIG3D_KEYS.has(it.category) && !ORIG3D_KEYS.has(EXTRA_CAT_MAP[it.category])) return false;
       if (state.cat === "games" && !GAME_KEYS.has(it.category) && EXTRA_CAT_MAP[it.category] !== "puzzle") return false;
-      if (!["all", "hot", "fav", "os", "gh", "fable", "games"].includes(state.cat)) {
+      if (!["all", "hot", "fav", "os", "gh", "fable", "orig3d", "games"].includes(state.cat)) {
         if (it.category !== state.cat && EXTRA_CAT_MAP[it.category] !== state.cat) return false;
       }
       if (state.stFilter === "want" && getSt(it.id) !== "want") return false;
@@ -1095,7 +1097,8 @@
     const osCount = ITEMS.filter(x => x.openSource).length;
     const ghCount = ITEMS.filter(x => x.curatedSource).length;
     const fableCount = ITEMS.filter(x => x._isFable).length;
-    const gameCount = ITEMS.filter(x => GAME_KEYS.has(x.category)).length;
+    const orig3dCount = ITEMS.filter(x => ORIG3D_KEYS.has(x.category) || ORIG3D_KEYS.has(EXTRA_CAT_MAP[x.category])).length;
+    const gameCount = ITEMS.filter(x => GAME_KEYS.has(x.category) || EXTRA_CAT_MAP[x.category] === "puzzle").length;
     const catCounts = {};
     for (const it of ITEMS) {
       catCounts[it.category] = (catCounts[it.category] || 0) + 1;
@@ -1103,36 +1106,36 @@
       if (mapped && mapped !== it.category) catCounts[mapped] = (catCounts[mapped] || 0) + 1;
     }
 
-    const sec = (id, title, bodyHtml) => `
+    const sec = (id, title, bodyHtml, grpCat = "", grpCount = null) => `
       <div class="a-sec ${FOLDED_SECS.has(id) ? "folded" : ""}">
-        <div class="a-grp" data-toggle-sec="${id}"><span>${title}</span><span class="caret">▾</span></div>
+        <div class="a-grp ${grpCat && state.cat === grpCat ? "on" : ""}" ${grpCat ? `data-grp-cat="${grpCat}" data-sec-id="${id}"` : `data-toggle-sec="${id}"`} style="${grpCat && state.cat === grpCat ? "color:var(--accent);background:var(--accent-weak);border-radius:8px;" : ""}">
+          <span style="flex:1;display:flex;align-items:center;justify-content:space-between;gap:6px">
+            <span>${title}</span>
+            ${grpCount !== null ? `<span class="n" style="font-size:11px;opacity:.75;font-variant-numeric:tabular-nums">${grpCount}</span>` : ""}
+          </span>
+          <span class="caret" data-toggle-sec="${id}" style="padding:2px 4px;margin-left:4px">▾</span>
+        </div>
         <div class="a-sec-body">${bodyHtml}</div>
       </div>
     `;
 
     const navHtml = [
-      sec("top", "精选与源码", `
+      sec("top", "精选导航", `
         <div class="a-row ${state.cat === "all" ? "on" : ""}" data-cat="all">🗂️ 全部案例<span class="n">${ITEMS.length}</span></div>
         <div class="a-row ${state.cat === "fav" ? "on" : ""}" data-cat="fav">❤️ 我的喜欢<span class="n">${countBySt("want")}</span></div>
         <div class="a-row ${state.cat === "hot" ? "on" : ""}" data-cat="hot">🔥 每周精选<span class="n">${HOT_IDS.size}</span></div>
-        <div class="a-row ${state.cat === "os" ? "on" : ""}" data-cat="os">📦 开源可拉源码<span class="n">${osCount}</span></div>
-        <div class="a-row ${state.cat === "fable" ? "on" : ""}" data-cat="fable">✨ Claude Fable 5.2<span class="n">${fableCount}</span></div>
+        <div class="a-row ${state.cat === "os" ? "on" : ""}" data-cat="os">📦 开源源码<span class="n">${osCount}</span></div>
+        <div class="a-row ${state.cat === "fable" ? "on" : ""}" data-cat="fable">✨ Fable 5.2<span class="n">${fableCount}</span></div>
       `),
-      sec("orig3d", "3D 创意与工程分类", ["art", "sim", "science", "site", "tools", "showcase", "city"].map(k => `
-        <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
-      `).join("")),
-      sec("games", `WebGL 游戏分类 (${gameCount})`, `
-        <div class="a-row ${state.cat === "games" ? "on" : ""}" data-cat="games">🎮 全部 3D 游戏<span class="n">${gameCount}</span></div>
-        ${["race", "action", "puzzle", "rpg", "strategy", "experimental"].map(k => `
-          <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}" style="padding-left:22px;font-size:12.5px">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
-        `).join("")}
-      `),
-      sec("wanxiang", `跨界扩充专区 (${ghCount})`, `
-        <div class="a-row ${state.cat === "gh" ? "on" : ""}" data-cat="gh">🌟 全部新扩充案例<span class="n">${ghCount}</span></div>
-        ${["explorable", "alife", "datastory", "webos", "wealth", "ecom3d", "osint", "ambient", "logicgame", "mathart"].filter(k => (catCounts[k] || 0) > 0).map(k => `
-          <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
-        `).join("")}
-      `)
+      sec("orig3d", "创意工程", ["art", "sim", "science", "site", "tools", "showcase", "city"].map(k => `
+        <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}" style="padding-left:20px;font-size:12.5px">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+      `).join(""), "orig3d", orig3dCount),
+      sec("games", "互动游戏", ["race", "action", "puzzle", "rpg", "strategy", "experimental"].map(k => `
+        <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}" style="padding-left:20px;font-size:12.5px">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+      `).join(""), "games", gameCount),
+      sec("wanxiang", "跨界专题", ["explorable", "alife", "datastory", "webos", "wealth", "ecom3d", "osint", "ambient", "logicgame", "mathart"].filter(k => (catCounts[k] || 0) > 0).map(k => `
+        <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}" style="padding-left:20px;font-size:12.5px">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+      `).join(""), "gh", ghCount)
     ].join("");
     document.getElementById("aSideNav").innerHTML = navHtml;
 
@@ -1606,7 +1609,20 @@
   document.body.addEventListener("click", e => {
     const toggleSecEl = e.target.closest("[data-toggle-sec]");
     if (toggleSecEl) {
+      e.stopPropagation();
       toggleSec(toggleSecEl.dataset.toggleSec);
+      return;
+    }
+    const grpCatEl = e.target.closest("[data-grp-cat]");
+    if (grpCatEl) {
+      state.cat = grpCatEl.dataset.grpCat;
+      state.limit = 45;
+      const sid = grpCatEl.dataset.secId;
+      if (sid && FOLDED_SECS.has(sid)) {
+        FOLDED_SECS.delete(sid);
+        try { localStorage.setItem("guo_wx_folded_v1", JSON.stringify([...FOLDED_SECS])); } catch (e) {}
+      }
+      renderAll();
       return;
     }
     const catEl = e.target.closest("[data-cat]");
@@ -1771,6 +1787,14 @@
   if (window.__PH_THEME) applyHostTheme(window.__PH_THEME.tokens, window.__PH_THEME.dark);
 
   renderAll();
+
+  // 支持从飞书等外部入口带 ?item=<id> 直接弹窗展示对应案例详情
+  try {
+    const urlItem = new URLSearchParams(location.search).get("item");
+    if (urlItem && ITEMS.some(x => x.id === urlItem)) {
+      openModal(urlItem);
+    }
+  } catch (e) {}
 })();
 </script>
 
