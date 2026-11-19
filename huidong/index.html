@@ -1281,7 +1281,7 @@
     if (!it) return;
     const st = getSt(it.id);
     const note = getNote(it.id);
-    const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
+    const cloneCmd = it.repo ? (IS_PUBLIC_WEB ? `git clone --depth 1 ${it.repo}` : `node ./构建/sync.mjs --clone ${it.slug || it.id}`) : "";
     const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js", "WebGL"];
     const paragraphs = it.caseProfile?.zh?.description || [it.summaryZh || it.summaryEn];
 
@@ -1412,7 +1412,7 @@
           <tbody>
             ${list.map(it => {
               const st = getSt(it.id);
-              const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
+              const cloneCmd = it.repo ? (IS_PUBLIC_WEB ? `git clone --depth 1 ${it.repo}` : `node ./构建/sync.mjs --clone ${it.slug || it.id}`) : "";
               const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js"];
               return `
                 <tr data-id="${esc(it.id)}" style="cursor:pointer">
@@ -1458,8 +1458,8 @@
     if (!it) return;
     const st = getSt(it.id);
     const note = getNote(it.id);
-    const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
-    const gitRawCmd = it.repo ? `git clone --depth 1 ${it.repo} "I:\\项目\\会动网页\\源码练习\\${it.slug}"` : "";
+    const cloneCmd = it.repo ? (IS_PUBLIC_WEB ? `git clone --depth 1 ${it.repo}` : `node ./构建/sync.mjs --clone ${it.slug || it.id}`) : "";
+    const gitRawCmd = it.repo ? `git clone --depth 1 ${it.repo}` : "";
     const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js", "WebGL"];
     const paragraphs = it.caseProfile?.zh?.description || [it.summaryZh || it.summaryEn];
 
