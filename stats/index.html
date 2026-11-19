@@ -14,11 +14,28 @@
   html[data-theme="night"], html.dark { --ink:#f1f5f9; --line:#243247; --bg:#0b1220; --card:#111a2b; --muted:#94a3b8; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
-  .wrap { max-width:980px; margin:0 auto; padding:36px 22px 48px; }
-  h1 { font-size:26px; letter-spacing:.5px; }
-  .sub { margin-top:8px; color:var(--muted); font-size:13.5px; line-height:1.8; }
-  .panel { margin-top:22px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px; }
-  .panel h2 { font-size:15.5px; margin-bottom:14px; }
+  .wrap { max-width:1020px; margin:0 auto; padding:34px 22px 48px; }
+
+  /* 密码门禁 */
+  .gate-card { max-width:440px; margin:64px auto 80px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 28px; text-align:center; box-shadow:0 20px 50px rgba(15,23,42,.08); }
+  .gate-ico { width:56px; height:56px; margin:0 auto 14px; border-radius:16px; background:rgba(37,99,235,.1); color:#2563eb; display:grid; place-items:center; font-size:26px; }
+  .gate-card h1 { font-size:21px; margin-bottom:8px; }
+  .gate-card p { font-size:13px; color:var(--muted); line-height:1.7; margin-bottom:20px; }
+  .gate-form { display:flex; gap:10px; }
+  .gate-form input { flex:1; padding:11px 14px; border-radius:11px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; font-size:15px; letter-spacing:2px; outline:none; }
+  .gate-form input:focus { border-color:#2563eb; }
+  .gate-form button { border:0; border-radius:11px; padding:11px 20px; background:linear-gradient(135deg,#1e40af,#2563eb); color:#fff; font:700 14px/1 inherit; cursor:pointer; }
+  .gate-err { margin-top:12px; font-size:12.5px; color:#dc2626; min-height:18px; }
+
+  /* 统计仪表盘 */
+  .dash-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .dash-head h1 { font-size:25px; letter-spacing:.5px; }
+  .lock-btn { border:1px solid var(--line); background:var(--card); color:var(--muted); border-radius:999px; padding:7px 14px; font-size:12.5px; font-weight:600; cursor:pointer; }
+  .lock-btn:hover { border-color:#ef4444; color:#ef4444; }
+  .sub { margin-top:8px; color:var(--muted); font-size:13px; line-height:1.8; }
+  .panel { margin-top:20px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 22px; }
+  .panel-top { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  .panel h2 { font-size:15.5px; margin:0; }
   .row { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px; }
   .row-3 { grid-template-columns:repeat(3, minmax(0, 1fr)); }
   .cell { border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
@@ -28,8 +45,23 @@
   .cell .num small { font-size:12px; color:var(--muted); font-weight:500; }
   .cell .tag { font-size:11.5px; color:var(--muted); margin-top:4px; }
   .cell .tag em { font-style:normal; color:var(--ink); font-weight:700; margin-left:4px; }
+
+  /* 历史趋势折线图 */
+  .chart-tabs { display:flex; flex-wrap:wrap; gap:6px; }
+  .chart-tab { border:1px solid var(--line); background:var(--bg); color:var(--muted); border-radius:999px; padding:4px 11px; font-size:12px; font-weight:600; cursor:pointer; }
+  .chart-tab.on { background:#2563eb; border-color:#2563eb; color:#fff; }
+  .chart-box { position:relative; width:100%; overflow-x:auto; padding-top:6px; }
+  .chart-box svg { width:100%; height:240px; display:block; min-width:560px; }
+  .chart-tip { margin-top:10px; font-size:12.5px; color:var(--muted); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .chart-tip strong { color:var(--ink); }
+
+  /* 14 天明细表 */
+  .hist-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:12.5px; }
+  .hist-table th, .hist-table td { padding:9px 10px; border-bottom:1px solid var(--line); text-align:right; font-variant-numeric:tabular-nums; }
+  .hist-table th:first-child, .hist-table td:first-child { text-align:left; font-weight:700; }
+  .hist-table th { color:var(--muted); font-weight:700; }
+  .table-scroll { overflow-x:auto; }
   .note { margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.9; }
-  a { color:#2563eb; }
   @media (max-width: 760px) {
     .wrap { padding:24px 16px 36px; }
     .row, .row-3 { grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; }
@@ -40,71 +72,283 @@
 <nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#workbench-flow">工作台流程</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#about">关于我</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav>
 
 <div class="wrap">
-  <h1>站点访问统计</h1>
-  <p class="sub">全站 8 个主要页面分开实时计数（数据来自 Abacus 计数器，无账号、无 cookie，每打开一次 +1，本统计页本身不计入访问）。</p>
-
-  <div class="panel">
-    <h2>全站合计</h2>
-    <div class="row row-3">
-      <div class="cell"><b>今日总打开</b><div class="line"><span class="num" id="all-today">-</span><small>次</small></div></div>
-      <div class="cell"><b>累计总打开</b><div class="line"><span class="num" id="all-all">-</span><small>次</small></div></div>
-      <div class="cell"><b>统计起始</b><div class="line"><span class="num" style="font-size:20px">2026-11-09</span></div></div>
-    </div>
+  <!-- 密码验证门禁（SHA-256 加盐校验，绝无明文密码） -->
+  <div class="gate-card" id="gateCard">
+    <div class="gate-ico">🔒</div>
+    <h1>站点访问统计 · 验证进入</h1>
+    <p>请输入管理员访问口令，验证后加载全站实时访问数据与近 14 天历史趋势曲线。</p>
+    <form class="gate-form" id="gateForm">
+      <input type="password" id="gateInput" inputmode="numeric" autocomplete="off" placeholder="输入口令" required>
+      <button type="submit">进入</button>
+    </form>
+    <div class="gate-err" id="gateErr"></div>
   </div>
 
-  <div class="panel">
-    <h2>各页面今日 &amp; 累计打开次数</h2>
-    <div class="row">
-      <div class="cell"><b>首页 /</b><div class="line"><span class="num" id="home-today">-</span><small>次</small></div><div class="tag">累计<em id="home-all">-</em> 次</div></div>
-      <div class="cell"><b>会动网页 /huidong/</b><div class="line"><span class="num" id="huidong-today">-</span><small>次</small></div><div class="tag">累计<em id="huidong-all">-</em> 次</div></div>
-      <div class="cell"><b>人生指南 /rensheng/</b><div class="line"><span class="num" id="rensheng-today">-</span><small>次</small></div><div class="tag">累计<em id="rensheng-all">-</em> 次</div></div>
-      <div class="cell"><b>资源中心 /resource/</b><div class="line"><span class="num" id="resource-today">-</span><small>次</small></div><div class="tag">累计<em id="resource-all">-</em> 次</div></div>
-      <div class="cell"><b>情报中枢 /intel/</b><div class="line"><span class="num" id="intel-today">-</span><small>次</small></div><div class="tag">累计<em id="intel-all">-</em> 次</div></div>
-      <div class="cell"><b>工作台流程 /workflow/</b><div class="line"><span class="num" id="workflow-today">-</span><small>次</small></div><div class="tag">累计<em id="workflow-all">-</em> 次</div></div>
-      <div class="cell"><b>更多项目 /projects/</b><div class="line"><span class="num" id="projects-today">-</span><small>次</small></div><div class="tag">累计<em id="projects-all">-</em> 次</div></div>
-      <div class="cell"><b>常用工具 /tools/</b><div class="line"><span class="num" id="tools-today">-</span><small>次</small></div><div class="tag">累计<em id="tools-all">-</em> 次</div></div>
+  <!-- 解锁后才渲染的数据面板 -->
+  <div id="dashRoot" hidden>
+    <div class="dash-head">
+      <h1>站点访问统计</h1>
+      <button type="button" class="lock-btn" id="lockBtn">🔒 锁定退出</button>
     </div>
-  </div>
+    <p class="sub">全站 8 个页面真实打开次数（PV），数据源 <code>abacus.jasoncameron.dev</code>（每真实打开一次 +1，本统计页本身不计数）。</p>
 
-  <p class="note">
-    说明：这里是「页面打开次数（PV）」。如果想看独立访客（UV）、来源渠道、地区分布和热力图，可以免费接 Microsoft Clarity / Cloudflare Web Analytics / Google Analytics（把统计代码发我就能装进全站）。<br>
-    数据源：<code>abacus.jasoncameron.dev</code> · 命名空间 <code>guijiyeren</code>
-  </p>
+    <div class="panel">
+      <div class="panel-top"><h2>全站合计</h2></div>
+      <div class="row row-3">
+        <div class="cell"><b>今日总打开</b><div class="line"><span class="num" id="all-today">-</span><small>次</small></div></div>
+        <div class="cell"><b>近 14 天合计</b><div class="line"><span class="num" id="all-14d">-</span><small>次</small></div></div>
+        <div class="cell"><b>历史累计总打开</b><div class="line"><span class="num" id="all-all">-</span><small>次</small></div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-top">
+        <h2>近 14 天历史趋势曲线</h2>
+        <div class="chart-tabs" id="chartTabs"></div>
+      </div>
+      <div class="chart-box" id="chartBox"></div>
+      <div class="chart-tip"><span id="chartHover">把鼠标移到曲线节点上查看当天精确数据</span><span>单位：页面打开次数（次/天）</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-top"><h2>各页面今日 &amp; 累计明细</h2></div>
+      <div class="row" id="pageCards"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-top"><h2>近 14 天每日访问明细表</h2></div>
+      <div class="table-scroll">
+        <table class="hist-table" id="histTable"><thead><tr><th>日期</th><th>全站合计</th><th>首页</th><th>会动网页</th><th>人生指南</th><th>资源中心</th><th>情报中枢</th><th>其他子页</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <p class="note">
+      提示：这是基于 Abacus 计数器的实时打开次数（PV）。如需看独立访客（UV）、来源渠道与地区热力图，可免费接入 Cloudflare Web Analytics 或 Microsoft Clarity，在官方独立后台查看。
+    </p>
+  </div>
 </div>
 
 <div data-site-footer data-base="../"></div>
 <script src="../assets/site-footer.js" defer></script>
 <script>
 (function () {
-  var NS = 'guijiyeren';
-  var D = new Date();
-  var KEY = '' + D.getFullYear() + ('0' + (D.getMonth() + 1)).slice(-2) + ('0' + D.getDate()).slice(-2);
-  var pages = ['home', 'huidong', 'rensheng', 'resource', 'intel', 'workflow', 'projects', 'tools'];
+  var SALT = 'guijiyeren::stats::v2::2026';
+  var TARGET = 'e93fba2f18423ebceb2bbe5db0bf9d5cee0c1ec9b99de998c974d5decbf07169';
+  var SESS_KEY = 'guiji_stats_unlocked_v2';
 
-  function getVal(name) {
-    return fetch('https://abacus.jasoncameron.dev/get/' + NS + '/' + name, { cache: 'no-store' })
-      .then(function (r) { return r.json(); })
-      .then(function (j) { return (j && typeof j.value === 'number') ? j.value : 0; })
-      .catch(function () { return 0; });
-  }
-  function set(id, v) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = v;
+  var gateCard = document.getElementById('gateCard');
+  var dashRoot = document.getElementById('dashRoot');
+  var gateForm = document.getElementById('gateForm');
+  var gateInput = document.getElementById('gateInput');
+  var gateErr = document.getElementById('gateErr');
+  var lockBtn = document.getElementById('lockBtn');
+
+  async function sha256Hex(str) {
+    var buf = new TextEncoder().encode(str);
+    var digest = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(digest)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
   }
 
-  var todaySum = 0, allSum = 0, done = 0;
-  pages.forEach(function (p) {
-    Promise.all([getVal(p + '-' + KEY), getVal(p + '-all')]).then(function (res) {
-      set(p + '-today', res[0]);
-      set(p + '-all', res[1]);
-      todaySum += res[0];
-      allSum += res[1];
-      if (++done === pages.length) {
-        set('all-today', todaySum);
-        set('all-all', allSum);
-      }
-    });
+  function unlock() {
+    gateCard.hidden = true;
+    dashRoot.hidden = false;
+    loadDashboard();
+  }
+
+  if (sessionStorage.getItem(SESS_KEY) === TARGET) {
+    unlock();
+  }
+
+  gateForm.addEventListener('submit', async function (ev) {
+    ev.preventDefault();
+    gateErr.textContent = '';
+    var val = (gateInput.value || '').trim();
+    if (!val) return;
+    var hex = await sha256Hex(SALT + ':' + val);
+    if (hex === TARGET) {
+      sessionStorage.setItem(SESS_KEY, TARGET);
+      gateInput.value = '';
+      unlock();
+    } else {
+      gateErr.textContent = '口令不正确，请重新输入。';
+      gateInput.select();
+    }
   });
+
+  lockBtn.addEventListener('click', function () {
+    sessionStorage.removeItem(SESS_KEY);
+    dashRoot.hidden = true;
+    gateCard.hidden = false;
+    gateInput.focus();
+  });
+
+  var loaded = false;
+  function loadDashboard() {
+    if (loaded) return;
+    loaded = true;
+
+    var NS = 'guijiyeren';
+    var pages = [
+      { id: 'home', label: '首页 /' },
+      { id: 'huidong', label: '会动网页' },
+      { id: 'rensheng', label: '人生指南' },
+      { id: 'resource', label: '资源中心' },
+      { id: 'intel', label: '情报中枢' },
+      { id: 'workflow', label: '工作台流程' },
+      { id: 'projects', label: '更多项目' },
+      { id: 'tools', label: '常用工具' }
+    ];
+
+    // 渲染 8 个页面卡片骨架
+    var cardsEl = document.getElementById('pageCards');
+    cardsEl.innerHTML = pages.map(function (p) {
+      return '<div class="cell"><b>' + p.label + '</b><div class="line"><span class="num" id="t-' + p.id + '">-</span><small>次</small></div><div class="tag">累计<em id="a-' + p.id + '">-</em> 次</div></div>';
+    }).join('');
+
+    // 生成近 14 天日期序列（从旧到新）
+    var days = [];
+    var now = new Date();
+    for (var i = 13; i >= 0; i--) {
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      var y = d.getFullYear();
+      var m = ('0' + (d.getMonth() + 1)).slice(-2);
+      var dd = ('0' + d.getDate()).slice(-2);
+      days.push({ key: '' + y + m + dd, short: m + '-' + dd, full: y + '-' + m + '-' + dd });
+    }
+
+    function getVal(name) {
+      return fetch('https://abacus.jasoncameron.dev/get/' + NS + '/' + name, { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { return (j && typeof j.value === 'number') ? j.value : 0; })
+        .catch(function () { return 0; });
+    }
+
+    // 拉取全量累计 + 近 14 天每日数据
+    var series = { total: new Array(days.length).fill(0) };
+    pages.forEach(function (p) { series[p.id] = new Array(days.length).fill(0); });
+
+    var allTotals = {};
+    var tasks = [];
+
+    pages.forEach(function (p) {
+      tasks.push(getVal(p.id + '-all').then(function (v) { allTotals[p.id] = v; }));
+      days.forEach(function (day, di) {
+        tasks.push(getVal(p.id + '-' + day.key).then(function (v) {
+          series[p.id][di] = v;
+        }));
+      });
+    });
+
+    Promise.all(tasks).then(function () {
+      var sumToday = 0, sum14 = 0, sumAll = 0;
+      for (var di = 0; di < days.length; di++) {
+        var daySum = 0;
+        pages.forEach(function (p) { daySum += series[p.id][di]; });
+        series.total[di] = daySum;
+        sum14 += daySum;
+      }
+      pages.forEach(function (p) {
+        var tv = series[p.id][days.length - 1];
+        var av = allTotals[p.id] || 0;
+        sumToday += tv;
+        sumAll += av;
+        var te = document.getElementById('t-' + p.id);
+        var ae = document.getElementById('a-' + p.id);
+        if (te) te.textContent = tv;
+        if (ae) ae.textContent = av;
+      });
+      document.getElementById('all-today').textContent = sumToday;
+      document.getElementById('all-14d').textContent = sum14;
+      document.getElementById('all-all').textContent = sumAll;
+
+      // 填充 14 天明细表（倒序，最新在最上）
+      var tbody = document.querySelector('#histTable tbody');
+      tbody.innerHTML = days.slice().reverse().map(function (day, idx) {
+        var di = days.length - 1 - idx;
+        var others = series.workflow[di] + series.projects[di] + series.tools[di];
+        return '<tr><td>' + day.full + '</td><td><b>' + series.total[di] + '</b></td><td>' + series.home[di] + '</td><td>' + series.huidong[di] + '</td><td>' + series.rensheng[di] + '</td><td>' + series.resource[di] + '</td><td>' + series.intel[di] + '</td><td>' + others + '</td></tr>';
+      }).join('');
+
+      // 折线图切换标签
+      var tabDefs = [{ id: 'total', label: '全站合计' }].concat(pages);
+      var tabsEl = document.getElementById('chartTabs');
+      var activeId = 'total';
+
+      function renderTabs() {
+        tabsEl.innerHTML = tabDefs.map(function (t) {
+          return '<button type="button" class="chart-tab' + (t.id === activeId ? ' on' : '') + '" data-cid="' + t.id + '">' + t.label + '</button>';
+        }).join('');
+        tabsEl.querySelectorAll('button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            activeId = b.getAttribute('data-cid');
+            renderTabs();
+            renderChart(activeId);
+          });
+        });
+      }
+
+      function renderChart(cid) {
+        var vals = series[cid] || [];
+        var maxV = Math.max.apply(null, vals.concat([5]));
+        var W = 760, H = 220, padL = 38, padR = 18, padT = 18, padB = 30;
+        var cw = W - padL - padR, ch = H - padT - padB;
+        var pts = vals.map(function (v, i) {
+          var x = padL + (cw * i / Math.max(1, vals.length - 1));
+          var y = padT + ch - (ch * (v / maxV));
+          return { x: x, y: y, v: v, day: days[i] };
+        });
+        var lineD = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+        var areaD = lineD + ' L' + pts[pts.length - 1].x.toFixed(1) + ',' + (padT + ch) + ' L' + pts[0].x.toFixed(1) + ',' + (padT + ch) + ' Z';
+
+        var gridLines = [0, 0.5, 1].map(function (r) {
+          var gy = padT + ch * (1 - r);
+          var gv = Math.round(maxV * r);
+          return '<line x1="' + padL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + gy.toFixed(1) + '" stroke="currentColor" stroke-opacity="0.12" stroke-dasharray="3 3"/>' +
+                 '<text x="' + (padL - 6) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.55">' + gv + '</text>';
+        }).join('');
+
+        var xLabels = pts.map(function (p, i) {
+          if (i % 2 !== 0 && i !== pts.length - 1) return '';
+          return '<text x="' + p.x.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.6">' + p.day.short + '</text>';
+        }).join('');
+
+        var dots = pts.map(function (p, i) {
+          return '<g class="c-pt" data-i="' + i + '" style="cursor:pointer">' +
+                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="10" fill="transparent"/>' +
+                 '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="4.2" fill="#2563eb" stroke="#fff" stroke-width="2"/>' +
+                 '</g>';
+        }).join('');
+
+        var box = document.getElementById('chartBox');
+        box.innerHTML =
+          '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
+            '<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.28"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"/></linearGradient></defs>' +
+            gridLines +
+            '<path d="' + areaD + '" fill="url(#areaGrad)"/>' +
+            '<path d="' + lineD + '" fill="none" stroke="#2563eb" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>' +
+            xLabels + dots +
+          '</svg>';
+
+        var hoverEl = document.getElementById('chartHover');
+        var tabName = (tabDefs.find(function (x) { return x.id === cid; }) || {}).label || cid;
+        box.querySelectorAll('.c-pt').forEach(function (g) {
+          var idx = Number(g.getAttribute('data-i'));
+          var p = pts[idx];
+          g.addEventListener('mouseenter', function () {
+            hoverEl.innerHTML = '<strong>' + p.day.full + '</strong> · ' + tabName + '：<strong>' + p.v + ' 次</strong>';
+          });
+          g.addEventListener('click', function () {
+            hoverEl.innerHTML = '<strong>' + p.day.full + '</strong> · ' + tabName + '：<strong>' + p.v + ' 次</strong>';
+          });
+        });
+        var last = pts[pts.length - 1];
+        hoverEl.innerHTML = '<strong>' + last.day.full + '（今日）</strong> · ' + tabName + '：<strong>' + last.v + ' 次</strong>';
+      }
+
+      renderTabs();
+      renderChart(activeId);
+    });
+  }
 })();
 </script>
 </body>

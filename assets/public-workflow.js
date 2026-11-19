@@ -425,7 +425,7 @@
     }
 
     host.append(cluster, stack, rel, detail);
-    setFilter("all");
+    setFilter(host.dataset.workflowMap === "home" ? "main" : "all");
   }
 
   document.querySelectorAll("[data-workflow-map]").forEach(mount);

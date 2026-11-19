@@ -62,6 +62,12 @@
     setNavHeight();
     setupTheme();
     trackVisit();
+    if (!document.querySelector('script[src*="site-guard.js"]')) {
+      var gs = document.createElement('script');
+      gs.src = (location.pathname === '/' || location.pathname.endsWith('/index.html') && location.pathname.split('/').length <= 2) ? 'assets/site-guard.js' : '../assets/site-guard.js';
+      gs.defer = true;
+      document.body.appendChild(gs);
+    }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
