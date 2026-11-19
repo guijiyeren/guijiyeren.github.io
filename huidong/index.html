@@ -1,0 +1,1753 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>会动网页 · 3D 交互、硬核科普与开源酷站研习库</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* ================= 工作台 7 套皮肤与 --ph-* 变量体系 ================= */
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --soft: #eef0f4;
+    --ink: #1d1d1f;
+    --ink2: #3f4550;
+    --muted: #7b818d;
+    --muted2: #9ea4b0;
+    --line: #e5e7ec;
+    --line2: #eef0f5;
+    --accent: #1F6F5C;
+    --accent-weak: rgba(31, 111, 92, .11);
+    --o: #CF5428;
+    --o-weak: #fdeee7;
+    --g: #A86F12;
+    --g-weak: #f6efe2;
+    --b: #2F6FEB;
+    --b-weak: #e9f0fd;
+    --r: 14px;
+    --btn-r: 9px;
+    --shadow: 0 2px 10px rgba(16, 24, 40, .05);
+    --shadow-hover: 0 14px 30px rgba(16, 24, 40, .12);
+    --font: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+  }
+
+  /* B 苹果风 */
+  body.skin-B {
+    --bg: #f5f5f7; --card: #ffffff; --soft: #ebebf0; --ink: #1d1d1f; --ink2: #424245;
+    --muted: #86868b; --muted2: #a1a1a6; --line: #e5e5ea; --line2: #f0f0f4;
+    --accent: #0071e3; --accent-weak: rgba(0, 113, 227, .10);
+    --r: 18px; --btn-r: 18px;
+  }
+  /* C 暗色 */
+  body.skin-C {
+    --bg: #0c0d10; --card: #15171c; --soft: #1c1f26; --ink: #e8e8ec; --ink2: #c4c6cf;
+    --muted: #8b8e99; --muted2: #686b75; --line: #252830; --line2: #1d2027;
+    --accent: #5fe0b5; --accent-weak: rgba(95, 224, 181, .14);
+    --o: #ff9f6b; --o-weak: rgba(255, 159, 107, .14);
+    --g: #f5c76b; --g-weak: rgba(245, 199, 107, .14);
+    --b: #7fb0ff; --b-weak: rgba(127, 176, 255, .14);
+    --shadow: 0 4px 16px rgba(0, 0, 0, .35);
+    --shadow-hover: 0 16px 34px rgba(0, 0, 0, .6);
+  }
+  /* D 杂志风 */
+  body.skin-D {
+    --bg: #f6f3ec; --card: #fffdf8; --soft: #ede7da; --ink: #231f1a; --ink2: #4a4339;
+    --muted: #7d7365; --muted2: #a39887; --line: #e2dacb; --line2: #ece5d8;
+    --accent: #8a5a12; --accent-weak: rgba(138, 90, 18, .12);
+    --r: 10px; --btn-r: 6px;
+  }
+  /* E 奶油风 */
+  body.skin-E {
+    --bg: #f8f0e5; --card: #fffaf2; --soft: #efe3d2; --ink: #3b2921; --ink2: #5c4438;
+    --muted: #7c6558; --muted2: #a48d7e; --line: #dfcdb8; --line2: #eadbc9;
+    --accent: #b07818; --accent-weak: rgba(176, 120, 24, .13);
+    --r: 16px; --btn-r: 12px;
+  }
+  /* F 海军风 */
+  body.skin-F {
+    --bg: #eef3f9; --card: #ffffff; --soft: #e1ebf6; --ink: #142842; --ink2: #2e4766;
+    --muted: #5d7594; --muted2: #879db8; --line: #d0dceb; --line2: #e2ebf5;
+    --accent: #1e4d8c; --accent-weak: rgba(30, 77, 140, .11);
+    --r: 12px; --btn-r: 8px;
+  }
+  /* G 科技风 */
+  body.skin-G {
+    --bg: #081520; --card: #102536; --soft: #163147; --ink: #ecf8ff; --ink2: #bdd8ea;
+    --muted: #82a8c2; --muted2: #597e99; --line: #23475c; --line2: #193647;
+    --accent: #22d3ee; --accent-weak: rgba(34, 211, 238, .15);
+    --o: #fb923c; --o-weak: rgba(251, 146, 60, .15);
+    --g: #4ade80; --g-weak: rgba(74, 222, 128, .15);
+    --b: #60a5fa; --b-weak: rgba(96, 165, 250, .15);
+    --r: 8px; --btn-r: 6px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scrollbar-gutter: stable; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 13.5px/1.55 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input, textarea, select { font: inherit; color: inherit; }
+
+  /* ================= 工作台三合一全局顶栏 ================= */
+  .wb-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 20px;
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .wb-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .wb-logo {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), #3b82f6);
+    color: #fff; font-weight: 800; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 8px rgba(31,111,92,.22);
+    flex: none;
+  }
+  .wb-brand-title { font-size: 15px; font-weight: 700; line-height: 1.2; }
+  .wb-brand-sub { font-size: 11px; color: var(--muted); }
+
+  /* 三合一模式切换器 */
+  .mode-switch {
+    display: flex;
+    background: var(--soft);
+    padding: 3px;
+    border-radius: 11px;
+    border: 1px solid var(--line2);
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+  .mode-btn {
+    border: 0;
+    background: transparent;
+    color: var(--ink2);
+    padding: 6px 13px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: .14s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mode-btn:hover { color: var(--ink); background: rgba(128,128,128,.07); }
+  .mode-btn.on {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0,0,0,.09);
+  }
+  .mode-btn .cnt-pill {
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--accent-weak);
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 右侧皮肤与工具区 */
+  .wb-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .skin-bar {
+    display: flex;
+    align-items: center;
+    background: var(--soft);
+    padding: 2px;
+    border-radius: 9px;
+    border: 1px solid var(--line2);
+    gap: 2px;
+  }
+  .skin-btn {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: .12s;
+  }
+  .skin-btn:hover { color: var(--ink); }
+  .skin-btn.on {
+    background: var(--card);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+
+  /* ================= 通用组件与徽标 ================= */
+  .badge {
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .badge-os { background: rgba(24, 121, 78, .14); color: #16a34a; border: 1px solid rgba(22, 163, 74, .28); }
+  body.skin-C .badge-os, body.skin-G .badge-os { color: #4ade80; background: rgba(74, 222, 128, .15); }
+  .badge-fable { background: rgba(124, 58, 237, .12); color: #7c3aed; border: 1px solid rgba(124, 58, 237, .25); }
+  body.skin-C .badge-fable, body.skin-G .badge-fable { color: #c084fc; background: rgba(192, 132, 252, .15); }
+  .badge-cat { background: var(--soft); color: var(--ink2); }
+  .badge-tech { background: var(--b-weak); color: var(--b); font-family: var(--mono); font-size: 10px; }
+
+  .st-pill {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: .14s;
+  }
+  .st-pill:hover { border-color: var(--accent); color: var(--ink); }
+  .st-pill.st-want { background: var(--g-weak); color: var(--g); border-color: rgba(168,111,18,.3); font-weight: 600; }
+  .st-pill.st-cloned { background: var(--b-weak); color: var(--b); border-color: rgba(47,111,235,.3); font-weight: 600; }
+  .st-pill.st-done { background: var(--accent-weak); color: var(--accent); border-color: var(--accent); font-weight: 600; }
+
+  .btn {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--btn-r);
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink2);
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: .14s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--muted2); color: var(--ink); background: var(--soft); }
+  .btn.pri { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  body.skin-C .btn.pri, body.skin-G .btn.pri { color: #091318; }
+  .btn.pri:hover { opacity: .92; }
+
+  /* ================= 视图 A：经典双栏（左分类树 + 顶栏筛选 + 5列高密度图墙） ================= */
+  .arch-A { display: flex; min-height: calc(100vh - 55px); }
+  .a-side {
+    width: 248px;
+    flex: none;
+    background: var(--card);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 53px;
+    height: calc(100vh - 53px);
+  }
+  .a-nav { flex: 1; overflow-y: auto; padding: 10px 10px 16px; scrollbar-width: thin; }
+  /* 可折叠左栏分组 */
+  .a-sec { margin-bottom: 4px; }
+  .a-grp {
+    font-size: 11px;
+    letter-spacing: .06em;
+    color: var(--muted);
+    padding: 9px 10px 6px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+    transition: .12s;
+  }
+  .a-grp:hover { background: var(--soft); color: var(--ink); }
+  .a-grp .caret { font-size: 11px; color: var(--muted2); transition: transform .15s; }
+  .a-sec.folded .a-grp .caret { transform: rotate(-90deg); }
+  .a-sec.folded .a-sec-body { display: none; }
+  .a-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink2);
+    transition: .12s;
+  }
+  .a-row:hover { background: var(--soft); color: var(--ink); }
+  .a-row.on { background: var(--accent-weak); color: var(--accent); font-weight: 600; }
+  .a-row .n { margin-left: auto; font-size: 11px; color: var(--muted2); font-variant-numeric: tabular-nums; }
+  .a-row.on .n { color: var(--accent); }
+
+  .a-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .a-top {
+    position: sticky;
+    top: 53px;
+    z-index: 20;
+    padding: 11px 22px;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 220px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0 12px;
+  }
+  .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak); }
+  .search-box input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 13px; }
+  .search-box kbd { font-size: 10.5px; color: var(--muted2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+
+  .chip-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding-top: 2px;
+  }
+  .chip-bar .lb { font-size: 11px; color: var(--muted2); margin-right: 2px; }
+  .fchip {
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: .12s;
+  }
+  .fchip:hover { border-color: var(--muted2); }
+  .fchip.on { background: var(--accent-weak); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .fchip .n { font-size: 10px; opacity: .75; }
+
+  .a-content { padding: 18px 22px 50px; flex: 1; }
+  .wall-5 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 15px 14px;
+  }
+  @media (max-width: 1440px) { .wall-5 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 1120px) { .wall-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 820px) {
+    .a-side { display: none; }
+    .wall-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* 卡片样式 */
+  .cd {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+    background: var(--card);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    position: relative;
+  }
+  .cd:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--muted2); }
+  .cd.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-weak); }
+  .cd .cv {
+    aspect-ratio: 16/10;
+    position: relative;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    overflow: hidden;
+  }
+  .cd .cv img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .35s ease;
+  }
+  .cd:hover .cv img { transform: scale(1.04); }
+  .cd .cv-top {
+    position: absolute; top: 8px; left: 8px; right: 8px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    pointer-events: none; z-index: 2;
+  }
+  .cd .cv-top .left-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+  .cd .cv-top .ext-btn {
+    pointer-events: auto;
+    width: 26px; height: 26px; border-radius: 7px;
+    background: rgba(15, 18, 24, .68);
+    backdrop-filter: blur(4px);
+    color: #fff; border: 1px solid rgba(255,255,255,.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; text-decoration: none;
+    transition: .14s;
+  }
+  .cd .cv-top .ext-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .cd .cv-bot {
+    position: absolute; left: 8px; right: 8px; bottom: 7px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 2;
+  }
+  .cd .cv::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.04) 40%, rgba(0,0,0,.55) 100%);
+    pointer-events: none;
+  }
+  .cd .cv-cat {
+    font-size: 10px; color: #fff;
+    background: rgba(15, 18, 24, .58);
+    border: 1px solid rgba(255,255,255,.22);
+    backdrop-filter: blur(4px);
+    border-radius: 999px; padding: 1.5px 8px;
+  }
+  .cd .body { padding: 10px 12px 11px; display: flex; flex-direction: column; flex: 1; gap: 5px; }
+  .cd h3 {
+    margin: 0; font-size: 13.5px; font-weight: 600; line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .cd .desc {
+    margin: 0; font-size: 11.5px; color: var(--muted); line-height: 1.45;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    min-height: 2.9em;
+  }
+  .cd .foot {
+    margin-top: auto; padding-top: 6px;
+    border-top: 1px dashed var(--line2);
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    font-size: 11px; color: var(--muted2);
+  }
+  .cd .author { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 110px; }
+
+  /* ================= 视图 B：汇总台 + 左画廊右常驻「3D实时沙盒 & 源码拆解抽屉」 ================= */
+  .arch-B { display: none; flex-direction: column; min-height: calc(100vh - 55px); }
+  .b-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    padding: 16px 22px 12px;
+  }
+  @media (max-width: 1020px) { .b-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .b-stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 13px 16px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: .14s;
+  }
+  .b-stat:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .b-stat.on { border-color: var(--accent); background: var(--accent-weak); }
+  .b-stat .k { font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; }
+  .b-stat .v { font-size: 24px; font-weight: 700; color: var(--ink); margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .b-stat .s { font-size: 11px; color: var(--muted2); }
+
+  .b-workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 540px;
+    gap: 16px;
+    padding: 0 22px 30px;
+    align-items: start;
+  }
+  @media (max-width: 1280px) { .b-workspace { grid-template-columns: 1fr 440px; } }
+  @media (max-width: 920px) { .b-workspace { grid-template-columns: 1fr; } }
+  .b-left { min-width: 0; }
+  .b-wall {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 1360px) { .b-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .b-inspector {
+    position: sticky;
+    top: 66px;
+    height: calc(100vh - 82px);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .bi-head {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .bi-head h3 { margin: 0; font-size: 14.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bi-stage {
+    height: 300px;
+    flex: none;
+    background: #090b10;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .bi-stage iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .bi-stage .stage-cover {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background-size: cover; background-position: center;
+  }
+  .bi-stage .stage-cover::before {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(10, 12, 18, .62); backdrop-filter: blur(3px);
+  }
+  .bi-stage .stage-cta {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    text-align: center; color: #fff; padding: 20px;
+  }
+  .bi-body { flex: 1; overflow-y: auto; padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .code-box {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 11px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .code-box code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .note-area {
+    width: 100%;
+    min-height: 86px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--soft);
+    padding: 9px 11px;
+    font-size: 12.5px;
+    resize: vertical;
+  }
+  .note-area:focus { outline: 0; border-color: var(--accent); background: var(--card); }
+
+  /* ================= 视图 C：开发者研习看板（86个开源源码专项表 + 学习进度四列看板） ================= */
+  .arch-C { display: none; flex-direction: column; min-height: calc(100vh - 55px); padding: 16px 22px 50px; }
+  .c-head {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 15px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .c-modes {
+    display: flex;
+    background: var(--soft);
+    padding: 4px;
+    border-radius: 11px;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .c-mode {
+    border: 0;
+    background: transparent;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--ink2);
+    transition: .14s;
+  }
+  .c-mode.on { background: var(--card); color: var(--accent); font-weight: 700; box-shadow: var(--shadow); }
+  .c-table-wrap {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .c-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .c-tbl th {
+    text-align: left;
+    padding: 11px 14px;
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+  }
+  .c-tbl td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line2);
+    vertical-align: middle;
+  }
+  .c-tbl tr:hover td { background: var(--soft); }
+  .c-thumb {
+    width: 84px; height: 52px; border-radius: 7px; object-fit: cover;
+    border: 1px solid var(--line); display: block;
+  }
+  .c-kanban {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 1100px) { .c-kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .kb-col {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 420px;
+  }
+  .kb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .kb-card {
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 10px;
+    background: var(--soft);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    transition: .14s;
+  }
+  .kb-card:hover { border-color: var(--accent); background: var(--card); }
+  .kb-card img { width: 64px; height: 42px; border-radius: 6px; object-fit: cover; flex: none; }
+
+  /* ================= 详情弹窗与同步状态弹窗 ================= */
+  .modal {
+    position: fixed; inset: 0;
+    background: rgba(12, 15, 22, .58);
+    backdrop-filter: blur(6px);
+    z-index: 120;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal.on { display: flex; }
+  .mbox {
+    width: min(980px, 96vw);
+    max-height: 88vh;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 30px 90px rgba(0,0,0,.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .mhead {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .mhead h2 { margin: 0; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+  .mbody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 22px 22px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 860px) { .mbody { grid-template-columns: 1fr; } }
+  .m-preview {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #0a0c10;
+    aspect-ratio: 16/10;
+    position: relative;
+  }
+  .m-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .m-preview iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .totop {
+    position: fixed; right: 24px; bottom: 24px;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink2);
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    cursor: pointer; display: none; align-items: center; justify-content: center;
+    font-size: 16px; z-index: 60; transition: .15s;
+  }
+  .totop.on { display: flex; }
+  .totop:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(20, 22, 28, .94); color: #fff;
+    padding: 8px 16px; border-radius: 10px; font-size: 12.5px;
+    opacity: 0; pointer-events: none; transition: .18s; z-index: 200;
+  }
+  .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body class="skin-A">
+
+<!-- ================= 工作台三合一全局顶栏（已去掉与总台重复的项目标题） ================= -->
+<header class="wb-header">
+  <!-- 三合一视图切换器 -->
+  <div class="mode-switch" id="archTabs">
+    <button class="mode-btn on" data-arch="A" title="左栏可折叠分类树 + 5列高密度图墙">
+      🗂️ 图墙目录 <span class="cnt-pill" id="pillTotal">972</span>
+    </button>
+    <button class="mode-btn" data-arch="B" title="顶部数据汇总 + 左画廊 + 右侧常驻 3D 实时试玩与笔记工作台">
+      🔬 分屏试玩沙盒 <span class="cnt-pill">边玩边记</span>
+    </button>
+    <button class="mode-btn" data-arch="C" title="开源源码必修表 + 我的四阶段学习进度看板">
+      🎯 源码与研习看板 <span class="cnt-pill" id="pillOs">开源</span>
+    </button>
+  </div>
+
+  <!-- 右侧皮肤切换与同步工具 -->
+  <div class="wb-tools">
+    <div class="skin-bar" id="skinTabs" title="切换工作台皮肤（在 Obsidian 总台内会自动跟随总台皮肤）">
+      <button class="skin-btn on" data-skin="A">标准</button>
+      <button class="skin-btn" data-skin="B">苹果</button>
+      <button class="skin-btn" data-skin="C">暗色</button>
+      <button class="skin-btn" data-skin="D">杂志</button>
+      <button class="skin-btn" data-skin="E">奶油</button>
+      <button class="skin-btn" data-skin="F">海军</button>
+      <button class="skin-btn" data-skin="G">科技</button>
+    </div>
+    <button class="btn" id="syncInfoBtn" title="查看同步记录与 AI Agent 增量更新指令">🔄 更新与同步</button>
+  </div>
+</header>
+
+<!-- =========================================================================
+     视图 A：资源中心同款（左栏分类树 + 顶栏搜索筛选 + 5列高密度图墙）
+     ========================================================================= -->
+<div class="arch-A" id="viewA">
+  <aside class="a-side">
+    <div class="a-nav" id="aSideNav"></div>
+  </aside>
+
+  <main class="a-main">
+    <div class="a-top">
+      <div class="search-box">
+        <span>🔍</span>
+        <input id="qInput" type="search" placeholder="搜索案例名称、技术栈（如 React Three Fiber、Shader、物理）、作者…">
+        <kbd>Ctrl K</kbd>
+      </div>
+      <button class="btn" id="onlyOsBtn">📦 只看开源源码 (86)</button>
+      <button class="btn" id="randomBtn">🎲 随机拆解一个</button>
+      <button class="btn" id="clearFilterBtn" style="display:none">清除筛选</button>
+      <span style="font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums" id="aCountText">显示 972 条</span>
+
+      <div class="chip-bar" id="aStatusChips"></div>
+    </div>
+
+    <div class="a-content">
+      <div class="wall-5" id="aWall"></div>
+      <div style="display:flex;justify-content:center;padding:26px 0">
+        <button class="btn" id="aMoreBtn" style="display:none">加载更多案例…</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- =========================================================================
+     视图 B：生财有术同款顶部汇总卡 + 左画廊 + 右常驻「3D试玩与源码拆解台」
+     ========================================================================= -->
+<div class="arch-B" id="viewB">
+  <div class="b-stats" id="bStatsBar"></div>
+
+  <div style="padding:0 22px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <div class="search-box" style="max-width:340px;height:32px">
+      <span>🔍</span>
+      <input id="bSearchInput" type="search" placeholder="在分屏沙盒中搜索案例…">
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;flex:1" id="bCatBar"></div>
+  </div>
+
+  <div class="b-workspace">
+    <div class="b-left">
+      <div class="b-wall" id="bWall"></div>
+      <div style="display:flex;justify-content:center;padding:22px 0">
+        <button class="btn" id="bMoreBtn" style="display:none">加载更多案例…</button>
+      </div>
+    </div>
+    <aside class="b-inspector" id="bInspector"></aside>
+  </div>
+</div>
+
+<!-- =========================================================================
+     视图 C：开发者研习看板（86个开源源码专项表 + 学习进度四列看板）
+     ========================================================================= -->
+<div class="arch-C" id="viewC">
+  <div class="c-head">
+    <div>
+      <h2 style="margin:0;font-size:17px">Three.js 开发者源码研习看板</h2>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">
+        把 972 个线上案例按「86 个可克隆 GitHub 源码 → 待学队列 → 本地跑通 → 拆解笔记」管理，支持一键复制本地克隆命令
+      </div>
+    </div>
+    <div class="c-modes" id="cModeTabs">
+      <button class="c-mode on" data-cmode="os" id="cTabOs">📦 开源源码必修课</button>
+      <button class="c-mode" data-cmode="explorable">🔬 科普 / 人工生命 / 数据</button>
+      <button class="c-mode" data-cmode="indie">💰 爆款工具 / 网页OS / 代码视频</button>
+      <button class="c-mode" data-cmode="motion">✨ 动效酷站 / AI / 单文件</button>
+      <button class="c-mode" data-cmode="kanban">🎯 我的四阶段研习看板</button>
+    </div>
+  </div>
+
+  <div id="cBody"></div>
+</div>
+
+<!-- ================= 详情与源码拆解弹窗 ================= -->
+<div class="modal" id="detailModal">
+  <div class="mbox" id="detailBox"></div>
+</div>
+
+<!-- ================= 更新与同步说明弹窗 ================= -->
+<div class="modal" id="syncModal">
+  <div class="mbox" style="width:min(760px,95vw)" id="syncBox"></div>
+</div>
+
+<button class="totop" id="totopBtn" title="回到顶部">↑</button>
+<div class="toast" id="toast"></div>
+
+<script src="数据/site.config.js"></script>
+<script src="数据/items.js"></script>
+<script src="数据/同步记录.js"></script>
+<script>
+(function() {
+  const IS_PUBLIC_WEB = location.protocol === "http:" || location.protocol === "https:" || new URLSearchParams(location.search).get("public") === "1";
+  const ITEMS = (globalThis.CATALOG_ITEMS || []).map((it, idx) => {
+    const rel = String(it.image || "").replace(/^\//, "");
+    const isLiveLocal = rel.includes("live-");
+    const remote = /^https?:/i.test(it.image || "") ? it.image : ("https://threejs.cc/" + rel);
+    return {
+      ...it,
+      _idx: idx,
+      _isFable: (it.id || "").includes("fable") || (it.tags || []).some(t => /fable/i.test(t)),
+      _posterLocal: (IS_PUBLIC_WEB && !isLiveLocal) ? remote : (rel || remote),
+      _posterUrl: isLiveLocal ? rel : remote
+    };
+  });
+
+  const CAT_MAP = {
+    explorable: "🔬 互动硬核科普",
+    alife: "🧬 人工生命涌现",
+    datastory: "🌍 数据地球沙盘",
+    webos: "🖥️ 3D沙盒与酷站",
+    wealth: "💸 财富与博弈算账",
+    ecom3d: "🛒 电商3D商品展台",
+    osint: "🛰️ 全球实时情报屏",
+    ambient: "🎹 音画合成器实验室",
+    logicgame: "🕹️ 手搓CPU与物理谜题",
+    mathart: "📐 傅里叶与数学奇观",
+    motion: "✨ 神级动效酷站",
+    aitools: "🤖 浏览器AI工具",
+    indietools: "💰 一人爆款小工具",
+    codevideo: "🎬 代码做视频动效",
+    heritage: "🏛️ 数字文物与历史",
+    vibecoding: "⚡ 单文件极限神作",
+    art: "视觉艺术",
+    sim: "物理模拟",
+    science: "科普教育",
+    site: "创意站点",
+    tools: "开发工具",
+    showcase: "产品展示",
+    city: "3D 地图",
+    race: "竞速体育",
+    action: "动作射击",
+    puzzle: "解谜策略",
+    rpg: "角色冒险",
+    strategy: "模拟经营",
+    experimental: "多人联机"
+  };
+  const GAME_KEYS = new Set(["race", "action", "puzzle", "rpg", "strategy", "experimental"]);
+  const EXTRA_HOT_IDS = [
+    "f1-car-exploded", "crash-test", "jwst-deployment", "dragonfly-mechanica", "crosstown-nyc", "sagrada-familia",
+    "live-ciechanow-watch", "live-bbycroft-llm-viz", "live-pavel-webgl-fluid", "live-earth-nullschool", "live-shiyun-poetry-galaxy", "live-webgl-jellyfish-3d"
+  ];
+  const HOT_IDS = new Set([...((globalThis.SITE_CONFIG?.hot?.ids) || []), ...EXTRA_HOT_IDS]);
+  // 将跨界扩充案例也智能映射到对应的原始 3D 分类末尾（不打乱原站顺序）
+  const EXTRA_CAT_MAP = {
+    explorable: "science",
+    alife: "sim",
+    datastory: "city",
+    ecom3d: "showcase",
+    osint: "city",
+    logicgame: "puzzle",
+    mathart: "art",
+    webos: "tools",
+    wealth: "science"
+  };
+
+  // 本地学习状态与笔记存储
+  const LS_KEY = "guo_threejs_study_v1";
+  const LS_PREF = "guo_threejs_pref_v1";
+  let STUDY = {};
+  let PREF = { arch: "A", skin: "A" };
+  try { STUDY = JSON.parse(localStorage.getItem(LS_KEY) || "{}"); } catch (e) {}
+  try { PREF = { ...PREF, ...JSON.parse(localStorage.getItem(LS_PREF) || "{}") }; } catch (e) {}
+
+  function saveStudy() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(STUDY)); } catch (e) {}
+  }
+  function savePref() {
+    try { localStorage.setItem(LS_PREF, JSON.stringify({ arch: state.arch, skin: state.skin })); } catch (e) {}
+  }
+  function getSt(id) { return STUDY[id]?.status || ""; }
+  function getNote(id) { return STUDY[id]?.note || ""; }
+  function setSt(id, status) {
+    if (!STUDY[id]) STUDY[id] = { status: "", note: "" };
+    STUDY[id].status = STUDY[id].status === status ? "" : status;
+    saveStudy();
+    renderAll();
+    toast(STUDY[id].status ? "已更新学习状态" : "已清除状态");
+  }
+  function setNote(id, note) {
+    if (!STUDY[id]) STUDY[id] = { status: "", note: "" };
+    STUDY[id].note = note;
+    saveStudy();
+  }
+
+  const state = {
+    arch: PREF.arch || "A",
+    skin: PREF.skin || "A",
+    q: "",
+    cat: "all",
+    stFilter: "",
+    limit: 45,
+    activeId: ITEMS[0]?.id || "",
+    cMode: "os"
+  };
+
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function toast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("on");
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove("on"), 1800);
+  }
+  function copyText(txt, tip = "已复制到剪贴板") {
+    navigator.clipboard?.writeText(txt).then(() => toast(tip)).catch(() => {
+      const ta = document.createElement("textarea");
+      ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); toast(tip); } catch (e) { toast("复制失败"); }
+      ta.remove();
+    });
+  }
+
+  function getFiltered() {
+    const q = state.q.trim().toLowerCase();
+    return ITEMS.filter(it => {
+      if (state.cat === "hot" && !HOT_IDS.has(it.id)) return false;
+      if (state.cat === "fav" && getSt(it.id) !== "want") return false;
+      if (state.cat === "os" && !it.openSource) return false;
+      if (state.cat === "gh" && !it.curatedSource) return false;
+      if (state.cat === "fable" && !it._isFable) return false;
+      if (state.cat === "games" && !GAME_KEYS.has(it.category) && EXTRA_CAT_MAP[it.category] !== "puzzle") return false;
+      if (!["all", "hot", "fav", "os", "gh", "fable", "games"].includes(state.cat)) {
+        if (it.category !== state.cat && EXTRA_CAT_MAP[it.category] !== state.cat) return false;
+      }
+      if (state.stFilter === "want" && getSt(it.id) !== "want") return false;
+      if (state.stFilter === "cloned" && getSt(it.id) !== "cloned") return false;
+      if (state.stFilter === "done" && getSt(it.id) !== "done") return false;
+      if (state.stFilter === "noted" && !getNote(it.id).trim()) return false;
+
+      if (q) {
+        const hay = [
+          it.displayNameZh, it.displayNameEn, it.name,
+          it.summaryZh, it.summaryEn, it.author, it.category,
+          ...(it.tags || []),
+          ...(it.caseProfile?.technology || [])
+        ].join(" ").toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }
+
+  function countBySt(st) {
+    if (st === "noted") return ITEMS.filter(x => getNote(x.id).trim()).length;
+    return ITEMS.filter(x => getSt(x.id) === st).length;
+  }
+
+  function renderCardHtml(it) {
+    const st = getSt(it.id);
+    const note = getNote(it.id);
+    const catName = CAT_MAP[it.category] || it.category;
+    const stLabel = st === "want" ? "❤️ 我的喜欢" : st === "cloned" ? "💻 已拉源码" : st === "done" ? "✅ 已经吃透" : "🤍 收入喜欢";
+    const stCls = st ? ("st-" + st) : "";
+    const isAct = state.arch === "B" && state.activeId === it.id;
+    return `
+      <article class="cd ${isAct ? "is-active" : ""}" data-id="${esc(it.id)}">
+        <div class="cv">
+          <img src="${esc(it._posterLocal)}" onerror="if(this.src!=='${esc(it._posterUrl)}')this.src='${esc(it._posterUrl)}'" alt="${esc(it.displayNameZh || it.name)}" loading="lazy">
+          <div class="cv-top">
+            <div class="left-badges">
+              ${it.openSource ? `<span class="badge badge-os">📦 开源源码</span>` : ""}
+              ${it._isFable ? `<span class="badge badge-fable">✨ Fable 5.2</span>` : ""}
+            </div>
+            <a class="ext-btn" href="${esc(it.url)}" target="_blank" rel="noopener" title="新窗口打开原 3D 网站" onclick="event.stopPropagation()">↗</a>
+          </div>
+          <div class="cv-bot">
+            <span class="cv-cat">${esc(catName)}</span>
+            ${note ? `<span class="cv-cat" style="background:rgba(31,111,92,.88)">📝 有笔记</span>` : ""}
+          </div>
+        </div>
+        <div class="body">
+          <h3 title="${esc(it.displayNameZh || it.name)}">${esc(it.displayNameZh || it.name)}</h3>
+          <p class="desc">${esc(it.summaryZh || it.summaryEn || "暂无简介")}</p>
+          <div class="foot">
+            <span class="author" title="作者：${esc(it.author || "社区开发者")}">👤 ${esc(it.author || "社区开发者")}</span>
+            <button class="st-pill ${stCls}" data-cycle-st="${esc(it.id)}" title="点击切换学习状态：待学 → 已拉源码 → 已掌握">${stLabel}</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  /* ================= 渲染视图 A ================= */
+  let FOLDED_SECS = new Set();
+  try { FOLDED_SECS = new Set(JSON.parse(localStorage.getItem("guo_wx_folded_v1") || "[]")); } catch (e) {}
+  function toggleSec(secId) {
+    if (FOLDED_SECS.has(secId)) FOLDED_SECS.delete(secId);
+    else FOLDED_SECS.add(secId);
+    try { localStorage.setItem("guo_wx_folded_v1", JSON.stringify([...FOLDED_SECS])); } catch (e) {}
+    renderArchA();
+  }
+
+  function renderArchA() {
+    const osCount = ITEMS.filter(x => x.openSource).length;
+    const ghCount = ITEMS.filter(x => x.curatedSource).length;
+    const fableCount = ITEMS.filter(x => x._isFable).length;
+    const gameCount = ITEMS.filter(x => GAME_KEYS.has(x.category)).length;
+    const catCounts = {};
+    for (const it of ITEMS) {
+      catCounts[it.category] = (catCounts[it.category] || 0) + 1;
+      const mapped = EXTRA_CAT_MAP[it.category];
+      if (mapped && mapped !== it.category) catCounts[mapped] = (catCounts[mapped] || 0) + 1;
+    }
+
+    const sec = (id, title, bodyHtml) => `
+      <div class="a-sec ${FOLDED_SECS.has(id) ? "folded" : ""}">
+        <div class="a-grp" data-toggle-sec="${id}"><span>${title}</span><span class="caret">▾</span></div>
+        <div class="a-sec-body">${bodyHtml}</div>
+      </div>
+    `;
+
+    const navHtml = [
+      sec("top", "精选与源码", `
+        <div class="a-row ${state.cat === "all" ? "on" : ""}" data-cat="all">🗂️ 全部案例<span class="n">${ITEMS.length}</span></div>
+        <div class="a-row ${state.cat === "fav" ? "on" : ""}" data-cat="fav">❤️ 我的喜欢<span class="n">${countBySt("want")}</span></div>
+        <div class="a-row ${state.cat === "hot" ? "on" : ""}" data-cat="hot">🔥 每周精选<span class="n">${HOT_IDS.size}</span></div>
+        <div class="a-row ${state.cat === "os" ? "on" : ""}" data-cat="os">📦 开源可拉源码<span class="n">${osCount}</span></div>
+        <div class="a-row ${state.cat === "fable" ? "on" : ""}" data-cat="fable">✨ Claude Fable 5.2<span class="n">${fableCount}</span></div>
+      `),
+      sec("orig3d", "3D 创意与工程分类", ["art", "sim", "science", "site", "tools", "showcase", "city"].map(k => `
+        <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+      `).join("")),
+      sec("games", `WebGL 游戏分类 (${gameCount})`, `
+        <div class="a-row ${state.cat === "games" ? "on" : ""}" data-cat="games">🎮 全部 3D 游戏<span class="n">${gameCount}</span></div>
+        ${["race", "action", "puzzle", "rpg", "strategy", "experimental"].map(k => `
+          <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}" style="padding-left:22px;font-size:12.5px">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+        `).join("")}
+      `),
+      sec("wanxiang", `跨界扩充专区 (${ghCount})`, `
+        <div class="a-row ${state.cat === "gh" ? "on" : ""}" data-cat="gh">🌟 全部新扩充案例<span class="n">${ghCount}</span></div>
+        ${["explorable", "alife", "datastory", "webos", "wealth", "ecom3d", "osint", "ambient", "logicgame", "mathart"].filter(k => (catCounts[k] || 0) > 0).map(k => `
+          <div class="a-row ${state.cat === k ? "on" : ""}" data-cat="${k}">${CAT_MAP[k]}<span class="n">${catCounts[k] || 0}</span></div>
+        `).join("")}
+      `)
+    ].join("");
+    document.getElementById("aSideNav").innerHTML = navHtml;
+
+    const stChips = [
+      ["", "全部状态", ITEMS.length],
+      ["want", "❤️ 我的喜欢", countBySt("want")],
+      ["cloned", "💻 已拉源码", countBySt("cloned")],
+      ["done", "✅ 已经吃透", countBySt("done")],
+      ["noted", "📝 写了笔记", countBySt("noted")]
+    ];
+    document.getElementById("aStatusChips").innerHTML =
+      `<span class="lb">我的研习状态：</span>` +
+      stChips.map(([k, label, n]) => `
+        <button class="fchip ${state.stFilter === k ? "on" : ""}" data-st="${k}">${label} <span class="n">${n}</span></button>
+      `).join("");
+
+    const list = getFiltered();
+    const hasFilter = state.cat !== "all" || state.stFilter !== "" || state.q.trim() !== "";
+    document.getElementById("clearFilterBtn").style.display = hasFilter ? "inline-flex" : "none";
+    document.getElementById("aCountText").textContent = `显示 ${Math.min(list.length, state.limit)} / ${list.length} 条`;
+    document.getElementById("onlyOsBtn").classList.toggle("pri", state.cat === "os");
+
+    document.getElementById("aWall").innerHTML = list.slice(0, state.limit).map(renderCardHtml).join("") ||
+      `<div style="grid-column:1/-1;padding:70px 20px;text-align:center;color:var(--muted)">没有找到匹配的 3D 案例，点击「清除筛选」恢复全部。</div>`;
+    const moreBtn = document.getElementById("aMoreBtn");
+    if (list.length > state.limit) {
+      moreBtn.style.display = "inline-flex";
+      moreBtn.textContent = `加载更多案例（还有 ${list.length - state.limit} 条）`;
+    } else {
+      moreBtn.style.display = "none";
+    }
+  }
+
+  /* ================= 渲染视图 B ================= */
+  function renderArchB() {
+    const osCount = ITEMS.filter(x => x.openSource).length;
+    const fableCount = ITEMS.filter(x => x._isFable).length;
+    const studiedCount = countBySt("want") + countBySt("cloned") + countBySt("done");
+
+    document.getElementById("bStatsBar").innerHTML = `
+      <div class="b-stat ${state.cat === "all" && !state.stFilter ? "on" : ""}" data-bcat="all">
+        <div class="k"><span>全部 3D 案例</span><span>13 个分类</span></div>
+        <div class="v">${ITEMS.length}</div>
+        <div class="s">封面与技术数据 100% 本地化</div>
+      </div>
+      <div class="b-stat ${state.cat === "os" ? "on" : ""}" data-bcat="os">
+        <div class="k"><span>📦 开源可拉源码</span><span>GitHub 仓库</span></div>
+        <div class="v" style="color:var(--accent)">${osCount}</div>
+        <div class="s">带完整源码，可 clone 到本地跑</div>
+      </div>
+      <div class="b-stat ${state.cat === "fable" ? "on" : ""}" data-bcat="fable">
+        <div class="k"><span>✨ AI 生成 3D 标杆</span><span>Fable 5.2 专区</span></div>
+        <div class="v">${fableCount}</div>
+        <div class="s">适合研究 AI 直出 3D 场景结构</div>
+      </div>
+      <div class="b-stat ${state.cat === "games" ? "on" : ""}" data-bcat="games">
+        <div class="k"><span>🎮 3D 网页游戏</span><span>6 大游戏类型</span></div>
+        <div class="v">317</div>
+        <div class="s">竞速 94 · 射击 79 · 解谜 55 · RPG 41</div>
+      </div>
+      <div class="b-stat ${state.stFilter ? "on" : ""}" data-bst="want">
+        <div class="k"><span>🎯 我的研习进度</span><span>本地持久化</span></div>
+        <div class="v">${studiedCount}</div>
+        <div class="s">待学 ${countBySt("want")} · 已拉源码 ${countBySt("cloned")} · 已掌握 ${countBySt("done")}</div>
+      </div>
+    `;
+
+    const quickCats = [
+      ["all", `全部 (${ITEMS.length})`], ["os", `📦 开源源码 (${osCount})`], ["gh", `🌟 跨界与高星 (${ITEMS.filter(x=>x.curatedSource).length})`],
+      ["explorable", "🔬 互动科普"], ["alife", "🧬 人工生命"], ["codevideo", "🎬 代码视频"], ["indietools", "💰 爆款工具"],
+      ["webos", "🖥️ 网页OS"], ["motion", "✨ 动效酷站"], ["aitools", "🤖 AI工具"], ["datastory", "🌍 数据沙盘"],
+      ["heritage", "🏛️ 数字文物"], ["vibecoding", "⚡ 单文件神作"], ["art", "视觉艺术"], ["sim", "物理模拟"]
+    ];
+    document.getElementById("bCatBar").innerHTML = quickCats.map(([k, label]) =>
+      `<button class="fchip ${state.cat === k ? "on" : ""}" data-cat="${k}">${label}</button>`
+    ).join("");
+
+    const list = getFiltered();
+    if (!list.some(x => x.id === state.activeId) && list[0]) {
+      state.activeId = list[0].id;
+    }
+    document.getElementById("bWall").innerHTML = list.slice(0, state.limit).map(renderCardHtml).join("");
+    const bMore = document.getElementById("bMoreBtn");
+    if (list.length > state.limit) {
+      bMore.style.display = "inline-flex";
+      bMore.textContent = `加载更多案例（还有 ${list.length - state.limit} 条）`;
+    } else {
+      bMore.style.display = "none";
+    }
+    renderBInspector();
+  }
+
+  function renderBInspector() {
+    const it = ITEMS.find(x => x.id === state.activeId) || ITEMS[0];
+    if (!it) return;
+    const st = getSt(it.id);
+    const note = getNote(it.id);
+    const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
+    const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js", "WebGL"];
+    const paragraphs = it.caseProfile?.zh?.description || [it.summaryZh || it.summaryEn];
+
+    document.getElementById("bInspector").innerHTML = `
+      <div class="bi-head">
+        <h3 title="${esc(it.displayNameZh || it.name)}">🔬 ${esc(it.displayNameZh || it.name)}</h3>
+        <div style="display:flex;gap:6px">
+          ${it.repo ? `<a class="btn" style="height:28px;padding:0 9px;font-size:11.5px" href="${esc(it.repo)}" target="_blank" rel="noopener">GitHub ↗</a>` : ""}
+          <a class="btn pri" style="height:28px;padding:0 10px;font-size:11.5px" href="${esc(it.url)}" target="_blank" rel="noopener">新窗口打开 ↗</a>
+        </div>
+      </div>
+      <div class="bi-stage" id="biStage">
+        <div class="stage-cover" style="background-image:url('${esc(it._posterLocal)}'),url('${esc(it._posterUrl)}')">
+          <div class="stage-cta">
+            <div style="font-size:13px;font-weight:600">在右侧工作台直接内嵌运行该 3D 场景</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn pri" id="loadIframeBtn">▶ 页内加载 3D 实时试玩</button>
+              <a class="btn" href="${esc(it.url)}" target="_blank" rel="noopener" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)">浏览器全屏玩 ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bi-body">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <span class="badge badge-cat">${esc(CAT_MAP[it.category] || it.category)}</span>
+          ${it.openSource ? `<span class="badge badge-os">📦 开源 (${esc(it.license || "MIT")})</span>` : `<span class="badge badge-cat">线上演示作品</span>`}
+          ${techs.map(t => `<span class="badge badge-tech">${esc(t)}</span>`).join("")}
+        </div>
+
+        <div style="font-size:12.5px;color:var(--ink2);line-height:1.6">
+          ${paragraphs.map(p => `<p style="margin:0 0 6px">${esc(p)}</p>`).join("")}
+        </div>
+
+        ${it.openSource && it.repo ? `
+          <div>
+            <div style="font-size:11.5px;font-weight:600;color:var(--accent);margin-bottom:5px">💻 一键拉取源码到本地 源码练习\\${esc(it.slug)}：</div>
+            <div class="code-box">
+              <code title="${esc(cloneCmd)}">${esc(cloneCmd)}</code>
+              <button class="btn" style="height:26px;padding:0 9px;font-size:11px" data-copy-cmd="${esc(cloneCmd)}">复制命令</button>
+            </div>
+          </div>
+        ` : ""}
+
+        <div>
+          <div style="font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:6px">🎯 标记我的研习进度：</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="st-pill ${st === "want" ? "st-want" : ""}" data-set-st="want" data-id="${esc(it.id)}">❤️ 我的喜欢</button>
+            <button class="st-pill ${st === "cloned" ? "st-cloned" : ""}" data-set-st="cloned" data-id="${esc(it.id)}">💻 已拉源码</button>
+            <button class="st-pill ${st === "done" ? "st-done" : ""}" data-set-st="done" data-id="${esc(it.id)}">✅ 已经吃透</button>
+          </div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div style="font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px">📝 我的开发拆解笔记（自动保存）：</div>
+          <textarea class="note-area" id="biNoteInput" placeholder="记录这个案例用到的镜头控制、Shader 思路、可复用到自己项目的代码片段…">${esc(note)}</textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("loadIframeBtn").onclick = () => {
+      document.getElementById("biStage").innerHTML = `<iframe src="${esc(it.url)}" allow="fullscreen; xr-spatial-tracking; accelerometer; gyroscope"></iframe>`;
+    };
+    const noteEl = document.getElementById("biNoteInput");
+    noteEl.addEventListener("input", () => setNote(it.id, noteEl.value));
+  }
+
+  /* ================= 渲染视图 C ================= */
+  function renderArchC() {
+    const box = document.getElementById("cBody");
+    if (state.cMode === "kanban") {
+      const cols = [
+        ["want", "❤️ 我的喜欢", "看到喜欢、随时拿来参考的案例"],
+        ["cloned", "💻 已拉源码", "已 clone 到 源码练习/ 文件夹"],
+        ["done", "✅ 已经吃透", "核心技术已拆解明白"],
+        ["noted", "📝 写了笔记", "含技术心得与摘录"]
+      ];
+      box.innerHTML = `<div class="c-kanban">` + cols.map(([key, title, sub]) => {
+        const items = key === "noted"
+          ? ITEMS.filter(x => getNote(x.id).trim())
+          : ITEMS.filter(x => getSt(x.id) === key);
+        return `
+          <div class="kb-col">
+            <div class="kb-head">
+              <span>${title}</span>
+              <span class="badge badge-cat">${items.length}</span>
+            </div>
+            <div style="font-size:11.5px;color:var(--muted);margin-bottom:4px">${sub}</div>
+            ${items.map(it => `
+              <div class="kb-card" data-id="${esc(it.id)}">
+                <img src="${esc(it._posterLocal)}" onerror="if(this.src!=='${esc(it._posterUrl)}')this.src='${esc(it._posterUrl)}'" alt="">
+                <div style="min-width:0;flex:1">
+                  <div style="font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(it.displayNameZh || it.name)}</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">${esc(CAT_MAP[it.category] || it.category)} · ${it.openSource ? "📦开源" : "演示"}</div>
+                  ${getNote(it.id) ? `<div style="font-size:11px;color:var(--accent);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📝 ${esc(getNote(it.id))}</div>` : ""}
+                </div>
+              </div>
+            `).join("") || `<div style="padding:30px 10px;text-align:center;color:var(--muted2);font-size:12px">暂无条目，在卡片上点「+ 标记学习」即可加入</div>`}
+          </div>
+        `;
+      }).join("") + `</div>`;
+      return;
+    }
+
+    const list = state.cMode === "os"
+      ? ITEMS.filter(x => x.openSource)
+      : state.cMode === "explorable"
+        ? ITEMS.filter(x => ["explorable", "alife", "datastory", "heritage"].includes(x.category))
+        : state.cMode === "indie"
+          ? ITEMS.filter(x => ["indietools", "webos", "codevideo"].includes(x.category))
+          : state.cMode === "motion"
+            ? ITEMS.filter(x => ["motion", "aitools", "vibecoding"].includes(x.category))
+            : ITEMS.filter(x => HOT_IDS.has(x.id));
+
+    box.innerHTML = `
+      <div class="c-table-wrap">
+        <table class="c-tbl">
+          <thead>
+            <tr>
+              <th style="width:100px">画面预览</th>
+              <th style="width:230px">案例名称 / 作者</th>
+              <th style="width:96px">分类</th>
+              <th>核心实现与拆解要点</th>
+              <th style="width:170px">技术栈 / 开源协议</th>
+              <th style="width:130px">我的研习状态</th>
+              <th style="width:200px">操作（试玩 / 源码拉取）</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map(it => {
+              const st = getSt(it.id);
+              const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
+              const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js"];
+              return `
+                <tr data-id="${esc(it.id)}" style="cursor:pointer">
+                  <td><img class="c-thumb" src="${esc(it._posterLocal)}" onerror="if(this.src!=='${esc(it._posterUrl)}')this.src='${esc(it._posterUrl)}'" loading="lazy"></td>
+                  <td>
+                    <div style="font-weight:600;color:var(--ink)">${esc(it.displayNameZh || it.name)}</div>
+                    <div style="font-size:11.5px;color:var(--muted);margin-top:2px">👤 ${esc(it.author || "社区")}</div>
+                  </td>
+                  <td><span class="badge badge-cat">${esc(CAT_MAP[it.category] || it.category)}</span></td>
+                  <td style="max-width:360px">
+                    <div style="font-size:12px;color:var(--ink2);line-height:1.5">${esc(it.summaryZh || it.summaryEn)}</div>
+                    ${getNote(it.id) ? `<div style="font-size:11.5px;color:var(--accent);margin-top:4px">📝 笔记：${esc(getNote(it.id))}</div>` : ""}
+                  </td>
+                  <td>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap">
+                      ${techs.map(t => `<span class="badge badge-tech">${esc(t)}</span>`).join("")}
+                    </div>
+                    ${it.license ? `<div style="font-size:10.5px;color:var(--muted2);margin-top:4px">${esc(it.license)}</div>` : ""}
+                  </td>
+                  <td>
+                    <button class="st-pill ${st ? "st-" + st : ""}" data-cycle-st="${esc(it.id)}">
+                      ${st === "want" ? "⭐ 待学" : st === "cloned" ? "💻 已拉源码" : st === "done" ? "✅ 已掌握" : "+ 标记状态"}
+                    </button>
+                  </td>
+                  <td onclick="event.stopPropagation()">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                      <a class="btn" style="height:28px;padding:0 9px;font-size:11.5px" href="${esc(it.url)}" target="_blank" rel="noopener">3D 试玩 ↗</a>
+                      ${it.repo ? `<button class="btn pri" style="height:28px;padding:0 9px;font-size:11.5px" data-copy-cmd="${esc(cloneCmd)}">拉取源码</button>` : ""}
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  /* ================= 详情弹窗 ================= */
+  function openModal(id) {
+    const it = ITEMS.find(x => x.id === id);
+    if (!it) return;
+    const st = getSt(it.id);
+    const note = getNote(it.id);
+    const cloneCmd = it.repo ? `node "I:\\项目\\会动网页\\构建\\sync.mjs" --clone ${it.slug || it.id}` : "";
+    const gitRawCmd = it.repo ? `git clone --depth 1 ${it.repo} "I:\\项目\\会动网页\\源码练习\\${it.slug}"` : "";
+    const techs = it.caseProfile?.technology?.length ? it.caseProfile.technology : ["Three.js", "WebGL"];
+    const paragraphs = it.caseProfile?.zh?.description || [it.summaryZh || it.summaryEn];
+
+    const box = document.getElementById("detailBox");
+    box.innerHTML = `
+      <div class="mhead">
+        <h2>
+          <span>${esc(it.displayNameZh || it.name)}</span>
+          ${it.openSource ? `<span class="badge badge-os">📦 开源可拉源码</span>` : ""}
+        </h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a class="btn pri" href="${esc(it.url)}" target="_blank" rel="noopener">新窗口打开 3D 原站 ↗</a>
+          ${it.repo ? `<a class="btn" href="${esc(it.repo)}" target="_blank" rel="noopener">GitHub 仓库 ↗</a>` : ""}
+          <button class="btn" id="closeModalBtn">✕ 关闭</button>
+        </div>
+      </div>
+      <div class="mbody">
+        <div>
+          <div class="m-preview" id="modalStage">
+            <img src="${esc(it._posterLocal)}" onerror="if(this.src!=='${esc(it._posterUrl)}')this.src='${esc(it._posterUrl)}'" alt="">
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px;flex-wrap:wrap">
+            <button class="btn pri" id="modalPlayBtn">▶ 在弹窗内直接加载 3D 实时交互 (iframe)</button>
+            <span style="font-size:11.5px;color:var(--muted)">收录于 ${esc(it.collected || "2026")} · 作者 ${esc(it.author || "社区")}</span>
+          </div>
+          ${it.openSource && it.repo ? `
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--accent)">💻 一键拉取源码到本地 源码练习\\${esc(it.slug)}：</div>
+              <div class="code-box">
+                <code title="${esc(cloneCmd)}">${esc(cloneCmd)}</code>
+                <button class="btn" style="height:26px;padding:0 10px;font-size:11.5px" data-copy-cmd="${esc(cloneCmd)}">复制同步命令</button>
+              </div>
+              <div class="code-box">
+                <code title="${esc(gitRawCmd)}">${esc(gitRawCmd)}</code>
+                <button class="btn" style="height:26px;padding:0 10px;font-size:11.5px" data-copy-cmd="${esc(gitRawCmd)}">复制 git clone</button>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="badge badge-cat">分类：${esc(CAT_MAP[it.category] || it.category)}</span>
+            ${techs.map(t => `<span class="badge badge-tech">${esc(t)}</span>`).join("")}
+            ${it.license ? `<span class="badge badge-cat">协议：${esc(it.license)}</span>` : ""}
+          </div>
+
+          <div style="background:var(--soft);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.65;color:var(--ink2)">
+            <div style="font-weight:600;color:var(--ink);margin-bottom:4px">案例拆解与功能说明</div>
+            ${paragraphs.map(p => `<p style="margin:0 0 6px">${esc(p)}</p>`).join("")}
+          </div>
+
+          <div>
+            <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">🎯 标记我的学习状态：</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="st-pill ${st === "want" ? "st-want" : ""}" data-set-st="want" data-id="${esc(it.id)}">❤️ 我的喜欢</button>
+              <button class="st-pill ${st === "cloned" ? "st-cloned" : ""}" data-set-st="cloned" data-id="${esc(it.id)}">💻 已拉源码</button>
+              <button class="st-pill ${st === "done" ? "st-done" : ""}" data-set-st="done" data-id="${esc(it.id)}">✅ 已经吃透</button>
+            </div>
+          </div>
+
+          <div style="flex:1;display:flex;flex-direction:column">
+            <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">📝 我的学习笔记 & 拆解心得（自动存本地）：</div>
+            <textarea class="note-area" id="modalNoteInput" style="flex:1;min-height:110px" placeholder="写下这个 3D 案例的技术亮点、复刻思路、或者本地运行踩坑记录…">${esc(note)}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("detailModal").classList.add("on");
+    document.getElementById("closeModalBtn").onclick = () => document.getElementById("detailModal").classList.remove("on");
+    document.getElementById("modalPlayBtn").onclick = () => {
+      document.getElementById("modalStage").innerHTML = `<iframe src="${esc(it.url)}" allow="fullscreen; xr-spatial-tracking"></iframe>`;
+    };
+    const noteInput = document.getElementById("modalNoteInput");
+    noteInput.addEventListener("input", () => {
+      setNote(it.id, noteInput.value);
+      renderAll();
+    });
+  }
+
+  /* ================= 更新与同步说明弹窗 ================= */
+  function openSyncModal() {
+    const meta = globalThis.THREEJS_SYNC_META?.latest || {
+      at: "2026-11-18",
+      total: ITEMS.length,
+      openSource: ITEMS.filter(x => x.openSource).length,
+      postersReady: ITEMS.length
+    };
+    const syncCmd = `node "I:\\项目\\会动网页\\构建\\sync.mjs"`;
+    const agentPrompt = `请先读 I:\\项目\\个人工作台\\ThreeJS案例库\\CLAUDE.md，然后运行 node "I:\\项目\\会动网页\\构建\\sync.mjs" 增量同步 https://threejs.cc 的最新案例与封面图。`;
+
+    const box = document.getElementById("syncBox");
+    box.innerHTML = `
+      <div class="mhead">
+        <h2>🔄 Three.js 案例库 · 增量同步与 AI 交接说明</h2>
+        <button class="btn" id="closeSyncBtn">✕ 关闭</button>
+      </div>
+      <div style="padding:18px 22px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px">
+            <div style="font-size:11.5px;color:var(--muted)">最近同步时间</div>
+            <div style="font-size:17px;font-weight:700;margin-top:4px">${esc(meta.at)}</div>
+          </div>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px">
+            <div style="font-size:11.5px;color:var(--muted)">本地收录总数 / 开源仓库</div>
+            <div style="font-size:17px;font-weight:700;margin-top:4px">${meta.total} 条 / ${meta.openSource} 个开源</div>
+          </div>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px">
+            <div style="font-size:11.5px;color:var(--muted)">本地封面图缓存</div>
+            <div style="font-size:17px;font-weight:700;margin-top:4px;color:var(--accent)">${meta.postersReady || ITEMS.length} 张已落盘</div>
+          </div>
+        </div>
+
+        <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px">
+          <div style="font-weight:700;margin-bottom:6px">1. 以后原站（threejs.cc）更新了新案例，怎么同步？</div>
+          <div style="font-size:12.5px;color:var(--ink2);margin-bottom:8px">
+            数据源接口已固定写在构建脚本里（拉取 <code>https://threejs.cc/data/items.js</code> 并增量补齐 <code>assets/posters/</code> 下缺失的封面图，只增不删）。在终端跑一行命令即可：
+          </div>
+          <div class="code-box" style="background:var(--card)">
+            <code>${esc(syncCmd)}</code>
+            <button class="btn pri" style="height:26px;padding:0 10px;font-size:11.5px" data-copy-cmd="${esc(syncCmd)}">复制同步命令</button>
+          </div>
+        </div>
+
+        <div style="background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px">
+          <div style="font-weight:700;margin-bottom:6px">2. 让任何 AI Agent（Claude Code / Codex / DeepSeek）帮你同步或拉源码</div>
+          <div style="font-size:12.5px;color:var(--ink2);margin-bottom:8px">
+            所有规则与数据地址都已经写进工作台说明书 <code>I:\\项目\\个人工作台\\ThreeJS案例库\\CLAUDE.md</code>，直接复制下面这句话发给任意 AI 即可：
+          </div>
+          <div class="code-box" style="background:var(--card)">
+            <code>${esc(agentPrompt)}</code>
+            <button class="btn pri" style="height:26px;padding:0 10px;font-size:11.5px" data-copy-cmd="${esc(agentPrompt)}">复制 AI 指令</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("syncModal").classList.add("on");
+    document.getElementById("closeSyncBtn").onclick = () => document.getElementById("syncModal").classList.remove("on");
+  }
+
+  /* ================= 渲染主入口 ================= */
+  function applySkinClass() {
+    document.body.className = "skin-" + state.skin;
+    document.querySelectorAll("#skinTabs .skin-btn").forEach(b => b.classList.toggle("on", b.dataset.skin === state.skin));
+  }
+
+  function renderAll() {
+    const osCount = ITEMS.filter(x => x.openSource).length;
+    const ghCount = ITEMS.filter(x => x.curatedSource).length;
+    document.getElementById("pillTotal").textContent = ITEMS.length;
+    document.getElementById("pillOs").textContent = osCount + " 开源";
+    document.getElementById("onlyOsBtn").textContent = `📦 只看开源源码 (${osCount})`;
+    const cTabOs = document.getElementById("cTabOs");
+    if (cTabOs) cTabOs.textContent = `📦 开源源码必修课 (${osCount})`;
+    const cTabGh = document.getElementById("cTabGh");
+    if (cTabGh) cTabGh.textContent = `🌟 高星与跨界扩充 (${ghCount})`;
+
+    document.querySelectorAll("#archTabs .mode-btn").forEach(b => b.classList.toggle("on", b.dataset.arch === state.arch));
+    document.getElementById("viewA").style.display = state.arch === "A" ? "flex" : "none";
+    document.getElementById("viewB").style.display = state.arch === "B" ? "flex" : "none";
+    document.getElementById("viewC").style.display = state.arch === "C" ? "flex" : "none";
+
+    applySkinClass();
+
+    if (state.arch === "A") renderArchA();
+    if (state.arch === "B") renderArchB();
+    if (state.arch === "C") renderArchC();
+  }
+
+  // 模式切换
+  document.getElementById("archTabs").addEventListener("click", e => {
+    const b = e.target.closest("[data-arch]");
+    if (!b) return;
+    state.arch = b.dataset.arch;
+    savePref();
+    renderAll();
+  });
+
+  // 皮肤切换
+  document.getElementById("skinTabs").addEventListener("click", e => {
+    const b = e.target.closest("[data-skin]");
+    if (!b) return;
+    state.skin = b.dataset.skin;
+    // 清除宿主内联覆盖变量，让手动选择的皮肤生效
+    for (const k of ["--bg", "--card", "--ink", "--line", "--muted", "--soft", "--line2", "--accent"]) {
+      document.documentElement.style.removeProperty(k);
+      document.body.style.removeProperty(k);
+    }
+    savePref();
+    applySkinClass();
+  });
+
+  // 全局点击事件委托
+  document.body.addEventListener("click", e => {
+    const toggleSecEl = e.target.closest("[data-toggle-sec]");
+    if (toggleSecEl) {
+      toggleSec(toggleSecEl.dataset.toggleSec);
+      return;
+    }
+    const catEl = e.target.closest("[data-cat]");
+    if (catEl) {
+      state.cat = catEl.dataset.cat;
+      state.limit = 45;
+      renderAll();
+      return;
+    }
+    const bcatEl = e.target.closest("[data-bcat]");
+    if (bcatEl) {
+      state.cat = bcatEl.dataset.bcat;
+      state.stFilter = "";
+      renderAll();
+      return;
+    }
+    const bstEl = e.target.closest("[data-bst]");
+    if (bstEl) {
+      state.stFilter = state.stFilter ? "" : "want";
+      renderAll();
+      return;
+    }
+    const stFilterEl = e.target.closest("[data-st]");
+    if (stFilterEl) {
+      state.stFilter = stFilterEl.dataset.st;
+      renderAll();
+      return;
+    }
+    const cycleEl = e.target.closest("[data-cycle-st]");
+    if (cycleEl) {
+      e.stopPropagation();
+      const id = cycleEl.dataset.cycleSt;
+      const cur = getSt(id);
+      const next = cur === "" ? "want" : cur === "want" ? "cloned" : cur === "cloned" ? "done" : "";
+      if (!STUDY[id]) STUDY[id] = { status: "", note: "" };
+      STUDY[id].status = next;
+      saveStudy();
+      renderAll();
+      toast(next ? "已标记为：" + (next === "want" ? "❤️ 我的喜欢" : next === "cloned" ? "💻 已拉源码" : "✅ 已经吃透") : "已取消标记");
+      return;
+    }
+    const setStEl = e.target.closest("[data-set-st]");
+    if (setStEl) {
+      e.stopPropagation();
+      setSt(setStEl.dataset.id, setStEl.dataset.setSt);
+      if (document.getElementById("detailModal").classList.contains("on")) {
+        openModal(setStEl.dataset.id);
+      }
+      return;
+    }
+    const copyEl = e.target.closest("[data-copy-cmd]");
+    if (copyEl) {
+      e.stopPropagation();
+      copyText(copyEl.dataset.copyCmd, "命令已复制，可在终端或发给 AI 直接执行");
+      return;
+    }
+    const cardEl = e.target.closest("[data-id]");
+    if (cardEl && !e.target.closest("a") && !e.target.closest("button")) {
+      const id = cardEl.dataset.id;
+      if (state.arch === "B") {
+        state.activeId = id;
+        renderArchB();
+      } else {
+        openModal(id);
+      }
+    }
+  });
+
+  // 视图 C 子模式切换
+  document.getElementById("cModeTabs").addEventListener("click", e => {
+    const b = e.target.closest("[data-cmode]");
+    if (!b) return;
+    state.cMode = b.dataset.cmode;
+    document.querySelectorAll("#cModeTabs .c-mode").forEach(x => x.classList.toggle("on", x === b));
+    renderArchC();
+  });
+
+  // 搜索联动
+  const syncSearch = val => {
+    state.q = val;
+    state.limit = 45;
+    document.getElementById("qInput").value = val;
+    document.getElementById("bSearchInput").value = val;
+    renderAll();
+  };
+  document.getElementById("qInput").addEventListener("input", e => syncSearch(e.target.value));
+  document.getElementById("bSearchInput").addEventListener("input", e => syncSearch(e.target.value));
+
+  document.getElementById("clearFilterBtn").onclick = () => {
+    state.cat = "all"; state.stFilter = ""; state.q = "";
+    document.getElementById("qInput").value = "";
+    document.getElementById("bSearchInput").value = "";
+    renderAll();
+  };
+  document.getElementById("onlyOsBtn").onclick = () => {
+    state.cat = state.cat === "os" ? "all" : "os";
+    renderAll();
+  };
+  document.getElementById("randomBtn").onclick = () => {
+    const list = getFiltered();
+    if (!list.length) return;
+    const pick = list[Math.floor(Math.random() * list.length)];
+    openModal(pick.id);
+  };
+  document.getElementById("aMoreBtn").onclick = () => { state.limit += 45; renderArchA(); };
+  document.getElementById("bMoreBtn").onclick = () => { state.limit += 30; renderArchB(); };
+
+  if (IS_PUBLIC_WEB) {
+    const sb = document.getElementById("syncInfoBtn");
+    if (sb) sb.style.display = "none";
+  } else {
+    document.getElementById("syncInfoBtn").onclick = openSyncModal;
+  }
+
+  document.getElementById("detailModal").addEventListener("click", e => {
+    if (e.target.id === "detailModal") document.getElementById("detailModal").classList.remove("on");
+  });
+  document.getElementById("syncModal").addEventListener("click", e => {
+    if (e.target.id === "syncModal") document.getElementById("syncModal").classList.remove("on");
+  });
+
+  const totop = document.getElementById("totopBtn");
+  totop.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  window.addEventListener("scroll", () => {
+    totop.classList.toggle("on", window.scrollY > 300);
+  }, { passive: true });
+
+  document.addEventListener("keydown", e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      const inp = state.arch === "B" ? document.getElementById("bSearchInput") : document.getElementById("qInput");
+      inp?.focus();
+    }
+    if (e.key === "Escape") {
+      document.getElementById("detailModal").classList.remove("on");
+      document.getElementById("syncModal").classList.remove("on");
+    }
+  });
+
+  // 自动对接 Obsidian 总台 (personal-hub) 推送的当前皮肤变量
+  function applyHostTheme(tokens, dark) {
+    if (dark) {
+      state.skin = "C";
+      applySkinClass();
+    }
+    if (tokens && tokens["--ph-bg"]) {
+      const st = document.documentElement.style;
+      const bs = document.body.style;
+      const setBoth = (k, v) => { if (v) { st.setProperty(k, v); bs.setProperty(k, v); } };
+      setBoth("--bg", tokens["--ph-bg"]);
+      setBoth("--card", tokens["--ph-card"]);
+      setBoth("--ink", tokens["--ph-text"]);
+      setBoth("--line", tokens["--ph-line"]);
+      setBoth("--muted", tokens["--ph-muted"]);
+      setBoth("--accent", tokens["--ph-accent"]);
+    }
+  }
+  window.addEventListener("ph-theme", e => applyHostTheme(e.detail?.tokens, e.detail?.dark));
+  window.addEventListener("message", e => {
+    if (e.data?.type === "RESOURCE_THEME") applyHostTheme(e.data.tokens, e.data.dark);
+  });
+  if (window.__PH_THEME) applyHostTheme(window.__PH_THEME.tokens, window.__PH_THEME.dark);
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
