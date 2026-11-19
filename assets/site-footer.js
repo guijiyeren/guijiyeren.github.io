@@ -13,7 +13,7 @@
             '<img src="' + base + 'assets/logo.png" alt="硅基野人" loading="lazy" decoding="async">' +
             '<div class="sf-about-body">' +
               '<h3>硅基野人 · 10 年电商人，正在实战 AI 无人公司</h3>' +
-              '<p>一个碳基老板，带着一群硅基员工。把选品、上架、文案、剪辑、发布拆成流程交给 AI，同时把路上攒下的好工具、好案例与全套工作台拆开公开分享。</p>' +
+              '<p>一个碳基老板带一群硅基员工，把电商与内容流程拆给 AI 跑，工具与实战全公开。</p>' +
             '</div>' +
             '<a class="sf-about-go" href="' + base + '#about">查看完整关于我 →</a>' +
           '</div>' +
