@@ -20,6 +20,7 @@
 <meta name="twitter:image" content="https://guijiyeren.github.io/og.png">
 <link rel="canonical" href="https://guijiyeren.github.io/">
 <link rel="icon" href="assets/logo.png">
+<script src="assets/site-guard.js?v=2"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"硅基野人","url":"https://guijiyeren.github.io/","jobTitle":"电商人 / AI 无人公司实战者","sameAs":["https://www.douyin.com/user/MS4wLjABAAAA0aUK8BArKOrt4GfMkZU4HUgbaqVOThYjFF3yOPJmoXibLHKliBfilrwYB5jQJ3H_","https://www.xiaohongshu.com/user/profile/645f5d61000000001f0310c2","https://space.bilibili.com/504784256","https://www.kuaishou.com/profile/3x837cneqdzidis","https://www.youtube.com/channel/UCZins5hWXKgwZxiH3Z7HvrA/","https://www.tiktok.com/@guijiyeren","https://www.zhihu.com/people/guozhengxin"]}
 </script>
@@ -128,6 +129,19 @@
   .badge.dev { color:#1d4ed8; background:#e0edff; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
   .badge.dev::before { content:""; width:6px; height:6px; border-radius:50%; background:#2563eb; animation:devDot 1.6s ease-in-out infinite; }
   @keyframes devDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.35; transform:scale(.75); } }
+  @media (max-width:640px) {
+    .prog-row { grid-template-columns:1fr auto; gap:6px 10px; }
+    .prog-row .pr-bar { grid-column:1 / -1; order:3; }
+  }
+  @media (max-width:900px) {
+    .build-grid { grid-template-columns:repeat(2, minmax(0, 1fr)) !important; }
+    .num-grid { grid-template-columns:repeat(3, minmax(0, 1fr)) !important; }
+  }
+  @media (max-width:560px) {
+    .build-grid { grid-template-columns:1fr !important; }
+    .num-grid { grid-template-columns:repeat(2, minmax(0, 1fr)) !important; }
+    .wrap { padding:0 16px; }
+  }
   .note-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
   .note-card { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; transition:.16s; }
   .note-card:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(15,23,42,.1); }

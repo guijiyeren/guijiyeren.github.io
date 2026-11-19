@@ -354,15 +354,21 @@ html.dark .public-flow {
 @keyframes public-flow-reveal { from { opacity: .65; transform: translateY(3px); } }
 @keyframes pf-fade { from { opacity: .65; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
+@media (max-width: 1020px) {
+  .public-flow-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+}
 @media (max-width: 860px) {
   .pf-machines { grid-template-columns: 1fr; gap: 8px; }
   .pf-beam { flex-direction: row; height: 24px; }
   .pf-beam-track { width: 42px; }
-  .public-flow-columns,
-  .public-flow-columns.cols-2 { grid-template-columns: 1fr; gap: 10px; }
   .public-flow-root::after, .public-flow-column::before { display: none; }
   .public-flow-group { text-align: start; }
+}
+@media (max-width: 640px) {
+  .public-flow-columns,
+  .public-flow-columns.cols-2 { grid-template-columns: 1fr; gap: 10px; }
   .public-flow-branches { grid-template-columns: 1fr; }
+  .pf-panel, .pf-cluster { padding: 14px 12px; }
 }
 
 #workbench-flow { border-top: 1px solid var(--line); }

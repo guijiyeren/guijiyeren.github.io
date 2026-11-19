@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>情报中枢</title><link rel="stylesheet" href="../assets/site-nav.css"><script src="../assets/site-nav.js" defer></script><style>:root{--site-nav-h:60px}header.page-head{top:var(--site-nav-h)!important}</style><link rel="stylesheet" href="assets/style.css?v=20261103f"><link rel="stylesheet" href="assets/workbench.css?v=20261103f"><link rel="stylesheet" href="assets/polish.css?v=20261103f"><link rel="stylesheet" href="assets/newsnow.css?v=20261103f"><script>(function(){
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>情报中枢</title><link rel="stylesheet" href="../assets/site-nav.css"><script src="../assets/site-nav.js?v=2" defer></script><style>:root{--site-nav-h:60px}header.page-head{top:var(--site-nav-h)!important}</style><link rel="stylesheet" href="assets/style.css?v=20261103f"><link rel="stylesheet" href="assets/workbench.css?v=20261103f"><link rel="stylesheet" href="assets/polish.css?v=20261103f"><link rel="stylesheet" href="assets/newsnow.css?v=20261103f"><script>(function(){
   var origFetch = window.fetch.bind(window);
   window.fetch = function(input, init){
     var u = typeof input === 'string' ? input : (input && input.url) || '';
@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="../assets/contact-links.css">
 <style>.public-intel-update{margin:8px auto 10px;max-width:1120px;padding:0 16px;text-align:right;color:#5a708b;font-size:12px;}html[data-theme="night"] .public-intel-update{color:#a4b8d3;}</style>
 <link rel="stylesheet" href="../assets/site-footer.css">
+<script src="../assets/site-guard.js?v=2"></script>
 </head>
 <body data-skin="A"><a class="skip-link" href="#focus">跳到情报阅读区</a><nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#workbench-flow">工作台流程</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#about">关于我</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav><main class="shell">
 <header class="page-head"><div class="ph-ident"><span class="ph-mark" aria-hidden="true"></span><div class="title-line"><h1>情报中枢</h1><span class="tag">调试中</span></div><p class="muted">电商 · AI 工具 · 内容创作 · 商业线索</p></div><div class="actions"><span id="connection" class="muted">等待连接</span><button id="quick-find" class="search-trigger" aria-label="快速查找，Ctrl K">查找 <kbd>Ctrl K</kbd></button><button id="refresh">刷新</button><button id="settings">设置</button><button id="sync" class="primary" title="备用入口：日常请用总台「一键采集 → 自动采集」；这里手动同步会照旧排网页机翻">同步更新（备用）</button></div></header>
@@ -182,7 +183,7 @@
 </main><div id="overlay" class="overlay" hidden></div><aside id="drawer" class="drawer" aria-label="详情侧栏" aria-modal="true" role="dialog" hidden><div class="drawer-head"><span>详情与来源</span><button id="close" aria-label="关闭详情">关闭 ×</button></div><div id="drawer-body"></div></aside><div id="toast" role="status" hidden></div><script src="assets/tidy.js?v=20261102i" defer></script><script src="assets/media-stop.js?v=20261102i" defer></script><script src="assets/nav-social.js?v=20261102i" defer></script><script src="assets/source-data.js?v=20261103a" defer></script><div style="max-width:1120px;margin:10px auto 0;padding:0 22px;font-size:11.5px;color:#94a3b8;">静态快照版 · 数据更新于 2026-11-10</div>
 
 <div data-site-footer data-base="../"></div>
-<script src="../assets/site-footer.js" defer></script>
+<script src="../assets/site-footer.js?v=2" defer></script>
 
 <style>
   .sp-nav { position:sticky; top:0; z-index:90; background:rgba(8,13,26,.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(56,189,248,.18); }
