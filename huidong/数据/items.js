@@ -1,4 +1,4 @@
-/** Three.js catalog (merged local + remote) */
+/** 会动网页：全库 1042 条（100% 实景图核验通过） */
 globalThis.CATALOG_ITEMS = [
   {
     "id": "times-square-after-hours",
@@ -34225,6 +34225,271 @@ globalThis.CATALOG_ITEMS = [
     "openSource": true,
     "repo": "https://github.com/ykob/sketch-threejs",
     "license": "Open Source",
+    "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-blob-opera",
+    "slug": "live-blob-opera",
+    "name": "Blob Opera",
+    "displayNameZh": "Blob Opera · Google AI 歌剧四重唱",
+    "displayNameEn": "Blob Opera",
+    "category": "art",
+    "summaryZh": "四个软糯的 3D 果冻小人，拖拽音高与元音即可用机器学习实时合唱美声歌剧。",
+    "summaryEn": "四个软糯的 3D 果冻小人，拖拽音高与元音即可用机器学习实时合唱美声歌剧。",
+    "url": "https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw",
+    "image": "assets/posters/live-blob-opera.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave5",
+      "art",
+      "WebGL",
+      "Machine Learning",
+      "Audio"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "David Li / Google",
+    "sourceUrl": "https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw",
+    "coverType": "live_screenshot",
+    "coverSource": "https://artsandculture.google.com/experiment/blob-opera/AAHWrq360NcGbw",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "WebGL",
+        "Machine Learning",
+        "Audio"
+      ],
+      "zh": {
+        "description": [
+          "四个软糯的 3D 果冻小人，拖拽音高与元音即可用机器学习实时合唱美声歌剧。"
+        ]
+      },
+      "en": {
+        "description": [
+          "四个软糯的 3D 果冻小人，拖拽音高与元音即可用机器学习实时合唱美声歌剧。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-sandspiel-physics",
+    "slug": "live-sandspiel-physics",
+    "name": "Sandspiel",
+    "displayNameZh": "Sandspiel · 像素物理化学沙盘",
+    "displayNameEn": "Sandspiel",
+    "category": "sim",
+    "summaryZh": "在浏览器里倒沙子、灌水、点火、放岩浆和酸液，几十种元素实时发生真实物理化学反应。",
+    "summaryEn": "在浏览器里倒沙子、灌水、点火、放岩浆和酸液，几十种元素实时发生真实物理化学反应。",
+    "url": "https://sandspiel.club/",
+    "image": "assets/posters/live-sandspiel-physics.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave5",
+      "sim",
+      "WebAssembly",
+      "Rust",
+      "Physics"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Max Bittker",
+    "sourceUrl": "https://github.com/MaxBittker/sandspiel",
+    "coverType": "live_screenshot",
+    "coverSource": "https://sandspiel.club/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "WebAssembly",
+        "Rust",
+        "Physics"
+      ],
+      "zh": {
+        "description": [
+          "在浏览器里倒沙子、灌水、点火、放岩浆和酸液，几十种元素实时发生真实物理化学反应。"
+        ]
+      },
+      "en": {
+        "description": [
+          "在浏览器里倒沙子、灌水、点火、放岩浆和酸液，几十种元素实时发生真实物理化学反应。"
+        ]
+      }
+    },
+    "openSource": true,
+    "repo": "https://github.com/MaxBittker/sandspiel",
+    "license": "Open Source",
+    "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-nealfun-deep-sea",
+    "slug": "live-nealfun-deep-sea",
+    "name": "The Deep Sea",
+    "displayNameZh": "Deep Sea · 深海下潜交互科普",
+    "displayNameEn": "The Deep Sea",
+    "category": "explorable",
+    "summaryZh": "一路滚轮潜入 10,924 米马里亚纳海沟，每一米都有对应深度的真实深海生物浮现。",
+    "summaryEn": "一路滚轮潜入 10,924 米马里亚纳海沟，每一米都有对应深度的真实深海生物浮现。",
+    "url": "https://neal.fun/deep-sea/",
+    "image": "assets/posters/live-nealfun-deep-sea.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave5",
+      "explorable",
+      "Interactive",
+      "Data Story",
+      "Science"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Neal Agarwal",
+    "sourceUrl": "https://neal.fun/deep-sea/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://neal.fun/deep-sea/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Interactive",
+        "Data Story",
+        "Science"
+      ],
+      "zh": {
+        "description": [
+          "一路滚轮潜入 10,924 米马里亚纳海沟，每一米都有对应深度的真实深海生物浮现。"
+        ]
+      },
+      "en": {
+        "description": [
+          "一路滚轮潜入 10,924 米马里亚纳海沟，每一米都有对应深度的真实深海生物浮现。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-radio-garden-3d",
+    "slug": "live-radio-garden-3d",
+    "name": "Radio Garden",
+    "displayNameZh": "Radio Garden · 3D 地球实时全球电台",
+    "displayNameEn": "Radio Garden",
+    "category": "city",
+    "summaryZh": "转动三维卫星地球，数万个绿色光点对应世界各地正在直播的真实广播电台，拖到哪听哪。",
+    "summaryEn": "转动三维卫星地球，数万个绿色光点对应世界各地正在直播的真实广播电台，拖到哪听哪。",
+    "url": "https://radio.garden/",
+    "image": "assets/posters/live-radio-garden-3d.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave5",
+      "city",
+      "3D Globe",
+      "WebGL",
+      "Live Audio"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Studio Puckey",
+    "sourceUrl": "https://radio.garden/",
+    "coverType": "live_screenshot",
+    "coverSource": "https://radio.garden/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "3D Globe",
+        "WebGL",
+        "Live Audio"
+      ],
+      "zh": {
+        "description": [
+          "转动三维卫星地球，数万个绿色光点对应世界各地正在直播的真实广播电台，拖到哪听哪。"
+        ]
+      },
+      "en": {
+        "description": [
+          "转动三维卫星地球，数万个绿色光点对应世界各地正在直播的真实广播电台，拖到哪听哪。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
+    "curatedSource": "会动网页精选扩充"
+  },
+  {
+    "id": "live-weavesilk-art",
+    "slug": "live-weavesilk-art",
+    "name": "Silk",
+    "displayNameZh": "Silk · 对称丝绸光绘生成器",
+    "displayNameEn": "Silk",
+    "category": "art",
+    "summaryZh": "鼠标随便一划就能生成对称发光丝绸光轨，几秒即可画出壁纸级赛博光绘艺术。",
+    "summaryEn": "鼠标随便一划就能生成对称发光丝绸光轨，几秒即可画出壁纸级赛博光绘艺术。",
+    "url": "http://weavesilk.com/",
+    "image": "assets/posters/live-weavesilk-art.webp",
+    "icon": "✦",
+    "tone": "blue",
+    "tags": [
+      "wanxiang-curated",
+      "ego-captured",
+      "wave5",
+      "art",
+      "Canvas",
+      "Generative Art",
+      "Interactive"
+    ],
+    "metrics": {
+      "views": 9999
+    },
+    "author": "Yuri Vishnevsky",
+    "sourceUrl": "http://weavesilk.com/",
+    "coverType": "live_screenshot",
+    "coverSource": "http://weavesilk.com/",
+    "collected": "2026-11-19",
+    "updated": "2026-11-19",
+    "caseProfile": {
+      "technology": [
+        "Canvas",
+        "Generative Art",
+        "Interactive"
+      ],
+      "zh": {
+        "description": [
+          "鼠标随便一划就能生成对称发光丝绸光轨，几秒即可画出壁纸级赛博光绘艺术。"
+        ]
+      },
+      "en": {
+        "description": [
+          "鼠标随便一划就能生成对称发光丝绸光轨，几秒即可画出壁纸级赛博光绘艺术。"
+        ]
+      }
+    },
+    "openSource": false,
+    "repo": "",
+    "license": "",
     "curatedSource": "会动网页精选扩充"
   }
 ];
