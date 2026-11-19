@@ -3,8 +3,14 @@
   if (window.__guijiGuardActive) return;
   window.__guijiGuardActive = true;
 
-  // 1. 防跨站 iframe 嵌套扒页
+  // 1. 域名绑定锁 + 防跨站 iframe 嵌套扒页（防止别人下载源码挂到其他域名盗版运行）
   try {
+    var h = (location.hostname || '').toLowerCase();
+    var allowed = h === 'guijiyeren.github.io' || h === 'localhost' || h === '127.0.0.1' || h === '';
+    if (location.protocol.indexOf('http') === 0 && !allowed) {
+      location.replace('https://guijiyeren.github.io/');
+      return;
+    }
     if (window.top !== window.self && window.top.location.origin !== window.location.origin) {
       window.top.location = window.self.location;
     }
