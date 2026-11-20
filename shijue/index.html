@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>视觉库 · 整片风格、镜头组件与实时动效展厅 · 硅基野人</title>
+<meta name="description" content="整理自日常视频与网页创作的视觉素材展厅：整片风格、镜头组件与 168 条纯代码实时动效，支持分类检索与实时预览。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../assets/logo.png">
+<script src="../assets/site-guard.js?v=2"></script>
+<link rel="stylesheet" href="../assets/site-nav.css">
+<link rel="stylesheet" href="../assets/site-footer.css">
+<script src="../assets/site-nav.js?v=2" defer></script>
+<style>
+  :root {
+    --site-nav-h: 60px;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --soft: #eef0f4;
+    --ink: #1d1d1f;
+    --ink2: #3f4550;
+    --muted: #6e7582;
+    --muted2: #98a0ad;
+    --line: #e5e7ec;
+    --line2: #eef0f5;
+    --accent: #1F6F5C;
+    --accent-weak: rgba(31, 111, 92, .11);
+    --o: #CF5428;
+    --o-weak: #fdeee7;
+    --b: #2F6FEB;
+    --b-weak: #e9f0fd;
+    --r: 14px;
+    --btn-r: 9px;
+    --shadow: 0 2px 10px rgba(16, 24, 40, .05);
+    --shadow-hover: 0 14px 30px rgba(16, 24, 40, .12);
+    --font: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+  }
+
+  body.skin-B {
+    --bg: #f5f5f7; --card: #ffffff; --soft: #ebebf0; --ink: #1d1d1f; --ink2: #424245;
+    --muted: #86868b; --line: #e5e5ea; --accent: #0071e3; --accent-weak: rgba(0, 113, 227, .10);
+    --r: 18px; --btn-r: 18px;
+  }
+  body.skin-C {
+    --bg: #0c0d10; --card: #15171c; --soft: #1c1f26; --ink: #e8e8ec; --ink2: #c4c6cf;
+    --muted: #8b8e99; --muted2: #686b75; --line: #252830; --line2: #1d2027;
+    --accent: #5fe0b5; --accent-weak: rgba(95, 224, 181, .14);
+    --o: #ff9f6b; --o-weak: rgba(255, 159, 107, .14);
+    --b: #7fb0ff; --b-weak: rgba(127, 176, 255, .14);
+    --shadow: 0 4px 16px rgba(0, 0, 0, .35);
+    --shadow-hover: 0 16px 34px rgba(0, 0, 0, .6);
+  }
+  body.skin-D {
+    --bg: #f6f3ec; --card: #fffdf8; --soft: #ede7da; --ink: #231f1a; --ink2: #4a4339;
+    --muted: #7d7365; --line: #e2dacb; --accent: #8a5a12; --accent-weak: rgba(138, 90, 18, .12);
+    --r: 10px; --btn-r: 6px;
+  }
+  body.skin-E {
+    --bg: #f8f0e5; --card: #fffaf2; --soft: #efe3d2; --ink: #3b2921; --ink2: #5c4438;
+    --muted: #7c6558; --line: #dfcdb8; --accent: #b07818; --accent-weak: rgba(176, 120, 24, .13);
+    --r: 16px; --btn-r: 12px;
+  }
+  body.skin-F {
+    --bg: #eef3f9; --card: #ffffff; --soft: #e1ebf6; --ink: #142842; --ink2: #2e4766;
+    --muted: #5d7594; --line: #d0dceb; --accent: #1e4d8c; --accent-weak: rgba(30, 77, 140, .11);
+    --r: 12px; --btn-r: 8px;
+  }
+  body.skin-G {
+    --bg: #081520; --card: #102536; --soft: #163147; --ink: #ecf8ff; --ink2: #bdd8ea;
+    --muted: #82a8c2; --muted2: #597e99; --line: #23475c; --line2: #193647;
+    --accent: #22d3ee; --accent-weak: rgba(34, 211, 238, .15);
+    --o: #fb923c; --o-weak: rgba(251, 146, 60, .15);
+    --b: #60a5fa; --b-weak: rgba(96, 165, 250, .15);
+    --r: 8px; --btn-r: 6px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scrollbar-gutter: stable; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 13.5px/1.55 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; color: inherit; }
+
+  /* 顶部工具条 */
+  .sj-header {
+    position: sticky;
+    top: var(--site-nav-h);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 24px;
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .sj-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sj-logo {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #2F6FEB);
+    color: #fff; font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex: 0 0 auto;
+  }
+  .sj-title { font-size: 16px; font-weight: 800; line-height: 1.2; }
+  .sj-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .sj-tabs {
+    display: inline-flex;
+    background: var(--soft);
+    padding: 4px;
+    border-radius: 12px;
+    gap: 4px;
+    border: 1px solid var(--line);
+  }
+  .sj-tab {
+    border: 0;
+    background: transparent;
+    padding: 7px 14px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: .16s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sj-tab:hover { color: var(--ink); }
+  .sj-tab.is-active {
+    background: var(--card);
+    color: var(--accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+  }
+  .sj-tab .cnt {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--soft);
+    color: var(--muted);
+  }
+  .sj-tab.is-active .cnt {
+    background: var(--accent-weak);
+    color: var(--accent);
+  }
+
+  .sj-skins {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .sj-skin-btn {
+    width: 24px; height: 24px; border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--soft);
+    font-size: 11px; font-weight: 700;
+    cursor: pointer; color: var(--muted);
+    transition: .15s;
+  }
+  .sj-skin-btn.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* 主体容器 */
+  .sj-main {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px 24px 64px;
+  }
+
+  /* 筛选工具栏 */
+  .sj-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .sj-pills {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+    min-width: 240px;
+  }
+  .sj-pill {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink2);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .sj-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .sj-pill.is-on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .sj-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .sj-toggle {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink2);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .sj-toggle.is-on {
+    background: var(--accent-weak);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .sj-search {
+    width: 240px;
+    max-width: 100%;
+    padding: 7px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    outline: none;
+    font-size: 13px;
+  }
+  .sj-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak); }
+
+  /* 二级筛选栏 */
+  .sj-subbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--soft);
+    font-size: 12px;
+  }
+  .sj-subbar .lbl { color: var(--muted); font-weight: 600; margin-right: 4px; }
+  .sj-subpill {
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink2);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .sj-subpill:hover { background: var(--card); }
+  .sj-subpill.is-on {
+    background: var(--card);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* 分组标题 */
+  .sj-sec { margin-top: 22px; }
+  .sj-sec:first-child { margin-top: 6px; }
+  .sj-sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .sj-sec-head h2 { margin: 0; font-size: 16px; font-weight: 800; }
+  .sj-sec-head span { font-size: 12px; color: var(--muted); }
+
+  /* 网格与卡片 */
+  .sj-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 1260px) { .sj-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 960px)  { .sj-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px)  {
+    .sj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .sj-header { padding: 10px 14px; }
+    .sj-main { padding: 14px 14px 48px; }
+    .sj-skins { display: none; }
+    .sj-search { width: 100%; }
+  }
+
+  .sj-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .sj-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+  .sj-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0d0f13;
+    overflow: hidden;
+  }
+  .sj-thumb.is-motion { aspect-ratio: 539 / 208; }
+  .sj-thumb img, .sj-thumb canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .sj-thumb.is-motion canvas { object-fit: contain; }
+  .sj-badge-no {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: rgba(12, 14, 18, .76);
+    color: #fff;
+    font: 700 11px/1.3 var(--mono);
+    backdrop-filter: blur(6px);
+  }
+  .sj-badge-anim {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: rgba(16, 185, 129, .9);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+  }
+  .sj-body {
+    padding: 10px 12px 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sj-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .sj-en {
+    font-size: 11px;
+    color: var(--muted2);
+    font-family: var(--mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sj-desc {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+  .sj-foot {
+    padding: 0 12px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .sj-tag {
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--soft);
+    color: var(--ink2);
+    font-weight: 600;
+  }
+  .sj-tag.is-accent { background: var(--accent-weak); color: var(--accent); }
+
+  .sj-empty {
+    padding: 48px 20px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px dashed var(--line);
+    border-radius: var(--r);
+    margin-top: 12px;
+  }
+
+  /* 弹窗 */
+  .sj-modal-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    background: rgba(8, 10, 14, .68);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .sj-modal-mask.is-open { display: flex; }
+  .sj-modal {
+    width: 100%;
+    max-width: 760px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, .4);
+    padding: 20px 22px 22px;
+  }
+  .sj-modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .sj-modal-head h3 { margin: 0; font-size: 18px; font-weight: 800; line-height: 1.3; }
+  .sj-close {
+    width: 32px; height: 32px; border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--soft);
+    cursor: pointer; font-size: 16px; line-height: 1;
+    flex: 0 0 auto;
+  }
+  .sj-modal-media {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0d0f13;
+    border: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .sj-modal-media img, .sj-modal-media canvas {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+  }
+  .sj-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .sj-modal-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .sj-modal-box {
+    background: var(--soft);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    color: var(--ink2);
+    line-height: 1.65;
+  }
+  .sj-modal-box ul { margin: 6px 0 0; padding-left: 18px; }
+  .sj-modal-acts {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .sj-btn {
+    border: 1px solid var(--line);
+    background: var(--soft);
+    color: var(--ink);
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .15s;
+  }
+  .sj-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .sj-btn.is-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .sj-btn.is-primary:hover { opacity: .92; color: #fff; }
+  .sj-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%) translateY(16px);
+    background: #111827;
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s;
+    z-index: 200;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  }
+  .sj-toast.is-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body class="skin-A">
+<nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#workbench-flow">工作台流程</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#about">关于我</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav>
+
+<header class="sj-header">
+  <div class="sj-brand">
+    <div class="sj-logo">视</div>
+    <div>
+      <div class="sj-title">视觉库 · 三大视觉资产展厅</div>
+      <div class="sj-sub" id="sjSub">整片风格 · 镜头组件 · 纯代码实时动效</div>
+    </div>
+  </div>
+  <div class="sj-tabs" id="sjTabs" role="tablist"></div>
+  <div class="sj-skins" id="sjSkins" title="切换展厅配色"></div>
+</header>
+
+<main class="sj-main">
+  <div class="sj-toolbar">
+    <div class="sj-pills" id="sjPills"></div>
+    <div class="sj-controls" id="sjControls"></div>
+  </div>
+  <div class="sj-subbar" id="sjSubbar" style="display:none"></div>
+  <div id="sjContent"></div>
+</main>
+
+<div class="sj-modal-mask" id="sjModalMask" aria-hidden="true">
+  <div class="sj-modal" id="sjModal" role="dialog" aria-modal="true"></div>
+</div>
+<div class="sj-toast" id="sjToast"></div>
+
+<div data-site-footer data-base="../"></div>
+<script src="../assets/site-footer.js?v=2" defer></script>
+<script src="motion-packs/runtime.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  const DATA = window.SHIJUE_DATA || { styles: [], components: [], motions: [], styleCats: [], compCats: [], motionGroups: [], counts: {} };
+  const state = {
+    tab: 'style',
+    styleCat: '',
+    styleOnlyAnim: false,
+    styleQuery: '',
+    compCat: '',
+    compEnergy: '',
+    compOnlyAnim: false,
+    compQuery: '',
+    motionGroup: '',
+    motionSub: '',
+    motionQuery: '',
+    skin: 'A'
+  };
+
+  try {
+    const p = new URLSearchParams(location.search);
+    if (['style', 'component', 'motion'].includes(p.get('tab'))) state.tab = p.get('tab');
+  } catch (e) {}
+
+  const $ = (id) => document.getElementById(id);
+  const loadedPacks = new Set();
+  const loadingPacks = new Map();
+  let motionObs = null;
+  let motionRaf = 0;
+  let modalRaf = 0;
+
+  function toast(msg) {
+    const el = $('sjToast');
+    el.textContent = msg;
+    el.classList.add('is-show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('is-show'), 2200);
+  }
+
+  function copyText(txt, okMsg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(() => toast(okMsg)).catch(() => fallbackCopy(txt, okMsg));
+    } else {
+      fallbackCopy(txt, okMsg);
+    }
+  }
+  function fallbackCopy(txt, okMsg) {
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); toast(okMsg); } catch (e) { toast('复制失败，请手动选中'); }
+    ta.remove();
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  }
+
+  function setSkin(s) {
+    state.skin = s;
+    document.body.className = document.body.className.replace(/\bskin-[A-G]\b/g, '').trim() + ' skin-' + s;
+    renderSkins();
+  }
+
+  function renderSkins() {
+    const box = $('sjSkins');
+    const names = { A: '默认', B: '苹果', C: '暗色', D: '杂志', E: '奶油', F: '海军', G: '科技' };
+    box.innerHTML = Object.keys(names).map(k =>
+      `<button class="sj-skin-btn${state.skin === k ? ' is-active' : ''}" data-skin="${k}" title="${names[k]}风">${k}</button>`
+    ).join('');
+    box.querySelectorAll('button').forEach(b => b.onclick = () => setSkin(b.dataset.skin));
+  }
+
+  function loadMotionPack(packId) {
+    if (!packId) return Promise.resolve(null);
+    if (window.MotionPrompt && window.MotionPrompt.packs && window.MotionPrompt.packs[packId]) {
+      return Promise.resolve(window.MotionPrompt.packs[packId]);
+    }
+    if (loadingPacks.has(packId)) return loadingPacks.get(packId);
+    const pr = new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'motion-packs/' + encodeURIComponent(packId) + '.js';
+      s.onload = () => {
+        loadedPacks.add(packId);
+        resolve((window.MotionPrompt && window.MotionPrompt.packs && window.MotionPrompt.packs[packId]) || null);
+      };
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
+    });
+    loadingPacks.set(packId, pr);
+    return pr;
+  }
+
+  function stopMotionLoop() {
+    if (motionRaf) { cancelAnimationFrame(motionRaf); motionRaf = 0; }
+    if (motionObs) { try { motionObs.disconnect(); } catch (e) {} motionObs = null; }
+  }
+
+  function closeModal() {
+    if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
+    const mask = $('sjModalMask');
+    mask.classList.remove('is-open');
+    mask.setAttribute('aria-hidden', 'true');
+  }
+  $('sjModalMask').addEventListener('click', (e) => {
+    if (e.target === $('sjModalMask')) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function renderTabs() {
+    const c = DATA.counts || {};
+    $('sjSub').textContent = `共 ${(c.styles || 0) + (c.components || 0) + (c.motions || 0)} 项视觉参考 · 更新于 ${DATA.updatedAt || ''}`;
+    const tabs = [
+      ['style', '① 风格', DATA.styles.length],
+      ['component', '② 组件', DATA.components.length],
+      ['motion', '③ 动效', DATA.motions.length]
+    ];
+    const host = $('sjTabs');
+    host.innerHTML = tabs.map(([k, lbl, n]) =>
+      `<button class="sj-tab${state.tab === k ? ' is-active' : ''}" data-tab="${k}" role="tab">${lbl}<span class="cnt">${n}</span></button>`
+    ).join('');
+    host.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        if (state.tab === b.dataset.tab) return;
+        state.tab = b.dataset.tab;
+        renderAll();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    });
+  }
+
+  function renderControls(placeholder, queryVal, onQuery, extraBtn) {
+    const host = $('sjControls');
+    host.innerHTML = '';
+    if (extraBtn) {
+      const btn = document.createElement('button');
+      btn.className = 'sj-toggle' + (extraBtn.on ? ' is-on' : '');
+      btn.textContent = extraBtn.label;
+      btn.onclick = extraBtn.onClick;
+      host.appendChild(btn);
+    }
+    const input = document.createElement('input');
+    input.type = 'search';
+    input.className = 'sj-search';
+    input.placeholder = placeholder;
+    input.value = queryVal;
+    let timer = 0;
+    input.oninput = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => onQuery(input.value.trim()), 120);
+    };
+    host.appendChild(input);
+  }
+
+  // ==================== ① 风格 ====================
+  function renderStylesTab(keepControls) {
+    stopMotionLoop();
+    const list = DATA.styles || [];
+    const pills = $('sjPills');
+    pills.innerHTML = '';
+    const addPill = (label, val) => {
+      const b = document.createElement('button');
+      b.className = 'sj-pill' + (state.styleCat === val ? ' is-on' : '');
+      b.textContent = label;
+      b.onclick = () => { state.styleCat = val; renderStylesTab(true); };
+      pills.appendChild(b);
+    };
+    addPill(`全部 ${list.length}`, '');
+    for (const cat of DATA.styleCats || []) {
+      const cnt = list.filter(x => x.cat === cat).length;
+      if (cnt) addPill(`${cat} ${cnt}`, cat);
+    }
+
+    if (!keepControls) {
+      const animCnt = list.filter(x => x.anim).length;
+      renderControls('搜风格名、编号或画面关键词…', state.styleQuery, (q) => {
+        state.styleQuery = q;
+        renderStylesTab(true);
+      }, animCnt ? {
+        label: `仅看精选动图 (${animCnt})`,
+        on: state.styleOnlyAnim,
+        onClick: () => { state.styleOnlyAnim = !state.styleOnlyAnim; renderStylesTab(false); }
+      } : null);
+    } else {
+      const tgl = $('sjControls').querySelector('.sj-toggle');
+      if (tgl) tgl.classList.toggle('is-on', state.styleOnlyAnim);
+    }
+
+    $('sjSubbar').style.display = 'none';
+
+    const q = state.styleQuery.toLowerCase();
+    const filtered = list.filter(s => {
+      if (state.styleCat && s.cat !== state.styleCat) return false;
+      if (state.styleOnlyAnim && !s.anim) return false;
+      if (q && !`${s.id} ${s.name} ${s.en} ${s.cat} ${s.desc} ${s.fit} ${(s.tech || []).join(' ')}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+    const content = $('sjContent');
+    if (!filtered.length) {
+      content.innerHTML = '<div class="sj-empty">没有找到匹配的风格，试试切换分类或清空搜索词。</div>';
+      return;
+    }
+
+    content.innerHTML = `
+      <section class="sj-sec">
+        <div class="sj-sec-head">
+          <h2>${esc(state.styleCat || '全部整片风格')}</h2>
+          <span>共 ${filtered.length} 种 · 点开卡片查看高清大图与视觉描述</span>
+        </div>
+        <div class="sj-grid" id="sjStyleGrid"></div>
+      </section>
+    `;
+    const grid = $('sjStyleGrid');
+    const frag = document.createDocumentFragment();
+    for (const s of filtered) {
+      const card = document.createElement('article');
+      card.className = 'sj-card';
+      const src = s.anim || s.img;
+      card.innerHTML = `
+        <div class="sj-thumb">
+          ${src ? `<img src="${esc(src)}" alt="${esc(s.name)}" loading="lazy" decoding="async">` : ''}
+          <span class="sj-badge-no">${esc(s.id)}</span>
+          ${s.anim ? '<span class="sj-badge-anim">动态</span>' : ''}
+        </div>
+        <div class="sj-body">
+          <div class="sj-name">${esc(s.name)}</div>
+          ${s.en ? `<div class="sj-en">${esc(s.en)}</div>` : ''}
+          ${s.desc ? `<div class="sj-desc">${esc(s.desc)}</div>` : ''}
+        </div>
+        <div class="sj-foot">
+          <span class="sj-tag is-accent">${esc(s.cat)}</span>
+          ${(s.tech || []).slice(0, 2).map(t => `<span class="sj-tag">${esc(t)}</span>`).join('')}
+        </div>
+      `;
+      card.onclick = () => openStyleModal(s);
+      frag.appendChild(card);
+    }
+    grid.appendChild(frag);
+  }
+
+  function openStyleModal(s) {
+    if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
+    const media = s.anim || s.img;
+    const modal = $('sjModal');
+    modal.innerHTML = `
+      <div class="sj-modal-head">
+        <h3>${esc(s.id)} · ${esc(s.name)}${s.en ? ` <small style="font-weight:500;color:var(--muted);font-size:13px">${esc(s.en)}</small>` : ''}</h3>
+        <button class="sj-close" id="sjCloseBtn" aria-label="关闭">×</button>
+      </div>
+      ${media ? `<div class="sj-modal-media"><img src="${esc(media)}" alt="${esc(s.name)}"></div>` : ''}
+      <div class="sj-meta-row">
+        <span class="sj-tag is-accent">${esc(s.cat)}</span>
+        ${s.anim ? '<span class="sj-tag">精选动态预览</span>' : ''}
+        ${(s.tech || []).map(t => `<span class="sj-tag">${esc(t)}</span>`).join('')}
+      </div>
+      ${s.desc ? `<div class="sj-modal-desc">${esc(s.desc)}</div>` : ''}
+      ${s.fit ? `<div class="sj-modal-box"><b>适合题材：</b>${esc(s.fit)}</div>` : ''}
+      ${(s.how && s.how.length) ? `<div class="sj-modal-box"><b>视觉要点：</b><ul>${s.how.map(h => `<li>${esc(h)}</li>`).join('')}</ul></div>` : ''}
+      <div class="sj-modal-acts">
+        <button class="sj-btn is-primary" id="sjCopyBtn">复制中文视觉描述</button>
+      </div>
+    `;
+    $('sjCloseBtn').onclick = closeModal;
+    $('sjCopyBtn').onclick = () => {
+      const lines = [
+        `视觉风格参考：「${s.name}」${s.en ? '（' + s.en + '）' : ''}`,
+        s.desc ? `- 画面特点：${s.desc}` : '',
+        (s.tech && s.tech.length) ? `- 表现形式：${s.tech.join('、')}` : '',
+        s.fit ? `- 适用题材：${s.fit}` : ''
+      ].filter(Boolean);
+      copyText(lines.join('\n'), '已复制风格描述词');
+    };
+    const mask = $('sjModalMask');
+    mask.classList.add('is-open');
+    mask.setAttribute('aria-hidden', 'false');
+  }
+
+  // ==================== ② 组件 ====================
+  function renderCompsTab(keepControls) {
+    stopMotionLoop();
+    const list = DATA.components || [];
+    const pills = $('sjPills');
+    pills.innerHTML = '';
+    const addPill = (label, val) => {
+      const b = document.createElement('button');
+      b.className = 'sj-pill' + (state.compCat === val ? ' is-on' : '');
+      b.textContent = label;
+      b.onclick = () => { state.compCat = val; state.compEnergy = ''; renderCompsTab(true); };
+      pills.appendChild(b);
+    };
+    addPill(`全部 ${list.length}`, '');
+    for (const cat of DATA.compCats || []) {
+      const cnt = list.filter(x => x.cat === cat).length;
+      if (cnt) addPill(`${cat} ${cnt}`, cat);
+    }
+
+    if (!keepControls) {
+      const animCnt = list.filter(x => x.anim).length;
+      renderControls('搜组件中文名、场景或英文…', state.compQuery, (q) => {
+        state.compQuery = q;
+        renderCompsTab(true);
+      }, animCnt ? {
+        label: `仅看精选动图 (${animCnt})`,
+        on: state.compOnlyAnim,
+        onClick: () => { state.compOnlyAnim = !state.compOnlyAnim; renderCompsTab(false); }
+      } : null);
+    } else {
+      const tgl = $('sjControls').querySelector('.sj-toggle');
+      if (tgl) tgl.classList.toggle('is-on', state.compOnlyAnim);
+    }
+
+    // 能量二级筛选
+    const scope = state.compCat ? list.filter(x => x.cat === state.compCat) : list;
+    const subbar = $('sjSubbar');
+    subbar.style.display = 'flex';
+    subbar.innerHTML = `<span class="lbl">${esc(state.compCat || '全部组件')} · 节奏/能量：</span>`;
+    [['', `全部 (${scope.length})`], ['低', '低能量·克制'], ['中', '中能量·常规'], ['高', '高能量·强冲击']].forEach(([v, l]) => {
+      const cnt = v ? scope.filter(x => String(x.energy || '').includes(v)).length : scope.length;
+      if (v && !cnt) return;
+      const b = document.createElement('button');
+      b.className = 'sj-subpill' + (state.compEnergy === v ? ' is-on' : '');
+      b.textContent = v ? `${l} ${cnt}` : l;
+      b.onclick = () => { state.compEnergy = v; renderCompsTab(true); };
+      subbar.appendChild(b);
+    });
+
+    const q = state.compQuery.toLowerCase();
+    const filtered = list.filter(c => {
+      if (state.compCat && c.cat !== state.compCat) return false;
+      if (state.compEnergy && !String(c.energy || '').includes(state.compEnergy)) return false;
+      if (state.compOnlyAnim && !c.anim) return false;
+      if (q && !`${c.cn} ${c.name} ${c.cat} ${c.one} ${c.fit}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+    const content = $('sjContent');
+    if (!filtered.length) {
+      content.innerHTML = '<div class="sj-empty">没有符合条件的镜头组件，试试切换分类或清空搜索词。</div>';
+      return;
+    }
+
+    content.innerHTML = '';
+    const showCats = state.compCat ? [state.compCat] : (DATA.compCats || []).filter(cat => filtered.some(c => c.cat === cat));
+    for (const cat of showCats) {
+      const group = filtered.filter(c => c.cat === cat);
+      const sec = document.createElement('section');
+      sec.className = 'sj-sec';
+      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(cat)}</h2><span>${group.length} 个组件</span></div><div class="sj-grid"></div>`;
+      const grid = sec.querySelector('.sj-grid');
+      for (const c of group) {
+        const card = document.createElement('article');
+        card.className = 'sj-card';
+        const src = c.anim || c.img;
+        card.innerHTML = `
+          <div class="sj-thumb">
+            ${src ? `<img src="${esc(src)}" alt="${esc(c.cn)}" loading="lazy" decoding="async">` : ''}
+            ${c.anim ? '<span class="sj-badge-anim">动态</span>' : ''}
+          </div>
+          <div class="sj-body">
+            <div class="sj-name">${esc(c.cn)}</div>
+            <div class="sj-en">${esc(c.name)}</div>
+            ${c.one ? `<div class="sj-desc">${esc(c.one)}</div>` : ''}
+          </div>
+          <div class="sj-foot">
+            ${c.energy ? `<span class="sj-tag">能量 ${esc(c.energy)}</span>` : ''}
+            ${c.dur ? `<span>${esc(c.dur)}</span>` : ''}
+          </div>
+        `;
+        card.onclick = () => openCompModal(c);
+        grid.appendChild(card);
+      }
+      content.appendChild(sec);
+    }
+  }
+
+  function openCompModal(c) {
+    if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
+    const media = c.anim || c.img;
+    const modal = $('sjModal');
+    modal.innerHTML = `
+      <div class="sj-modal-head">
+        <h3>${esc(c.cn)} <small style="font-weight:500;color:var(--muted);font-size:13px">${esc(c.name)}</small></h3>
+        <button class="sj-close" id="sjCloseBtn" aria-label="关闭">×</button>
+      </div>
+      ${media ? `<div class="sj-modal-media"><img src="${esc(media)}" alt="${esc(c.cn)}"></div>` : ''}
+      <div class="sj-meta-row">
+        <span class="sj-tag is-accent">${esc(c.cat)}</span>
+        ${c.energy ? `<span class="sj-tag">能量：${esc(c.energy)}</span>` : ''}
+        ${c.dur ? `<span class="sj-tag">参考时长：${esc(c.dur)}</span>` : ''}
+      </div>
+      ${c.one ? `<div class="sj-modal-desc">${esc(c.one)}</div>` : ''}
+      ${c.fit ? `<div class="sj-modal-box"><b>适用场景：</b>${esc(c.fit)}</div>` : ''}
+      <div class="sj-modal-acts">
+        <button class="sj-btn is-primary" id="sjCopyBtn">复制组件中文描述</button>
+      </div>
+    `;
+    $('sjCloseBtn').onclick = closeModal;
+    $('sjCopyBtn').onclick = () => {
+      const lines = [
+        `镜头组件参考：「${c.cn}」（${c.name} · ${c.cat}）`,
+        c.one ? `- 画面效果：${c.one}` : '',
+        c.fit ? `- 适用场景：${c.fit}` : '',
+        c.dur ? `- 参考时长：${c.dur}` : ''
+      ].filter(Boolean);
+      copyText(lines.join('\n'), '已复制组件描述词');
+    };
+    const mask = $('sjModalMask');
+    mask.classList.add('is-open');
+    mask.setAttribute('aria-hidden', 'false');
+  }
+
+  // ==================== ③ 动效（168 条纯代码 Canvas 2D 实时动画） ====================
+  function renderMotionsTab(keepControls) {
+    stopMotionLoop();
+    const list = DATA.motions || [];
+    const groups = DATA.motionGroups || ['动态图形', '镜头与转场', 'UI 与网页'];
+
+    const pills = $('sjPills');
+    pills.innerHTML = '';
+    const addPill = (label, val) => {
+      const b = document.createElement('button');
+      b.className = 'sj-pill' + (state.motionGroup === val ? ' is-on' : '');
+      b.textContent = label;
+      b.onclick = () => { state.motionGroup = val; state.motionSub = ''; renderMotionsTab(true); };
+      pills.appendChild(b);
+    };
+    addPill(`全部动效 ${list.length}`, '');
+    for (const g of groups) {
+      const cnt = list.filter(x => x.grp === g).length;
+      if (cnt) addPill(`${g} ${cnt}`, g);
+    }
+
+    if (!keepControls) {
+      renderControls('搜 #编号、中文名、英文或动效说明…', state.motionQuery, (q) => {
+        state.motionQuery = q;
+        renderMotionsTab(true);
+      });
+    }
+
+    // 二级子分类
+    const scope = state.motionGroup ? list.filter(x => x.grp === state.motionGroup) : list;
+    const subs = [...new Set(scope.map(x => x.sub).filter(Boolean))];
+    const subbar = $('sjSubbar');
+    if (subs.length > 1) {
+      subbar.style.display = 'flex';
+      subbar.innerHTML = `<span class="lbl">${esc(state.motionGroup || '全部动效')} · 子分类：</span>`;
+      const allB = document.createElement('button');
+      allB.className = 'sj-subpill' + (!state.motionSub ? ' is-on' : '');
+      allB.textContent = `全部 ${scope.length}`;
+      allB.onclick = () => { state.motionSub = ''; renderMotionsTab(true); };
+      subbar.appendChild(allB);
+      for (const sub of subs) {
+        const cnt = scope.filter(x => x.sub === sub).length;
+        const b = document.createElement('button');
+        b.className = 'sj-subpill' + (state.motionSub === sub ? ' is-on' : '');
+        b.textContent = `${sub} ${cnt}`;
+        b.onclick = () => { state.motionSub = sub; renderMotionsTab(true); };
+        subbar.appendChild(b);
+      }
+    } else {
+      subbar.style.display = 'none';
+    }
+
+    const q = state.motionQuery.toLowerCase();
+    const filtered = list.filter(t => {
+      if (state.motionGroup && t.grp !== state.motionGroup) return false;
+      if (state.motionSub && t.sub !== state.motionSub) return false;
+      if (q && !`#${t.no} ${t.name} ${t.en} ${t.desc} ${t.example} ${t.grp} ${t.sub}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+    const content = $('sjContent');
+    if (!filtered.length) {
+      content.innerHTML = '<div class="sj-empty">没有符合条件的动效，试试切换分类或清空搜索词。</div>';
+      return;
+    }
+
+    const activeCanvases = new Map();
+    motionObs = new IntersectionObserver((entries) => {
+      for (const ent of entries) {
+        const cv = ent.target;
+        if (ent.isIntersecting) {
+          if (!cv._mpReady && !cv._mpLoading) {
+            cv._mpLoading = true;
+            const pid = cv.dataset.packId;
+            const idx = Number(cv.dataset.cellIdx);
+            loadMotionPack(pid).then((pack) => {
+              cv._mpLoading = false;
+              if (pack && pack.cells && typeof pack.cells[idx] === 'function') {
+                cv.width = pack.width || 539;
+                cv.height = pack.height || 208;
+                cv._mpReady = {
+                  ctx: cv.getContext('2d'),
+                  draw: pack.cells[idx],
+                  w: cv.width,
+                  h: cv.height,
+                  cycle: pack.cycle || 4.7
+                };
+                if (cv._inView) activeCanvases.set(cv, cv._mpReady);
+              }
+            });
+          }
+          cv._inView = true;
+          if (cv._mpReady) activeCanvases.set(cv, cv._mpReady);
+        } else {
+          cv._inView = false;
+          activeCanvases.delete(cv);
+        }
+      }
+    }, { threshold: 0.08 });
+
+    const t0 = performance.now();
+    const tick = (now) => {
+      if (state.tab !== 'motion') { stopMotionLoop(); return; }
+      const sec = (now - t0) / 1000;
+      let drawn = 0;
+      for (const [cv, item] of activeCanvases) {
+        if (drawn >= 12) break;
+        if (!cv.isConnected) { activeCanvases.delete(cv); continue; }
+        try {
+          item.ctx.clearRect(0, 0, item.w, item.h);
+          item.ctx.save();
+          item.draw(item.ctx, item.w, item.h, sec % item.cycle);
+          item.ctx.restore();
+          drawn++;
+        } catch (e) {}
+      }
+      motionRaf = requestAnimationFrame(tick);
+    };
+    motionRaf = requestAnimationFrame(tick);
+
+    content.innerHTML = '';
+    const showGroups = state.motionGroup ? [state.motionGroup] : groups.filter(g => filtered.some(x => x.grp === g));
+    for (const grp of showGroups) {
+      const group = filtered.filter(x => x.grp === grp);
+      const sec = document.createElement('section');
+      sec.className = 'sj-sec';
+      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(state.motionSub ? grp + ' · ' + state.motionSub : grp)}</h2><span>${group.length} 条 · 纯代码实时动画，滚进屏幕自动播放</span></div><div class="sj-grid"></div>`;
+      const grid = sec.querySelector('.sj-grid');
+      for (const t of group) {
+        const card = document.createElement('article');
+        card.className = 'sj-card';
+        card.innerHTML = `
+          <div class="sj-thumb is-motion">
+            <canvas width="539" height="208" data-pack-id="${esc(t.packId)}" data-cell-idx="${t.cellIdx}"></canvas>
+            <span class="sj-badge-no">#${esc(t.no)}</span>
+          </div>
+          <div class="sj-body">
+            <div class="sj-name">${esc(t.name)}</div>
+            ${t.en ? `<div class="sj-en">${esc(t.en)}</div>` : ''}
+            ${t.desc ? `<div class="sj-desc">${esc(t.desc)}</div>` : ''}
+          </div>
+          <div class="sj-foot">
+            <span class="sj-tag">${esc(t.sub || t.grp)}</span>
+          </div>
+        `;
+        const cv = card.querySelector('canvas');
+        if (t.packId && t.cellIdx >= 0) motionObs.observe(cv);
+        card.onclick = () => openMotionModal(t);
+        grid.appendChild(card);
+      }
+      content.appendChild(sec);
+    }
+  }
+
+  function openMotionModal(t) {
+    if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
+    const modal = $('sjModal');
+    modal.innerHTML = `
+      <div class="sj-modal-head">
+        <h3>#${esc(t.no)} ${esc(t.name)}${t.en ? ` <small style="font-weight:500;color:var(--muted);font-size:13px">${esc(t.en)}</small>` : ''}</h3>
+        <button class="sj-close" id="sjCloseBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="sj-modal-media"><canvas id="sjModalCanvas" width="539" height="208"></canvas></div>
+      <div class="sj-meta-row">
+        <span class="sj-tag is-accent">${esc(t.grp)}</span>
+        ${t.sub ? `<span class="sj-tag">${esc(t.sub)}</span>` : ''}
+        <span class="sj-tag">编号 #${esc(t.no)}</span>
+      </div>
+      ${t.desc ? `<div class="sj-modal-desc">${esc(t.desc)}</div>` : ''}
+      ${t.example ? `<div class="sj-modal-box"><b>提问示例：</b>${esc(t.example)}</div>` : ''}
+      <div class="sj-modal-acts">
+        <button class="sj-btn is-primary" id="sjCopyBtn">复制动效术语</button>
+        ${t.gid ? `<a class="sj-btn" href="https://showheyohtaki.github.io/motion-prompt/#${encodeURIComponent(t.gid)}" target="_blank" rel="noopener noreferrer">官方演示 ↗</a>` : ''}
+      </div>
+    `;
+    $('sjCloseBtn').onclick = closeModal;
+    $('sjCopyBtn').onclick = () => {
+      const txt = `动效参考：#${t.no} ${t.name}${t.en ? '（' + t.en + '）' : ''} — ${t.desc || ''}${t.example ? '\n示例：' + t.example : ''}`;
+      copyText(txt, '已复制动效术语');
+    };
+    const mask = $('sjModalMask');
+    mask.classList.add('is-open');
+    mask.setAttribute('aria-hidden', 'false');
+
+    const cv = $('sjModalCanvas');
+    if (t.packId && t.cellIdx >= 0) {
+      loadMotionPack(t.packId).then((pack) => {
+        if (!pack || !pack.cells || typeof pack.cells[t.cellIdx] !== 'function') return;
+        const W = pack.width || 539, H = pack.height || 208, cycle = pack.cycle || 4.7;
+        cv.width = W; cv.height = H;
+        const ctx = cv.getContext('2d');
+        const drawFn = pack.cells[t.cellIdx];
+        const t0 = performance.now();
+        const loop = (now) => {
+          if (!cv.isConnected || !$('sjModalMask').classList.contains('is-open')) return;
+          try {
+            ctx.clearRect(0, 0, W, H);
+            ctx.save();
+            drawFn(ctx, W, H, ((now - t0) / 1000) % cycle);
+            ctx.restore();
+          } catch (e) {}
+          modalRaf = requestAnimationFrame(loop);
+        };
+        modalRaf = requestAnimationFrame(loop);
+      });
+    }
+  }
+
+  function renderAll() {
+    renderTabs();
+    renderSkins();
+    if (state.tab === 'style') renderStylesTab(false);
+    else if (state.tab === 'component') renderCompsTab(false);
+    else renderMotionsTab(false);
+  }
+
+  // 与全站顶栏白天/夜晚切换同步
+  const themeObs = new MutationObserver(() => {
+    const night = document.documentElement.getAttribute('data-theme') === 'night';
+    if (night && state.skin !== 'C' && state.skin !== 'G') setSkin('C');
+    else if (!night && (state.skin === 'C' || state.skin === 'G')) setSkin('A');
+  });
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.documentElement.getAttribute('data-theme') === 'night') state.skin = 'C';
+
+  renderAll();
+
+  try {
+    if (localStorage.getItem('guiji_stats_ignore_self') !== '1') {
+      const d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+      fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/shijue-' + k, { cache: 'no-store' }).catch(() => {});
+      fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/shijue-all', { cache: 'no-store' }).catch(() => {});
+      if (localStorage.getItem('guiji_uv_shijue_' + k) !== '1') {
+        localStorage.setItem('guiji_uv_shijue_' + k, '1');
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-shijue-' + k, { cache: 'no-store' }).catch(() => {});
+      }
+      if (localStorage.getItem('guiji_uv_site_' + k) !== '1') {
+        localStorage.setItem('guiji_uv_site_' + k, '1');
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-' + k, { cache: 'no-store' }).catch(() => {});
+        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-all', { cache: 'no-store' }).catch(() => {});
+      }
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

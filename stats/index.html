@@ -150,7 +150,7 @@
     <div class="panel">
       <div class="panel-top"><h2>近 14 天每日访问明细表</h2></div>
       <div class="table-scroll">
-        <table class="hist-table" id="histTable"><thead><tr><th>日期</th><th>全站人数(UV)</th><th>全站次数(PV)</th><th>首页</th><th>会动网页</th><th>人生指南</th><th>资源中心</th><th>情报中枢</th><th>其他子页</th></tr></thead><tbody></tbody></table>
+        <table class="hist-table" id="histTable"><thead><tr><th>日期</th><th>全站人数(UV)</th><th>全站次数(PV)</th><th>首页</th><th>会动网页</th><th>视觉库</th><th>人生指南</th><th>资源中心</th><th>情报中枢</th><th>其他子页</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
   </div>
@@ -233,6 +233,7 @@
     var pages = [
       { id: 'home', label: '首页 /' },
       { id: 'huidong', label: '会动网页' },
+      { id: 'shijue', label: '视觉库' },
       { id: 'rensheng', label: '人生指南' },
       { id: 'resource', label: '资源中心' },
       { id: 'intel', label: '情报中枢' },
@@ -306,7 +307,7 @@
       document.querySelector('#histTable tbody').innerHTML = days.slice().reverse().map(function (day, idx) {
         var di = lastIdx - idx;
         var others = pvSeries.workflow[di] + pvSeries.projects[di] + pvSeries.tools[di];
-        return '<tr><td>' + day.full + '</td><td style="color:#10b981;font-weight:700">' + uvSeries.total[di] + '</td><td style="color:#2563eb;font-weight:700">' + pvSeries.total[di] + '</td><td>' + pvSeries.home[di] + '</td><td>' + pvSeries.huidong[di] + '</td><td>' + pvSeries.rensheng[di] + '</td><td>' + pvSeries.resource[di] + '</td><td>' + pvSeries.intel[di] + '</td><td>' + others + '</td></tr>';
+        return '<tr><td>' + day.full + '</td><td style="color:#10b981;font-weight:700">' + uvSeries.total[di] + '</td><td style="color:#2563eb;font-weight:700">' + pvSeries.total[di] + '</td><td>' + pvSeries.home[di] + '</td><td>' + pvSeries.huidong[di] + '</td><td>' + pvSeries.shijue[di] + '</td><td>' + pvSeries.rensheng[di] + '</td><td>' + pvSeries.resource[di] + '</td><td>' + pvSeries.intel[di] + '</td><td>' + others + '</td></tr>';
       }).join('');
 
       var tabDefs = [{ id: 'total', label: '全站合计' }].concat(pages);
