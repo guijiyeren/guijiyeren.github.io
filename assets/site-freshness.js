@@ -24,15 +24,19 @@
   fetch(url, { cache: "no-cache" }).then((response) => {
     if (!response.ok) throw new Error("Unavailable site updates");
     return response.json();
-  }).then(({ intel, resource, daily }) => {
-    updateBadges({ intel, resource, daily });
-    replace("latest", shortDate([intel.date, resource.date, daily.date].sort().at(-1)));
-    replace("intel.date", shortDate(intel.date));
-    replace("resource.date", shortDate(resource.date));
-    replace("resource.count", count(resource.count));
-    replace("daily.date", shortDate(daily.date));
+  }).then((data) => {
+    const { intel, resource, daily, shijue } = data;
+    updateBadges(data);
+    const dates = [intel?.date, resource?.date, daily?.date, shijue?.date].filter(Boolean).sort();
+    if (dates.length) replace("latest", shortDate(dates.at(-1)));
+    if (intel?.date) replace("intel.date", shortDate(intel.date));
+    if (resource?.date) replace("resource.date", shortDate(resource.date));
+    if (resource?.count !== undefined) replace("resource.count", count(resource.count));
+    if (daily?.date) replace("daily.date", shortDate(daily.date));
+    if (shijue?.date) replace("shijue.date", shortDate(shijue.date));
+    if (shijue?.count !== undefined) replace("shijue.count", count(shijue.count));
     const latestCard = document.querySelector("[data-latest-card]");
-    if (latestCard && daily.url.startsWith("https://guijiyeren.feishu.cn/wiki/")) {
+    if (latestCard && daily?.url?.startsWith("https://guijiyeren.feishu.cn/wiki/")) {
       latestCard.href = daily.url;
       latestCard.title = daily.title;
     }

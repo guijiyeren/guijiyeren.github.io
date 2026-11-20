@@ -5,7 +5,14 @@
 <title>视觉图鉴 · 整片风格、镜头组件与实时动效展厅 · 硅基野人</title>
 <meta name="description" content="硅基野人视觉图鉴：136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，支持分类检索与实时预览。">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://guijiyeren.github.io/shijue/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="硅基野人">
+<meta property="og:title" content="视觉图鉴 · 整片风格、镜头组件与实时动效展厅 · 硅基野人">
+<meta property="og:description" content="136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，支持分类检索、能量筛选与一键复制视觉描述词。">
+<meta property="og:url" content="https://guijiyeren.github.io/shijue/">
 <link rel="icon" href="../assets/logo.png">
+<script>(function(){try{var t=localStorage.getItem('guiji_theme');if(!t){var h=new Date().getHours();t=(h>=7&&h<19)?'day':'night';}document.documentElement.setAttribute('data-theme',t);document.documentElement.classList.toggle('dark',t==='night');}catch(e){}})();</script>
 <script src="../assets/site-guard.js?v=2"></script>
 <link rel="stylesheet" href="../assets/site-nav.css">
 <link rel="stylesheet" href="../assets/site-footer.css">
@@ -596,9 +603,11 @@
     skin: 'A'
   };
 
+  let initialItem = '';
   try {
     const p = new URLSearchParams(location.search);
     if (['style', 'component', 'motion'].includes(p.get('tab'))) state.tab = p.get('tab');
+    initialItem = (p.get('item') || '').trim();
   } catch (e) {}
 
   const $ = (id) => document.getElementById(id);
@@ -638,9 +647,13 @@
     return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   }
 
-  function setSkin(s) {
+  function setSkin(s, persist = true) {
+    if (!/^[A-G]$/.test(s || '')) s = 'A';
     state.skin = s;
     document.body.className = document.body.className.replace(/\bskin-[A-G]\b/g, '').trim() + ' skin-' + s;
+    if (persist) {
+      try { localStorage.setItem('guiji_shijue_skin', s); } catch (e) {}
+    }
     renderSkins();
   }
 
@@ -707,6 +720,12 @@
       b.onclick = () => {
         if (state.tab === b.dataset.tab) return;
         state.tab = b.dataset.tab;
+        try {
+          const u = new URL(location.href);
+          u.searchParams.set('tab', state.tab);
+          u.searchParams.delete('item');
+          history.replaceState(null, '', u.pathname + u.search + u.hash);
+        } catch (e) {}
         renderAll();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
@@ -1100,13 +1119,14 @@
       const sec = (now - t0) / 1000;
       let drawn = 0;
       for (const [cv, item] of activeCanvases) {
-        if (drawn >= 12) break;
         if (!cv.isConnected) { activeCanvases.delete(cv); continue; }
+        if (drawn >= 24 && item.painted) continue;
         try {
           item.ctx.clearRect(0, 0, item.w, item.h);
           item.ctx.save();
           item.draw(item.ctx, item.w, item.h, sec % item.cycle);
           item.ctx.restore();
+          item.painted = true;
           drawn++;
         } catch (e) {}
       }
@@ -1210,33 +1230,40 @@
     else renderMotionsTab(false);
   }
 
-  // 与全站顶栏白天/夜晚切换同步
+  // 与全站顶栏白天/夜晚切换同步（初始优先读取全站主题，并同步写入 body.skin-*）
   const themeObs = new MutationObserver(() => {
     const night = document.documentElement.getAttribute('data-theme') === 'night';
-    if (night && state.skin !== 'C' && state.skin !== 'G') setSkin('C');
-    else if (!night && (state.skin === 'C' || state.skin === 'G')) setSkin('A');
+    if (night && state.skin !== 'C' && state.skin !== 'G') setSkin('C', false);
+    else if (!night && (state.skin === 'C' || state.skin === 'G')) setSkin('A', false);
   });
   themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  if (document.documentElement.getAttribute('data-theme') === 'night') state.skin = 'C';
+
+  (function initSkin() {
+    const night = document.documentElement.getAttribute('data-theme') === 'night';
+    let saved = '';
+    try { saved = localStorage.getItem('guiji_shijue_skin') || ''; } catch (e) {}
+    if (night) {
+      setSkin((saved === 'C' || saved === 'G') ? saved : 'C', false);
+    } else {
+      setSkin((saved && saved !== 'C' && saved !== 'G') ? saved : 'A', false);
+    }
+  })();
+
+  // 若 URL 带 ?item=<id>，先定位到对应板块再自动打开弹窗
+  let openInitialModal = null;
+  if (initialItem) {
+    const lower = initialItem.toLowerCase();
+    const hitStyle = (DATA.styles || []).find(s => String(s.id).toLowerCase() === lower);
+    const hitComp = !hitStyle && (DATA.components || []).find(c => String(c.id).toLowerCase() === lower || String(c.name).toLowerCase() === lower);
+    const hitMotion = !hitStyle && !hitComp && (DATA.motions || []).find(m => String(m.no) === initialItem.replace(/^#/, '') || String(m.gid) === initialItem.replace(/^#/, ''));
+    if (hitStyle) { state.tab = 'style'; openInitialModal = () => openStyleModal(hitStyle); }
+    else if (hitComp) { state.tab = 'component'; openInitialModal = () => openCompModal(hitComp); }
+    else if (hitMotion) { state.tab = 'motion'; openInitialModal = () => openMotionModal(hitMotion); }
+  }
 
   renderAll();
-
-  try {
-    if (localStorage.getItem('guiji_stats_ignore_self') !== '1') {
-      const d = new Date(), k = '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
-      fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/shijue-' + k, { cache: 'no-store' }).catch(() => {});
-      fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/shijue-all', { cache: 'no-store' }).catch(() => {});
-      if (localStorage.getItem('guiji_uv_shijue_' + k) !== '1') {
-        localStorage.setItem('guiji_uv_shijue_' + k, '1');
-        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-shijue-' + k, { cache: 'no-store' }).catch(() => {});
-      }
-      if (localStorage.getItem('guiji_uv_site_' + k) !== '1') {
-        localStorage.setItem('guiji_uv_site_' + k, '1');
-        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-' + k, { cache: 'no-store' }).catch(() => {});
-        fetch('https://abacus.jasoncameron.dev/hit/guijiyeren/uv-site-all', { cache: 'no-store' }).catch(() => {});
-      }
-    }
-  } catch (e) {}
+  if (openInitialModal) openInitialModal();
+  // 访客人数 (UV) 与访问次数 (PV) 统一由全站 ../assets/site-nav.js?v=2 自动统计（含 guiji_ignore_self 判断）
 })();
 </script>
 </body>

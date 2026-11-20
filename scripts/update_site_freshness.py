@@ -20,6 +20,27 @@ def read_json(relative):
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
 
 
+def read_shijue_summary():
+    raw = (ROOT / "shijue/data.js").read_text(encoding="utf-8").strip()
+    prefix = "window.SHIJUE_DATA ="
+    if not raw.startswith(prefix):
+        raise ValueError("视觉图鉴数据文件格式异常")
+    payload = json.loads(raw[len(prefix):].strip().rstrip(";"))
+    counts = payload["counts"]
+    styles = len(payload["styles"])
+    components = len(payload["components"])
+    motions = len(payload["motions"])
+    if styles != counts["styles"] or components != counts["components"] or motions != counts["motions"]:
+        raise ValueError("视觉图鉴条数与计数摘要不符")
+    return {
+        "date": date.fromisoformat(payload["updatedAt"]).isoformat(),
+        "count": styles + components + motions,
+        "styles": styles,
+        "components": components,
+        "motions": motions,
+    }
+
+
 def source_summary(card):
     news = read_json("intel/data/api/newsnow.json")
     if not news["ok"] or not news["data"]:
@@ -41,6 +62,7 @@ def source_summary(card):
             "newestEntry": newest,
         },
         "daily": card,
+        "shijue": read_shijue_summary(),
     }
 
 
