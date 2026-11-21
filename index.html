@@ -366,26 +366,79 @@
   .bc-main { position:absolute; left:50%; top:21.5%; transform:translateX(-50%); width:64%; aspect-ratio:16/10; border-radius:10px; overflow:hidden; border:1.5px solid rgba(56,189,248,.82); box-shadow:0 18px 40px rgba(0,0,0,.7), 0 0 22px rgba(56,189,248,.22); z-index:3; background:#050b16; }
   .bc-main video, .bc-main img { width:100%; height:100%; object-fit:cover; display:block; }
   .bc-main::after { content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12); border-radius:inherit; }
-  /* 飞书知识库封面：稳态窗口 + 侧栏微光扫读 + 底部状态流 */
-  .bc-wiki-win { position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:74%; aspect-ratio:1360/960; border-radius:9px; overflow:hidden; border:1.5px solid rgba(56,189,248,.68); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#fff; }
+  /* 飞书知识库封面：稳态窗口 + 真实多页联动切换 */
+  .bc-wiki-win { position:relative; position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:74%; aspect-ratio:1360/960; border-radius:9px; overflow:hidden; border:1.5px solid rgba(56,189,248,.68); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#fff; }
   .bc-wiki-win img { width:100%; height:100%; object-fit:cover; display:block; }
-  .bc-wiki-scan { position:absolute; left:.8%; top:18.5%; width:19.6%; height:4.8%; border-radius:3px; background:rgba(37,99,235,.15); border-left:2px solid #2563eb; pointer-events:none; animation:bcWikiScan 7.5s ease-in-out infinite; }
-  @keyframes bcWikiScan {
-    0%,14% { top:18.2%; opacity:.9; }
-    24%,36% { top:32.0%; opacity:.9; }
-    46%,58% { top:46.2%; opacity:.9; }
-    68%,80% { top:64.5%; opacity:.9; }
-    90%,100% { top:18.2%; opacity:.9; }
-  }
+  .bc-wiki-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .55s ease; }
+  .bc-wiki-slide.is-on { opacity:1; }
+  .bc-feishu .bc-chip { animation:none !important; transition:border-color .35s, color .35s, box-shadow .35s, background .35s; }
+  .bc-feishu .bc-chip.is-on { border-color:rgba(56,189,248,.78) !important; color:#e0f2fe !important; background:rgba(14,42,82,.92) !important; box-shadow:0 0 12px rgba(56,189,248,.28); }
   .bc-wiki-glint { position:absolute; top:0; bottom:0; left:-45%; width:38%; pointer-events:none; background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.16) 50%, transparent 100%); animation:bcGlint 6.8s ease-in-out infinite; }
   @keyframes bcGlint { 0%,68% { left:-45%; opacity:0; } 74% { opacity:1; } 96%,100% { left:115%; opacity:0; } }
+  /* 人生指南 / 资源中心 / 情报中枢 稳态实景内微动 */
+  .bc-scan-rs { position:absolute; left:1.4%; top:60.5%; width:19.4%; height:4.3%; border-radius:3px; background:rgba(37,99,235,.15); border-left:2px solid #2563eb; pointer-events:none; animation:bcScanRs 7.2s ease-in-out infinite; }
+  @keyframes bcScanRs {
+    0%,16% { top:60.0%; } 26%,42% { top:64.5%; } 52%,68% { top:69.0%; } 78%,92% { top:73.5%; } 100% { top:60.0%; }
+  }
+  .bc-scan-rc { position:absolute; left:2.2%; top:11.5%; width:19.2%; height:5.4%; border-radius:4px; background:rgba(14,165,233,.16); border-left:2px solid #0284c7; pointer-events:none; animation:bcScanRc 7.6s ease-in-out infinite; }
+  @keyframes bcScanRc {
+    0%,16% { top:11.4%; } 26%,42% { top:17.2%; } 52%,68% { top:23.0%; } 78%,92% { top:29.0%; } 100% { top:11.4%; }
+  }
+  .bc-intel-stream { position:absolute; left:22%; top:78%; width:64%; height:14%; pointer-events:none; overflow:hidden; }
+  .bc-intel-pulse { position:absolute; top:22%; left:-18%; width:26%; height:56%; border-radius:999px; background:linear-gradient(90deg, transparent, rgba(56,189,248,.48), rgba(249,115,22,.42), transparent); filter:blur(2px); animation:bcIntelFlow 3.4s linear infinite; }
+  @keyframes bcIntelFlow { 0% { left:-22%; opacity:0; } 14% { opacity:.95; } 82% { opacity:.95; } 100% { left:98%; opacity:0; } }
+  /* 项目干货 & 无限画布 暗色高保真界面微缩框 */
+  .bc-mini-app { position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:78%; height:67.5%; border-radius:10px; overflow:hidden; border:1.5px solid rgba(56,189,248,.62); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#0b1528; display:flex; flex-direction:column; }
+  .bc-vault-app { padding:9px 10px 8px; gap:6px; background:linear-gradient(180deg, #0d1a31 0%, #091224 100%); }
+  .bcv-search { display:flex; align-items:center; gap:6px; padding:4.5px 8px; border-radius:7px; background:rgba(15,23,42,.92); border:1px solid rgba(148,163,184,.28); font-size:9.5px; color:#94a3b8 !important; }
+  .bcv-search-txt { flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; color:#cbd5e1 !important; display:flex; align-items:center; gap:2px; }
+  .bcv-cursor { display:inline-block; width:1.5px; height:10px; background:#38bdf8; animation:bcBlink 1.1s steps(1) infinite; }
+  @keyframes bcBlink { 50% { opacity:0; } }
+  .bcv-count { padding:1px 5px; border-radius:4px; background:rgba(56,189,248,.16); color:#7dd3fc !important; font-size:8.5px; font-weight:700; }
+  .bcv-tags { display:flex; gap:5px; overflow:hidden; }
+  .bcv-tag { padding:2px 6.5px; border-radius:999px; font-size:8.5px; font-weight:700; color:#94a3b8 !important; background:rgba(30,41,59,.78); border:1px solid rgba(148,163,184,.22); white-space:nowrap; animation:bcvTagCycle 6.6s ease-in-out infinite; }
+  .bcv-tag:nth-child(2) { animation-delay:2.2s; }
+  .bcv-tag:nth-child(3) { animation-delay:4.4s; }
+  .bcv-tag:nth-child(4) { animation:none; }
+  @keyframes bcvTagCycle { 0%,28% { background:rgba(37,99,235,.32); border-color:rgba(96,165,250,.78); color:#e0f2fe; } 34%,100% { background:rgba(30,41,59,.78); border-color:rgba(148,163,184,.22); color:#94a3b8; } }
+  .bcv-list { flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:4px; min-height:0; }
+  .bcv-row { display:flex; align-items:center; gap:6px; padding:5px 7px; border-radius:6px; background:rgba(15,23,42,.68); border:1px solid rgba(148,163,184,.16); animation:bcvRowCycle 6.6s ease-in-out infinite; }
+  .bcv-row:nth-child(2) { animation-delay:2.2s; }
+  .bcv-row:nth-child(3) { animation-delay:4.4s; }
+  @keyframes bcvRowCycle { 0%,28% { background:rgba(30,58,138,.36); border-color:rgba(56,189,248,.68); box-shadow:0 0 12px rgba(56,189,248,.14); } 34%,100% { background:rgba(15,23,42,.68); border-color:rgba(148,163,184,.16); box-shadow:none; } }
+  .bcv-badge { font-style:normal; padding:1.5px 5px; border-radius:4px; font-size:8px; font-weight:800; flex:0 0 auto; }
+  .bcv-badge.c1 { background:rgba(56,189,248,.2); color:#7dd3fc !important; }
+  .bcv-badge.c2 { background:rgba(167,139,250,.22); color:#ddd6fe !important; }
+  .bcv-badge.c3 { background:rgba(52,211,153,.2); color:#6ee7b7 !important; }
+  .bcv-title { flex:1; min-width:0; font-size:9.5px; font-weight:600; color:#e2e8f0 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bcv-m { font-size:8px; font-weight:700; color:#64748b !important; flex:0 0 auto; }
+  /* 无限画布：暗色点阵工作区 + 节点连线光流 */
+  .bc-canvas-app { position:absolute; background:radial-gradient(rgba(148,163,184,.22) 1px, transparent 1px) 0 0 / 12px 12px, #091121; }
+  .bcc-wires { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+  .bcc-bar { position:absolute; left:3.2%; top:12%; bottom:12%; width:7.6%; border-radius:999px; background:rgba(15,23,42,.92); border:1px solid rgba(148,163,184,.26); display:flex; flex-direction:column; align-items:center; justify-content:space-evenly; z-index:3; box-shadow:0 6px 14px rgba(0,0,0,.45); }
+  .bcc-tool { width:13px; height:13px; border-radius:50%; display:grid; place-items:center; font-size:8px; font-weight:800; color:#94a3b8 !important; }
+  .bcc-tool.plus { background:#e2e8f0; color:#0f172a !important; font-size:10px; line-height:1; }
+  .bcc-node { position:absolute; border-radius:7px; background:rgba(15,23,42,.94); border:1px solid rgba(148,163,184,.32); box-shadow:0 8px 20px rgba(0,0,0,.5); z-index:2; display:flex; flex-direction:column; overflow:hidden; }
+  .bcc-n1 { left:14.2%; top:8%; width:32.5%; height:35%; border-color:rgba(192,132,252,.52); }
+  .bcc-n2 { left:14.2%; top:49%; width:32.5%; height:37%; border-color:rgba(56,189,248,.52); }
+  .bcc-n3 { left:58.5%; top:11%; width:37.5%; height:78%; border-color:rgba(52,211,153,.62); box-shadow:0 10px 24px rgba(0,0,0,.56), 0 0 16px rgba(52,211,153,.14); }
+  .bcc-nh { display:flex; align-items:center; gap:4px; padding:3px 6px; background:rgba(30,41,59,.85); border-bottom:1px solid rgba(148,163,184,.18); font-size:8px; font-weight:700; color:#e2e8f0 !important; white-space:nowrap; }
+  .bcc-nd { width:5px; height:5px; border-radius:50%; flex:0 0 auto; }
+  .bcc-nd.v { background:#c084fc; } .bcc-nd.c { background:#38bdf8; } .bcc-nd.g { background:#34d399; animation:bcDotPulse 2.2s ease-in-out infinite; }
+  .bcc-nbody { flex:1; padding:4px 6px; display:flex; flex-direction:column; justify-content:center; gap:3.5px; min-height:0; }
+  .bcc-nbody.pic { padding:3px; }
+  .bcc-nbody.pic img { width:100%; height:100%; object-fit:cover; border-radius:4px; display:block; }
+  .bcc-txt { font-size:8px; color:#cbd5e1 !important; line-height:1.35; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bcc-barline { height:3px; border-radius:99px; background:rgba(148,163,184,.28); width:72%; }
+  .bcc-foot { display:flex; align-items:center; justify-content:space-between; padding:2.5px 6px; background:rgba(15,23,42,.95); border-top:1px solid rgba(148,163,184,.16); font-size:7.5px; color:#6ee7b7 !important; font-weight:700; }
+  .bcc-zoom { position:absolute; left:14.2%; bottom:2.5%; z-index:3; padding:1px 6px; border-radius:999px; background:rgba(15,23,42,.88); border:1px solid rgba(148,163,184,.26); font-size:7px; font-weight:700; color:#94a3b8 !important; }
   .bc-chips { position:absolute; left:50%; bottom:4.5%; transform:translateX(-50%); z-index:4; display:flex; align-items:center; gap:7px; white-space:nowrap; }
   .bc-chip { padding:3px 9px; border-radius:999px; font-size:9px; font-weight:700; letter-spacing:.4px; color:#cbd5e1 !important; background:rgba(8,18,36,.86); border:1px solid rgba(148,163,184,.28); animation:bcChipCycle 6s ease-in-out infinite; }
   .bc-chip:nth-child(2) { animation-delay:2s; }
   .bc-chip:nth-child(3) { animation-delay:4s; }
   @keyframes bcChipCycle { 0%,28% { border-color:rgba(56,189,248,.72); color:#e0f2fe; box-shadow:0 0 10px rgba(56,189,248,.22); } 36%,100% { border-color:rgba(148,163,184,.26); color:#cbd5e1; box-shadow:none; } }
   @media (prefers-reduced-motion: reduce) {
-    .bc-dot, .bc-wiki-scan, .bc-wiki-glint, .bc-chip { animation:none !important; }
+    .bc-dot, .bc-wiki-scan, .bc-wiki-glint, .bc-scan-rs, .bc-scan-rc, .bc-intel-pulse, .bcv-cursor, .bcv-tag, .bcv-row, .bcc-nd.g, .bc-chip { animation:none !important; }
   }
   .b-body { padding:18px 18px 20px; min-height:98px; }
   .b-top { display:flex; align-items:center; gap:8px; }
@@ -414,19 +467,25 @@
   .kb2 { position:relative; z-index:1; display:grid; grid-template-columns:1.08fr .92fr; gap:64px; align-items:center; }
   .kb2-visual { position:relative; min-width:0; }
   .kb2-browser { position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(148,163,184,.26); background:#0b1224; box-shadow:0 30px 80px rgba(0,0,0,.48),0 0 0 1px rgba(125,211,252,.06) inset; transform:perspective(1200px) rotateY(-2deg) rotateX(1deg); transform-origin:50% 50%; }
-  .kb2-browser-bar { height:38px; display:flex; align-items:center; gap:7px; padding:0 14px; background:#0d1a2e; border-bottom:1px solid rgba(148,163,184,.16); }
-  .kb2-browser-bar i { width:9px; height:9px; border-radius:50%; background:#334155; display:block; }
+  .kb2-browser-bar { height:40px; display:flex; align-items:center; gap:7px; padding:0 12px 0 14px; background:#0d1a2e; border-bottom:1px solid rgba(148,163,184,.16); }
+  .kb2-browser-bar i { width:9px; height:9px; border-radius:50%; background:#334155; display:block; flex:0 0 auto; }
   .kb2-browser-bar i:nth-child(1){ background:#f87171; } .kb2-browser-bar i:nth-child(2){ background:#fbbf24; } .kb2-browser-bar i:nth-child(3){ background:#34d399; }
-  .kb2-browser-bar span { margin-left:10px; font-size:11px; color:#94a3b8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .kb2-browser-bar span { margin-left:8px; font-size:11px; color:#94a3b8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; min-width:0; }
+  .kb2-tabs { display:inline-flex; align-items:center; gap:4px; margin-left:8px; flex:0 0 auto; }
+  .kb2-tab { border:1px solid rgba(148,163,184,.26) !important; background:rgba(15,23,42,.72) !important; color:#94a3b8 !important; font:600 10.5px/1 inherit; padding:5px 9px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap; }
+  .kb2-tab:hover { border-color:rgba(56,189,248,.55) !important; color:#e0f2fe !important; }
+  .kb2-tab.is-on { border-color:rgba(56,189,248,.85) !important; background:rgba(37,99,235,.32) !important; color:#e0f2fe !important; box-shadow:0 0 12px rgba(56,189,248,.22); }
   .kb2-browser img { width:100%; aspect-ratio:1360/960; object-fit:cover; display:block; }
   .kb2-browser::after { content:""; position:absolute; left:0; right:0; bottom:0; height:32px; pointer-events:none; background:linear-gradient(180deg,rgba(11,18,36,0),rgba(11,18,36,.72) 96%); }
-  .kb2-shot-wrap { position:relative; overflow:hidden; background:#fff; }
-  .kb2-sidebar-hl { position:absolute; left:.6%; top:18.2%; width:19.6%; height:4.6%; border-radius:4px; background:rgba(37,99,235,.13); border-left:2.5px solid #2563eb; pointer-events:none; animation:bcWikiScan 8.5s ease-in-out infinite; }
+  .kb2-shot-wrap { position:relative; aspect-ratio:1360/960; overflow:hidden; background:#fff; }
+  .kb2-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .55s ease; }
+  .kb2-slide.is-on { opacity:1; }
   .kb2-float { position:absolute; left:22px; bottom:-17px; display:flex; align-items:center; gap:8px; background:#0b1224; color:#bae6fd; border:1px solid rgba(125,211,252,.32); padding:9px 14px; border-radius:999px; font-size:12px; box-shadow:0 14px 34px rgba(0,0,0,.35); }
   .kb2-float .dot { position:relative; width:7px; height:7px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px #22d3ee; }
   .kb2-float .dot::after { content:""; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid rgba(34,211,238,.65); animation:kbDotRing 2.2s ease-out infinite; }
   @keyframes kbDotRing { 0% { transform:scale(.75); opacity:.9; } 100% { transform:scale(2.1); opacity:0; } }
-  @media (prefers-reduced-motion: reduce) { .kb2-sidebar-hl, .kb2-float .dot::after { animation:none !important; } }
+  @media (prefers-reduced-motion: reduce) { .kb2-float .dot::after { animation:none !important; } }
+  @media (max-width:560px) { .kb2-browser-bar span { display:none; } .kb2-tabs { margin-left:auto; } }
   .kb2-main { min-width:0; }
   .kb2-main .eyebrow2 { color:#7dd3fc; font-size:12px; font-weight:700; letter-spacing:2px; }
   .kb2-main h2 { margin:14px 0 18px; font-size:clamp(32px,3.4vw,48px); line-height:1.16; letter-spacing:-.5px; color:#f8fafc; }
@@ -517,43 +576,49 @@
   .about-timeline .tl-row b { font-size:12.5px; }
   .about-timeline .tl-row span { font-size:12.5px; line-height:1.55; }
   .about-rich.about-reverse .about-visual { max-width:100%; margin:0; display:flex; flex-direction:column; }
-  .mig-card { background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 34px rgba(15,23,42,.07); padding:16px 18px 14px; display:flex; flex-direction:column; gap:8px; height:100%; }
+  .mig-card { background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 34px rgba(15,23,42,.07); padding:16px 18px 14px; display:flex; flex-direction:column; gap:10px; height:100%; }
   .mig-head { display:flex; align-items:center; gap:10px; }
   .mig-head b { font-size:14px; letter-spacing:.3px; }
-  .mig-head button { margin-left:auto; border:1px solid var(--line); background:#fff; color:#475569; font:600 11.5px/1 inherit; border-radius:999px; padding:6px 13px; cursor:pointer; }
-  .mig-head button:hover { border-color:#bfdbfe; color:var(--blue); }
-  .mig-stage { position:relative; flex:1; min-height:340px; border-radius:14px; background:radial-gradient(120% 120% at 70% 10%, #eef5ff 0%, #f8fbff 55%, #ffffff 100%); overflow:hidden; }
-  .mig-stage::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 22% 18%, rgba(56,189,248,.10), transparent 34%), radial-gradient(circle at 80% 78%, rgba(37,99,235,.07), transparent 38%); }
-  .mig-star { animation:migTwinkle 3.2s ease-in-out infinite alternate; }
-  @keyframes migTwinkle { from { opacity:.12; } to { opacity:.75; } }
-  .mig-node:hover circle { fill:#2563eb; stroke:#1d4ed8; }
-  .mig-node:hover text { fill:#1d4ed8; font-weight:700; }
-  .mig-card { transition:transform .25s ease, box-shadow .25s ease; }
-  @media (hover:hover) { .mig-card:hover { box-shadow:0 20px 46px rgba(15,23,42,.12); } }
-  #migProg { filter:drop-shadow(0 0 4px rgba(37,99,235,.55)); }
-  #migDot { filter:drop-shadow(0 0 7px rgba(56,189,248,.95)); }
-  .mig-node.on circle { filter:drop-shadow(0 0 5px rgba(37,99,235,.75)); }
-  .mig-node.on text { text-shadow:0 1px 2px rgba(255,255,255,.9); }
-
-  .mig-stage.mig-stage-dark { background:radial-gradient(120% 120% at 65% 20%, #0d2440 0%, #071321 60%, #040a13 100%); }
-  #migGlobe { display:block; width:100%; height:340px; }
-  .mig-hint { margin-left:auto; font-size:11px; color:#94a3b8; }
-  .mig-stage-dark .mig-cap b { color:#e0f2fe; }
-  .mig-stage-dark .mig-cap span { color:#93c5fd; }
-  .mig-stage svg { width:100%; height:100%; display:block; }
-  .mig-cap { position:absolute; left:14px; bottom:12px; right:14px; display:flex; align-items:baseline; gap:10px; }
+  .mig-head button { margin-left:auto; border:1px solid var(--line); background:#fff; color:#475569; font:600 11.5px/1 inherit; border-radius:999px; padding:6px 13px; cursor:pointer; transition:.18s; }
+  .mig-head button:hover { border-color:#93c5fd; color:var(--blue); }
+  .mig-stage { position:relative; flex:1; min-height:360px; border-radius:14px; background:radial-gradient(125% 110% at 72% 16%, #122a4e 0%, #081529 58%, #040b17 100%); border:1px solid rgba(56,189,248,.22); overflow:hidden; box-shadow:inset 0 0 36px rgba(0,0,0,.38); }
+  .mig-stage::before { content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(56,189,248,.065) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,.065) 1px, transparent 1px); background-size:32px 32px; mask-image:radial-gradient(ellipse at 54% 46%, rgba(0,0,0,.95) 35%, rgba(0,0,0,.18) 100%); }
+  .mig-stage::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 82% 54%, rgba(52,211,153,.13), transparent 34%), radial-gradient(circle at 22% 72%, rgba(56,189,248,.10), transparent 36%); }
+  .mig-star { animation:migTwinkle 3.4s ease-in-out infinite alternate; }
+  @keyframes migTwinkle { from { opacity:.14; } to { opacity:.68; } }
+  .mig-node circle.mig-c-dot { fill:#0d1e38; stroke:#64748b; stroke-width:2; transition:fill .35s, stroke .35s, r .35s; }
+  .mig-node circle.mig-c-halo { fill:transparent; stroke:transparent; transition:all .35s; }
+  .mig-node text { font-size:11px; fill:#94a3b8; font-weight:600; paint-order:stroke; stroke:#071326; stroke-width:3.5px; stroke-linejoin:round; transition:fill .3s; }
+  .mig-node.on circle.mig-c-dot { fill:#38bdf8; stroke:#e0f2fe; filter:drop-shadow(0 0 6px rgba(56,189,248,.85)); }
+  .mig-node.on text { fill:#e2f1ff; font-weight:700; }
+  .mig-node.now circle.mig-c-dot { fill:#34d399; stroke:#ffffff; filter:drop-shadow(0 0 9px rgba(52,211,153,.95)); }
+  .mig-node.now circle.mig-c-halo { fill:rgba(52,211,153,.18); stroke:rgba(52,211,153,.55); stroke-width:1.2; }
+  .mig-node.now text { fill:#ffffff; font-weight:800; }
+  .mig-node:hover circle.mig-c-dot { fill:#7dd3fc; stroke:#fff; }
+  .mig-node:hover text { fill:#fff; font-weight:800; }
+  #migProg { filter:drop-shadow(0 0 5px rgba(56,189,248,.75)); }
+  #migDot { filter:drop-shadow(0 0 8px rgba(125,211,252,.98)); }
+  .mig-stage svg { position:relative; z-index:1; width:100%; height:100%; display:block; }
   .mig-sub { font-size:11px; color:#94a3b8; }
-  .mig-tip { position:absolute; z-index:4; width:max-content; max-width:120px; padding:6px 10px; border-radius:9px; background:#fff; border:1px solid #bfdbfe; box-shadow:0 8px 22px rgba(15,23,42,.18); transform:translate(-50%,-100%) translateY(-7px) scale(.96); opacity:0; pointer-events:none; transition:opacity .08s, transform .08s; white-space:nowrap; text-align:center; }
-  .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-9px) scale(1); }
-  .mig-tip b { display:block; font-size:12px; font-weight:800; color:#1d4ed8; letter-spacing:.5px; }
-  html[data-theme="night"] .mig-tip { background:#111a2b !important; border-color:#243247 !important; }
-  html[data-theme="night"] .mig-tip b { color:#7dd3fc !important; }
-  html[data-theme="night"] .mig-tip span { color:#a8b7cc !important; }
-  .mig-cap b { font-size:15px; color:#0f172a; }
-  .mig-cap span { font-size:11.5px; color:#64748b; line-height:1.6; }
-  .mig-cap { align-items:flex-start; }
-  .mig-cap b { white-space:nowrap; }
-  .mig-cap span { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .mig-tip { position:absolute; z-index:4; width:max-content; max-width:140px; padding:5px 10px; border-radius:9px; background:rgba(8,19,38,.92); border:1px solid rgba(56,189,248,.52); backdrop-filter:blur(8px); box-shadow:0 10px 24px rgba(0,0,0,.45); transform:translate(-50%,-100%) translateY(-6px) scale(.92); opacity:0; pointer-events:none; transition:opacity .26s ease, transform .26s cubic-bezier(.22,1,.36,1); white-space:nowrap; text-align:center; }
+  .mig-tip.on { opacity:1; transform:translate(-50%,-100%) translateY(-13px) scale(1); }
+  .mig-tip b { display:block; font-size:11.5px; font-weight:800; color:#e0f2fe !important; letter-spacing:.4px; }
+  .mig-tip small { display:block; font-size:9.5px; color:#7dd3fc !important; margin-top:1px; font-weight:600; }
+  .mig-hud { position:absolute; left:12px; right:12px; bottom:11px; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; border-radius:10px; background:rgba(6,14,28,.82); border:1px solid rgba(148,163,184,.22); backdrop-filter:blur(8px); }
+  .mig-cap { display:flex; align-items:baseline; gap:8px; min-width:0; }
+  .mig-step-no { font-size:10.5px; font-weight:800; color:#38bdf8 !important; font-variant-numeric:tabular-nums; letter-spacing:.5px; flex:0 0 auto; }
+  .mig-cap b { font-size:13.5px; color:#f8fafc !important; white-space:nowrap; }
+  .mig-cap span { font-size:11.5px; color:#93c5fd !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mig-dots { display:flex; align-items:center; gap:5px; flex:0 0 auto; }
+  .mig-step-dot { width:7px; height:7px; padding:0; border:0 !important; border-radius:999px; background:rgba(148,163,184,.36) !important; cursor:pointer; transition:width .25s ease, background .25s ease, box-shadow .25s ease; }
+  .mig-step-dot.passed { background:rgba(56,189,248,.62) !important; }
+  .mig-step-dot.now { width:18px; background:#34d399 !important; box-shadow:0 0 8px rgba(52,211,153,.8); }
+  html[data-theme="night"] .mig-stage { background:radial-gradient(125% 110% at 72% 16%, #122a4e 0%, #081529 58%, #040b17 100%) !important; }
+  html[data-theme="night"] .mig-tip { background:rgba(8,19,38,.94) !important; border-color:rgba(56,189,248,.52) !important; }
+  html[data-theme="night"] #migBase { stroke:rgba(148,163,184,.28) !important; }
+  html[data-theme="night"] #migSvg text { fill:#94a3b8 !important; }
+  html[data-theme="night"] #migSvg .mig-node.on text { fill:#e2f1ff !important; }
+  html[data-theme="night"] #migSvg .mig-node.now text { fill:#ffffff !important; }
   .mig-foot { display:flex; align-items:center; gap:10px; border-top:1px solid #eef2f8; padding-top:10px; }
   .mig-avatar { width:34px; height:34px; border-radius:50%; border:1px solid #dbeafe; }
   .mig-brand { min-width:0; }
@@ -561,10 +626,6 @@
   .mig-brand span { display:block; font-size:10.5px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .mig-tags { margin-left:auto; display:grid; grid-template-columns:repeat(3,auto); gap:6px; }
   .mig-tags span { font-size:10px; color:#1d4ed8; background:#e0edff; border-radius:999px; padding:2px 8px; white-space:nowrap; }
-  .mig-node circle { fill:#fff; stroke:#c7d7ee; stroke-width:2; transition:.3s; }
-  .mig-node text { font-size:10.5px; fill:#64748b; }
-  .mig-node.on circle { fill:#2563eb; stroke:#2563eb; }
-  .mig-node.on text { fill:#0f172a; font-weight:700; }
   .mig-node { cursor:pointer; }
   .mig-mask { position:fixed; inset:0; z-index:170; background:rgba(5,10,22,.62); display:none; align-items:center; justify-content:center; padding:18px; }
   .mig-mask.on { display:flex; }
@@ -1232,29 +1293,125 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
           <p>AI 内容生产线：一条视频多平台发布与回收。</p>
         </div>
       </article>
-<a class="build-card is-open-link" href="./rensheng/" target="_blank" rel="noopener">
-        <div class="cover" data-cover="nebula"></div>
+      <a class="build-card is-open-link" href="./rensheng/" target="_blank" rel="noopener">
+        <div class="cover">
+          <div class="bc-stage bc-ui-card" aria-label="人生指南动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
+              <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="372" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="28" cy="264" r="3" fill="#34d399" opacity=".82"/>
+              <circle cx="372" cy="264" r="3" fill="#34d399" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>LIFE GUIDE · 767 条行动清单</div>
+            <div class="bc-wiki-win">
+              <img src="assets/covers/rensheng-ui.jpg" alt="人生指南行动清单界面" loading="lazy" decoding="async">
+              <div class="bc-scan-rs" aria-hidden="true"></div>
+              <div class="bc-wiki-glint" aria-hidden="true"></div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">767 条清单</div>
+              <div class="bc-chip">成本筛选</div>
+              <div class="bc-chip">3D 星图</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>人生指南</h3><span class="b-tag open">已公开 ↗</span></div>
           <p>767 条人生建议的行动版，已公开上线。</p>
         </div>
       </a>
-<article class="build-card">
-        <div class="cover" data-cover="galaxy"></div>
+      <article class="build-card">
+        <div class="cover">
+          <div class="bc-stage bc-vault" aria-label="项目干货检索库封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="24" y="42" width="352" height="222" rx="14" fill="none" stroke="rgba(167,139,250,.18)" stroke-width="1"/>
+              <circle cx="24" cy="42" r="3" fill="#a78bfa" opacity=".82"/>
+              <circle cx="376" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="24" cy="264" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="376" cy="264" r="3" fill="#a78bfa" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot"></i>实战干货库 · 10,000+ 篇</div>
+            <div class="bc-mini-app bc-vault-app" aria-hidden="true">
+              <div class="bcv-search">
+                <div class="bcv-search-txt">🔍 按主题检索实战干货<i class="bcv-cursor"></i></div>
+                <div class="bcv-count">10,000+ 条</div>
+              </div>
+              <div class="bcv-tags">
+                <div class="bcv-tag">AI 实战</div>
+                <div class="bcv-tag">电商选品</div>
+                <div class="bcv-tag">流量变现</div>
+                <div class="bcv-tag">提示词</div>
+              </div>
+              <div class="bcv-list">
+                <div class="bcv-row"><i class="bcv-badge c1">AI</i><div class="bcv-title">AI 工作流拆解与自动化提效复盘</div><div class="bcv-m">精选</div></div>
+                <div class="bcv-row"><i class="bcv-badge c2">电商</i><div class="bcv-title">蓝海细分选品与转化拆解笔记</div><div class="bcv-m">实操</div></div>
+                <div class="bcv-row"><i class="bcv-badge c3">流量</i><div class="bcv-title">多平台内容起号与精细化运营</div><div class="bcv-m">高频</div></div>
+              </div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">10,000+ 沉淀</div>
+              <div class="bc-chip">主题归档</div>
+              <div class="bc-chip">秒级检索</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>项目干货</h3><span class="b-tag">内部系统</span></div>
           <p>把圈内干货按主题整理成可检索的资料，1 万多条。</p>
         </div>
       </article>
-<a class="build-card is-open-link" href="./resource/" target="_blank" rel="noopener">
-        <div class="cover" data-cover="rc"></div>
+      <a class="build-card is-open-link" href="./resource/" target="_blank" rel="noopener">
+        <div class="cover">
+          <div class="bc-stage bc-ui-card" aria-label="资源中心动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
+              <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="372" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="28" cy="264" r="3" fill="#34d399" opacity=".82"/>
+              <circle cx="372" cy="264" r="3" fill="#34d399" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>RESOURCE HUB · <i style="font-style:normal" data-site-value="resource.count">10,281</i> 条索引</div>
+            <div class="bc-wiki-win">
+              <img src="assets/covers/resource-ui.jpg" alt="资源中心 8 大分区图墙界面" loading="lazy" decoding="async">
+              <div class="bc-scan-rc" aria-hidden="true"></div>
+              <div class="bc-wiki-glint" aria-hidden="true"></div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">8 大分区</div>
+              <div class="bc-chip">89 分类</div>
+              <div class="bc-chip">可看目录</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>资源中心</h3><span class="b-tag open">已公开 ↗</span></div>
           <p><span data-site-value="resource.count">10,281</span> 条资源索引，可按分类检索。</p>
         </div>
       </a>
-<a class="build-card is-open-link" href="./intel/" target="_blank" rel="noopener">
-        <div class="cover" data-cover="hub"></div>
+      <a class="build-card is-open-link" href="./intel/" target="_blank" rel="noopener">
+        <div class="cover">
+          <div class="bc-stage bc-ui-card" aria-label="情报中枢动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
+              <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="372" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="28" cy="264" r="3" fill="#34d399" opacity=".82"/>
+              <circle cx="372" cy="264" r="3" fill="#34d399" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>INTEL HUB · 40+ 情报源</div>
+            <div class="bc-wiki-win">
+              <img src="assets/covers/intel-ui.jpg" alt="情报中枢热词云与多源汇聚界面" loading="lazy" decoding="async">
+              <div class="bc-intel-stream" aria-hidden="true"><div class="bc-intel-pulse"></div></div>
+              <div class="bc-wiki-glint" aria-hidden="true"></div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">40+ 采集源</div>
+              <div class="bc-chip">AI 打分</div>
+              <div class="bc-chip">每日日报</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>情报中枢</h3><span class="b-tag open">已公开 ↗</span></div>
           <p>40+ 情报源每天自动采集、去重、打分、出日报。</p>
@@ -1262,7 +1419,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </a>
       <a class="build-card is-open-link" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">
         <div class="cover">
-          <div class="bc-stage bc-feishu" aria-label="飞书知识库动态封面">
+          <div class="bc-stage bc-feishu" data-feishu-demo="card" aria-label="飞书知识库动态封面">
             <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
               <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
               <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
@@ -1272,14 +1429,14 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
             </svg>
             <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>OPEN WIKI · 77 DOCS</div>
             <div class="bc-wiki-win">
-              <img src="assets/kb-shot-wide.jpg" alt="飞书知识库最新总览" loading="lazy" decoding="async">
-              <div class="bc-wiki-scan" aria-hidden="true"></div>
-              <div class="bc-wiki-glint" aria-hidden="true"></div>
+              <img class="bc-wiki-slide is-on" src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 00 首页" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/kb-shot-commerce.jpg" alt="飞书知识库 · 07 电商全自动化" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/kb-shot-map.jpg" alt="飞书知识库 · 10 知识全景地图" loading="lazy" decoding="async">
             </div>
             <div class="bc-chips" aria-hidden="true">
-              <div class="bc-chip">AI WORKBENCH</div>
-              <div class="bc-chip">52 篇复盘</div>
-              <div class="bc-chip">LIVE SYNC</div>
+              <div class="bc-chip is-on">00 知识库首页</div>
+              <div class="bc-chip">07 电商全自动</div>
+              <div class="bc-chip">10 全景地图</div>
             </div>
           </div>
         </div>
@@ -1289,7 +1446,58 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         </div>
       </a>
       <article class="build-card">
-        <div class="cover wuxian-live-host" data-wuxian-cover aria-label="无限画布动态封面"></div>
+        <div class="cover">
+          <div class="bc-stage bc-canvas-ui" aria-label="无限画布节点工作流封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="24" y="42" width="352" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
+              <circle cx="24" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="376" cy="42" r="3" fill="#34d399" opacity=".82"/>
+              <circle cx="24" cy="264" r="3" fill="#a78bfa" opacity=".82"/>
+              <circle cx="376" cy="264" r="3" fill="#38bdf8" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot"></i>INFINITE CANVAS · 无限画布</div>
+            <div class="bc-mini-app bc-canvas-app" aria-hidden="true">
+              <div class="bcc-bar">
+                <div class="bcc-tool plus">+</div>
+                <div class="bcc-tool">文</div>
+                <div class="bcc-tool">图</div>
+                <div class="bcc-tool">片</div>
+              </div>
+              <svg class="bcc-wires" viewBox="0 0 320 190" preserveAspectRatio="none">
+                <path d="M 149 52 C 169 52, 169 95, 188 95" fill="none" stroke="rgba(192,132,252,.6)" stroke-width="1.6"/>
+                <path d="M 149 136 C 169 136, 169 95, 188 95" fill="none" stroke="rgba(56,189,248,.6)" stroke-width="1.6"/>
+                <circle r="3" fill="#e9d5ff">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" path="M 149 52 C 169 52, 169 95, 188 95"/>
+                </circle>
+                <circle r="3" fill="#7dd3fc">
+                  <animateMotion dur="3.2s" begin="-1.6s" repeatCount="indefinite" path="M 149 136 C 169 136, 169 95, 188 95"/>
+                </circle>
+              </svg>
+              <div class="bcc-node bcc-n1">
+                <div class="bcc-nh"><i class="bcc-nd v"></i>提示词</div>
+                <div class="bcc-nbody">
+                  <div class="bcc-txt">山峰盘龙 · 红叶光影</div>
+                  <div class="bcc-barline"></div>
+                </div>
+              </div>
+              <div class="bcc-node bcc-n2">
+                <div class="bcc-nh"><i class="bcc-nd c"></i>参考素材</div>
+                <div class="bcc-nbody pic"><img src="assets/shijue-shot-hud.jpg" alt="" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="bcc-node bcc-n3">
+                <div class="bcc-nh"><i class="bcc-nd g"></i>AI 生图 / 成片</div>
+                <div class="bcc-nbody pic"><img src="assets/huidong-shot4.jpg" alt="" loading="lazy" decoding="async"></div>
+                <div class="bcc-foot"><div>16:9 HD</div><div>● 已连线</div></div>
+              </div>
+              <div class="bcc-zoom">100%</div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">节点连线</div>
+              <div class="bc-chip">素材拼接</div>
+              <div class="bc-chip">无限缩放</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>无限画布</h3><span class="b-tag">内部系统</span></div>
           <p>把想法、素材和流程铺在一张可无限缩放的画布上。</p>
@@ -1342,11 +1550,11 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
               </circle>
             </svg>
             <div class="bc-pill"><i class="bc-dot"></i>428 VISUAL ATLAS · 视觉图鉴</div>
-            <div class="bc-side bc-left"><img src="shijue/media/styles/s30.webp" alt="巨字动态排版" loading="lazy" decoding="async"></div>
+            <div class="bc-side bc-left"><img src="assets/shijue-shot-hud.jpg" alt="赛博朋克 HUD" loading="lazy" decoding="async"></div>
             <div class="bc-side bc-right"><img src="shijue/media/styles/s02.webp" alt="等轴 2.5D 立体渲染" loading="lazy" decoding="async"></div>
             <div class="bc-main">
-              <video data-cover-video autoplay muted loop playsinline preload="metadata" poster="assets/shijue-shot-hud.jpg" aria-label="赛博朋克 HUD 动态预览">
-                <source src="shijue/media/styles-vid/s08.mp4" type="video/mp4">
+              <video data-cover-video autoplay muted loop playsinline preload="metadata" poster="shijue/media/styles/s07.webp" aria-label="贴纸风科普动态预览">
+                <source src="shijue/media/styles-vid/s07.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -1365,11 +1573,20 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   <div class="wrap">
     <div class="kb2">
       <div class="kb2-visual">
-        <div class="kb2-browser">
-          <div class="kb2-browser-bar"><i></i><i></i><i></i><span>guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span></div>
+        <div class="kb2-browser" data-feishu-demo="stage">
+          <div class="kb2-browser-bar">
+            <i></i><i></i><i></i>
+            <span id="kb2Url">guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span>
+            <div class="kb2-tabs" role="tablist" aria-label="飞书知识库示例页面切换">
+              <button type="button" class="kb2-tab is-on" data-kb-idx="0" data-kb-url="guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg">00 首页</button>
+              <button type="button" class="kb2-tab" data-kb-idx="1" data-kb-url="guijiyeren.feishu.cn/wiki/XDn1wVKnCiMs5okndf9cmFzvnmc">07 电商全自动</button>
+              <button type="button" class="kb2-tab" data-kb-idx="2" data-kb-url="guijiyeren.feishu.cn/wiki/LaN3wyNGmiiPTCkgIwccYaDOnNc">10 全景地图</button>
+            </div>
+          </div>
           <div class="kb2-shot-wrap">
-            <img src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 硅基野人首页与完整目录" loading="lazy" decoding="async">
-            <div class="kb2-sidebar-hl" aria-hidden="true"></div>
+            <img class="kb2-slide is-on" src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 00 硅基野人首页与完整目录" loading="lazy" decoding="async">
+            <img class="kb2-slide" src="assets/kb-shot-commerce.jpg" alt="飞书知识库 · 07 电商全自动化与完整目录" loading="lazy" decoding="async">
+            <img class="kb2-slide" src="assets/kb-shot-map.jpg" alt="飞书知识库 · 10 知识全景地图与完整目录" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="kb2-float"><span class="dot"></span>持续更新 · 77 页知识库</div>
@@ -1487,28 +1704,35 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </div>
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-sub">8 个落脚点</span><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-sub">8 个落脚点 · 点节点看详情</span><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
             <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
                 <linearGradient id="migGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#2563eb"/>
+                  <stop offset="0" stop-color="#38bdf8"/><stop offset=".55" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/>
                 </linearGradient>
+                <filter id="migBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5.5"/></filter>
               </defs>
-              <defs>
-                <filter id="migBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>
-              </defs>
-              <path id="migGlow" d="" fill="none" stroke="url(#migGrad)" stroke-width="10" opacity=".16" filter="url(#migBlur)"/>
-              <path id="migBase" d="" fill="none" stroke="#cfe0f3" stroke-width="2.5" stroke-dasharray="5 7"/>
-              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3.5" stroke-linecap="round"/>
+              <g id="migBg" aria-hidden="true">
+                <circle cx="430" cy="198" r="46" fill="none" stroke="rgba(52,211,153,.14)" stroke-width="1" stroke-dasharray="3 5"/>
+                <circle cx="430" cy="198" r="92" fill="none" stroke="rgba(56,189,248,.09)" stroke-width="1" stroke-dasharray="2 7"/>
+                <circle cx="430" cy="198" r="144" fill="none" stroke="rgba(56,189,248,.05)" stroke-width="1"/>
+              </g>
               <g id="migStars"></g>
+              <path id="migGlow" d="" fill="none" stroke="url(#migGrad)" stroke-width="9" opacity=".24" filter="url(#migBlur)"/>
+              <path id="migBase" d="" fill="none" stroke="rgba(148,163,184,.28)" stroke-width="1.8" stroke-dasharray="4 6"/>
+              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3" stroke-linecap="round"/>
               <g id="migTrail"></g>
               <g id="migNodes"></g>
-              <circle id="migRing" cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0"/>
-              <circle id="migDot" r="5.5" fill="#fff" stroke="#2563eb" stroke-width="3"/>
+              <circle id="migRing" cx="0" cy="0" r="0" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0"/>
+              <circle id="migRing2" cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0"/>
+              <circle id="migDot" r="5" fill="#fff" stroke="#38bdf8" stroke-width="2.5"/>
             </svg>
-            <div class="mig-tip" id="migTip"><b id="migTipCity"></b></div>
-            <div class="mig-cap"><b id="migCity">湖南怀化</b><span id="migDesc">出生</span></div>
+            <div class="mig-tip" id="migTip"><b id="migTipCity"></b><small id="migTipSub"></small></div>
+            <div class="mig-hud">
+              <div class="mig-cap"><span class="mig-step-no" id="migStepNo">01/08</span><b id="migCity">湖南怀化</b><span id="migDesc">出生</span></div>
+              <div class="mig-dots" id="migDots" aria-label="迁徙路线进度点"></div>
+            </div>
           </div>
           <div class="mig-foot">
             <img src="assets/logo.png" alt="硅基野人" class="mig-avatar" loading="lazy" decoding="async">
@@ -1542,13 +1766,13 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     <div class="sec-head">
       <div class="eyebrow2">Services</div>
       <h2>我能帮你做什么</h2>
-      <p>卖成品、卖模板、卖流程，不陪跑；都是从自己生意里长出来的东西，电商老板和企业团队优先。</p>
+      <p>主打「拿来就能跑」的标准化方案与成品交付——都是我自己在电商和自媒体业务里跑通的实战系统。平时精力主要在一线做自己的业务，更适合想直接复用成熟流程、快速出结果的电商老板和企业团队。</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card"><b>电商 AI 提效 · 成品样板</b><p>选品、主图、短视频、客服，哪个环节最痛，就把它做成一套能直接跑的 AI 模板＋操作手册，拿去即用，不用我天天盯。</p><a href="#message">聊聊 →</a></div>
-      <div class="svc-card"><b>AI 内容流水线 · 模板包</b><p>选题、脚本、拍摄、剪辑、八平台发布，打包成流程＋模板＋提示词一套，团队照着就能干。</p><a href="#message">聊聊 →</a></div>
-      <div class="svc-card"><b>企业 AI 工作台 / 流程自动化</b><p>把表格、客服、投放、库存这些重复活拆开接成 Agent；老板少盯人，员工少做重复活，出错率也降下来。</p><a href="#message">聊聊 →</a></div>
-      <div class="svc-card"><b>电商 AI 录播课 / 实操手册</b><p>选品、内容、投放、AI 工具一条线，做成录播课＋文字手册，一次买断随时回看；企业团队给上手包。</p><a href="#message">聊聊 →</a></div>
+      <div class="svc-card"><b>电商 AI 提效 · 开箱方案</b><p>围绕选品调研、商品主图与 AI 穿搭出图、短视频与日常台账，把跑通的环节打包成可直接落地的 AI 工作流与操作手册，团队按步骤就能直接出成品。</p><a href="#message">聊聊需求 →</a></div>
+      <div class="svc-card"><b>AI 内容流水线 · 多平台方案</b><p>从热点选题、脚本配音、自动剪辑成片到多平台同步分发与数据回收，整套流程、提示词与视觉风格规范打包交付，支持按需随时扩展更多平台。</p><a href="#message">聊聊需求 →</a></div>
+      <div class="svc-card"><b>个人 / 企业 AI 工作台搭建</b><p>把信息采集、知识沉淀、任务派发、定时巡检与多 AI 协作串成一套本地工作台，减少人工盯梢和重复劳动，把精力留给核心判断与拍板。</p><a href="#message">聊聊需求 →</a></div>
+      <div class="svc-card"><b>实战样板与团队上手手册</b><p>把电商自动化、AI 穿搭和自媒体提效的完整搭建过程整理成可对照复刻的实操手册与样板工程，交付即归团队自有，随时回看、快速上手。</p><a href="#message">聊聊需求 →</a></div>
     </div>
   </div>
 </section>
@@ -1558,15 +1782,15 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     <div class="sec-head">
       <div class="eyebrow2">FAQ</div>
       <h2>常见问题</h2>
-      <p>先看这里，能省一次来回。</p>
+      <p>关于我的业务线、公开项目和合作方式，先看这里能省一次来回。</p>
     </div>
     <div class="faq-list faq-grid">
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="eager"><span class="faq-q">这网站是怎么做出来的？</span><span class="faq-num">01</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="eager"><p>站不是我一行行写的。我提需求、定结构和验收，AI 帮我搭页面、改代码。不过里面的项目、作品、工具和数据都是真的。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">最新作品为什么只放几条？其他平台在哪看？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>首页只放跟我业务、跟正在做的事相关的作品；其他不太相关的就没放。要看更多，去抖音、小红书、B站、快手等主页，底部有平台入口。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能找你合作吗？都接什么？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>接电商 AI 提效、内容流水线、企业工作台、成品模板和录播课；先留言说清需求，按能落地的结果报价。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">能转载或搬运你的内容吗？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>注明出处可以转载；商用、改编、切片分发先留言聊一下，别直接搬。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">网站会一直更新吗？</span><span class="faq-num">05</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>会。公开项目做好一个放一个，工具和知识库跟着更新；页面上的「最新更新」和飞书知识库会同步，但不照搬。</p></div></div>
-    
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="eager"><span class="faq-q">这些公开项目和飞书知识库都能直接用吗？收费吗？</span><span class="faq-num">01</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="eager"><p>站上的 6 个公开项目（人生指南、资源中心、情报中枢、每日拆卡、会动网页、视觉图鉴）和飞书知识库全部免费公开，免登录直接用。把平时实战沉淀出来的东西整理分享出来，就是希望大家可以一起看、一起用、少走弯路。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">你目前的主线业务有哪些？哪些公开，哪些在内部跑？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>目前围绕四条主线实战：电商全自动化、AI 穿搭工作流、自媒体多平台全自动、个人 AI 工作台。跑通且适合对外分享的工具、方法与复盘都会放到公开页面和飞书知识库；涉及具体店铺数据、内部素材与商业隐私的系统保留在本地运行，对外只展示思路与脱敏界面。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">资源中心和情报中枢为什么只看目录和榜单，不提供下载？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>出于版权与合规要求，资源中心只公开分类结构与条目目录，展示资料整理与检索方式，不放任何网盘链接或提取码；情报中枢展示版也做了脱敏处理，只公开热词趋势、筛选框架和公开榜。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">我不会写代码，也能搭一套类似的工作台吗？从哪开始？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>可以。我本身做了 10 年电商，并不是专业程序员；这个网站和整套工作台都是我提需求、定结构、做验收，由 AI 写代码实现的。建议先看飞书知识库里的「01｜新手 7 天路线」，从拆解自己每天最耗时的重复活开始，先跑通一个环节再逐步连成流水线。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">如果想合作或直接拿现成方案，一般怎么配合？</span><span class="faq-num">05</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>我平时大部分时间在一线跑自己的电商和内容业务，更适合交付已经跑通的标准化工作流、成品模板和实操手册，让你拿回去上手就能出成品。有明确业务需求可以在下方直接留言，写清你的行业、卡点和目标，看到后会通过邮箱回复。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">站里的整理和飞书文档可以转载或分享给团队吗？</span><span class="faq-num">06</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>个人学习、团队内部分享或注明「硅基野人」出处的正常转载都可以；如果涉及商业复用、二次打包分发或批量搬运，先通过下方留言或邮箱打声招呼。</p></div></div>
     </div>
   </div>
 </section>
@@ -1685,8 +1909,8 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
 
 <footer id="page-end">
   <div class="in">
-    <div>© 2026 <b>硅基野人</b> · 本站 V1.0 · 内容由 AI 参与生产，我负责拍板</div>
-    <div>知识库：<a href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="./daily/" data-daily-brief>每日早报</a> · <a href="./stats/">访问统计</a></div>
+    <div>© 2026 <b>硅基野人</b> · 本站 V2.0 · 内容由 AI 参与生产，我负责拍板</div>
+    <div>知识库：<a href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="./daily/" data-daily-brief>每日早报</a> · <a href="./stats/">访问统计</a></div>
   </div>
 </footer>
 
@@ -3013,217 +3237,342 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   }
 }catch(e){}})();</script>
 <script>
-/* ---------- 关于我：迁徙路线动画 ---------- */
+/* ---------- 飞书知识库两处：真实多页联动切换（00 首页 / 07 电商全自动 / 10 全景地图） ---------- */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 1) #building 飞书卡片自动联动
+  var card = document.querySelector('[data-feishu-demo="card"]');
+  if (card) {
+    var cSlides = Array.prototype.slice.call(card.querySelectorAll('.bc-wiki-slide'));
+    var cChips = Array.prototype.slice.call(card.querySelectorAll('.bc-chip'));
+    var cIdx = 0, cTimer = null, cVisible = false;
+    function setCard(i) {
+      cIdx = i % cSlides.length;
+      cSlides.forEach(function(el, k){ el.classList.toggle('is-on', k === cIdx); });
+      cChips.forEach(function(el, k){ el.classList.toggle('is-on', k === cIdx); });
+    }
+    function startCard() {
+      if (reduce || cTimer || cSlides.length < 2) return;
+      cTimer = setInterval(function(){ setCard(cIdx + 1); }, 3600);
+    }
+    function stopCard() { if (cTimer) { clearInterval(cTimer); cTimer = null; } }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        cVisible = es[0].isIntersecting;
+        if (cVisible) startCard(); else stopCard();
+      }, { rootMargin: '80px 0px' }).observe(card);
+    } else { startCard(); }
+  }
+  // 2) #kb 大展板自动切换 + 点击标签手动切页 + 同步更新地址栏
+  var stage = document.querySelector('[data-feishu-demo="stage"]');
+  if (stage) {
+    var sSlides = Array.prototype.slice.call(stage.querySelectorAll('.kb2-slide'));
+    var sTabs = Array.prototype.slice.call(stage.querySelectorAll('.kb2-tab'));
+    var urlEl = document.getElementById('kb2Url');
+    var sIdx = 0, sTimer = null, sHover = false, sVisible = false;
+    function setStage(i) {
+      sIdx = ((i % sSlides.length) + sSlides.length) % sSlides.length;
+      sSlides.forEach(function(el, k){ el.classList.toggle('is-on', k === sIdx); });
+      sTabs.forEach(function(el, k){ el.classList.toggle('is-on', k === sIdx); });
+      if (urlEl && sTabs[sIdx]) urlEl.textContent = sTabs[sIdx].getAttribute('data-kb-url') || '';
+    }
+    function startStage() {
+      if (reduce || sTimer || sHover || !sVisible || sSlides.length < 2) return;
+      sTimer = setInterval(function(){ setStage(sIdx + 1); }, 4200);
+    }
+    function stopStage() { if (sTimer) { clearInterval(sTimer); sTimer = null; } }
+    sTabs.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var idx = parseInt(btn.getAttribute('data-kb-idx') || '0', 10);
+        setStage(idx);
+        stopStage();
+        startStage();
+      });
+    });
+    stage.addEventListener('mouseenter', function(){ sHover = true; stopStage(); });
+    stage.addEventListener('mouseleave', function(){ sHover = false; startStage(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        sVisible = es[0].isIntersecting;
+        if (sVisible) startStage(); else stopStage();
+      }, { rootMargin: '100px 0px' }).observe(stage);
+    } else { sVisible = true; startStage(); }
+  }
+})();
+
+/* ---------- 关于我：迁徙路线动画（缓动飞航 + 到站停顿雷达波 + 可点进度点） ---------- */
 (function(){
   var STOPS = [
-    { city: "湖南怀化", short: "出生", x: 45, y: 250 },
-    { city: "北京", short: "求学", x: 205, y: 65 },
-    { city: "东海县", short: "水晶电商", x: 335, y: 170 },
-    { city: "燕郊", short: "买房", x: 250, y: 115 },
-    { city: "东北辽源", short: "考察项目", x: 350, y: 80 },
-    { city: "浙江诸暨", short: "卖袜子", x: 395, y: 250 },
-    { city: "湖南长沙", short: "买房", x: 110, y: 285 },
-    { city: "浙江杭州", short: "定居", x: 455, y: 170 }
+    { year: "1986", city: "湖南怀化", short: "出生", x: 92,  y: 268, dx: 0,   dy: 20,  anchor: "middle" },
+    { year: "2005", city: "北京",     short: "求学", x: 242, y: 70,  dx: -12, dy: -8,  anchor: "end" },
+    { year: "2015", city: "东海县",   short: "水晶电商", x: 346, y: 144, dx: -12, dy: 4,   anchor: "end" },
+    { year: "2013", city: "燕郊",     short: "买房", x: 314, y: 90,  dx: 12,  dy: -6,  anchor: "start" },
+    { year: "2017", city: "东北辽源", short: "考察项目", x: 432, y: 54,  dx: 0,   dy: -13, anchor: "middle" },
+    { year: "2018", city: "浙江诸暨", short: "卖袜子", x: 376, y: 264, dx: 0,   dy: 20,  anchor: "middle" },
+    { year: "2019", city: "湖南长沙", short: "买房", x: 206, y: 214, dx: 0,   dy: -12, anchor: "middle" },
+    { year: "2025", city: "浙江杭州", short: "定居", x: 432, y: 200, dx: 12,  dy: 4,   anchor: "start" }
   ];
+  var CURVE_BOW = [-26, -24, -22, -20, 34, 24, -28];
   var svg = document.getElementById("migSvg");
   if (!svg) return;
   var base = document.getElementById("migBase");
   var prog = document.getElementById("migProg");
+  var glow = document.getElementById("migGlow");
   var nodesG = document.getElementById("migNodes");
   var dot = document.getElementById("migDot");
   var cityEl = document.getElementById("migCity");
   var descEl = document.getElementById("migDesc");
+  var stepNoEl = document.getElementById("migStepNo");
+  var dotsHost = document.getElementById("migDots");
   var playBtn = document.getElementById("migPlay");
+  var ring = document.getElementById("migRing");
+  var ring2 = document.getElementById("migRing2");
+  var tipEl = document.getElementById("migTip");
+  var tipCity = document.getElementById("migTipCity");
+  var tipSub = document.getElementById("migTipSub");
 
-  function smoothPath(pts){
-    if (pts.length < 2) return "";
-    var d = "M " + pts[0].x + " " + pts[0].y;
-    for (var i = 1; i < pts.length; i++) {
-      var p0 = pts[i - 1], p1 = pts[i];
-      var cx = (p0.x + p1.x) / 2, cy = (p0.y + p1.y) / 2 - 26;
-      d += " Q " + cx + " " + cy + " " + p1.x + " " + p1.y;
-    }
-    return d;
+  // 构建航线弧度：法向偏移避免往返线段重叠
+  var segDs = [];
+  var fullD = "M " + STOPS[0].x + " " + STOPS[0].y;
+  for (var i = 1; i < STOPS.length; i++) {
+    var p0 = STOPS[i - 1], p1 = STOPS[i];
+    var mx = (p0.x + p1.x) / 2, my = (p0.y + p1.y) / 2;
+    var vx = p1.x - p0.x, vy = p1.y - p0.y;
+    var dist = Math.hypot(vx, vy) || 1;
+    var bow = CURVE_BOW[i - 1] || -24;
+    var cx = mx + (-vy / dist) * bow;
+    var cy = my + (vx / dist) * bow;
+    var seg = "M " + p0.x + " " + p0.y + " Q " + cx.toFixed(1) + " " + cy.toFixed(1) + " " + p1.x + " " + p1.y;
+    segDs.push(seg);
+    fullD += " Q " + cx.toFixed(1) + " " + cy.toFixed(1) + " " + p1.x + " " + p1.y;
   }
-  var d = smoothPath(STOPS);
-  base.setAttribute("d", d);
-  prog.setAttribute("d", d);
+  base.setAttribute("d", fullD);
+  prog.setAttribute("d", fullD);
+  if (glow) glow.setAttribute("d", fullD);
 
-  // 节点
-  var nodeEls = STOPS.map(function(s, i){
+  // 每段精确弧长（累积数组，实现逐段缓动 + 精准到站停顿）
+  var total = prog.getTotalLength();
+  prog.style.strokeDasharray = total;
+  prog.style.strokeDashoffset = total;
+  var cumLens = [0];
+  var acc = 0;
+  for (var s = 0; s < segDs.length; s++) {
+    var tmpP = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    tmpP.setAttribute("d", segDs[s]);
+    acc += tmpP.getTotalLength();
+    cumLens.push(acc);
+  }
+  // 归一化对齐 total，防浮点误差
+  var scaleL = acc ? total / acc : 1;
+  for (var k = 0; k < cumLens.length; k++) cumLens[k] *= scaleL;
+
+  // 背景星点（低饱和克制点缀）
+  var starsG = document.getElementById("migStars");
+  for (var si = 0; si < 22; si++) {
+    var sc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    sc.setAttribute("cx", String(18 + ((si * 67) % 484)));
+    sc.setAttribute("cy", String(16 + ((si * 43) % 286)));
+    sc.setAttribute("r", String(0.7 + (si % 3) * 0.45));
+    sc.setAttribute("fill", si % 3 ? "#7dd3fc" : "#a7f3d0");
+    sc.setAttribute("class", "mig-star");
+    sc.style.animationDelay = ((si * 0.43) % 3).toFixed(1) + "s";
+    sc.style.animationDuration = (2.6 + (si % 4) * 0.6).toFixed(1) + "s";
+    starsG.appendChild(sc);
+  }
+
+  // 10 粒渐隐拖尾
+  var trailG = document.getElementById("migTrail");
+  var trail = [];
+  for (var ti = 0; ti < 10; ti++) {
+    var tc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    tc.setAttribute("r", String((3.6 - ti * 0.3).toFixed(2)));
+    tc.setAttribute("fill", ti < 4 ? "#bae6fd" : "#38bdf8");
+    tc.setAttribute("opacity", String((0.55 - ti * 0.052).toFixed(3)));
+    trailG.appendChild(tc);
+    trail.push(tc);
+  }
+
+  // 城市节点
+  var nodeEls = STOPS.map(function(st, idx){
     var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     g.setAttribute("class", "mig-node");
+    var halo = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    halo.setAttribute("class", "mig-c-halo");
+    halo.setAttribute("cx", st.x); halo.setAttribute("cy", st.y); halo.setAttribute("r", 11);
     var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    c.setAttribute("cx", s.x); c.setAttribute("cy", s.y); c.setAttribute("r", 5);
+    c.setAttribute("class", "mig-c-dot");
+    c.setAttribute("cx", st.x); c.setAttribute("cy", st.y); c.setAttribute("r", idx === STOPS.length - 1 ? 6 : 4.8);
     var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    t.setAttribute("x", s.x + 9); t.setAttribute("y", s.y + 3.5);
-    t.textContent = s.city;
-    g.appendChild(c); g.appendChild(t);
-    g.addEventListener("click", function(){ showStop(i); });
+    t.setAttribute("x", st.x + st.dx);
+    t.setAttribute("y", st.y + st.dy);
+    t.setAttribute("text-anchor", st.anchor);
+    t.textContent = st.city;
+    g.appendChild(halo); g.appendChild(c); g.appendChild(t);
+    g.addEventListener("click", function(){ showStop(idx); });
     nodesG.appendChild(g);
     return g;
   });
 
+  // 底部 8 站可点进度点
+  var stepDots = STOPS.map(function(st, idx){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "mig-step-dot";
+    b.title = (idx + 1) + ". " + st.city + " · " + st.short;
+    b.setAttribute("aria-label", st.city + " · " + st.short);
+    b.addEventListener("click", function(){ jumpToStop(idx); });
+    if (dotsHost) dotsHost.appendChild(b);
+    return b;
+  });
+
+  // 弹窗逻辑（原样保留）
   var mask = document.getElementById("migMask");
   var modalCity = document.getElementById("migModalCity");
   var modalYear = document.getElementById("migYear");
   var modalDesc = document.getElementById("migModalDesc");
-  function showStop(i){
+  function showStop(idx){
     if (!mask || !modalCity) return;
-    var st = STOPS[i];
-    modalYear.textContent = "";
+    var st = STOPS[idx];
+    modalYear.textContent = "第 " + (idx + 1) + " 站 · " + st.year;
     modalCity.textContent = st.city;
     modalDesc.textContent = st.short;
     mask.classList.add("on");
   }
-  function closeStop(){
-    if (mask) mask.classList.remove("on");
-  }
+  function closeStop(){ if (mask) mask.classList.remove("on"); }
   var closeBtn = document.getElementById("migClose");
   if (closeBtn) closeBtn.addEventListener("click", closeStop);
   if (mask) mask.addEventListener("click", function(ev){ if (ev.target === mask) closeStop(); });
   document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") closeStop(); });
 
-  var tipEl = document.getElementById("migTip");
-  var tipCity = document.getElementById("migTipCity");
-  var tipDesc = document.getElementById("migTipDesc");
-  var tipTimer = null;
-  function showTip(i){
+  function showTip(idx){
     if (!tipEl || !tipCity) return;
-    var st = STOPS[i];
+    var st = STOPS[idx];
     tipCity.textContent = st.short;
-    var left = st.x / 520 * 100;
-    var top = st.y / 360 * 100;
+    if (tipSub) tipSub.textContent = st.year + " · " + st.city;
+    var left = Math.min(84, Math.max(16, (st.x / 520) * 100));
+    var top = Math.max(16, (st.y / 360) * 100);
     tipEl.style.left = left + "%";
     tipEl.style.top = top + "%";
     tipEl.classList.remove("on");
     void tipEl.offsetWidth;
     tipEl.classList.add("on");
-    clearTimeout(tipTimer);
-    tipTimer = setTimeout(function(){ tipEl.classList.remove("on"); }, i === STOPS.length - 1 ? 3400 : 3200);
   }
 
-  var glow = document.getElementById("migGlow");
-  var trailG = document.getElementById("migTrail");
-  var ring = document.getElementById("migRing");
-  var trail = [];
-  for (var ti = 0; ti < 6; ti++) {
-    var tc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    tc.setAttribute("r", String(3.2 - ti * .38));
-    tc.setAttribute("fill", "#7dd3fc");
-    tc.setAttribute("opacity", String(.42 - ti * .06));
-    trailG.appendChild(tc); trail.push(tc);
-  }
-  var starsG = document.getElementById("migStars");
-  for (var si = 0; si < 26; si++) {
-    var sc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    sc.setAttribute("cx", String(14 + Math.random() * 492));
-    sc.setAttribute("cy", String(16 + Math.random() * 328));
-    sc.setAttribute("r", String(0.7 + Math.random() * 1.2));
-    sc.setAttribute("fill", si % 3 ? "#7dd3fc" : "#bfdbfe");
-    sc.setAttribute("class", "mig-star");
-    sc.style.animationDelay = (Math.random() * 3).toFixed(1) + "s";
-    sc.style.animationDuration = (2.4 + Math.random() * 2.4).toFixed(1) + "s";
-    starsG.appendChild(sc);
-  }
+  // 分段时序：起始停顿 0.8s + 7 段 × (1.15s 缓动飞航 + 0.85s 到站停顿) + 终点杭州展示 3.0s
+  var START_HOLD = 800, FLY_MS = 1150, DWELL_MS = 850, END_HOLD = 3000;
+  var SEG_MS = FLY_MS + DWELL_MS;
+  var CYCLE_MS = START_HOLD + (STOPS.length - 1) * SEG_MS + END_HOLD;
+  function easeInOut(u){ return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
 
-  var total = prog.getTotalLength();
-  prog.style.strokeDasharray = total;
-  prog.style.strokeDashoffset = total;
-  if (glow) { glow.setAttribute("d", prog.getAttribute("d")); }
+  var t0 = performance.now(), paused = false, pausedElapsed = 0, raf = null, lastActive = -1;
 
-  // 每个城市在路径上的精确长度：光点一到节点，气泡就切，不再按比例估算
-  var stopLens = (function(){
-    var samples = [], step = Math.max(1, Math.floor(total / 900));
-    for (var len = 0; len <= total; len += step) {
-      var p = prog.getPointAtLength(len);
-      samples.push({ len: len, x: p.x, y: p.y });
-    }
-    return STOPS.map(function(st){
-      var best = 0, bestD = Infinity;
-      for (var i = 0; i < samples.length; i++) {
-        var dx = samples[i].x - st.x, dy = samples[i].y - st.y;
-        var d = dx * dx + dy * dy;
-        if (d < bestD) { bestD = d; best = samples[i].len; }
+  function renderAt(elapsed){
+    var curLen = 0, active = 0, dwellP = 0, inDwell = false;
+    if (elapsed < START_HOLD) {
+      curLen = 0; active = 0; inDwell = true; dwellP = elapsed / START_HOLD;
+    } else if (elapsed < START_HOLD + (STOPS.length - 1) * SEG_MS) {
+      var rel = elapsed - START_HOLD;
+      var segIdx = Math.floor(rel / SEG_MS);
+      var segT = rel - segIdx * SEG_MS;
+      if (segT < FLY_MS) {
+        var u = easeInOut(segT / FLY_MS);
+        curLen = cumLens[segIdx] + (cumLens[segIdx + 1] - cumLens[segIdx]) * u;
+        active = segIdx;
+      } else {
+        curLen = cumLens[segIdx + 1];
+        active = segIdx + 1;
+        inDwell = true;
+        dwellP = (segT - FLY_MS) / DWELL_MS;
       }
-      return best;
-    });
-  })();
+    } else {
+      curLen = total;
+      active = STOPS.length - 1;
+      inDwell = true;
+      dwellP = ((elapsed - START_HOLD - (STOPS.length - 1) * SEG_MS) % 1500) / 1500;
+    }
 
-  var t0 = performance.now(), dur = 14000, paused = false, pausedAt = 0, raf = null, lastActive = -1;
-
-  function pointAt(ratio){ return prog.getPointAtLength(total * ratio); }
-
-  var hold = 3000;
-  function frame(now){
-    if (paused) return;
-    var cycle = dur + hold;
-    var elapsed = (now - t0) % cycle;
-    var ratio = elapsed >= dur ? 1 : elapsed / dur;
-    prog.style.strokeDashoffset = total * (1 - ratio);
-    var curLen = total * ratio;
-    var pt = pointAt(ratio);
+    prog.style.strokeDashoffset = Math.max(0, total - curLen);
+    var pt = prog.getPointAtLength(curLen);
     dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
-    // 光点拖尾
+
+    // 拖尾只在飞航段拉长，到站停顿时自然收拢
+    var tailSpread = inDwell ? 0 : 6.2;
     for (var ti = 0; ti < trail.length; ti++) {
-      var tp = pointAt(Math.max(0, curLen - 9 - ti * 7) / total);
+      var tl = Math.max(0, curLen - (ti + 1) * tailSpread);
+      var tp = prog.getPointAtLength(tl);
       trail[ti].setAttribute("cx", tp.x); trail[ti].setAttribute("cy", tp.y);
+      trail[ti].setAttribute("opacity", inDwell ? "0" : String((0.52 - ti * 0.048).toFixed(3)));
     }
-    // 当前节点：按光点实际走过的路径长度判断
-    var active = 0;
-    for (var i = 0; i < STOPS.length; i++) {
-      if (curLen >= stopLens[i] - 1.5) active = i;
+
+    // 双圈雷达扩散波（到站时绽放）
+    if (ring && ring2) {
+      var stAct = STOPS[active];
+      ring.setAttribute("cx", stAct.x); ring.setAttribute("cy", stAct.y);
+      ring2.setAttribute("cx", stAct.x); ring2.setAttribute("cy", stAct.y);
+      if (inDwell) {
+        var p1 = dwellP;
+        var p2 = (dwellP + 0.45) % 1;
+        ring.setAttribute("r", String((6 + p1 * 22).toFixed(1)));
+        ring.setAttribute("opacity", String((0.78 * (1 - p1)).toFixed(3)));
+        ring2.setAttribute("r", String((6 + p2 * 22).toFixed(1)));
+        ring2.setAttribute("opacity", String((0.48 * (1 - p2)).toFixed(3)));
+      } else {
+        ring.setAttribute("opacity", "0");
+        ring2.setAttribute("opacity", "0");
+      }
     }
+
     if (active !== lastActive) {
       lastActive = active;
-      nodeEls.forEach(function(g, i){ g.classList.toggle("on", i <= active); });
-      cityEl.textContent = STOPS[active].city;
-      descEl.textContent = STOPS[active].short;
+      nodeEls.forEach(function(g, idx){
+        g.classList.toggle("on", idx <= active);
+        g.classList.toggle("now", idx === active);
+      });
+      stepDots.forEach(function(b, idx){
+        b.classList.toggle("passed", idx < active);
+        b.classList.toggle("now", idx === active);
+      });
+      if (stepNoEl) stepNoEl.textContent = "0" + (active + 1) + "/0" + STOPS.length;
+      if (cityEl) cityEl.textContent = STOPS[active].city;
+      if (descEl) descEl.textContent = STOPS[active].short;
       showTip(active);
-      if (ring) {
-        ring.setAttribute("cx", STOPS[active].x);
-        ring.setAttribute("cy", STOPS[active].y);
-      }
     }
-    if (ring) {
-      ring.setAttribute("r", String(9 + 3.5 * Math.sin(now / 280)));
-      ring.setAttribute("opacity", ".5");
-    }
+  }
+
+  function frame(now){
+    if (paused) return;
+    var elapsed = (now - t0) % CYCLE_MS;
+    pausedElapsed = elapsed;
+    renderAt(elapsed);
     raf = requestAnimationFrame(frame);
   }
 
-  function jump(i){
-    var ratio = i / (STOPS.length - 1);
-    t0 = performance.now() - ratio * dur;
-    if (!paused) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); }
+  function jumpToStop(idx){
+    var target = idx === 0 ? 120 : START_HOLD + (idx - 1) * SEG_MS + FLY_MS + 60;
+    pausedElapsed = target;
+    t0 = performance.now() - target;
+    lastActive = -1;
+    renderAt(target);
   }
 
   playBtn.addEventListener("click", function(){
     paused = !paused;
-    if (paused) { cancelAnimationFrame(raf); playBtn.textContent = "播放"; }
-    else { t0 = performance.now(); raf = requestAnimationFrame(frame); playBtn.textContent = "暂停"; }
+    if (paused) {
+      cancelAnimationFrame(raf);
+      playBtn.textContent = "播放";
+    } else {
+      t0 = performance.now() - pausedElapsed;
+      playBtn.textContent = "暂停";
+      raf = requestAnimationFrame(frame);
+    }
   });
 
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) {
-    prog.style.strokeDashoffset = 0;
-    nodeEls.forEach(function(g){ g.classList.add("on"); });
-    cityEl.textContent = "浙江杭州"; descEl.textContent = "定居"; showTip(STOPS.length - 1);
+    renderAt(CYCLE_MS - 400);
     playBtn.style.display = "none";
   } else {
     raf = requestAnimationFrame(frame);
-  }
-
-  // 轻微 3D 跟随（只在桌面鼠标）
-  var card = document.querySelector(".mig-card");
-  if (card && window.matchMedia("(hover:hover)").matches) {
-    card.addEventListener("mousemove", function(e){
-      var r = card.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width - .5;
-      var py = (e.clientY - r.top) / r.height - .5;
-      card.style.transform = "perspective(900px) rotateX(" + (-py * 3.2).toFixed(2) + "deg) rotateY(" + (px * 3.2).toFixed(2) + "deg)";
-    });
-    card.addEventListener("mouseleave", function(){ card.style.transform = ""; });
   }
 })();
 </script>
@@ -3359,6 +3708,8 @@ html[data-theme="night"] .skin-panel * { color:#cbd5e1 !important; }
 html[data-theme="night"] img { background-color:#111a2b !important; }
 html[data-theme="night"] .bc-wiki-win img, html[data-theme="night"] .kb2-shot-wrap img { background-color:#fff !important; }
 html[data-theme="night"] .bc-stage { background:radial-gradient(115% 90% at 50% 16%, #112545 0%, #071022 64%, #040914 100%) !important; }
+html[data-theme="night"] .bc-mini-app { background:#0b1528 !important; border-color:rgba(56,189,248,.62) !important; }
+html[data-theme="night"] .bc-canvas-app { background:radial-gradient(rgba(148,163,184,.22) 1px, transparent 1px) 0 0 / 12px 12px, #091121 !important; }
 html[data-theme="night"] .bc-pill { color:#e2f1ff !important; background:rgba(8,18,36,.86) !important; border-color:rgba(56,189,248,.45) !important; }
 html[data-theme="night"] .bc-chip { color:#cbd5e1 !important; background:rgba(8,18,36,.88) !important; }
 html[data-theme="night"] .kb2-float { background:#0b1224 !important; color:#bae6fd !important; }
