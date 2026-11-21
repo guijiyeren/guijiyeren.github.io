@@ -349,8 +349,44 @@
   .build-card { background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 14px 34px rgba(15,23,42,.06); transition:.2s; }
   .build-card:hover { transform:translateY(-3px); box-shadow:0 22px 50px rgba(15,23,42,.12); }
   .build-card .cover { aspect-ratio:4/3; overflow:hidden; background:#0b1020; }
-  .build-card .cover img { width:100%; height:100%; object-fit:cover; display:block; animation:ken 16s ease-in-out infinite alternate; }
-  @keyframes ken { 0% { transform:scale(1) translate(0,0); } 100% { transform:scale(1.08) translate(-1.5%, -1.5%); } }
+  .build-card .cover img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* 实战项目：稳态框体 + 内部元素微动封面（会动网页 / 视觉图鉴 / 飞书知识库） */
+  .bc-stage { position:relative; width:100%; height:100%; overflow:hidden; background:radial-gradient(115% 90% at 50% 16%, #112545 0%, #071022 64%, #040914 100%); user-select:none; }
+  .bc-stage::before { content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(56,189,248,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,.07) 1px, transparent 1px); background-size:24px 24px; mask-image:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 65%, rgba(0,0,0,.9) 100%); }
+  .bc-pill { position:absolute; top:6.5%; left:50%; transform:translateX(-50%); z-index:4; display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; background:rgba(8,18,36,.84); border:1px solid rgba(56,189,248,.42); color:#e2f1ff !important; font-size:10px; font-weight:700; letter-spacing:.6px; white-space:nowrap; box-shadow:0 6px 18px rgba(0,0,0,.35); }
+  .bc-dot { width:6px; height:6px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px rgba(56,189,248,.9); flex:0 0 auto; animation:bcDotPulse 2.4s ease-in-out infinite; }
+  .bc-dot-live { background:#34d399; box-shadow:0 0 8px rgba(52,211,153,.9); }
+  @keyframes bcDotPulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.45; transform:scale(.78); } }
+  .bc-orbit { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+  .bc-side { position:absolute; bottom:10.5%; width:38%; aspect-ratio:16/10; border-radius:8px; overflow:hidden; box-shadow:0 12px 26px rgba(0,0,0,.56); z-index:2; background:#0b1224; }
+  .bc-side.bc-left { left:4.5%; border:1px solid rgba(167,139,250,.55); }
+  .bc-side.bc-right { right:4.5%; border:1px solid rgba(56,189,248,.48); }
+  .bc-side img { width:100%; height:100%; object-fit:cover; display:block; }
+  .bc-main { position:absolute; left:50%; top:21.5%; transform:translateX(-50%); width:64%; aspect-ratio:16/10; border-radius:10px; overflow:hidden; border:1.5px solid rgba(56,189,248,.82); box-shadow:0 18px 40px rgba(0,0,0,.7), 0 0 22px rgba(56,189,248,.22); z-index:3; background:#050b16; }
+  .bc-main video, .bc-main img { width:100%; height:100%; object-fit:cover; display:block; }
+  .bc-main::after { content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12); border-radius:inherit; }
+  /* 飞书知识库封面：稳态窗口 + 侧栏微光扫读 + 底部状态流 */
+  .bc-wiki-win { position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:74%; aspect-ratio:1360/960; border-radius:9px; overflow:hidden; border:1.5px solid rgba(56,189,248,.68); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#fff; }
+  .bc-wiki-win img { width:100%; height:100%; object-fit:cover; display:block; }
+  .bc-wiki-scan { position:absolute; left:.8%; top:18.5%; width:19.6%; height:4.8%; border-radius:3px; background:rgba(37,99,235,.15); border-left:2px solid #2563eb; pointer-events:none; animation:bcWikiScan 7.5s ease-in-out infinite; }
+  @keyframes bcWikiScan {
+    0%,14% { top:18.2%; opacity:.9; }
+    24%,36% { top:32.0%; opacity:.9; }
+    46%,58% { top:46.2%; opacity:.9; }
+    68%,80% { top:64.5%; opacity:.9; }
+    90%,100% { top:18.2%; opacity:.9; }
+  }
+  .bc-wiki-glint { position:absolute; top:0; bottom:0; left:-45%; width:38%; pointer-events:none; background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.16) 50%, transparent 100%); animation:bcGlint 6.8s ease-in-out infinite; }
+  @keyframes bcGlint { 0%,68% { left:-45%; opacity:0; } 74% { opacity:1; } 96%,100% { left:115%; opacity:0; } }
+  .bc-chips { position:absolute; left:50%; bottom:4.5%; transform:translateX(-50%); z-index:4; display:flex; align-items:center; gap:7px; white-space:nowrap; }
+  .bc-chip { padding:3px 9px; border-radius:999px; font-size:9px; font-weight:700; letter-spacing:.4px; color:#cbd5e1 !important; background:rgba(8,18,36,.86); border:1px solid rgba(148,163,184,.28); animation:bcChipCycle 6s ease-in-out infinite; }
+  .bc-chip:nth-child(2) { animation-delay:2s; }
+  .bc-chip:nth-child(3) { animation-delay:4s; }
+  @keyframes bcChipCycle { 0%,28% { border-color:rgba(56,189,248,.72); color:#e0f2fe; box-shadow:0 0 10px rgba(56,189,248,.22); } 36%,100% { border-color:rgba(148,163,184,.26); color:#cbd5e1; box-shadow:none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .bc-dot, .bc-wiki-scan, .bc-wiki-glint, .bc-chip { animation:none !important; }
+  }
   .b-body { padding:18px 18px 20px; min-height:98px; }
   .b-top { display:flex; align-items:center; gap:8px; }
   .b-top h3 { font-size:16.5px; }
@@ -382,10 +418,15 @@
   .kb2-browser-bar i { width:9px; height:9px; border-radius:50%; background:#334155; display:block; }
   .kb2-browser-bar i:nth-child(1){ background:#f87171; } .kb2-browser-bar i:nth-child(2){ background:#fbbf24; } .kb2-browser-bar i:nth-child(3){ background:#34d399; }
   .kb2-browser-bar span { margin-left:10px; font-size:11px; color:#94a3b8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .kb2-browser img { width:100%; aspect-ratio:1144/900; object-fit:cover; display:block; }
-  .kb2-browser::after { content:""; position:absolute; left:0; right:0; bottom:0; height:64px; pointer-events:none; background:linear-gradient(180deg,rgba(11,18,36,0),#0b1224 92%); }
+  .kb2-browser img { width:100%; aspect-ratio:1360/960; object-fit:cover; display:block; }
+  .kb2-browser::after { content:""; position:absolute; left:0; right:0; bottom:0; height:32px; pointer-events:none; background:linear-gradient(180deg,rgba(11,18,36,0),rgba(11,18,36,.72) 96%); }
+  .kb2-shot-wrap { position:relative; overflow:hidden; background:#fff; }
+  .kb2-sidebar-hl { position:absolute; left:.6%; top:18.2%; width:19.6%; height:4.6%; border-radius:4px; background:rgba(37,99,235,.13); border-left:2.5px solid #2563eb; pointer-events:none; animation:bcWikiScan 8.5s ease-in-out infinite; }
   .kb2-float { position:absolute; left:22px; bottom:-17px; display:flex; align-items:center; gap:8px; background:#0b1224; color:#bae6fd; border:1px solid rgba(125,211,252,.32); padding:9px 14px; border-radius:999px; font-size:12px; box-shadow:0 14px 34px rgba(0,0,0,.35); }
-  .kb2-float .dot { width:6px; height:6px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px #22d3ee; }
+  .kb2-float .dot { position:relative; width:7px; height:7px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px #22d3ee; }
+  .kb2-float .dot::after { content:""; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid rgba(34,211,238,.65); animation:kbDotRing 2.2s ease-out infinite; }
+  @keyframes kbDotRing { 0% { transform:scale(.75); opacity:.9; } 100% { transform:scale(2.1); opacity:0; } }
+  @media (prefers-reduced-motion: reduce) { .kb2-sidebar-hl, .kb2-float .dot::after { animation:none !important; } }
   .kb2-main { min-width:0; }
   .kb2-main .eyebrow2 { color:#7dd3fc; font-size:12px; font-weight:700; letter-spacing:2px; }
   .kb2-main h2 { margin:14px 0 18px; font-size:clamp(32px,3.4vw,48px); line-height:1.16; letter-spacing:-.5px; color:#f8fafc; }
@@ -1009,15 +1050,15 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         <div class="pp-media">
           <div class="pp-stage">
             <div class="pp-frame browser">
-              <img id="hd-main-img" src="assets/huidong-live-loong.webp" alt="会动网页 · 视觉艺术实录" loading="lazy" decoding="async">
+              <img id="hd-main-img" src="assets/huidong-shot-wall.jpg" alt="会动网页 · 暗色展厅图墙" loading="lazy" decoding="async">
             </div>
-            <div class="pp-cap"><b id="hd-cap-t">视觉艺术</b><span id="hd-cap-d">赤龙 3D 实时渲染实景录屏（点开网页可自由旋转）</span></div>
+            <div class="pp-cap"><b id="hd-cap-t">展厅图墙</b><span id="hd-cap-d">1,050 个会动的 3D 与交互案例，左栏分类 + 7 套皮肤切换</span></div>
           </div>
           <div class="pp-thumbs">
-            <button type="button" class="pp-th on" data-big="assets/huidong-live-loong.webp" data-kind="browser" data-cap="视觉艺术" data-desc="赤龙 3D 实时渲染实景录屏（点开网页可自由旋转）"><img src="assets/huidong-live-loong.jpg" alt="视觉艺术" loading="lazy" decoding="async"><span>视觉艺术</span></button>
-            <button type="button" class="pp-th" data-big="assets/huidong-live-fluid.webp" data-kind="browser" data-cap="七彩流体" data-desc="WebGL 实时流体烟雾实景交互录屏"><img src="assets/huidong-live-fluid.jpg" alt="七彩流体" loading="lazy" decoding="async"><span>七彩流体</span></button>
-            <button type="button" class="pp-th" data-big="assets/huidong-live-jelly.webp" data-kind="browser" data-cap="深海水母" data-desc="半透明次表面散射荧光水母群 3D 实录"><img src="assets/huidong-live-jelly.jpg" alt="深海水母" loading="lazy" decoding="async"><span>深海水母</span></button>
-            <button type="button" class="pp-th" data-big="assets/huidong-live-earth.webp" data-kind="browser" data-cap="实时地球" data-desc="全球超算实时台风与洋流 3D 发光地球实录"><img src="assets/huidong-live-earth.jpg" alt="实时地球" loading="lazy" decoding="async"><span>实时地球</span></button>
+            <button type="button" class="pp-th on" data-big="assets/huidong-shot-wall.jpg" data-kind="browser" data-cap="展厅图墙" data-desc="1,050 个会动的 3D 与交互案例，左栏分类 + 7 套皮肤切换"><img src="assets/huidong-shot-wall.jpg" alt="展厅图墙" loading="lazy" decoding="async"><span>展厅图墙</span></button>
+            <button type="button" class="pp-th" data-big="assets/huidong-shot4.jpg" data-kind="browser" data-cap="赤龙 3D" data-desc="纯代码生成的 3D 山峰、红叶与盘龙实景（点开网页可自由旋转）"><img src="assets/huidong-shot4.jpg" alt="赤龙 3D" loading="lazy" decoding="async"><span>赤龙 3D</span></button>
+            <button type="button" class="pp-th" data-big="assets/huidong-shot1.jpg" data-kind="browser" data-cap="F1 赛车拆解" data-desc="可交互 3D 赛车结构爆炸图与实时遥测面板"><img src="assets/huidong-shot1.jpg" alt="F1 赛车拆解" loading="lazy" decoding="async"><span>F1 拆解</span></button>
+            <button type="button" class="pp-th" data-big="assets/huidong-shot2.jpg" data-kind="browser" data-cap="韦伯望远镜" data-desc="深空展开全流程 3D 实时交互模拟"><img src="assets/huidong-shot2.jpg" alt="韦伯望远镜" loading="lazy" decoding="async"><span>韦伯望远镜</span></button>
           </div>
         </div>
         <div class="pp-info">
@@ -1040,15 +1081,15 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         <div class="pp-media">
           <div class="pp-stage">
             <div class="pp-frame browser">
-              <img src="shijue/media/styles-anim/s08.webp" alt="视觉图鉴 · 赛博朋克 HUD 动态预览" loading="lazy" decoding="async">
+              <img src="assets/shijue-shot-styles.jpg" alt="视觉图鉴 · 整片风格展厅" loading="lazy" decoding="async">
             </div>
-            <div class="pp-cap"><b>整片风格 · 赛博朋克 HUD</b><span>136 种整片视觉风格，支持分类检索与精选动态预览</span></div>
+            <div class="pp-cap"><b>风格展厅</b><span>136 种整片视觉风格，与会动网页统一双栏检索与皮肤切换</span></div>
           </div>
           <div class="pp-thumbs">
-            <button type="button" class="pp-th on" data-big="shijue/media/styles-anim/s08.webp" data-kind="browser" data-cap="整片风格 · 赛博朋克 HUD" data-desc="136 种整片视觉风格，支持分类检索与精选动态预览"><img src="shijue/media/styles/s08.webp" alt="赛博朋克 HUD" loading="lazy" decoding="async"><span>赛博风格</span></button>
-            <button type="button" class="pp-th" data-big="shijue/media/styles-anim/s30.webp" data-kind="browser" data-cap="整片风格 · 巨字动态排版" data-desc="高冲击力动态文字排版与杂志视觉参考"><img src="shijue/media/styles/s30.webp" alt="巨字动态排版" loading="lazy" decoding="async"><span>巨字排版</span></button>
-            <button type="button" class="pp-th" data-big="shijue/media/comps-anim/dataviz-landscape-open.webp" data-kind="browser" data-cap="镜头组件 · 暗场支流线束开场" data-desc="124 个镜头组件，按 10 大场景与能量节奏细分"><img src="shijue/media/comps/dataviz-landscape-open.webp" alt="镜头组件" loading="lazy" decoding="async"><span>镜头组件</span></button>
-            <button type="button" class="pp-th" data-big="assets/shijue-live-motion.webp" data-kind="browser" data-cap="实时动效 · 168 条纯代码动画" data-desc="3 大类 168 条 Canvas 2D 实时动效，滚进屏幕自动 60fps 播放"><img src="assets/shijue-live-motion.jpg" alt="实时动效预览" loading="lazy" decoding="async"><span>实时动效</span></button>
+            <button type="button" class="pp-th on" data-big="assets/shijue-shot-styles.jpg" data-kind="browser" data-cap="风格展厅" data-desc="136 种整片视觉风格，与会动网页统一双栏检索与皮肤切换"><img src="assets/shijue-shot-styles.jpg" alt="风格展厅" loading="lazy" decoding="async"><span>风格展厅</span></button>
+            <button type="button" class="pp-th" data-big="assets/shijue-shot-hud.jpg" data-kind="browser" data-cap="赛博 HUD" data-desc="电影级科幻全息地球与轨道光学监控视觉参考"><img src="assets/shijue-shot-hud.jpg" alt="赛博 HUD" loading="lazy" decoding="async"><span>赛博 HUD</span></button>
+            <button type="button" class="pp-th" data-big="assets/shijue-shot-comps.jpg" data-kind="browser" data-cap="镜头组件" data-desc="124 个镜头组件，按 10 大镜头场景与低中高能量筛选"><img src="assets/shijue-shot-comps.jpg" alt="镜头组件" loading="lazy" decoding="async"><span>镜头组件</span></button>
+            <button type="button" class="pp-th" data-big="assets/shijue-shot-motion.jpg" data-kind="browser" data-cap="实时动效" data-desc="168 条纯代码 Canvas 2D 动效，涵盖动态图形、转场与网页交互"><img src="assets/shijue-shot-motion.jpg" alt="实时动效" loading="lazy" decoding="async"><span>实时动效</span></button>
           </div>
         </div>
         <div class="pp-info">
@@ -1220,7 +1261,28 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         </div>
       </a>
       <a class="build-card is-open-link" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">
-        <div class="cover"><img src="assets/covers/feishu-kb.webp" alt="飞书知识库动态封面" width="548" height="412" loading="lazy" decoding="async"></div>
+        <div class="cover">
+          <div class="bc-stage bc-feishu" aria-label="飞书知识库动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
+              <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="372" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
+              <circle cx="28" cy="264" r="3" fill="#34d399" opacity=".82"/>
+              <circle cx="372" cy="264" r="3" fill="#34d399" opacity=".82"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>OPEN WIKI · 77 DOCS</div>
+            <div class="bc-wiki-win">
+              <img src="assets/kb-shot-wide.jpg" alt="飞书知识库最新总览" loading="lazy" decoding="async">
+              <div class="bc-wiki-scan" aria-hidden="true"></div>
+              <div class="bc-wiki-glint" aria-hidden="true"></div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">AI WORKBENCH</div>
+              <div class="bc-chip">52 篇复盘</div>
+              <div class="bc-chip">LIVE SYNC</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>飞书知识库</h3><span class="b-tag open">已公开 ↗</span></div>
           <p>AI 个人工作台的完整实战过程，持续更新。</p>
@@ -1241,14 +1303,54 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         </div>
       </article>
       <a class="build-card is-open-link" href="./huidong/" target="_blank" rel="noopener">
-        <div class="cover"><img src="assets/covers/huidong.webp" alt="会动网页动态封面" width="548" height="412" loading="lazy" decoding="async"></div>
+        <div class="cover">
+          <div class="bc-stage bc-trio" aria-label="会动网页动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <ellipse cx="200" cy="146" rx="172" ry="64" fill="none" stroke="rgba(56,189,248,.22)" stroke-width="1"/>
+              <circle r="4" fill="#a78bfa" opacity=".92">
+                <animateMotion dur="14s" repeatCount="indefinite" path="M 28,146 A 172,64 0 1,1 372,146 A 172,64 0 1,1 28,146"/>
+              </circle>
+              <circle r="4" fill="#38bdf8" opacity=".95">
+                <animateMotion dur="14s" begin="-7s" repeatCount="indefinite" path="M 28,146 A 172,64 0 1,1 372,146 A 172,64 0 1,1 28,146"/>
+              </circle>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot"></i>1,050+ 3D WEB LAB</div>
+            <div class="bc-side bc-left"><img src="assets/huidong-shot1.jpg" alt="F1 3D 工程拆解" loading="lazy" decoding="async"></div>
+            <div class="bc-side bc-right"><img src="assets/huidong-shot2.jpg" alt="韦伯望远镜 3D 模拟" loading="lazy" decoding="async"></div>
+            <div class="bc-main">
+              <video data-cover-video autoplay muted loop playsinline preload="metadata" poster="assets/covers/loong-poster.jpg" aria-label="赤龙 3D 实时动画">
+                <source src="assets/covers/loong-loop.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>会动网页</h3><span class="b-tag open">已公开 ↗</span></div>
           <p>1,050 个 3D 交互、物理模拟与开源酷站研习库，已公开上线。</p>
         </div>
       </a>
       <a class="build-card is-open-link" href="./shijue/" target="_blank" rel="noopener">
-        <div class="cover"><img src="assets/covers/shijue.webp" alt="视觉图鉴动态封面" width="548" height="412" loading="lazy" decoding="async"></div>
+        <div class="cover">
+          <div class="bc-stage bc-trio" aria-label="视觉图鉴动态封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <ellipse cx="200" cy="146" rx="172" ry="64" fill="none" stroke="rgba(56,189,248,.22)" stroke-width="1"/>
+              <circle r="4" fill="#38bdf8" opacity=".92">
+                <animateMotion dur="15s" repeatCount="indefinite" path="M 28,146 A 172,64 0 1,1 372,146 A 172,64 0 1,1 28,146"/>
+              </circle>
+              <circle r="4" fill="#c084fc" opacity=".9">
+                <animateMotion dur="15s" begin="-7.5s" repeatCount="indefinite" path="M 28,146 A 172,64 0 1,1 372,146 A 172,64 0 1,1 28,146"/>
+              </circle>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot"></i>428 VISUAL ATLAS · 视觉图鉴</div>
+            <div class="bc-side bc-left"><img src="shijue/media/styles/s30.webp" alt="巨字动态排版" loading="lazy" decoding="async"></div>
+            <div class="bc-side bc-right"><img src="shijue/media/styles/s02.webp" alt="等轴 2.5D 立体渲染" loading="lazy" decoding="async"></div>
+            <div class="bc-main">
+              <video data-cover-video autoplay muted loop playsinline preload="metadata" poster="assets/shijue-shot-hud.jpg" aria-label="赛博朋克 HUD 动态预览">
+                <source src="shijue/media/styles-vid/s08.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
           <div class="b-top"><h3>视觉图鉴</h3><span class="b-tag open">已公开 ↗</span></div>
           <p>136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，已公开上线。</p>
@@ -1264,10 +1366,13 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     <div class="kb2">
       <div class="kb2-visual">
         <div class="kb2-browser">
-          <div class="kb2-browser-bar"><i></i><i></i><i></i><span>bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span></div>
-          <img src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 硅基野人首页" loading="lazy" decoding="async">
+          <div class="kb2-browser-bar"><i></i><i></i><i></i><span>guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg</span></div>
+          <div class="kb2-shot-wrap">
+            <img src="assets/kb-shot-wide.jpg" alt="飞书知识库 · 硅基野人首页与完整目录" loading="lazy" decoding="async">
+            <div class="kb2-sidebar-hl" aria-hidden="true"></div>
+          </div>
         </div>
-        <div class="kb2-float"><span class="dot"></span>持续更新</div>
+        <div class="kb2-float"><span class="dot"></span>持续更新 · 77 页知识库</div>
       </div>
       <div class="kb2-main">
         <div class="eyebrow2">OPEN KNOWLEDGE</div>
@@ -1280,7 +1385,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         </div>
         <div class="kb2-chips"><span>新手教程</span><span>流程模板</span><span>提示词</span><span>持续更新</span></div>
         <div class="kb2-actions">
-          <a class="kb2-go" href="https://bwsvxs7m77k.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">进入知识库 <span>→</span></a>
+          <a class="kb2-go" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">进入知识库 <span>→</span></a>
           <span class="kb2-note">飞书文档</span>
         </div>
       </div>
@@ -3252,8 +3357,36 @@ html[data-theme="night"] .hg-tag, html[data-theme="night"] em { background:#1e29
 html[data-theme="night"] .skin-panel * { color:#cbd5e1 !important; }
 
 html[data-theme="night"] img { background-color:#111a2b !important; }
+html[data-theme="night"] .bc-wiki-win img, html[data-theme="night"] .kb2-shot-wrap img { background-color:#fff !important; }
+html[data-theme="night"] .bc-stage { background:radial-gradient(115% 90% at 50% 16%, #112545 0%, #071022 64%, #040914 100%) !important; }
+html[data-theme="night"] .bc-pill { color:#e2f1ff !important; background:rgba(8,18,36,.86) !important; border-color:rgba(56,189,248,.45) !important; }
+html[data-theme="night"] .bc-chip { color:#cbd5e1 !important; background:rgba(8,18,36,.88) !important; }
+html[data-theme="night"] .kb2-float { background:#0b1224 !important; color:#bae6fd !important; }
+html[data-theme="night"] #kb .kb2-main h2 em { background:transparent !important; color:#7dd3fc !important; border:0 !important; }
 html[data-theme="night"] .dy-cover { background-color:#111a2b !important; }
 </style>
+
+<script>
+/* ---------- 实战项目内嵌视频：进视口播放、出视口暂停 ---------- */
+(function(){
+  var vids = Array.prototype.slice.call(document.querySelectorAll('video[data-cover-video]'));
+  if (!vids.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { vids.forEach(function(v){ try{ v.pause(); v.removeAttribute('autoplay'); }catch(e){} }); return; }
+  function safePlay(v){ try{ v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}); }catch(e){} }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) safePlay(en.target);
+        else { try{ en.target.pause(); }catch(e){} }
+      });
+    }, { rootMargin: '120px 0px' });
+    vids.forEach(function(v){ io.observe(v); });
+  } else {
+    vids.forEach(safePlay);
+  }
+})();
+</script>
 
 <script src="assets/wuxian-card.js" defer></script>
 <script>(function(){
