@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>视觉图鉴 · 整片风格、镜头组件与实时动效展厅 · 硅基野人</title>
-<meta name="description" content="硅基野人视觉图鉴：136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，支持分类检索与实时预览。">
+<meta name="description" content="硅基野人视觉图鉴：136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，全量动态预览，支持分类检索与一键复制视觉描述。">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="canonical" href="https://guijiyeren.github.io/shijue/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="硅基野人">
 <meta property="og:title" content="视觉图鉴 · 整片风格、镜头组件与实时动效展厅 · 硅基野人">
-<meta property="og:description" content="136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，支持分类检索、能量筛选与一键复制视觉描述词。">
+<meta property="og:description" content="136 种整片风格、124 个镜头组件与 168 条纯代码实时动效，全量动态预览，支持分类检索与一键复制视觉描述词。">
 <meta property="og:url" content="https://guijiyeren.github.io/shijue/">
 <link rel="icon" href="../assets/logo.png">
 <script>(function(){try{var t=localStorage.getItem('guiji_theme');if(!t){var h=new Date().getHours();t=(h>=7&&h<19)?'day':'night';}document.documentElement.setAttribute('data-theme',t);document.documentElement.classList.toggle('dark',t==='night');}catch(e){}})();</script>
@@ -18,21 +18,25 @@
 <link rel="stylesheet" href="../assets/site-footer.css">
 <script src="../assets/site-nav.js?v=2" defer></script>
 <style>
+  /* ================= 与「会动网页」统一的工作台 7 套皮肤与设计体系 ================= */
   :root {
     --site-nav-h: 60px;
+    --wb-bar-h: 53px;
     --bg: #f4f5f7;
     --card: #ffffff;
     --soft: #eef0f4;
     --ink: #1d1d1f;
     --ink2: #3f4550;
-    --muted: #6e7582;
-    --muted2: #98a0ad;
+    --muted: #7b818d;
+    --muted2: #9ea4b0;
     --line: #e5e7ec;
     --line2: #eef0f5;
     --accent: #1F6F5C;
     --accent-weak: rgba(31, 111, 92, .11);
     --o: #CF5428;
     --o-weak: #fdeee7;
+    --g: #A86F12;
+    --g-weak: #f6efe2;
     --b: #2F6FEB;
     --b-weak: #e9f0fd;
     --r: 14px;
@@ -43,40 +47,52 @@
     --mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
   }
 
+  /* B 苹果风 */
   body.skin-B {
     --bg: #f5f5f7; --card: #ffffff; --soft: #ebebf0; --ink: #1d1d1f; --ink2: #424245;
-    --muted: #86868b; --line: #e5e5ea; --accent: #0071e3; --accent-weak: rgba(0, 113, 227, .10);
+    --muted: #86868b; --muted2: #a1a1a6; --line: #e5e5ea; --line2: #f0f0f4;
+    --accent: #0071e3; --accent-weak: rgba(0, 113, 227, .10);
     --r: 18px; --btn-r: 18px;
   }
+  /* C 暗色 */
   body.skin-C {
     --bg: #0c0d10; --card: #15171c; --soft: #1c1f26; --ink: #e8e8ec; --ink2: #c4c6cf;
     --muted: #8b8e99; --muted2: #686b75; --line: #252830; --line2: #1d2027;
     --accent: #5fe0b5; --accent-weak: rgba(95, 224, 181, .14);
     --o: #ff9f6b; --o-weak: rgba(255, 159, 107, .14);
+    --g: #f5c76b; --g-weak: rgba(245, 199, 107, .14);
     --b: #7fb0ff; --b-weak: rgba(127, 176, 255, .14);
     --shadow: 0 4px 16px rgba(0, 0, 0, .35);
     --shadow-hover: 0 16px 34px rgba(0, 0, 0, .6);
   }
+  /* D 杂志风 */
   body.skin-D {
     --bg: #f6f3ec; --card: #fffdf8; --soft: #ede7da; --ink: #231f1a; --ink2: #4a4339;
-    --muted: #7d7365; --line: #e2dacb; --accent: #8a5a12; --accent-weak: rgba(138, 90, 18, .12);
+    --muted: #7d7365; --muted2: #a39887; --line: #e2dacb; --line2: #ece5d8;
+    --accent: #8a5a12; --accent-weak: rgba(138, 90, 18, .12);
     --r: 10px; --btn-r: 6px;
   }
+  /* E 奶油风 */
   body.skin-E {
     --bg: #f8f0e5; --card: #fffaf2; --soft: #efe3d2; --ink: #3b2921; --ink2: #5c4438;
-    --muted: #7c6558; --line: #dfcdb8; --accent: #b07818; --accent-weak: rgba(176, 120, 24, .13);
+    --muted: #7c6558; --muted2: #a48d7e; --line: #dfcdb8; --line2: #eadbc9;
+    --accent: #b07818; --accent-weak: rgba(176, 120, 24, .13);
     --r: 16px; --btn-r: 12px;
   }
+  /* F 海军风 */
   body.skin-F {
     --bg: #eef3f9; --card: #ffffff; --soft: #e1ebf6; --ink: #142842; --ink2: #2e4766;
-    --muted: #5d7594; --line: #d0dceb; --accent: #1e4d8c; --accent-weak: rgba(30, 77, 140, .11);
+    --muted: #5d7594; --muted2: #879db8; --line: #d0dceb; --line2: #e2ebf5;
+    --accent: #1e4d8c; --accent-weak: rgba(30, 77, 140, .11);
     --r: 12px; --btn-r: 8px;
   }
+  /* G 科技风 */
   body.skin-G {
     --bg: #081520; --card: #102536; --soft: #163147; --ink: #ecf8ff; --ink2: #bdd8ea;
     --muted: #82a8c2; --muted2: #597e99; --line: #23475c; --line2: #193647;
     --accent: #22d3ee; --accent-weak: rgba(34, 211, 238, .15);
     --o: #fb923c; --o-weak: rgba(251, 146, 60, .15);
+    --g: #4ade80; --g-weak: rgba(74, 222, 128, .15);
     --b: #60a5fa; --b-weak: rgba(96, 165, 250, .15);
     --r: 8px; --btn-r: 6px;
   }
@@ -92,230 +108,288 @@
   }
   button, input { font: inherit; color: inherit; }
 
-  /* 顶部工具条 */
-  .sj-header {
+  /* ================= 二级功能顶栏（与「会动网页」1:1 统一） ================= */
+  .wb-header {
     position: sticky;
     top: var(--site-nav-h);
-    z-index: 60;
+    z-index: 80;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 12px 24px;
+    padding: 10px 20px;
     background: color-mix(in srgb, var(--card) 92%, transparent);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--line);
     flex-wrap: wrap;
   }
-  .sj-brand {
+  .mode-switch {
     display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .sj-logo {
-    width: 34px; height: 34px; border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), #2F6FEB);
-    color: #fff; font-weight: 800; font-size: 14px;
-    display: flex; align-items: center; justify-content: center;
-    flex: 0 0 auto;
-  }
-  .sj-title { font-size: 16px; font-weight: 800; line-height: 1.2; }
-  .sj-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  .sj-tabs {
-    display: inline-flex;
     background: var(--soft);
-    padding: 4px;
-    border-radius: 12px;
-    gap: 4px;
-    border: 1px solid var(--line);
+    padding: 3px;
+    border-radius: 11px;
+    border: 1px solid var(--line2);
+    gap: 3px;
+    flex-wrap: wrap;
   }
-  .sj-tab {
+  .mode-btn {
     border: 0;
     background: transparent;
-    padding: 7px 14px;
-    border-radius: 9px;
-    font-weight: 700;
-    font-size: 13px;
     color: var(--ink2);
+    padding: 6px 13px;
+    border-radius: 8px;
+    font-size: 12.5px;
     cursor: pointer;
-    transition: .16s;
+    transition: .14s;
     display: inline-flex;
     align-items: center;
     gap: 6px;
   }
-  .sj-tab:hover { color: var(--ink); }
-  .sj-tab.is-active {
+  .mode-btn:hover { color: var(--ink); background: rgba(128, 128, 128, .07); }
+  .mode-btn.on {
     background: var(--card);
     color: var(--accent);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
-  }
-  .sj-tab .cnt {
-    font-size: 11px;
     font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .09);
+  }
+  .mode-btn .cnt-pill {
+    font-size: 10.5px;
     padding: 1px 6px;
     border-radius: 999px;
-    background: var(--soft);
-    color: var(--muted);
-  }
-  .sj-tab.is-active .cnt {
     background: var(--accent-weak);
     color: var(--accent);
+    font-variant-numeric: tabular-nums;
   }
 
-  .sj-skins {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .sj-skin-btn {
-    width: 24px; height: 24px; border-radius: 7px;
-    border: 1px solid var(--line);
-    background: var(--soft);
-    font-size: 11px; font-weight: 700;
-    cursor: pointer; color: var(--muted);
-    transition: .15s;
-  }
-  .sj-skin-btn.is-active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
-  /* 主体容器 */
-  .sj-main {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 20px 24px 64px;
-  }
-
-  /* 筛选工具栏 */
-  .sj-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-  .sj-pills {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    flex: 1;
-    min-width: 240px;
-  }
-  .sj-pill {
-    border: 1px solid var(--line);
-    background: var(--card);
-    color: var(--ink2);
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .15s;
-  }
-  .sj-pill:hover { border-color: var(--accent); color: var(--accent); }
-  .sj-pill.is-on {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  .sj-controls {
+  .wb-tools {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
   }
-  .sj-toggle {
+  .skin-bar {
+    display: flex;
+    align-items: center;
+    background: var(--soft);
+    padding: 2px;
+    border-radius: 9px;
+    border: 1px solid var(--line2);
+    gap: 2px;
+  }
+  .skin-btn {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: .12s;
+  }
+  .skin-btn:hover { color: var(--ink); }
+  .skin-btn.on {
+    background: var(--card);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+  }
+
+  .btn {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--btn-r);
     border: 1px solid var(--line);
     background: var(--card);
     color: var(--ink2);
-    padding: 6px 12px;
-    border-radius: 999px;
     font-size: 12px;
-    font-weight: 600;
     cursor: pointer;
-    transition: .15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: .14s;
+    text-decoration: none;
+    white-space: nowrap;
   }
-  .sj-toggle.is-on {
-    background: var(--accent-weak);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .sj-search {
-    width: 240px;
-    max-width: 100%;
-    padding: 7px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: var(--card);
-    outline: none;
-    font-size: 13px;
-  }
-  .sj-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak); }
+  .btn:hover { border-color: var(--muted2); color: var(--ink); background: var(--soft); }
+  .btn.is-on { background: var(--accent-weak); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .btn.pri { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  body.skin-C .btn.pri, body.skin-G .btn.pri { color: #091318; }
+  .btn.pri:hover { opacity: .92; }
 
-  /* 二级筛选栏 */
-  .sj-subbar {
+  /* ================= 经典双栏主体（与「会动网页」1:1 统一） ================= */
+  .arch-A { display: flex; min-height: calc(100vh - var(--site-nav-h) - var(--wb-bar-h)); }
+  .a-side {
+    width: 248px;
+    flex: none;
+    background: var(--card);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: calc(var(--site-nav-h) + var(--wb-bar-h));
+    height: calc(100vh - var(--site-nav-h) - var(--wb-bar-h));
+  }
+  .a-side.is-collapsed { display: none; }
+  .a-nav { flex: 1; overflow-y: auto; padding: 10px 10px 18px; scrollbar-width: thin; }
+  .a-sec { margin-bottom: 6px; }
+  .a-grp {
+    font-size: 11px;
+    letter-spacing: .06em;
+    color: var(--muted);
+    padding: 9px 10px 6px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+    transition: .12s;
+  }
+  .a-grp:hover { background: var(--soft); color: var(--ink); }
+  .a-grp .caret { font-size: 11px; color: var(--muted2); transition: transform .15s; }
+  .a-sec.folded .a-grp .caret { transform: rotate(-90deg); }
+  .a-sec.folded .a-sec-body { display: none; }
+  .a-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink2);
+    transition: .12s;
+    border: 0;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+  .a-row:hover { background: var(--soft); color: var(--ink); }
+  .a-row.on { background: var(--accent-weak); color: var(--accent); font-weight: 600; }
+  .a-row .n { margin-left: auto; font-size: 11px; color: var(--muted2); font-variant-numeric: tabular-nums; }
+  .a-row.on .n { color: var(--accent); }
+  .a-row.is-sub { padding-left: 22px; font-size: 12.5px; }
+
+  .a-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .a-top {
+    position: sticky;
+    top: calc(var(--site-nav-h) + var(--wb-bar-h));
+    z-index: 20;
+    padding: 11px 22px;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 220px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0 12px;
+  }
+  .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-weak); }
+  .search-box input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 13px; min-width: 0; }
+  .search-box kbd { font-size: 10.5px; color: var(--muted2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+
+  .chip-bar {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 6px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--soft);
-    font-size: 12px;
+    padding-top: 2px;
   }
-  .sj-subbar .lbl { color: var(--muted); font-weight: 600; margin-right: 4px; }
-  .sj-subpill {
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--ink2);
+  .chip-bar .lb { font-size: 11px; color: var(--muted2); margin-right: 2px; }
+  .fchip {
+    font-size: 11.5px;
     padding: 3px 10px;
     border-radius: 999px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: .15s;
-  }
-  .sj-subpill:hover { background: var(--card); }
-  .sj-subpill.is-on {
+    border: 1px solid var(--line);
     background: var(--card);
-    border-color: var(--accent);
-    color: var(--accent);
-    font-weight: 700;
+    color: var(--ink2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: .12s;
   }
+  .fchip:hover { border-color: var(--muted2); color: var(--ink); }
+  .fchip.on { background: var(--accent-weak); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .fchip .n { font-size: 10px; opacity: .75; }
 
-  /* 分组标题 */
+  .a-mob-cats {
+    display: none;
+    width: 100%;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0 4px;
+  }
+  .a-mob-cats::-webkit-scrollbar { display: none; }
+  .a-mob-cats .fchip { flex: none; white-space: nowrap; }
+
+  .a-content { padding: 18px 22px 54px; flex: 1; min-width: 0; }
   .sj-sec { margin-top: 22px; }
-  .sj-sec:first-child { margin-top: 6px; }
+  .sj-sec:first-child { margin-top: 0; }
   .sj-sec-head {
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    gap: 6px 10px;
+    flex-wrap: wrap;
     margin-bottom: 12px;
   }
-  .sj-sec-head h2 { margin: 0; font-size: 16px; font-weight: 800; }
+  .sj-sec-head h2 { margin: 0; font-size: 15.5px; font-weight: 800; white-space: nowrap; }
   .sj-sec-head span { font-size: 12px; color: var(--muted); }
 
-  /* 网格与卡片 */
-  .sj-grid {
+  /* 卡片墙（对齐会动网页 .wall-5 响应式列数） */
+  .wall-5 {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 14px;
+    gap: 15px 14px;
   }
-  @media (max-width: 1260px) { .sj-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  @media (max-width: 960px)  { .sj-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 640px)  {
-    .sj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .sj-header { padding: 10px 14px; }
-    .sj-main { padding: 14px 14px 48px; }
-    .sj-skins { display: none; }
-    .sj-search { width: 100%; }
+  @media (max-width: 1440px) { .wall-5 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 1120px) { .wall-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 960px) {
+    .wb-header { position: static !important; padding: 10px 14px; gap: 8px; }
+    .a-top { position: static !important; padding: 10px 14px; gap: 8px; }
+    .a-side { width: 210px; top: var(--site-nav-h) !important; height: calc(100vh - var(--site-nav-h)) !important; }
+    .a-content { padding: 14px 14px 40px; }
+  }
+  @media (max-width: 820px) {
+    .a-side { display: none !important; }
+    .a-mob-cats { display: flex; }
+    .wall-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    #toggleSideBtn { display: none; }
+  }
+  @media (max-width: 640px) {
+    html, body { overflow-x: clip; max-width: 100vw; }
+    .mode-switch { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mode-btn { justify-content: center; padding: 7px 6px; font-size: 11.5px; gap: 3px; }
+    .mode-btn .cnt-pill { display: none; }
+    .wb-tools { width: 100%; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+    .wb-tools::-webkit-scrollbar { display: none; }
+    .skin-bar { flex: none; }
+    .search-box { min-width: 0; width: 100%; flex: 1 1 100%; }
+    .search-box kbd { display: none; }
+    .a-top .btn { font-size: 11.5px; padding: 0 9px; height: 30px; }
+    .chip-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 4px; }
+    .chip-bar::-webkit-scrollbar { display: none; }
+    .chip-bar .lb, .chip-bar .fchip { flex: none; white-space: nowrap; }
+    .wall-5 { grid-template-columns: 1fr; gap: 12px; }
   }
 
+  /* 卡片设计 */
   .sj-card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -340,7 +414,7 @@
     overflow: hidden;
   }
   .sj-thumb.is-motion { aspect-ratio: 539 / 208; }
-  .sj-thumb img, .sj-thumb canvas {
+  .sj-thumb img, .sj-thumb video, .sj-thumb canvas {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -357,17 +431,30 @@
     color: #fff;
     font: 700 11px/1.3 var(--mono);
     backdrop-filter: blur(6px);
+    z-index: 2;
   }
-  .sj-badge-anim {
+  .sj-badge-live {
     position: absolute;
     right: 8px;
     top: 8px;
     padding: 2px 7px;
-    border-radius: 6px;
-    background: rgba(16, 185, 129, .9);
-    color: #fff;
-    font-size: 10.5px;
+    border-radius: 999px;
+    background: rgba(12, 14, 18, .68);
+    color: #86efac;
+    font-size: 10px;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+  }
+  .sj-badge-live i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: block;
   }
   .sj-body {
     padding: 10px 12px 8px;
@@ -419,20 +506,20 @@
   .sj-tag.is-accent { background: var(--accent-weak); color: var(--accent); }
 
   .sj-empty {
-    padding: 48px 20px;
+    padding: 52px 20px;
     text-align: center;
     color: var(--muted);
     background: var(--card);
     border: 1px dashed var(--line);
     border-radius: var(--r);
-    margin-top: 12px;
+    margin-top: 8px;
   }
 
-  /* 弹窗 */
+  /* 详情弹窗 */
   .sj-modal-mask {
     position: fixed;
     inset: 0;
-    z-index: 120;
+    z-index: 160;
     background: rgba(8, 10, 14, .68);
     backdrop-filter: blur(6px);
     display: none;
@@ -443,7 +530,7 @@
   .sj-modal-mask.is-open { display: flex; }
   .sj-modal {
     width: 100%;
-    max-width: 760px;
+    max-width: 780px;
     max-height: 90vh;
     overflow-y: auto;
     background: var(--card);
@@ -476,9 +563,9 @@
     border: 1px solid var(--line);
     margin-bottom: 14px;
   }
-  .sj-modal-media img, .sj-modal-media canvas {
+  .sj-modal-media img, .sj-modal-media video, .sj-modal-media canvas {
     width: 100%;
-    max-height: 400px;
+    max-height: 420px;
     object-fit: contain;
     display: block;
   }
@@ -513,25 +600,6 @@
     flex-wrap: wrap;
     margin-top: 16px;
   }
-  .sj-btn {
-    border: 1px solid var(--line);
-    background: var(--soft);
-    color: var(--ink);
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    transition: .15s;
-  }
-  .sj-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .sj-btn.is-primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  .sj-btn.is-primary:hover { opacity: .92; color: #fff; }
   .sj-toast {
     position: fixed;
     left: 50%;
@@ -546,7 +614,7 @@
     opacity: 0;
     pointer-events: none;
     transition: .2s;
-    z-index: 200;
+    z-index: 220;
     box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
   }
   .sj-toast.is-show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -555,26 +623,40 @@
 <body class="skin-A">
 <nav class="site-nav" aria-label="站点导航"><div class="site-nav-in"><a class="sn-brand" href="../"><img src="../assets/logo.png" alt="">硅基野人</a><div class="sn-links"><a href="../">首页</a><a href="../#projects">公开项目</a><a href="../#workbench-flow">工作台流程</a><a href="../#building">实战项目</a><a href="../#kb">飞书知识库</a><a href="../#about">关于我</a><a href="#follow">联系方式</a></div><button class="sn-theme" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚" aria-pressed="false"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button></div></nav>
 
-<header class="sj-header">
-  <div class="sj-brand">
-    <div class="sj-logo">图</div>
-    <div>
-      <div class="sj-title">视觉图鉴 · 风格、组件与实时动效展厅</div>
-      <div class="sj-sub" id="sjSub">整片风格 · 镜头组件 · 纯代码实时动效</div>
-    </div>
+<!-- ================= 二级工具顶栏（对齐「会动网页」，去掉重复标题块） ================= -->
+<header class="wb-header" id="wbHeader">
+  <div class="mode-switch" id="sjTabs" role="tablist"></div>
+  <div class="wb-tools">
+    <div class="skin-bar" id="sjSkins" title="切换展厅配色"></div>
   </div>
-  <div class="sj-tabs" id="sjTabs" role="tablist"></div>
-  <div class="sj-skins" id="sjSkins" title="切换展厅配色"></div>
 </header>
 
-<main class="sj-main">
-  <div class="sj-toolbar">
-    <div class="sj-pills" id="sjPills"></div>
-    <div class="sj-controls" id="sjControls"></div>
-  </div>
-  <div class="sj-subbar" id="sjSubbar" style="display:none"></div>
-  <div id="sjContent"></div>
-</main>
+<!-- ================= 经典双栏主体：左侧可折叠分类树 + 右侧搜索与卡片图墙 ================= -->
+<div class="arch-A">
+  <aside class="a-side" id="aSide">
+    <div class="a-nav" id="aSideNav"></div>
+  </aside>
+
+  <main class="a-main">
+    <div class="a-top">
+      <button class="btn" id="toggleSideBtn" type="button" title="展开/收起左侧分类栏">☰ 分类</button>
+      <div class="search-box">
+        <span>🔍</span>
+        <input id="sjSearch" type="search" placeholder="搜索风格名、编号或画面关键词…">
+        <kbd>Ctrl K</kbd>
+      </div>
+      <button class="btn" id="randomBtn" type="button">🎲 随机看一个</button>
+      <button class="btn is-on" id="autoPlayBtn" type="button" title="卡片进入屏幕时自动播放动态预览">▶ 自动动图：开</button>
+      <button class="btn" id="clearFilterBtn" type="button" style="display:none">清除筛选</button>
+      <span style="font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums" id="sjCountText">共 428 项</span>
+
+      <div class="a-mob-cats" id="aMobCats"></div>
+      <div class="chip-bar" id="sjChipBar" style="display:none"></div>
+    </div>
+
+    <div class="a-content" id="sjContent"></div>
+  </main>
+</div>
 
 <div class="sj-modal-mask" id="sjModalMask" aria-hidden="true">
   <div class="sj-modal" id="sjModal" role="dialog" aria-modal="true"></div>
@@ -588,19 +670,22 @@
 <script>
 (function () {
   const DATA = window.SHIJUE_DATA || { styles: [], components: [], motions: [], styleCats: [], compCats: [], motionGroups: [], counts: {} };
+  const SKIN_NAMES = { A: '标准', B: '苹果', C: '暗色', D: '杂志', E: '奶油', F: '海军', G: '科技' };
+
   const state = {
     tab: 'style',
     styleCat: '',
-    styleOnlyAnim: false,
     styleQuery: '',
     compCat: '',
     compEnergy: '',
-    compOnlyAnim: false,
     compQuery: '',
     motionGroup: '',
     motionSub: '',
     motionQuery: '',
-    skin: 'A'
+    skin: 'A',
+    autoPlay: true,
+    sideCollapsed: false,
+    foldedGroups: {}
   };
 
   let initialItem = '';
@@ -613,9 +698,17 @@
   const $ = (id) => document.getElementById(id);
   const loadedPacks = new Set();
   const loadingPacks = new Map();
+  let videoObs = null;
   let motionObs = null;
   let motionRaf = 0;
   let modalRaf = 0;
+  let lastFiltered = [];
+
+  function syncBarHeight() {
+    const h = Math.round(($('wbHeader') && $('wbHeader').getBoundingClientRect().height) || 53);
+    document.documentElement.style.setProperty('--wb-bar-h', h + 'px');
+  }
+  window.addEventListener('resize', syncBarHeight);
 
   function toast(msg) {
     const el = $('sjToast');
@@ -659,11 +752,10 @@
 
   function renderSkins() {
     const box = $('sjSkins');
-    const names = { A: '默认', B: '苹果', C: '暗色', D: '杂志', E: '奶油', F: '海军', G: '科技' };
-    box.innerHTML = Object.keys(names).map(k =>
-      `<button class="sj-skin-btn${state.skin === k ? ' is-active' : ''}" data-skin="${k}" title="${names[k]}风">${k}</button>`
+    box.innerHTML = Object.keys(SKIN_NAMES).map(k =>
+      `<button class="skin-btn${state.skin === k ? ' on' : ''}" data-skin="${k}" title="${SKIN_NAMES[k]}皮肤">${SKIN_NAMES[k]}</button>`
     ).join('');
-    box.querySelectorAll('button').forEach(b => b.onclick = () => setSkin(b.dataset.skin));
+    box.querySelectorAll('button').forEach(b => b.onclick = () => setSkin(b.dataset.skin, true));
   }
 
   function loadMotionPack(packId) {
@@ -686,13 +778,58 @@
     return pr;
   }
 
-  function stopMotionLoop() {
+  function stopObservers() {
     if (motionRaf) { cancelAnimationFrame(motionRaf); motionRaf = 0; }
     if (motionObs) { try { motionObs.disconnect(); } catch (e) {} motionObs = null; }
+    if (videoObs) { try { videoObs.disconnect(); } catch (e) {} videoObs = null; }
+  }
+
+  function playCardVideo(v) {
+    if (!v || !v.dataset.src) return;
+    if (!v.getAttribute('src')) {
+      v.src = v.dataset.src;
+      v.load();
+    }
+    const pr = v.play();
+    if (pr && pr.catch) pr.catch(() => {});
+  }
+
+  function pauseCardVideo(v) {
+    if (!v) return;
+    try { v.pause(); } catch (e) {}
+  }
+
+  function setupVideoObserver(container) {
+    const videos = Array.from(container.querySelectorAll('video[data-src]'));
+    if (!videos.length) return;
+
+    videos.forEach(v => {
+      const card = v.closest('.sj-card');
+      if (!card) return;
+      card.addEventListener('mouseenter', () => {
+        if (!state.autoPlay) playCardVideo(v);
+      });
+      card.addEventListener('mouseleave', () => {
+        if (!state.autoPlay) pauseCardVideo(v);
+      });
+    });
+
+    if (!state.autoPlay) return;
+    videoObs = new IntersectionObserver((entries) => {
+      for (const ent of entries) {
+        const v = ent.target;
+        if (ent.isIntersecting) playCardVideo(v);
+        else pauseCardVideo(v);
+      }
+    }, { rootMargin: '120px 0px', threshold: 0.05 });
+
+    videos.forEach(v => videoObs.observe(v));
   }
 
   function closeModal() {
     if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
+    const mv = $('sjModal').querySelector('video');
+    if (mv) { try { mv.pause(); } catch (e) {} }
     const mask = $('sjModalMask');
     mask.classList.remove('is-open');
     mask.setAttribute('aria-hidden', 'true');
@@ -702,19 +839,22 @@
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      $('sjSearch').focus();
+      $('sjSearch').select();
+    }
   });
 
   function renderTabs() {
-    const c = DATA.counts || {};
-    $('sjSub').textContent = `共 ${(c.styles || 0) + (c.components || 0) + (c.motions || 0)} 项视觉参考 · 更新于 ${DATA.updatedAt || ''}`;
     const tabs = [
-      ['style', '① 风格', DATA.styles.length],
-      ['component', '② 组件', DATA.components.length],
-      ['motion', '③ 动效', DATA.motions.length]
+      ['style', '🎨 整片风格', DATA.styles.length],
+      ['component', '🎬 镜头组件', DATA.components.length],
+      ['motion', '⚡ 实时动效', DATA.motions.length]
     ];
     const host = $('sjTabs');
     host.innerHTML = tabs.map(([k, lbl, n]) =>
-      `<button class="sj-tab${state.tab === k ? ' is-active' : ''}" data-tab="${k}" role="tab">${lbl}<span class="cnt">${n}</span></button>`
+      `<button class="mode-btn${state.tab === k ? ' on' : ''}" data-tab="${k}" role="tab">${lbl}<span class="cnt-pill">${n}</span></button>`
     ).join('');
     host.querySelectorAll('button').forEach(b => {
       b.onclick = () => {
@@ -732,76 +872,85 @@
     });
   }
 
-  function renderControls(placeholder, queryVal, onQuery, extraBtn) {
-    const host = $('sjControls');
-    host.innerHTML = '';
-    if (extraBtn) {
-      const btn = document.createElement('button');
-      btn.className = 'sj-toggle' + (extraBtn.on ? ' is-on' : '');
-      btn.textContent = extraBtn.label;
-      btn.onclick = extraBtn.onClick;
-      host.appendChild(btn);
-    }
-    const input = document.createElement('input');
-    input.type = 'search';
-    input.className = 'sj-search';
-    input.placeholder = placeholder;
-    input.value = queryVal;
-    let timer = 0;
-    input.oninput = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => onQuery(input.value.trim()), 120);
-    };
-    host.appendChild(input);
+  function syncTopToolbar(placeholder, queryVal, hasFilter, shown, total) {
+    const inp = $('sjSearch');
+    if (inp.placeholder !== placeholder) inp.placeholder = placeholder;
+    if (document.activeElement !== inp && inp.value !== queryVal) inp.value = queryVal;
+    $('clearFilterBtn').style.display = hasFilter ? '' : 'none';
+    $('sjCountText').textContent = `显示 ${shown} / ${total} 项`;
+    const ap = $('autoPlayBtn');
+    ap.style.display = state.tab === 'motion' ? 'none' : '';
+    ap.classList.toggle('is-on', state.autoPlay);
+    ap.textContent = state.autoPlay ? '▶ 自动动图：开' : '⏸ 仅悬停动图';
   }
 
-  // ==================== ① 风格 ====================
-  function renderStylesTab(keepControls) {
-    stopMotionLoop();
+  function buildSideSection(secId, title, rowsHtml) {
+    const folded = !!state.foldedGroups[secId];
+    return `
+      <div class="a-sec${folded ? ' folded' : ''}" data-sec="${esc(secId)}">
+        <div class="a-grp" data-toggle-sec="${esc(secId)}"><span>${esc(title)}</span><span class="caret">▾</span></div>
+        <div class="a-sec-body">${rowsHtml}</div>
+      </div>
+    `;
+  }
+
+  function bindSideToggles(nav) {
+    nav.querySelectorAll('[data-toggle-sec]').forEach(el => {
+      el.onclick = () => {
+        const sid = el.getAttribute('data-toggle-sec');
+        state.foldedGroups[sid] = !state.foldedGroups[sid];
+        el.closest('.a-sec').classList.toggle('folded', state.foldedGroups[sid]);
+      };
+    });
+  }
+
+  // ==================== ① 风格（136 条全量循环 MP4 动态预览） ====================
+  function renderStylesTab() {
+    stopObservers();
     const list = DATA.styles || [];
-    const pills = $('sjPills');
-    pills.innerHTML = '';
-    const addPill = (label, val) => {
-      const b = document.createElement('button');
-      b.className = 'sj-pill' + (state.styleCat === val ? ' is-on' : '');
-      b.textContent = label;
-      b.onclick = () => { state.styleCat = val; renderStylesTab(true); };
-      pills.appendChild(b);
-    };
-    addPill(`全部 ${list.length}`, '');
-    for (const cat of DATA.styleCats || []) {
+    const cats = DATA.styleCats || [];
+
+    // 左侧导航树
+    const nav = $('aSideNav');
+    const overviewRows = `
+      <button type="button" class="a-row${!state.styleCat ? ' on' : ''}" data-cat=""><span>📁 全部风格</span><span class="n">${list.length}</span></button>
+    `;
+    const catRows = cats.map(cat => {
       const cnt = list.filter(x => x.cat === cat).length;
-      if (cnt) addPill(`${cat} ${cnt}`, cat);
-    }
+      if (!cnt) return '';
+      return `<button type="button" class="a-row${state.styleCat === cat ? ' on' : ''}" data-cat="${esc(cat)}"><span>${esc(cat)}</span><span class="n">${cnt}</span></button>`;
+    }).join('');
+    nav.innerHTML = buildSideSection('style_top', '精选导航', overviewRows) + buildSideSection('style_cats', '视觉流派', catRows);
+    bindSideToggles(nav);
+    nav.querySelectorAll('.a-row').forEach(btn => {
+      btn.onclick = () => { state.styleCat = btn.dataset.cat; renderStylesTab(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    });
 
-    if (!keepControls) {
-      const animCnt = list.filter(x => x.anim).length;
-      renderControls('搜风格名、编号或画面关键词…', state.styleQuery, (q) => {
-        state.styleQuery = q;
-        renderStylesTab(true);
-      }, animCnt ? {
-        label: `仅看精选动图 (${animCnt})`,
-        on: state.styleOnlyAnim,
-        onClick: () => { state.styleOnlyAnim = !state.styleOnlyAnim; renderStylesTab(false); }
-      } : null);
-    } else {
-      const tgl = $('sjControls').querySelector('.sj-toggle');
-      if (tgl) tgl.classList.toggle('is-on', state.styleOnlyAnim);
-    }
+    // 手机端横向分类条
+    const mob = $('aMobCats');
+    mob.innerHTML = `<button type="button" class="fchip${!state.styleCat ? ' on' : ''}" data-cat="">全部 <span class="n">${list.length}</span></button>` +
+      cats.map(cat => {
+        const cnt = list.filter(x => x.cat === cat).length;
+        return cnt ? `<button type="button" class="fchip${state.styleCat === cat ? ' on' : ''}" data-cat="${esc(cat)}">${esc(cat)} <span class="n">${cnt}</span></button>` : '';
+      }).join('');
+    mob.querySelectorAll('.fchip').forEach(btn => {
+      btn.onclick = () => { state.styleCat = btn.dataset.cat; renderStylesTab(); };
+    });
 
-    $('sjSubbar').style.display = 'none';
+    $('sjChipBar').style.display = 'none';
 
     const q = state.styleQuery.toLowerCase();
     const filtered = list.filter(s => {
       if (state.styleCat && s.cat !== state.styleCat) return false;
-      if (state.styleOnlyAnim && !s.anim) return false;
       if (q && !`${s.id} ${s.name} ${s.en} ${s.cat} ${s.desc} ${s.fit} ${(s.tech || []).join(' ')}`.toLowerCase().includes(q)) return false;
       return true;
     });
+    lastFiltered = filtered;
+    syncTopToolbar('搜索风格名、编号（如 S07 / S21）或画面关键词…', state.styleQuery, !!(state.styleCat || state.styleQuery), filtered.length, list.length);
 
     const content = $('sjContent');
     if (!filtered.length) {
-      content.innerHTML = '<div class="sj-empty">没有找到匹配的风格，试试切换分类或清空搜索词。</div>';
+      content.innerHTML = '<div class="sj-empty">没有找到匹配的风格，试试切换左侧分类或清空搜索词。</div>';
       return;
     }
 
@@ -809,9 +958,9 @@
       <section class="sj-sec">
         <div class="sj-sec-head">
           <h2>${esc(state.styleCat || '全部整片风格')}</h2>
-          <span>共 ${filtered.length} 种 · 点开卡片查看高清大图与视觉描述</span>
+          <span>共 ${filtered.length} 种 · 全量动态预览，点开卡片看高清循环与视觉描述</span>
         </div>
-        <div class="sj-grid" id="sjStyleGrid"></div>
+        <div class="wall-5" id="sjStyleGrid"></div>
       </section>
     `;
     const grid = $('sjStyleGrid');
@@ -819,12 +968,17 @@
     for (const s of filtered) {
       const card = document.createElement('article');
       card.className = 'sj-card';
-      const src = s.anim || s.img;
+      let mediaHtml = '';
+      if (s.vid) {
+        mediaHtml = `<video muted loop playsinline preload="none" poster="${esc(s.img || '')}" data-src="${esc(s.vid)}"></video>`;
+      } else if (s.anim || s.img) {
+        mediaHtml = `<img src="${esc(s.anim || s.img)}" alt="${esc(s.name)}" loading="lazy" decoding="async">`;
+      }
       card.innerHTML = `
         <div class="sj-thumb">
-          ${src ? `<img src="${esc(src)}" alt="${esc(s.name)}" loading="lazy" decoding="async">` : ''}
+          ${mediaHtml}
           <span class="sj-badge-no">${esc(s.id)}</span>
-          ${s.anim ? '<span class="sj-badge-anim">动态</span>' : ''}
+          ${(s.vid || s.anim) ? '<span class="sj-badge-live"><i></i>动态</span>' : ''}
         </div>
         <div class="sj-body">
           <div class="sj-name">${esc(s.name)}</div>
@@ -840,28 +994,34 @@
       frag.appendChild(card);
     }
     grid.appendChild(frag);
+    setupVideoObserver(grid);
   }
 
   function openStyleModal(s) {
     if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
-    const media = s.anim || s.img;
     const modal = $('sjModal');
+    let mediaHtml = '';
+    if (s.vid) {
+      mediaHtml = `<div class="sj-modal-media"><video src="${esc(s.vid)}" poster="${esc(s.img || '')}" autoplay muted loop playsinline controls></video></div>`;
+    } else if (s.anim || s.img) {
+      mediaHtml = `<div class="sj-modal-media"><img src="${esc(s.anim || s.img)}" alt="${esc(s.name)}"></div>`;
+    }
     modal.innerHTML = `
       <div class="sj-modal-head">
         <h3>${esc(s.id)} · ${esc(s.name)}${s.en ? ` <small style="font-weight:500;color:var(--muted);font-size:13px">${esc(s.en)}</small>` : ''}</h3>
         <button class="sj-close" id="sjCloseBtn" aria-label="关闭">×</button>
       </div>
-      ${media ? `<div class="sj-modal-media"><img src="${esc(media)}" alt="${esc(s.name)}"></div>` : ''}
+      ${mediaHtml}
       <div class="sj-meta-row">
         <span class="sj-tag is-accent">${esc(s.cat)}</span>
-        ${s.anim ? '<span class="sj-tag">精选动态预览</span>' : ''}
+        ${(s.vid || s.anim) ? '<span class="sj-tag">动态循环预览</span>' : ''}
         ${(s.tech || []).map(t => `<span class="sj-tag">${esc(t)}</span>`).join('')}
       </div>
       ${s.desc ? `<div class="sj-modal-desc">${esc(s.desc)}</div>` : ''}
       ${s.fit ? `<div class="sj-modal-box"><b>适合题材：</b>${esc(s.fit)}</div>` : ''}
       ${(s.how && s.how.length) ? `<div class="sj-modal-box"><b>视觉要点：</b><ul>${s.how.map(h => `<li>${esc(h)}</li>`).join('')}</ul></div>` : ''}
       <div class="sj-modal-acts">
-        <button class="sj-btn is-primary" id="sjCopyBtn">复制中文视觉描述</button>
+        <button class="btn pri" id="sjCopyBtn">复制中文视觉描述</button>
       </div>
     `;
     $('sjCloseBtn').onclick = closeModal;
@@ -879,63 +1039,60 @@
     mask.setAttribute('aria-hidden', 'false');
   }
 
-  // ==================== ② 组件 ====================
-  function renderCompsTab(keepControls) {
-    stopMotionLoop();
+  // ==================== ② 镜头组件（124 条全量循环 MP4 动态预览） ====================
+  function renderCompsTab() {
+    stopObservers();
     const list = DATA.components || [];
-    const pills = $('sjPills');
-    pills.innerHTML = '';
-    const addPill = (label, val) => {
-      const b = document.createElement('button');
-      b.className = 'sj-pill' + (state.compCat === val ? ' is-on' : '');
-      b.textContent = label;
-      b.onclick = () => { state.compCat = val; state.compEnergy = ''; renderCompsTab(true); };
-      pills.appendChild(b);
-    };
-    addPill(`全部 ${list.length}`, '');
-    for (const cat of DATA.compCats || []) {
+    const cats = DATA.compCats || [];
+
+    const nav = $('aSideNav');
+    const overviewRows = `
+      <button type="button" class="a-row${!state.compCat ? ' on' : ''}" data-cat=""><span>📁 全部组件</span><span class="n">${list.length}</span></button>
+    `;
+    const catRows = cats.map(cat => {
       const cnt = list.filter(x => x.cat === cat).length;
-      if (cnt) addPill(`${cat} ${cnt}`, cat);
-    }
+      if (!cnt) return '';
+      return `<button type="button" class="a-row${state.compCat === cat ? ' on' : ''}" data-cat="${esc(cat)}"><span>${esc(cat)}</span><span class="n">${cnt}</span></button>`;
+    }).join('');
+    nav.innerHTML = buildSideSection('comp_top', '精选导航', overviewRows) + buildSideSection('comp_cats', '镜头场景', catRows);
+    bindSideToggles(nav);
+    nav.querySelectorAll('.a-row').forEach(btn => {
+      btn.onclick = () => { state.compCat = btn.dataset.cat; state.compEnergy = ''; renderCompsTab(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    });
 
-    if (!keepControls) {
-      const animCnt = list.filter(x => x.anim).length;
-      renderControls('搜组件中文名、场景或英文…', state.compQuery, (q) => {
-        state.compQuery = q;
-        renderCompsTab(true);
-      }, animCnt ? {
-        label: `仅看精选动图 (${animCnt})`,
-        on: state.compOnlyAnim,
-        onClick: () => { state.compOnlyAnim = !state.compOnlyAnim; renderCompsTab(false); }
-      } : null);
-    } else {
-      const tgl = $('sjControls').querySelector('.sj-toggle');
-      if (tgl) tgl.classList.toggle('is-on', state.compOnlyAnim);
-    }
+    const mob = $('aMobCats');
+    mob.innerHTML = `<button type="button" class="fchip${!state.compCat ? ' on' : ''}" data-cat="">全部 <span class="n">${list.length}</span></button>` +
+      cats.map(cat => {
+        const cnt = list.filter(x => x.cat === cat).length;
+        return cnt ? `<button type="button" class="fchip${state.compCat === cat ? ' on' : ''}" data-cat="${esc(cat)}">${esc(cat)} <span class="n">${cnt}</span></button>` : '';
+      }).join('');
+    mob.querySelectorAll('.fchip').forEach(btn => {
+      btn.onclick = () => { state.compCat = btn.dataset.cat; state.compEnergy = ''; renderCompsTab(); };
+    });
 
-    // 能量二级筛选
+    // 能量快捷筛选条（同会动网页 .chip-bar）
     const scope = state.compCat ? list.filter(x => x.cat === state.compCat) : list;
-    const subbar = $('sjSubbar');
-    subbar.style.display = 'flex';
-    subbar.innerHTML = `<span class="lbl">${esc(state.compCat || '全部组件')} · 节奏/能量：</span>`;
-    [['', `全部 (${scope.length})`], ['低', '低能量·克制'], ['中', '中能量·常规'], ['高', '高能量·强冲击']].forEach(([v, l]) => {
-      const cnt = v ? scope.filter(x => String(x.energy || '').includes(v)).length : scope.length;
-      if (v && !cnt) return;
-      const b = document.createElement('button');
-      b.className = 'sj-subpill' + (state.compEnergy === v ? ' is-on' : '');
-      b.textContent = v ? `${l} ${cnt}` : l;
-      b.onclick = () => { state.compEnergy = v; renderCompsTab(true); };
-      subbar.appendChild(b);
+    const chipBar = $('sjChipBar');
+    chipBar.style.display = 'flex';
+    chipBar.innerHTML = `<span class="lb">节奏与能量：</span>` +
+      [['', '全部能量'], ['低', '低能量·克制'], ['中', '中能量·常规'], ['高', '高能量·强冲击']].map(([v, l]) => {
+        const cnt = v ? scope.filter(x => String(x.energy || '').includes(v)).length : scope.length;
+        if (v && !cnt) return '';
+        return `<button type="button" class="fchip${state.compEnergy === v ? ' on' : ''}" data-energy="${v}">${l} <span class="n">${cnt}</span></button>`;
+      }).join('');
+    chipBar.querySelectorAll('.fchip').forEach(b => {
+      b.onclick = () => { state.compEnergy = b.dataset.energy; renderCompsTab(); };
     });
 
     const q = state.compQuery.toLowerCase();
     const filtered = list.filter(c => {
       if (state.compCat && c.cat !== state.compCat) return false;
       if (state.compEnergy && !String(c.energy || '').includes(state.compEnergy)) return false;
-      if (state.compOnlyAnim && !c.anim) return false;
       if (q && !`${c.cn} ${c.name} ${c.cat} ${c.one} ${c.fit}`.toLowerCase().includes(q)) return false;
       return true;
     });
+    lastFiltered = filtered;
+    syncTopToolbar('搜索组件中文名、镜头场景或英文…', state.compQuery, !!(state.compCat || state.compEnergy || state.compQuery), filtered.length, list.length);
 
     const content = $('sjContent');
     if (!filtered.length) {
@@ -944,21 +1101,26 @@
     }
 
     content.innerHTML = '';
-    const showCats = state.compCat ? [state.compCat] : (DATA.compCats || []).filter(cat => filtered.some(c => c.cat === cat));
+    const showCats = state.compCat ? [state.compCat] : cats.filter(cat => filtered.some(c => c.cat === cat));
     for (const cat of showCats) {
       const group = filtered.filter(c => c.cat === cat);
       const sec = document.createElement('section');
       sec.className = 'sj-sec';
-      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(cat)}</h2><span>${group.length} 个组件</span></div><div class="sj-grid"></div>`;
-      const grid = sec.querySelector('.sj-grid');
+      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(cat)}</h2><span>${group.length} 个组件 · 进屏自动播放</span></div><div class="wall-5"></div>`;
+      const grid = sec.querySelector('.wall-5');
       for (const c of group) {
         const card = document.createElement('article');
         card.className = 'sj-card';
-        const src = c.anim || c.img;
+        let mediaHtml = '';
+        if (c.vid) {
+          mediaHtml = `<video muted loop playsinline preload="none" poster="${esc(c.img || '')}" data-src="${esc(c.vid)}"></video>`;
+        } else if (c.anim || c.img) {
+          mediaHtml = `<img src="${esc(c.anim || c.img)}" alt="${esc(c.cn)}" loading="lazy" decoding="async">`;
+        }
         card.innerHTML = `
           <div class="sj-thumb">
-            ${src ? `<img src="${esc(src)}" alt="${esc(c.cn)}" loading="lazy" decoding="async">` : ''}
-            ${c.anim ? '<span class="sj-badge-anim">动态</span>' : ''}
+            ${mediaHtml}
+            ${(c.vid || c.anim) ? '<span class="sj-badge-live"><i></i>动态</span>' : ''}
           </div>
           <div class="sj-body">
             <div class="sj-name">${esc(c.cn)}</div>
@@ -975,18 +1137,24 @@
       }
       content.appendChild(sec);
     }
+    setupVideoObserver(content);
   }
 
   function openCompModal(c) {
     if (modalRaf) { cancelAnimationFrame(modalRaf); modalRaf = 0; }
-    const media = c.anim || c.img;
     const modal = $('sjModal');
+    let mediaHtml = '';
+    if (c.vid) {
+      mediaHtml = `<div class="sj-modal-media"><video src="${esc(c.vid)}" poster="${esc(c.img || '')}" autoplay muted loop playsinline controls></video></div>`;
+    } else if (c.anim || c.img) {
+      mediaHtml = `<div class="sj-modal-media"><img src="${esc(c.anim || c.img)}" alt="${esc(c.cn)}"></div>`;
+    }
     modal.innerHTML = `
       <div class="sj-modal-head">
         <h3>${esc(c.cn)} <small style="font-weight:500;color:var(--muted);font-size:13px">${esc(c.name)}</small></h3>
         <button class="sj-close" id="sjCloseBtn" aria-label="关闭">×</button>
       </div>
-      ${media ? `<div class="sj-modal-media"><img src="${esc(media)}" alt="${esc(c.cn)}"></div>` : ''}
+      ${mediaHtml}
       <div class="sj-meta-row">
         <span class="sj-tag is-accent">${esc(c.cat)}</span>
         ${c.energy ? `<span class="sj-tag">能量：${esc(c.energy)}</span>` : ''}
@@ -995,7 +1163,7 @@
       ${c.one ? `<div class="sj-modal-desc">${esc(c.one)}</div>` : ''}
       ${c.fit ? `<div class="sj-modal-box"><b>适用场景：</b>${esc(c.fit)}</div>` : ''}
       <div class="sj-modal-acts">
-        <button class="sj-btn is-primary" id="sjCopyBtn">复制组件中文描述</button>
+        <button class="btn pri" id="sjCopyBtn">复制组件中文描述</button>
       </div>
     `;
     $('sjCloseBtn').onclick = closeModal;
@@ -1013,57 +1181,51 @@
     mask.setAttribute('aria-hidden', 'false');
   }
 
-  // ==================== ③ 动效（168 条纯代码 Canvas 2D 实时动画） ====================
-  function renderMotionsTab(keepControls) {
-    stopMotionLoop();
+  // ==================== ③ 实时动效（168 条纯代码 Canvas 2D 实时动画） ====================
+  function renderMotionsTab() {
+    stopObservers();
     const list = DATA.motions || [];
     const groups = DATA.motionGroups || ['动态图形', '镜头与转场', 'UI 与网页'];
 
-    const pills = $('sjPills');
-    pills.innerHTML = '';
-    const addPill = (label, val) => {
-      const b = document.createElement('button');
-      b.className = 'sj-pill' + (state.motionGroup === val ? ' is-on' : '');
-      b.textContent = label;
-      b.onclick = () => { state.motionGroup = val; state.motionSub = ''; renderMotionsTab(true); };
-      pills.appendChild(b);
-    };
-    addPill(`全部动效 ${list.length}`, '');
+    // 左侧导航树：3 大类可折叠分组，每组展开即 18 个子分类
+    const nav = $('aSideNav');
+    let navHtml = buildSideSection('motion_top', '精选导航',
+      `<button type="button" class="a-row${!state.motionGroup && !state.motionSub ? ' on' : ''}" data-grp="" data-sub=""><span>⚡ 全部动效</span><span class="n">${list.length}</span></button>`
+    );
     for (const g of groups) {
-      const cnt = list.filter(x => x.grp === g).length;
-      if (cnt) addPill(`${g} ${cnt}`, g);
-    }
-
-    if (!keepControls) {
-      renderControls('搜 #编号、中文名、英文或动效说明…', state.motionQuery, (q) => {
-        state.motionQuery = q;
-        renderMotionsTab(true);
-      });
-    }
-
-    // 二级子分类
-    const scope = state.motionGroup ? list.filter(x => x.grp === state.motionGroup) : list;
-    const subs = [...new Set(scope.map(x => x.sub).filter(Boolean))];
-    const subbar = $('sjSubbar');
-    if (subs.length > 1) {
-      subbar.style.display = 'flex';
-      subbar.innerHTML = `<span class="lbl">${esc(state.motionGroup || '全部动效')} · 子分类：</span>`;
-      const allB = document.createElement('button');
-      allB.className = 'sj-subpill' + (!state.motionSub ? ' is-on' : '');
-      allB.textContent = `全部 ${scope.length}`;
-      allB.onclick = () => { state.motionSub = ''; renderMotionsTab(true); };
-      subbar.appendChild(allB);
-      for (const sub of subs) {
+      const scope = list.filter(x => x.grp === g);
+      if (!scope.length) continue;
+      const subs = [...new Set(scope.map(x => x.sub).filter(Boolean))];
+      let rows = `<button type="button" class="a-row${state.motionGroup === g && !state.motionSub ? ' on' : ''}" data-grp="${esc(g)}" data-sub=""><span>全部 ${esc(g)}</span><span class="n">${scope.length}</span></button>`;
+      rows += subs.map(sub => {
         const cnt = scope.filter(x => x.sub === sub).length;
-        const b = document.createElement('button');
-        b.className = 'sj-subpill' + (state.motionSub === sub ? ' is-on' : '');
-        b.textContent = `${sub} ${cnt}`;
-        b.onclick = () => { state.motionSub = sub; renderMotionsTab(true); };
-        subbar.appendChild(b);
-      }
-    } else {
-      subbar.style.display = 'none';
+        const on = state.motionGroup === g && state.motionSub === sub;
+        return `<button type="button" class="a-row is-sub${on ? ' on' : ''}" data-grp="${esc(g)}" data-sub="${esc(sub)}"><span>${esc(sub)}</span><span class="n">${cnt}</span></button>`;
+      }).join('');
+      navHtml += buildSideSection('motion_' + g, `${g} (${scope.length})`, rows);
     }
+    nav.innerHTML = navHtml;
+    bindSideToggles(nav);
+    nav.querySelectorAll('.a-row').forEach(btn => {
+      btn.onclick = () => {
+        state.motionGroup = btn.dataset.grp;
+        state.motionSub = btn.dataset.sub;
+        renderMotionsTab();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    });
+
+    const mob = $('aMobCats');
+    mob.innerHTML = `<button type="button" class="fchip${!state.motionGroup ? ' on' : ''}" data-grp="">全部 <span class="n">${list.length}</span></button>` +
+      groups.map(g => {
+        const cnt = list.filter(x => x.grp === g).length;
+        return cnt ? `<button type="button" class="fchip${state.motionGroup === g ? ' on' : ''}" data-grp="${esc(g)}">${esc(g)} <span class="n">${cnt}</span></button>` : '';
+      }).join('');
+    mob.querySelectorAll('.fchip').forEach(btn => {
+      btn.onclick = () => { state.motionGroup = btn.dataset.grp; state.motionSub = ''; renderMotionsTab(); };
+    });
+
+    $('sjChipBar').style.display = 'none';
 
     const q = state.motionQuery.toLowerCase();
     const filtered = list.filter(t => {
@@ -1072,10 +1234,12 @@
       if (q && !`#${t.no} ${t.name} ${t.en} ${t.desc} ${t.example} ${t.grp} ${t.sub}`.toLowerCase().includes(q)) return false;
       return true;
     });
+    lastFiltered = filtered;
+    syncTopToolbar('搜索 #编号、动效中文名、英文或说明…', state.motionQuery, !!(state.motionGroup || state.motionSub || state.motionQuery), filtered.length, list.length);
 
     const content = $('sjContent');
     if (!filtered.length) {
-      content.innerHTML = '<div class="sj-empty">没有符合条件的动效，试试切换分类或清空搜索词。</div>';
+      content.innerHTML = '<div class="sj-empty">没有符合条件的动效，试试切换左侧分类或清空搜索词。</div>';
       return;
     }
 
@@ -1098,7 +1262,8 @@
                   draw: pack.cells[idx],
                   w: cv.width,
                   h: cv.height,
-                  cycle: pack.cycle || 4.7
+                  cycle: pack.cycle || 4.7,
+                  painted: false
                 };
                 if (cv._inView) activeCanvases.set(cv, cv._mpReady);
               }
@@ -1115,7 +1280,7 @@
 
     const t0 = performance.now();
     const tick = (now) => {
-      if (state.tab !== 'motion') { stopMotionLoop(); return; }
+      if (state.tab !== 'motion') { stopObservers(); return; }
       const sec = (now - t0) / 1000;
       let drawn = 0;
       for (const [cv, item] of activeCanvases) {
@@ -1140,8 +1305,8 @@
       const group = filtered.filter(x => x.grp === grp);
       const sec = document.createElement('section');
       sec.className = 'sj-sec';
-      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(state.motionSub ? grp + ' · ' + state.motionSub : grp)}</h2><span>${group.length} 条 · 纯代码实时动画，滚进屏幕自动播放</span></div><div class="sj-grid"></div>`;
-      const grid = sec.querySelector('.sj-grid');
+      sec.innerHTML = `<div class="sj-sec-head"><h2>${esc(state.motionSub ? grp + ' · ' + state.motionSub : grp)}</h2><span>${group.length} 条 · 纯代码 Canvas 2D 实时动画，滚进屏幕自动播放</span></div><div class="wall-5"></div>`;
+      const grid = sec.querySelector('.wall-5');
       for (const t of group) {
         const card = document.createElement('article');
         card.className = 'sj-card';
@@ -1185,8 +1350,8 @@
       ${t.desc ? `<div class="sj-modal-desc">${esc(t.desc)}</div>` : ''}
       ${t.example ? `<div class="sj-modal-box"><b>提问示例：</b>${esc(t.example)}</div>` : ''}
       <div class="sj-modal-acts">
-        <button class="sj-btn is-primary" id="sjCopyBtn">复制动效术语</button>
-        ${t.gid ? `<a class="sj-btn" href="https://showheyohtaki.github.io/motion-prompt/#${encodeURIComponent(t.gid)}" target="_blank" rel="noopener noreferrer">官方演示 ↗</a>` : ''}
+        <button class="btn pri" id="sjCopyBtn">复制动效术语</button>
+        ${t.gid ? `<a class="btn" href="https://showheyohtaki.github.io/motion-prompt/#${encodeURIComponent(t.gid)}" target="_blank" rel="noopener noreferrer">官方演示 ↗</a>` : ''}
       </div>
     `;
     $('sjCloseBtn').onclick = closeModal;
@@ -1222,15 +1387,59 @@
     }
   }
 
+  // 顶部搜索与工具按钮事件绑定
+  let searchTimer = 0;
+  $('sjSearch').addEventListener('input', (e) => {
+    clearTimeout(searchTimer);
+    const val = e.target.value.trim();
+    searchTimer = setTimeout(() => {
+      if (state.tab === 'style') { state.styleQuery = val; renderStylesTab(); }
+      else if (state.tab === 'component') { state.compQuery = val; renderCompsTab(); }
+      else { state.motionQuery = val; renderMotionsTab(); }
+    }, 120);
+  });
+
+  $('toggleSideBtn').onclick = () => {
+    state.sideCollapsed = !state.sideCollapsed;
+    $('aSide').classList.toggle('is-collapsed', state.sideCollapsed);
+    $('toggleSideBtn').classList.toggle('is-on', !state.sideCollapsed);
+  };
+
+  $('autoPlayBtn').onclick = () => {
+    state.autoPlay = !state.autoPlay;
+    renderCurrentTab();
+  };
+
+  $('randomBtn').onclick = () => {
+    if (!lastFiltered.length) return;
+    const item = lastFiltered[Math.floor(Math.random() * lastFiltered.length)];
+    if (state.tab === 'style') openStyleModal(item);
+    else if (state.tab === 'component') openCompModal(item);
+    else openMotionModal(item);
+  };
+
+  $('clearFilterBtn').onclick = () => {
+    if (state.tab === 'style') { state.styleCat = ''; state.styleQuery = ''; }
+    else if (state.tab === 'component') { state.compCat = ''; state.compEnergy = ''; state.compQuery = ''; }
+    else { state.motionGroup = ''; state.motionSub = ''; state.motionQuery = ''; }
+    $('sjSearch').value = '';
+    renderCurrentTab();
+  };
+
+  function renderCurrentTab() {
+    if (state.tab === 'style') renderStylesTab();
+    else if (state.tab === 'component') renderCompsTab();
+    else renderMotionsTab();
+  }
+
   function renderAll() {
     renderTabs();
     renderSkins();
-    if (state.tab === 'style') renderStylesTab(false);
-    else if (state.tab === 'component') renderCompsTab(false);
-    else renderMotionsTab(false);
+    renderCurrentTab();
+    syncBarHeight();
   }
 
-  // 与全站顶栏白天/夜晚切换同步（初始优先读取全站主题，并同步写入 body.skin-*）
+  // 与全站顶栏白天/夜晚切换同步
   const themeObs = new MutationObserver(() => {
     const night = document.documentElement.getAttribute('data-theme') === 'night';
     if (night && state.skin !== 'C' && state.skin !== 'G') setSkin('C', false);
@@ -1249,7 +1458,6 @@
     }
   })();
 
-  // 若 URL 带 ?item=<id>，先定位到对应板块再自动打开弹窗
   let openInitialModal = null;
   if (initialItem) {
     const lower = initialItem.toLowerCase();
