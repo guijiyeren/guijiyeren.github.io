@@ -197,10 +197,10 @@
   .tool-card .t-desc { color:#64748b; }
   .tool-card span { display:block; margin-top:2px; font-size:10.5px; color:#94a3b8; line-height:1.5; }
   .svc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:24px; }
-  .svc-card { border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; background:#fbfdff; }
-  .svc-card b { font-size:14px; color:#0f172a; }
-  .svc-card p { margin-top:8px; font-size:12.5px; color:#64748b; line-height:1.75; min-height:66px; }
-  .svc-card a { display:inline-block; margin-top:10px; font-size:12.5px; color:#1d4ed8; font-weight:700; }
+  .svc-card { border:1px solid var(--line); border-radius:14px; padding:18px 20px 16px; background:#fbfdff; display:flex; flex-direction:column; gap:8px; }
+  .svc-card b { font-size:15px; color:#0f172a; }
+  .svc-card p { margin:0; font-size:13px; color:#64748b; line-height:1.7; min-height:0; }
+  .svc-card a { display:inline-block; margin-top:4px; font-size:12.5px; color:#1d4ed8; font-weight:700; align-self:flex-start; }
   .faq-list { margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:4px 20px; }
   .faq-list details { border-bottom:1px solid #eef2f8; }
   .faq-list details:last-child { border-bottom:0; }
@@ -366,24 +366,15 @@
   .bc-main { position:absolute; left:50%; top:21.5%; transform:translateX(-50%); width:64%; aspect-ratio:16/10; border-radius:10px; overflow:hidden; border:1.5px solid rgba(56,189,248,.82); box-shadow:0 18px 40px rgba(0,0,0,.7), 0 0 22px rgba(56,189,248,.22); z-index:3; background:#050b16; }
   .bc-main video, .bc-main img { width:100%; height:100%; object-fit:cover; display:block; }
   .bc-main::after { content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12); border-radius:inherit; }
-  /* 飞书知识库封面：稳态窗口 + 真实多页联动切换 */
-  .bc-wiki-win { position:relative; position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:74%; aspect-ratio:1360/960; border-radius:9px; overflow:hidden; border:1.5px solid rgba(56,189,248,.68); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#fff; }
+  /* 飞书知识库 / 资源中心 / 人生指南 封面：稳态窗口 + 真实多页联动切换 */
+  .bc-wiki-win { position:absolute; left:50%; top:16.5%; transform:translateX(-50%); width:74%; aspect-ratio:1360/960; border-radius:9px; overflow:hidden; border:1.5px solid rgba(56,189,248,.68); box-shadow:0 16px 36px rgba(0,0,0,.62), 0 0 22px rgba(56,189,248,.16); z-index:3; background:#fff; }
   .bc-wiki-win img { width:100%; height:100%; object-fit:cover; display:block; }
   .bc-wiki-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .55s ease; }
   .bc-wiki-slide.is-on { opacity:1; }
-  .bc-feishu .bc-chip { animation:none !important; transition:border-color .35s, color .35s, box-shadow .35s, background .35s; }
-  .bc-feishu .bc-chip.is-on { border-color:rgba(56,189,248,.78) !important; color:#e0f2fe !important; background:rgba(14,42,82,.92) !important; box-shadow:0 0 12px rgba(56,189,248,.28); }
+  .bc-feishu .bc-chip, .bc-sync .bc-chip { animation:none !important; transition:border-color .35s, color .35s, box-shadow .35s, background .35s; }
+  .bc-feishu .bc-chip.is-on, .bc-sync .bc-chip.is-on { border-color:rgba(56,189,248,.82) !important; color:#e0f2fe !important; background:rgba(14,42,82,.94) !important; box-shadow:0 0 12px rgba(56,189,248,.32); }
   .bc-wiki-glint { position:absolute; top:0; bottom:0; left:-45%; width:38%; pointer-events:none; background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.16) 50%, transparent 100%); animation:bcGlint 6.8s ease-in-out infinite; }
   @keyframes bcGlint { 0%,68% { left:-45%; opacity:0; } 74% { opacity:1; } 96%,100% { left:115%; opacity:0; } }
-  /* 人生指南 / 资源中心 / 情报中枢 稳态实景内微动 */
-  .bc-scan-rs { position:absolute; left:1.4%; top:60.5%; width:19.4%; height:4.3%; border-radius:3px; background:rgba(37,99,235,.15); border-left:2px solid #2563eb; pointer-events:none; animation:bcScanRs 7.2s ease-in-out infinite; }
-  @keyframes bcScanRs {
-    0%,16% { top:60.0%; } 26%,42% { top:64.5%; } 52%,68% { top:69.0%; } 78%,92% { top:73.5%; } 100% { top:60.0%; }
-  }
-  .bc-scan-rc { position:absolute; left:2.2%; top:11.5%; width:19.2%; height:5.4%; border-radius:4px; background:rgba(14,165,233,.16); border-left:2px solid #0284c7; pointer-events:none; animation:bcScanRc 7.6s ease-in-out infinite; }
-  @keyframes bcScanRc {
-    0%,16% { top:11.4%; } 26%,42% { top:17.2%; } 52%,68% { top:23.0%; } 78%,92% { top:29.0%; } 100% { top:11.4%; }
-  }
   .bc-intel-stream { position:absolute; left:22%; top:78%; width:64%; height:14%; pointer-events:none; overflow:hidden; }
   .bc-intel-pulse { position:absolute; top:22%; left:-18%; width:26%; height:56%; border-radius:999px; background:linear-gradient(90deg, transparent, rgba(56,189,248,.48), rgba(249,115,22,.42), transparent); filter:blur(2px); animation:bcIntelFlow 3.4s linear infinite; }
   @keyframes bcIntelFlow { 0% { left:-22%; opacity:0; } 14% { opacity:.95; } 82% { opacity:.95; } 100% { left:98%; opacity:0; } }
@@ -432,13 +423,68 @@
   .bcc-barline { height:3px; border-radius:99px; background:rgba(148,163,184,.28); width:72%; }
   .bcc-foot { display:flex; align-items:center; justify-content:space-between; padding:2.5px 6px; background:rgba(15,23,42,.95); border-top:1px solid rgba(148,163,184,.16); font-size:7.5px; color:#6ee7b7 !important; font-weight:700; }
   .bcc-zoom { position:absolute; left:14.2%; bottom:2.5%; z-index:3; padding:1px 6px; border-radius:999px; background:rgba(15,23,42,.88); border:1px solid rgba(148,163,184,.26); font-size:7px; font-weight:700; color:#94a3b8 !important; }
+  /* 剪辑工厂：暗色专业四轨时间轴 + 红框审片 AI 改片微缩工作台 */
+  .bc-edit-app { background:linear-gradient(180deg, #0c162b 0%, #060d1c 100%); display:flex; flex-direction:column; padding:0; }
+  .bce-bar { display:flex; align-items:center; gap:5px; padding:4px 7px; background:rgba(15,23,42,.96); border-bottom:1px solid rgba(148,163,184,.18); flex:0 0 auto; }
+  .bce-dots { display:flex; gap:3px; flex:0 0 auto; }
+  .bce-dots i { width:4.5px; height:4.5px; border-radius:50%; display:block; }
+  .bce-dots i:nth-child(1) { background:#f87171; }
+  .bce-dots i:nth-child(2) { background:#fbbf24; }
+  .bce-dots i:nth-child(3) { background:#34d399; }
+  .bce-tab { padding:1.5px 5.5px; border-radius:4px; font-size:7px; font-weight:700; color:#94a3b8 !important; background:rgba(30,41,59,.7); border:1px solid rgba(148,163,184,.2); white-space:nowrap; }
+  .bce-tab.on { color:#e0f2fe !important; background:rgba(37,99,235,.38); border-color:rgba(56,189,248,.68); }
+  .bce-exp { margin-left:auto; position:relative; overflow:hidden; padding:1.5px 6.5px; border-radius:999px; font-size:7px; font-weight:800; color:#ffffff !important; background:linear-gradient(90deg, #2563eb, #38bdf8); box-shadow:0 0 10px rgba(56,189,248,.45); white-space:nowrap; }
+  .bce-exp::after { content:""; position:absolute; inset:0; background:linear-gradient(105deg, transparent 20%, rgba(255,255,255,.55) 50%, transparent 80%); transform:translateX(-120%); animation:bceSweep 3.2s ease-in-out infinite; }
+  @keyframes bceSweep { 0%,42% { transform:translateX(-120%); } 72%,100% { transform:translateX(130%); } }
+  .bce-top { flex:1 1 56%; min-height:0; display:grid; grid-template-columns:1.48fr 1fr; gap:6px; padding:6px 7px 5px; }
+  .bce-mon { position:relative; border-radius:6px; overflow:hidden; border:1px solid rgba(56,189,248,.34); background:#030712; box-shadow:inset 0 0 18px rgba(0,0,0,.6); }
+  .bce-mon img { width:100%; height:100%; object-fit:cover; display:block; opacity:.86; }
+  .bce-mon::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(4,9,20,.45) 0%, transparent 32%, transparent 66%, rgba(4,9,20,.88) 100%); pointer-events:none; }
+  .bce-rec { position:absolute; top:4px; left:5px; z-index:2; display:inline-flex; align-items:center; gap:3px; padding:1px 4.5px; border-radius:4px; background:rgba(6,12,24,.78); border:1px solid rgba(248,113,113,.45); font-size:6.5px; font-weight:800; color:#fecaca !important; letter-spacing:.3px; }
+  .bce-rec i { width:4px; height:4px; border-radius:50%; background:#ef4444; box-shadow:0 0 6px #ef4444; animation:bcDotPulse 1.4s ease-in-out infinite; }
+  .bce-tc { position:absolute; top:4px; right:5px; z-index:2; padding:1px 4.5px; border-radius:4px; background:rgba(6,12,24,.78); font-size:6.5px; font-weight:700; font-variant-numeric:tabular-nums; color:#7dd3fc !important; }
+  .bce-redbox { position:absolute; left:25%; top:29%; width:52%; height:41%; z-index:2; border:1.5px dashed rgba(248,113,113,.95); border-radius:4px; background:rgba(239,68,68,.12); box-shadow:0 0 12px rgba(239,68,68,.38), inset 0 0 8px rgba(239,68,68,.18); animation:bceBoxLock 4.6s ease-in-out infinite; }
+  .bce-redbox::before { content:"红框改片"; position:absolute; left:-1px; top:-12px; padding:0.5px 4px; border-radius:3px 3px 3px 0; background:#ef4444; color:#fff; font-size:6.5px; font-weight:800; line-height:1.4; white-space:nowrap; box-shadow:0 2px 6px rgba(239,68,68,.55); }
+  @keyframes bceBoxLock { 0%,100% { transform:translate(0,0) scale(1); border-color:rgba(248,113,113,.95); } 50% { transform:translate(5px,2px) scale(1.03); border-color:#fca5a5; } }
+  .bce-sub { position:absolute; left:5px; right:5px; bottom:4px; z-index:2; text-align:center; padding:1.5px 4px; border-radius:3px; background:rgba(2,6,18,.82); border:1px solid rgba(251,191,36,.32); font-size:6.8px; font-weight:700; color:#fef08a !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bce-side { display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .bce-sh { font-size:7px; font-weight:800; color:#7dd3fc !important; letter-spacing:.4px; display:flex; align-items:center; gap:4px; }
+  .bce-sh i { width:4.5px; height:4.5px; border-radius:50%; background:#a78bfa; box-shadow:0 0 6px #a78bfa; }
+  .bce-note { padding:4px 5px; border-radius:5px; background:rgba(30,41,59,.78); border:1px solid rgba(167,139,250,.45); box-shadow:0 0 10px rgba(139,92,246,.14); }
+  .bce-note-t { font-size:6.5px; font-weight:800; color:#ddd6fe !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bce-note-d { font-size:6.5px; color:#cbd5e1 !important; margin-top:1.5px; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bce-note2 { padding:3px 5px; border-radius:5px; background:rgba(15,23,42,.86); border:1px solid rgba(52,211,153,.35); font-size:6.5px; font-weight:700; color:#6ee7b7 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bce-cta { margin-top:auto; position:relative; overflow:hidden; text-align:center; padding:3.5px 4px; border-radius:5px; background:linear-gradient(90deg, #4f46e5, #2563eb, #0ea5e9); font-size:7px; font-weight:800; color:#ffffff !important; box-shadow:0 4px 12px rgba(37,99,235,.4); }
+  .bce-cta::after { content:""; position:absolute; inset:0; background:linear-gradient(105deg, transparent 20%, rgba(255,255,255,.42) 50%, transparent 80%); transform:translateX(-120%); animation:bceSweep 3.2s 1.4s ease-in-out infinite; }
+  .bce-tl { position:relative; flex:0 0 auto; padding:4px 7px 6px; background:rgba(6,11,24,.94); border-top:1px solid rgba(148,163,184,.18); display:flex; flex-direction:column; gap:3.2px; }
+  .bce-tr { display:grid; grid-template-columns:22px 1fr; align-items:center; gap:5px; height:10.5px; }
+  .bce-tlbl { font-size:6.5px; font-weight:700; color:#94a3b8 !important; text-align:right; white-space:nowrap; }
+  .bce-lane { position:relative; height:100%; border-radius:3px; background:rgba(15,23,42,.92); display:flex; align-items:center; gap:2.5px; padding:1px 2px; overflow:hidden; }
+  .bce-blk { height:100%; border-radius:2px; font-size:5.8px; font-weight:800; color:#ffffff !important; display:flex; align-items:center; padding:0 3.5px; white-space:nowrap; overflow:hidden; }
+  .bce-blk.v1 { width:28%; background:linear-gradient(90deg,#1d4ed8,#2563eb); }
+  .bce-blk.v2 { width:40%; background:linear-gradient(90deg,#0284c7,#38bdf8); box-shadow:0 0 8px rgba(56,189,248,.48); }
+  .bce-blk.v3 { width:26%; background:linear-gradient(90deg,#3730a3,#6366f1); }
+  .bce-blk.s1 { width:22%; background:rgba(245,158,11,.78); }
+  .bce-blk.s2 { width:34%; background:rgba(251,191,36,.92); color:#1e293b !important; }
+  .bce-blk.s3 { width:24%; background:rgba(245,158,11,.72); }
+  .bce-blk.f1 { width:24%; margin-left:14%; background:linear-gradient(90deg,#7c3aed,#c084fc); }
+  .bce-blk.f2 { width:28%; margin-left:10%; background:linear-gradient(90deg,#db2777,#a855f7); }
+  .bce-wav { width:92%; height:100%; border-radius:2px; background:rgba(16,185,129,.22); border:1px solid rgba(52,211,153,.45); display:flex; align-items:center; justify-content:space-evenly; padding:0 3px; }
+  .bce-wav i { width:2px; height:60%; border-radius:1px; background:#34d399; display:block; animation:bceWav 1.4s ease-in-out infinite alternate; }
+  .bce-wav i:nth-child(odd) { height:85%; animation-duration:1.05s; }
+  .bce-wav i:nth-child(3n) { height:42%; animation-duration:1.65s; animation-delay:.25s; }
+  .bce-wav i:nth-child(4n) { height:92%; animation-delay:.45s; }
+  @keyframes bceWav { from { transform:scaleY(.38); } to { transform:scaleY(1); } }
+  .bce-playhead { position:absolute; top:2px; bottom:3px; left:36px; width:1.5px; background:#38bdf8; box-shadow:0 0 8px #38bdf8, 0 0 14px rgba(56,189,248,.85); pointer-events:none; z-index:4; animation:bceScrub 6.2s linear infinite; }
+  .bce-playhead::before { content:""; position:absolute; top:-2px; left:-3.2px; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid #7dd3fc; }
+  @keyframes bceScrub { 0% { left:34px; } 100% { left:calc(100% - 10px); } }
   .bc-chips { position:absolute; left:50%; bottom:4.5%; transform:translateX(-50%); z-index:4; display:flex; align-items:center; gap:7px; white-space:nowrap; }
   .bc-chip { padding:3px 9px; border-radius:999px; font-size:9px; font-weight:700; letter-spacing:.4px; color:#cbd5e1 !important; background:rgba(8,18,36,.86); border:1px solid rgba(148,163,184,.28); animation:bcChipCycle 6s ease-in-out infinite; }
   .bc-chip:nth-child(2) { animation-delay:2s; }
   .bc-chip:nth-child(3) { animation-delay:4s; }
   @keyframes bcChipCycle { 0%,28% { border-color:rgba(56,189,248,.72); color:#e0f2fe; box-shadow:0 0 10px rgba(56,189,248,.22); } 36%,100% { border-color:rgba(148,163,184,.26); color:#cbd5e1; box-shadow:none; } }
   @media (prefers-reduced-motion: reduce) {
-    .bc-dot, .bc-wiki-scan, .bc-wiki-glint, .bc-scan-rs, .bc-scan-rc, .bc-intel-pulse, .bcv-cursor, .bcv-tag, .bcv-row, .bcc-nd.g, .bc-chip { animation:none !important; }
+    .bc-dot, .bc-wiki-glint, .bc-intel-pulse, .bcv-cursor, .bcv-tag, .bcv-row, .bcc-nd.g, .bc-chip, .bce-exp::after, .bce-cta::after, .bce-redbox, .bce-wav i, .bce-playhead { animation:none !important; }
   }
   .b-body { padding:18px 18px 20px; min-height:98px; }
   .b-top { display:flex; align-items:center; gap:8px; }
@@ -596,8 +642,15 @@
   .mig-node.now text { fill:#ffffff; font-weight:800; }
   .mig-node:hover circle.mig-c-dot { fill:#7dd3fc; stroke:#fff; }
   .mig-node:hover text { fill:#fff; font-weight:800; }
-  #migProg { filter:drop-shadow(0 0 5px rgba(56,189,248,.75)); }
-  #migDot { filter:drop-shadow(0 0 8px rgba(125,211,252,.98)); }
+  #migProg { filter:drop-shadow(0 0 6px rgba(56,189,248,.82)); }
+  #migHead { filter:drop-shadow(0 0 9px rgba(125,211,252,.98)); }
+  #migRadarSweep { transform-origin:432px 200px; animation:migRadarSpin 9.5s linear infinite; }
+  @keyframes migRadarSpin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+  #migHomeBeacon { opacity:0; transition:opacity .45s ease; }
+  #migHomeBeacon.on { opacity:1; }
+  #migHomeBeacon .hb-ring { animation:migHomePulse 2.4s ease-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes migHomePulse { 0% { transform:scale(.6); opacity:.88; } 100% { transform:scale(2.1); opacity:0; } }
+  @media (prefers-reduced-motion: reduce) { #migRadarSweep, #migHomeBeacon .hb-ring, .mig-star { animation:none !important; } }
   .mig-stage svg { position:relative; z-index:1; width:100%; height:100%; display:block; }
   .mig-sub { font-size:11px; color:#94a3b8; }
   .mig-tip { position:absolute; z-index:4; width:max-content; max-width:140px; padding:5px 10px; border-radius:9px; background:rgba(8,19,38,.92); border:1px solid rgba(56,189,248,.52); backdrop-filter:blur(8px); box-shadow:0 10px 24px rgba(0,0,0,.45); transform:translate(-50%,-100%) translateY(-6px) scale(.92); opacity:0; pointer-events:none; transition:opacity .26s ease, transform .26s cubic-bezier(.22,1,.36,1); white-space:nowrap; text-align:center; }
@@ -1192,17 +1245,42 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     </div>
     <div class="prog-v2">
       <div class="prog-hero">
-        <div class="ph-ring" style="--pct:80">
-          <svg viewBox="0 0 88 88"><circle class="r-bg" cx="44" cy="44" r="36"/><circle class="r-fg" cx="44" cy="44" r="36"/></svg>
-          <span><b>80</b>%</span>
+        <div class="ph-ring" id="phRing" data-target="90" style="--pct:90">
+          <svg viewBox="0 0 104 104" aria-label="进度 90%">
+            <defs>
+              <linearGradient id="phArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="48%" stop-color="#2563eb"/>
+                <stop offset="82%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#22d3ee"/>
+              </linearGradient>
+              <linearGradient id="phSheenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+                <stop offset="50%" stop-color="rgba(224,242,254,.95)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </linearGradient>
+            </defs>
+            <circle class="r-orbit" cx="52" cy="52" r="47"/>
+            <circle class="r-inner" cx="52" cy="52" r="29"/>
+            <g transform="rotate(-90 52 52)">
+              <circle class="r-bg" cx="52" cy="52" r="38"/>
+              <circle class="r-glow" id="phArcGlow" cx="52" cy="52" r="38"/>
+              <circle class="r-fg" id="phArcFg" cx="52" cy="52" r="38"/>
+              <circle class="r-sheen" cx="52" cy="52" r="38"/>
+              <circle class="r-tip-halo" id="phTipHalo" cx="82.74" cy="29.66" r="7.5"/>
+              <circle class="r-tip-dot" id="phTipDot" cx="82.74" cy="29.66" r="4"/>
+            </g>
+          </svg>
+          <div class="ph-val"><b id="phPctNum">90</b><i>%</i></div>
         </div>
         <div class="ph-main">
           <div class="ph-top"><span class="ph-live"><i></i>正在攻坚</span><h3>剪辑工厂搭建</h3></div>
-          <p>把录音导入、试片生成、字幕精修与成片导出打通到同一条流水线。</p>
+          <p>把录音导入、试片生成、字幕精修、红框改片与成片导出打通到同一条流水线。</p>
           <div class="ph-steps">
             <span class="done">✓ 工程导入</span>
             <span class="done">✓ 一键试片</span>
             <span class="done">✓ 字幕精修</span>
+            <span class="done">✓ 四轨时间轴</span>
             <span class="now">● 批量导出冲刺</span>
           </div>
         </div>
@@ -1225,14 +1303,23 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     <style>
       .prog-v2 { margin-top:24px; display:flex; flex-direction:column; gap:18px; }
       .prog-hero { display:flex; align-items:center; gap:24px; padding:22px 26px; border-radius:18px; border:1.5px solid #bfdbfe; background:linear-gradient(135deg,#eff6ff 0%,#f8fafc 60%,#eef2ff 100%); box-shadow:0 12px 30px rgba(37,99,235,.08); flex-wrap:wrap; }
-      .ph-ring { position:relative; width:88px; height:88px; flex:0 0 88px; display:grid; place-items:center; }
-      .ph-ring svg { width:88px; height:88px; transform:rotate(-90deg); }
-      .ph-ring circle { fill:none; stroke-width:7; }
-      .ph-ring .r-bg { stroke:#dbeafe; }
-      .ph-ring .r-fg { stroke:#2563eb; stroke-linecap:round; stroke-dasharray:226.2; stroke-dashoffset:45.2; animation:phRingPulse 2.4s ease-in-out infinite; }
-      @keyframes phRingPulse { 0%,100% { filter:drop-shadow(0 0 2px rgba(37,99,235,.35)); } 50% { filter:drop-shadow(0 0 8px rgba(56,189,248,.75)); } }
-      .ph-ring span { position:absolute; font-size:13px; font-weight:700; color:#1d4ed8; }
-      .ph-ring span b { font-size:22px; font-weight:850; }
+      .ph-ring { position:relative; width:96px; height:96px; flex:0 0 96px; display:grid; place-items:center; }
+      .ph-ring svg { width:96px; height:96px; overflow:visible; }
+      .ph-ring circle { fill:none; }
+      .ph-ring .r-orbit { stroke:rgba(56,189,248,.48); stroke-width:1.4; stroke-dasharray:4 7; transform-origin:52px 52px; animation:phOrbitSpin 16s linear infinite; }
+      .ph-ring .r-inner { stroke:rgba(99,102,241,.28); stroke-width:1.2; stroke-dasharray:2 5; transform-origin:52px 52px; animation:phOrbitSpin 22s linear reverse infinite; }
+      @keyframes phOrbitSpin { to { transform:rotate(360deg); } }
+      .ph-ring .r-bg { stroke:#dbeafe; stroke-width:7.5; }
+      .ph-ring .r-glow { stroke:url(#phArcGrad); stroke-width:11; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:23.88; opacity:.26; filter:blur(4px); }
+      .ph-ring .r-fg { stroke:url(#phArcGrad); stroke-width:7.5; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:23.88; filter:drop-shadow(0 0 5px rgba(37,99,235,.42)); }
+      .ph-ring .r-sheen { stroke:url(#phSheenGrad); stroke-width:4; stroke-linecap:round; stroke-dasharray:34 205; stroke-dashoffset:238.76; opacity:.9; animation:phArcSheen 2.9s ease-in-out infinite; }
+      @keyframes phArcSheen { 0% { stroke-dashoffset:238.76; opacity:0; } 14% { opacity:.95; } 78% { opacity:.9; } 100% { stroke-dashoffset:24; opacity:0; } }
+      .ph-ring .r-tip-halo { fill:rgba(34,211,238,.28); stroke:rgba(56,189,248,.85); stroke-width:1.2; animation:phTipPulse 2.1s ease-out infinite; transform-box:fill-box; transform-origin:center; }
+      .ph-ring .r-tip-dot { fill:#ffffff; stroke:#2563eb; stroke-width:2.2; filter:drop-shadow(0 0 6px rgba(56,189,248,.95)); }
+      @keyframes phTipPulse { 0% { transform:scale(.75); opacity:.92; } 100% { transform:scale(1.9); opacity:0; } }
+      .ph-val { position:absolute; display:flex; align-items:baseline; justify-content:center; gap:1px; line-height:1; }
+      .ph-val b { font-size:24px; font-weight:850; color:#1d4ed8 !important; font-variant-numeric:tabular-nums; letter-spacing:-.5px; }
+      .ph-val i { font-style:normal; font-size:12px; font-weight:800; color:#2563eb !important; }
       .ph-main { flex:1 1 280px; }
       .ph-top { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
       .ph-top h3 { margin:0; font-size:18px; color:#0f172a; }
@@ -1251,10 +1338,17 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       .pl-card span { font-size:11px; font-weight:700; color:#15803d; background:#dcfce7; padding:2px 8px; border-radius:999px; flex:0 0 auto; }
       html[data-theme="night"] .prog-hero { background:linear-gradient(135deg,#111d34,#0f172a) !important; border-color:#2563eb !important; }
       html[data-theme="night"] .ph-ring .r-bg { stroke:#1e293b !important; }
+      html[data-theme="night"] .ph-ring .r-orbit { stroke:rgba(56,189,248,.58) !important; }
+      html[data-theme="night"] .ph-val b { color:#f8fafc !important; }
+      html[data-theme="night"] .ph-val i { color:#7dd3fc !important; }
+      html[data-theme="night"] .ph-live { background:rgba(37,99,235,.26) !important; color:#93c5fd !important; }
+      html[data-theme="night"] .ph-steps .done { background:rgba(22,163,74,.18) !important; color:#86efac !important; }
+      html[data-theme="night"] .ph-steps .now { background:#2563eb !important; color:#ffffff !important; }
       html[data-theme="night"] .ph-top h3 { color:#f1f5f9 !important; }
       html[data-theme="night"] .ph-main p { color:#94a3b8 !important; }
       html[data-theme="night"] .pl-card { background:#111a2b !important; border-color:#243247 !important; }
       html[data-theme="night"] .pl-card b { color:#f1f5f9 !important; }
+      @media (prefers-reduced-motion: reduce) { .ph-ring .r-orbit, .ph-ring .r-inner, .ph-ring .r-sheen, .ph-ring .r-tip-halo { animation:none !important; } }
       @media (max-width:900px) { .prog-live-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
       @media (max-width:520px) { .prog-hero { padding:18px 16px; gap:14px; } .prog-live-grid { grid-template-columns:1fr; } }
     </style>
@@ -1295,7 +1389,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </article>
       <a class="build-card is-open-link" href="./rensheng/" target="_blank" rel="noopener">
         <div class="cover">
-          <div class="bc-stage bc-ui-card" aria-label="人生指南动态封面">
+          <div class="bc-stage bc-ui-card bc-sync" data-sync-demo="rensheng" aria-label="人生指南动态封面">
             <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
               <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
               <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
@@ -1305,13 +1399,13 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
             </svg>
             <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>LIFE GUIDE · 767 条行动清单</div>
             <div class="bc-wiki-win">
-              <img src="assets/covers/rensheng-ui.jpg" alt="人生指南行动清单界面" loading="lazy" decoding="async">
-              <div class="bc-scan-rs" aria-hidden="true"></div>
-              <div class="bc-wiki-glint" aria-hidden="true"></div>
+              <img class="bc-wiki-slide is-on" src="assets/covers/rensheng-ui.jpg" alt="人生指南 · 767 条行动清单首页" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/covers/rensheng-ui-2.jpg" alt="人生指南 · 瀑布图墙行动卡" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/covers/rensheng-ui-3.jpg" alt="人生指南 · 3D 标签星云" loading="lazy" decoding="async">
             </div>
             <div class="bc-chips" aria-hidden="true">
-              <div class="bc-chip">767 条清单</div>
-              <div class="bc-chip">成本筛选</div>
+              <div class="bc-chip is-on">767 条清单</div>
+              <div class="bc-chip">图墙行动卡</div>
               <div class="bc-chip">3D 星图</div>
             </div>
           </div>
@@ -1363,7 +1457,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </article>
       <a class="build-card is-open-link" href="./resource/" target="_blank" rel="noopener">
         <div class="cover">
-          <div class="bc-stage bc-ui-card" aria-label="资源中心动态封面">
+          <div class="bc-stage bc-ui-card bc-sync" data-sync-demo="resource" aria-label="资源中心动态封面">
             <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
               <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
               <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
@@ -1373,14 +1467,14 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
             </svg>
             <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>RESOURCE HUB · <i style="font-style:normal" data-site-value="resource.count">10,281</i> 条索引</div>
             <div class="bc-wiki-win">
-              <img src="assets/covers/resource-ui.jpg" alt="资源中心 8 大分区图墙界面" loading="lazy" decoding="async">
-              <div class="bc-scan-rc" aria-hidden="true"></div>
-              <div class="bc-wiki-glint" aria-hidden="true"></div>
+              <img class="bc-wiki-slide is-on" src="assets/covers/resource-ui.jpg" alt="资源中心 · 全部 8 大分区图墙" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/covers/resource-ui-2.jpg" alt="资源中心 · 电商课程区分区筛选" loading="lazy" decoding="async">
+              <img class="bc-wiki-slide" src="assets/covers/resource-ui-3.jpg" alt="资源中心 · 点开条目查看目录结构" loading="lazy" decoding="async">
             </div>
             <div class="bc-chips" aria-hidden="true">
-              <div class="bc-chip">8 大分区</div>
-              <div class="bc-chip">89 分类</div>
-              <div class="bc-chip">可看目录</div>
+              <div class="bc-chip is-on">8 大分区</div>
+              <div class="bc-chip">分类筛选</div>
+              <div class="bc-chip">目录结构</div>
             </div>
           </div>
         </div>
@@ -1419,7 +1513,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </a>
       <a class="build-card is-open-link" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">
         <div class="cover">
-          <div class="bc-stage bc-feishu" data-feishu-demo="card" aria-label="飞书知识库动态封面">
+          <div class="bc-stage bc-feishu bc-sync" data-feishu-demo="card" data-sync-demo="feishu" aria-label="飞书知识库动态封面">
             <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
               <rect x="28" y="42" width="344" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
               <circle cx="28" cy="42" r="3" fill="#38bdf8" opacity=".82"/>
@@ -1464,30 +1558,30 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
                 <div class="bcc-tool">片</div>
               </div>
               <svg class="bcc-wires" viewBox="0 0 320 190" preserveAspectRatio="none">
-                <path d="M 149 52 C 169 52, 169 95, 188 95" fill="none" stroke="rgba(192,132,252,.6)" stroke-width="1.6"/>
-                <path d="M 149 136 C 169 136, 169 95, 188 95" fill="none" stroke="rgba(56,189,248,.6)" stroke-width="1.6"/>
-                <circle r="3" fill="#e9d5ff">
-                  <animateMotion dur="3.2s" repeatCount="indefinite" path="M 149 52 C 169 52, 169 95, 188 95"/>
+                <path d="M 149 52 C 169 52, 169 95, 188 95" fill="none" stroke="rgba(192,132,252,.72)" stroke-width="1.8"/>
+                <path d="M 149 136 C 169 136, 169 95, 188 95" fill="none" stroke="rgba(56,189,248,.72)" stroke-width="1.8"/>
+                <circle r="3.4" fill="#f3e8ff">
+                  <animateMotion dur="2.8s" repeatCount="indefinite" path="M 149 52 C 169 52, 169 95, 188 95"/>
                 </circle>
-                <circle r="3" fill="#7dd3fc">
-                  <animateMotion dur="3.2s" begin="-1.6s" repeatCount="indefinite" path="M 149 136 C 169 136, 169 95, 188 95"/>
+                <circle r="3.4" fill="#bae6fd">
+                  <animateMotion dur="2.8s" begin="-1.4s" repeatCount="indefinite" path="M 149 136 C 169 136, 169 95, 188 95"/>
                 </circle>
               </svg>
               <div class="bcc-node bcc-n1">
                 <div class="bcc-nh"><i class="bcc-nd v"></i>提示词</div>
                 <div class="bcc-nbody">
-                  <div class="bcc-txt">山峰盘龙 · 红叶光影</div>
+                  <div class="bcc-txt">黑金大理石棚拍</div>
                   <div class="bcc-barline"></div>
                 </div>
               </div>
               <div class="bcc-node bcc-n2">
-                <div class="bcc-nh"><i class="bcc-nd c"></i>参考素材</div>
-                <div class="bcc-nbody pic"><img src="assets/shijue-shot-hud.jpg" alt="" loading="lazy" decoding="async"></div>
+                <div class="bcc-nh"><i class="bcc-nd c"></i>产品参考图</div>
+                <div class="bcc-nbody pic"><img src="assets/covers/wx-ref.jpg" alt="护肤品自然光参考图" loading="lazy" decoding="async"></div>
               </div>
               <div class="bcc-node bcc-n3">
-                <div class="bcc-nh"><i class="bcc-nd g"></i>AI 生图 / 成片</div>
-                <div class="bcc-nbody pic"><img src="assets/huidong-shot4.jpg" alt="" loading="lazy" decoding="async"></div>
-                <div class="bcc-foot"><div>16:9 HD</div><div>● 已连线</div></div>
+                <div class="bcc-nh"><i class="bcc-nd g"></i>AI 商业大片</div>
+                <div class="bcc-nbody pic"><img src="assets/covers/wx-out.jpg" alt="黑金大理石 AI 商业成片" loading="lazy" decoding="async"></div>
+                <div class="bcc-foot"><div>4K 商拍</div><div>● 已连线</div></div>
               </div>
               <div class="bcc-zoom">100%</div>
             </div>
@@ -1504,10 +1598,59 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
         </div>
       </article>
       <article class="build-card">
-        <div class="cover"><img src="assets/covers/editing-factory.webp" alt="剪辑工厂动画封面" width="548" height="412" loading="lazy" decoding="async"></div>
+        <div class="cover">
+          <div class="bc-stage bc-edit-ui" aria-label="剪辑工厂四轨剪辑与红框改片工作台封面">
+            <svg class="bc-orbit" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="24" y="42" width="352" height="222" rx="14" fill="none" stroke="rgba(56,189,248,.18)" stroke-width="1"/>
+              <circle cx="24" cy="42" r="3" fill="#f87171" opacity=".88"/>
+              <circle cx="376" cy="42" r="3" fill="#38bdf8" opacity=".88"/>
+              <circle cx="24" cy="264" r="3" fill="#a78bfa" opacity=".88"/>
+              <circle cx="376" cy="264" r="3" fill="#34d399" opacity=".88"/>
+            </svg>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>EDIT FACTORY · 90% 实战剪辑台</div>
+            <div class="bc-mini-app bc-edit-app" aria-hidden="true">
+              <div class="bce-bar">
+                <div class="bce-dots"><i></i><i></i><i></i></div>
+                <div class="bce-tab on">四轨时间轴</div>
+                <div class="bce-tab">导演审片</div>
+                <div class="bce-exp">导出 1080p</div>
+              </div>
+              <div class="bce-top">
+                <div class="bce-mon">
+                  <img src="assets/work-33.jpg" alt="" loading="lazy" decoding="async">
+                  <div class="bce-rec"><i></i>1080P</div>
+                  <div class="bce-tc">00:08.4</div>
+                  <div class="bce-redbox"></div>
+                  <div class="bce-sub">这句换画面，字号加大</div>
+                </div>
+                <div class="bce-side">
+                  <div class="bce-sh"><i></i>AI 精准改片</div>
+                  <div class="bce-note">
+                    <div class="bce-note-t">03.2s 框选区</div>
+                    <div class="bce-note-d">放大画面并重配音</div>
+                  </div>
+                  <div class="bce-note2">✓ 字幕改字 0.1s 生效</div>
+                  <div class="bce-cta">一键发给 AI 精修</div>
+                </div>
+              </div>
+              <div class="bce-tl">
+                <div class="bce-tr"><div class="bce-tlbl">画面</div><div class="bce-lane"><div class="bce-blk v1">S01</div><div class="bce-blk v2">S02 精修</div><div class="bce-blk v3">S03</div></div></div>
+                <div class="bce-tr"><div class="bce-tlbl">字幕</div><div class="bce-lane"><div class="bce-blk s1"></div><div class="bce-blk s2">主标题</div><div class="bce-blk s3"></div></div></div>
+                <div class="bce-tr"><div class="bce-tlbl">配音</div><div class="bce-lane"><div class="bce-wav"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+                <div class="bce-tr"><div class="bce-tlbl">特效</div><div class="bce-lane"><div class="bce-blk f1">花字</div><div class="bce-blk f2">转场</div></div></div>
+                <div class="bce-playhead"></div>
+              </div>
+            </div>
+            <div class="bc-chips" aria-hidden="true">
+              <div class="bc-chip">红框选区改片</div>
+              <div class="bc-chip">四轨时间轴</div>
+              <div class="bc-chip">1080p 导出</div>
+            </div>
+          </div>
+        </div>
         <div class="b-body">
-          <div class="b-top"><h3>剪辑工厂</h3><span class="b-tag">开发中</span></div>
-          <p>把脚本、配音、字幕和改片接到同一条视频制作流程里。</p>
+          <div class="b-top"><h3>剪辑工厂</h3><span class="b-tag doing">开发中 90%</span></div>
+          <p>把脚本、配音、字幕、红框改片和四轨剪辑接到同一条流程里。</p>
         </div>
       </article>
       <a class="build-card is-open-link" href="./huidong/" target="_blank" rel="noopener">
@@ -1704,29 +1847,52 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       </div>
       <div class="about-visual">
         <div class="mig-card">
-          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-sub">8 个落脚点 · 点节点看详情</span><button type="button" id="migPlay">暂停</button></div>
+          <div class="mig-head"><b>我的迁徙路线</b><span class="mig-sub">8 个落脚点，点节点看详情</span><button type="button" id="migPlay">暂停</button></div>
           <div class="mig-stage">
             <svg id="migSvg" viewBox="0 0 520 360" aria-label="迁徙路线动画">
               <defs>
                 <linearGradient id="migGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#38bdf8"/><stop offset=".55" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/>
+                  <stop offset="0" stop-color="#38bdf8"/><stop offset=".52" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/>
                 </linearGradient>
-                <filter id="migBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5.5"/></filter>
+                <linearGradient id="migRadarGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#34d399" stop-opacity=".28"/>
+                  <stop offset=".65" stop-color="#38bdf8" stop-opacity=".10"/>
+                  <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="migBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+                <clipPath id="migRadarClip"><circle cx="432" cy="200" r="146"/></clipPath>
               </defs>
               <g id="migBg" aria-hidden="true">
-                <circle cx="430" cy="198" r="46" fill="none" stroke="rgba(52,211,153,.14)" stroke-width="1" stroke-dasharray="3 5"/>
-                <circle cx="430" cy="198" r="92" fill="none" stroke="rgba(56,189,248,.09)" stroke-width="1" stroke-dasharray="2 7"/>
-                <circle cx="430" cy="198" r="144" fill="none" stroke="rgba(56,189,248,.05)" stroke-width="1"/>
+                <g clip-path="url(#migRadarClip)">
+                  <g id="migRadarSweep">
+                    <path d="M 432 200 L 565.4 140.6 A 146 146 0 0 1 565.4 259.4 Z" fill="url(#migRadarGrad)"/>
+                  </g>
+                </g>
+                <circle cx="432" cy="200" r="46" fill="none" stroke="rgba(52,211,153,.18)" stroke-width="1" stroke-dasharray="3 5"/>
+                <circle cx="432" cy="200" r="94" fill="none" stroke="rgba(56,189,248,.11)" stroke-width="1" stroke-dasharray="2 7"/>
+                <circle cx="432" cy="200" r="146" fill="none" stroke="rgba(56,189,248,.06)" stroke-width="1"/>
+                <path d="M 16 28 L 16 16 L 28 16 M 504 28 L 504 16 L 492 16 M 16 296 L 16 308 L 28 308 M 504 296 L 504 308 L 492 308" fill="none" stroke="rgba(56,189,248,.28)" stroke-width="1.3" stroke-linecap="round"/>
               </g>
               <g id="migStars"></g>
-              <path id="migGlow" d="" fill="none" stroke="url(#migGrad)" stroke-width="9" opacity=".24" filter="url(#migBlur)"/>
-              <path id="migBase" d="" fill="none" stroke="rgba(148,163,184,.28)" stroke-width="1.8" stroke-dasharray="4 6"/>
-              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3" stroke-linecap="round"/>
+              <path id="migGlow" d="" fill="none" stroke="url(#migGrad)" stroke-width="11" stroke-linecap="round" opacity=".32" filter="url(#migBlur)"/>
+              <path id="migBase" d="" fill="none" stroke="rgba(148,163,184,.26)" stroke-width="1.6" stroke-dasharray="4 6"/>
+              <path id="migProg" d="" fill="none" stroke="url(#migGrad)" stroke-width="3.2" stroke-linecap="round"/>
+              <g id="migPulses"></g>
               <g id="migTrail"></g>
+              <g id="migHomeBeacon" aria-hidden="true">
+                <circle class="hb-ring" cx="432" cy="200" r="14" fill="none" stroke="#34d399" stroke-width="1.6"/>
+                <circle cx="432" cy="200" r="10" fill="rgba(52,211,153,.16)" stroke="rgba(250,204,21,.65)" stroke-width="1.1"/>
+              </g>
               <g id="migNodes"></g>
-              <circle id="migRing" cx="0" cy="0" r="0" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0"/>
-              <circle id="migRing2" cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0"/>
-              <circle id="migDot" r="5" fill="#fff" stroke="#38bdf8" stroke-width="2.5"/>
+              <g id="migSparks"></g>
+              <circle id="migRing" cx="0" cy="0" r="0" fill="none" stroke="#34d399" stroke-width="1.9" opacity="0"/>
+              <circle id="migRing2" cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" stroke-width="1.3" opacity="0"/>
+              <circle id="migRing3" cx="0" cy="0" r="0" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0"/>
+              <g id="migHead" transform="translate(92 268)">
+                <circle r="8.5" fill="rgba(56,189,248,.22)"/>
+                <path id="migArrow" d="M 8 0 L -5 -4.8 L -2.2 0 L -5 4.8 Z" fill="#ffffff" stroke="#38bdf8" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle id="migDot" r="3.4" fill="#ffffff" stroke="#34d399" stroke-width="1.8" opacity="0"/>
+              </g>
             </svg>
             <div class="mig-tip" id="migTip"><b id="migTipCity"></b><small id="migTipSub"></small></div>
             <div class="mig-hud">
@@ -1766,13 +1932,13 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     <div class="sec-head">
       <div class="eyebrow2">Services</div>
       <h2>我能帮你做什么</h2>
-      <p>主打「拿来就能跑」的标准化方案与成品交付——都是我自己在电商和自媒体业务里跑通的实战系统。平时精力主要在一线做自己的业务，更适合想直接复用成熟流程、快速出结果的电商老板和企业团队。</p>
+      <p>都是我自己在一线跑通的实战方案，主打拿来就能用，上手就能出成品。</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card"><b>电商 AI 提效 · 开箱方案</b><p>围绕选品调研、商品主图与 AI 穿搭出图、短视频与日常台账，把跑通的环节打包成可直接落地的 AI 工作流与操作手册，团队按步骤就能直接出成品。</p><a href="#message">聊聊需求 →</a></div>
-      <div class="svc-card"><b>AI 内容流水线 · 多平台方案</b><p>从热点选题、脚本配音、自动剪辑成片到多平台同步分发与数据回收，整套流程、提示词与视觉风格规范打包交付，支持按需随时扩展更多平台。</p><a href="#message">聊聊需求 →</a></div>
-      <div class="svc-card"><b>个人 / 企业 AI 工作台搭建</b><p>把信息采集、知识沉淀、任务派发、定时巡检与多 AI 协作串成一套本地工作台，减少人工盯梢和重复劳动，把精力留给核心判断与拍板。</p><a href="#message">聊聊需求 →</a></div>
-      <div class="svc-card"><b>实战样板与团队上手手册</b><p>把电商自动化、AI 穿搭和自媒体提效的完整搭建过程整理成可对照复刻的实操手册与样板工程，交付即归团队自有，随时回看、快速上手。</p><a href="#message">聊聊需求 →</a></div>
+      <div class="svc-card"><b>电商 AI 提效方案</b><p>选品、主图、AI 穿搭和日常台账全打包，团队照着跑就能出成品。</p><a href="#message">聊聊需求</a></div>
+      <div class="svc-card"><b>多平台 AI 内容流水线</b><p>选题、脚本、配音、剪辑到多平台分发整套交付，平台可按需扩展。</p><a href="#message">聊聊需求</a></div>
+      <div class="svc-card"><b>个人和企业 AI 工作台</b><p>把信息采集、知识整理、任务派发和巡检串成工作台，减少重复人工。</p><a href="#message">聊聊需求</a></div>
+      <div class="svc-card"><b>实战样板和实操手册</b><p>电商、穿搭和自媒体全套搭建过程整理成手册，拿回去随时回看复刻。</p><a href="#message">聊聊需求</a></div>
     </div>
   </div>
 </section>
@@ -1786,11 +1952,11 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     </div>
     <div class="faq-list faq-grid">
       <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="eager"><span class="faq-q">这些公开项目和飞书知识库都能直接用吗？收费吗？</span><span class="faq-num">01</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="eager"><p>站上的 6 个公开项目（人生指南、资源中心、情报中枢、每日拆卡、会动网页、视觉图鉴）和飞书知识库全部免费公开，免登录直接用。把平时实战沉淀出来的东西整理分享出来，就是希望大家可以一起看、一起用、少走弯路。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">你目前的主线业务有哪些？哪些公开，哪些在内部跑？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>目前围绕四条主线实战：电商全自动化、AI 穿搭工作流、自媒体多平台全自动、个人 AI 工作台。跑通且适合对外分享的工具、方法与复盘都会放到公开页面和飞书知识库；涉及具体店铺数据、内部素材与商业隐私的系统保留在本地运行，对外只展示思路与脱敏界面。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">资源中心和情报中枢为什么只看目录和榜单，不提供下载？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>出于版权与合规要求，资源中心只公开分类结构与条目目录，展示资料整理与检索方式，不放任何网盘链接或提取码；情报中枢展示版也做了脱敏处理，只公开热词趋势、筛选框架和公开榜。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">我不会写代码，也能搭一套类似的工作台吗？从哪开始？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>可以。我本身做了 10 年电商，并不是专业程序员；这个网站和整套工作台都是我提需求、定结构、做验收，由 AI 写代码实现的。建议先看飞书知识库里的「新手 7 天路线」，从拆解自己每天最耗时的重复活开始，先跑通一个环节再逐步连成流水线。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">你目前的主线业务有哪些？哪些公开，哪些在内部跑？</span><span class="faq-num">02</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>目前围绕四条主线实战：电商全自动化、AI 穿搭工作流、自媒体多平台全自动、个人 AI 工作台。跑通且适合对外分享的工具、方法与复盘都会放到公开页面和飞书知识库，涉及具体店铺数据、内部素材与商业隐私的系统保留在本地运行，对外只展示思路与脱敏界面。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">资源中心和情报中枢为什么只看目录和榜单，不提供下载？</span><span class="faq-num">03</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>出于版权与合规要求，资源中心只公开分类结构与条目目录，展示资料整理与检索方式，不放任何网盘链接或提取码。情报中枢展示版也做了脱敏处理，只公开热词趋势、筛选框架和公开榜。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">我不会写代码，也能搭一套类似的工作台吗？从哪开始？</span><span class="faq-num">04</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>可以。我本身做了 10 年电商，并不是专业程序员，这个网站和整套工作台都是我提需求、定结构、做验收，由 AI 写代码实现的。建议先看飞书知识库里的新手 7 天路线，从拆解自己每天最耗时的重复活开始，先跑通一个环节再逐步连成流水线。</p></div></div>
       <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">如果想合作或直接拿现成方案，一般怎么配合？</span><span class="faq-num">05</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>我平时大部分时间在一线跑自己的电商和内容业务，更适合交付已经跑通的标准化工作流、成品模板和实操手册，让你拿回去上手就能出成品。有明确业务需求可以在下方直接留言，写清你的行业、卡点和目标，看到后会通过邮箱回复。</p></div></div>
-      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">站里的整理和飞书文档可以转载或分享给团队吗？</span><span class="faq-num">06</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>个人学习、团队内部分享或注明「硅基野人」出处的正常转载都可以；如果涉及商业复用、二次打包分发或批量搬运，先通过下方留言或邮箱打声招呼。</p></div></div>
+      <div class="faq-item"><div class="faq-q-row"><img class="faq-q-img" src="assets/faq-q.png" alt="问题" loading="lazy" decoding="async"><span class="faq-q">站里的整理和飞书文档可以转载或分享给团队吗？</span><span class="faq-num">06</span></div><div class="faq-a"><img class="faq-a-img" src="assets/faq-a.png" alt="回答" loading="lazy" decoding="async"><p>个人学习、团队内部分享或者注明硅基野人出处的正常转载都可以，如果涉及商业复用、二次打包分发或批量搬运，先通过下方留言或邮箱打声招呼。</p></div></div>
     </div>
   </div>
 </section>
@@ -3237,32 +3403,87 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   }
 }catch(e){}})();</script>
 <script>
-/* ---------- 飞书知识库两处：真实多页联动切换（00 首页 / 07 电商全自动 / 10 全景地图） ---------- */
+/* ---------- 项目进度 90% 能量环：进视口平滑充能 + 数字滚动 + 端点光点追踪 ---------- */
+(function(){
+  var ring = document.getElementById('phRing');
+  var fg = document.getElementById('phArcFg');
+  var glow = document.getElementById('phArcGlow');
+  var tipDot = document.getElementById('phTipDot');
+  var tipHalo = document.getElementById('phTipHalo');
+  var numEl = document.getElementById('phPctNum');
+  if (!ring || !fg || !numEl) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TARGET = parseInt(ring.getAttribute('data-target') || '90', 10);
+  var R = 38, CX = 52, CY = 52, CIRC = 2 * Math.PI * R;
+  function setPct(pct) {
+    var p = Math.max(0, Math.min(100, pct));
+    var off = CIRC * (1 - p / 100);
+    fg.style.strokeDashoffset = off.toFixed(2);
+    if (glow) glow.style.strokeDashoffset = off.toFixed(2);
+    var rad = (p / 100) * Math.PI * 2;
+    var tx = (CX + R * Math.cos(rad)).toFixed(2);
+    var ty = (CY + R * Math.sin(rad)).toFixed(2);
+    if (tipDot) { tipDot.setAttribute('cx', tx); tipDot.setAttribute('cy', ty); }
+    if (tipHalo) { tipHalo.setAttribute('cx', tx); tipHalo.setAttribute('cy', ty); }
+    numEl.textContent = String(Math.round(p));
+  }
+  if (reduce) { setPct(TARGET); return; }
+  var played = false;
+  function animate() {
+    if (played) return;
+    played = true;
+    var dur = 1250, t0 = performance.now();
+    function tick(now) {
+      var u = Math.min(1, (now - t0) / dur);
+      var eased = 1 - Math.pow(1 - u, 3);
+      setPct(TARGET * eased);
+      if (u < 1) requestAnimationFrame(tick);
+    }
+    setPct(0);
+    requestAnimationFrame(tick);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0] && es[0].isIntersecting) animate();
+    }, { threshold: 0.25 }).observe(ring);
+  } else { setPct(TARGET); }
+})();
+
+/* ---------- 人生指南 / 资源中心 / 飞书知识库：真实多页联动切换 ---------- */
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // 1) #building 飞书卡片自动联动
-  var card = document.querySelector('[data-feishu-demo="card"]');
-  if (card) {
+  // 1) #building 三张多页卡片（人生指南 / 资源中心 / 飞书知识库）统一真切页控制器
+  var syncCards = Array.prototype.slice.call(document.querySelectorAll('[data-sync-demo]'));
+  syncCards.forEach(function(card, cardIndex){
     var cSlides = Array.prototype.slice.call(card.querySelectorAll('.bc-wiki-slide'));
     var cChips = Array.prototype.slice.call(card.querySelectorAll('.bc-chip'));
-    var cIdx = 0, cTimer = null, cVisible = false;
+    if (cSlides.length < 2) return;
+    var cIdx = 0, cTimer = null, cDelay = null;
     function setCard(i) {
-      cIdx = i % cSlides.length;
+      cIdx = ((i % cSlides.length) + cSlides.length) % cSlides.length;
       cSlides.forEach(function(el, k){ el.classList.toggle('is-on', k === cIdx); });
       cChips.forEach(function(el, k){ el.classList.toggle('is-on', k === cIdx); });
     }
     function startCard() {
-      if (reduce || cTimer || cSlides.length < 2) return;
-      cTimer = setInterval(function(){ setCard(cIdx + 1); }, 3600);
+      if (reduce || cTimer || cDelay) return;
+      // 略微错峰启动，避免三张卡片同毫秒齐闪
+      cDelay = setTimeout(function(){
+        cDelay = null;
+        if (cTimer) return;
+        setCard(cIdx + 1);
+        cTimer = setInterval(function(){ setCard(cIdx + 1); }, 3400);
+      }, 2400 + cardIndex * 450);
     }
-    function stopCard() { if (cTimer) { clearInterval(cTimer); cTimer = null; } }
+    function stopCard() {
+      if (cDelay) { clearTimeout(cDelay); cDelay = null; }
+      if (cTimer) { clearInterval(cTimer); cTimer = null; }
+    }
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function(es){
-        cVisible = es[0].isIntersecting;
-        if (cVisible) startCard(); else stopCard();
+        if (es[0].isIntersecting) startCard(); else stopCard();
       }, { rootMargin: '80px 0px' }).observe(card);
     } else { startCard(); }
-  }
+  });
   // 2) #kb 大展板自动切换 + 点击标签手动切页 + 同步更新地址栏
   var stage = document.querySelector('[data-feishu-demo="stage"]');
   if (stage) {
@@ -3300,17 +3521,17 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   }
 })();
 
-/* ---------- 关于我：迁徙路线动画（缓动飞航 + 到站停顿雷达波 + 可点进度点） ---------- */
+/* ---------- 关于我：迁徙路线动画（不标年份 + 雷达扫描 + 定向飞航箭头 + 能量脉冲 + 三重波纹火花） ---------- */
 (function(){
   var STOPS = [
-    { year: "1986", city: "湖南怀化", short: "出生", x: 92,  y: 268, dx: 0,   dy: 20,  anchor: "middle" },
-    { year: "2005", city: "北京",     short: "求学", x: 242, y: 70,  dx: -12, dy: -8,  anchor: "end" },
-    { year: "2015", city: "东海县",   short: "水晶电商", x: 346, y: 144, dx: -12, dy: 4,   anchor: "end" },
-    { year: "2013", city: "燕郊",     short: "买房", x: 314, y: 90,  dx: 12,  dy: -6,  anchor: "start" },
-    { year: "2017", city: "东北辽源", short: "考察项目", x: 432, y: 54,  dx: 0,   dy: -13, anchor: "middle" },
-    { year: "2018", city: "浙江诸暨", short: "卖袜子", x: 376, y: 264, dx: 0,   dy: 20,  anchor: "middle" },
-    { year: "2019", city: "湖南长沙", short: "买房", x: 206, y: 214, dx: 0,   dy: -12, anchor: "middle" },
-    { year: "2025", city: "浙江杭州", short: "定居", x: 432, y: 200, dx: 12,  dy: 4,   anchor: "start" }
+    { city: "湖南怀化", short: "出生",     x: 92,  y: 268, dx: 0,   dy: 20,  anchor: "middle" },
+    { city: "北京",     short: "求学",     x: 242, y: 70,  dx: -12, dy: -8,  anchor: "end" },
+    { city: "东海县",   short: "水晶电商", x: 346, y: 144, dx: -12, dy: 4,   anchor: "end" },
+    { city: "燕郊",     short: "买房",     x: 314, y: 90,  dx: 12,  dy: -6,  anchor: "start" },
+    { city: "东北辽源", short: "考察项目", x: 432, y: 54,  dx: 0,   dy: -13, anchor: "middle" },
+    { city: "浙江诸暨", short: "卖袜子",   x: 376, y: 264, dx: 0,   dy: 20,  anchor: "middle" },
+    { city: "湖南长沙", short: "买房",     x: 206, y: 214, dx: 0,   dy: -12, anchor: "middle" },
+    { city: "浙江杭州", short: "定居",     x: 432, y: 200, dx: 12,  dy: 4,   anchor: "start" }
   ];
   var CURVE_BOW = [-26, -24, -22, -20, 34, 24, -28];
   var svg = document.getElementById("migSvg");
@@ -3319,6 +3540,8 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   var prog = document.getElementById("migProg");
   var glow = document.getElementById("migGlow");
   var nodesG = document.getElementById("migNodes");
+  var headG = document.getElementById("migHead");
+  var arrowEl = document.getElementById("migArrow");
   var dot = document.getElementById("migDot");
   var cityEl = document.getElementById("migCity");
   var descEl = document.getElementById("migDesc");
@@ -3327,6 +3550,8 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   var playBtn = document.getElementById("migPlay");
   var ring = document.getElementById("migRing");
   var ring2 = document.getElementById("migRing2");
+  var ring3 = document.getElementById("migRing3");
+  var homeBeacon = document.getElementById("migHomeBeacon");
   var tipEl = document.getElementById("migTip");
   var tipCity = document.getElementById("migTipCity");
   var tipSub = document.getElementById("migTipSub");
@@ -3354,6 +3579,10 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   var total = prog.getTotalLength();
   prog.style.strokeDasharray = total;
   prog.style.strokeDashoffset = total;
+  if (glow) {
+    glow.style.strokeDasharray = total;
+    glow.style.strokeDashoffset = total;
+  }
   var cumLens = [0];
   var acc = 0;
   for (var s = 0; s < segDs.length; s++) {
@@ -3362,13 +3591,12 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     acc += tmpP.getTotalLength();
     cumLens.push(acc);
   }
-  // 归一化对齐 total，防浮点误差
   var scaleL = acc ? total / acc : 1;
   for (var k = 0; k < cumLens.length; k++) cumLens[k] *= scaleL;
 
-  // 背景星点（低饱和克制点缀）
+  // 背景星点（低饱和深空质感）
   var starsG = document.getElementById("migStars");
-  for (var si = 0; si < 22; si++) {
+  for (var si = 0; si < 26; si++) {
     var sc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     sc.setAttribute("cx", String(18 + ((si * 67) % 484)));
     sc.setAttribute("cy", String(16 + ((si * 43) % 286)));
@@ -3380,16 +3608,40 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     starsG.appendChild(sc);
   }
 
-  // 10 粒渐隐拖尾
+  // 沿已解锁轨迹高速巡航的 3 粒能量光珠
+  var pulsesG = document.getElementById("migPulses");
+  var pulses = [];
+  for (var pi = 0; pi < 3; pi++) {
+    var pc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    pc.setAttribute("r", pi === 0 ? "2.6" : "2.1");
+    pc.setAttribute("fill", pi === 0 ? "#a7f3d0" : "#bae6fd");
+    pc.setAttribute("opacity", "0");
+    if (pulsesG) pulsesG.appendChild(pc);
+    pulses.push(pc);
+  }
+
+  // 14 粒彗星渐隐拖尾
   var trailG = document.getElementById("migTrail");
   var trail = [];
-  for (var ti = 0; ti < 10; ti++) {
+  for (var ti = 0; ti < 14; ti++) {
     var tc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    tc.setAttribute("r", String((3.6 - ti * 0.3).toFixed(2)));
-    tc.setAttribute("fill", ti < 4 ? "#bae6fd" : "#38bdf8");
-    tc.setAttribute("opacity", String((0.55 - ti * 0.052).toFixed(3)));
+    tc.setAttribute("r", String(Math.max(0.8, 3.8 - ti * 0.23).toFixed(2)));
+    tc.setAttribute("fill", ti < 4 ? "#ffffff" : (ti < 9 ? "#7dd3fc" : "#818cf8"));
+    tc.setAttribute("opacity", "0");
     trailG.appendChild(tc);
     trail.push(tc);
+  }
+
+  // 6 粒到站辐射微星火花
+  var sparksG = document.getElementById("migSparks");
+  var sparks = [];
+  for (var ki = 0; ki < 6; ki++) {
+    var sp = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    sp.setAttribute("r", "1.7");
+    sp.setAttribute("fill", ki % 2 ? "#7dd3fc" : "#6ee7b7");
+    sp.setAttribute("opacity", "0");
+    if (sparksG) sparksG.appendChild(sp);
+    sparks.push(sp);
   }
 
   // 城市节点
@@ -3401,7 +3653,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     halo.setAttribute("cx", st.x); halo.setAttribute("cy", st.y); halo.setAttribute("r", 11);
     var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     c.setAttribute("class", "mig-c-dot");
-    c.setAttribute("cx", st.x); c.setAttribute("cy", st.y); c.setAttribute("r", idx === STOPS.length - 1 ? 6 : 4.8);
+    c.setAttribute("cx", st.x); c.setAttribute("cy", st.y); c.setAttribute("r", idx === STOPS.length - 1 ? 6.2 : 4.8);
     var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
     t.setAttribute("x", st.x + st.dx);
     t.setAttribute("y", st.y + st.dy);
@@ -3418,14 +3670,14 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     var b = document.createElement("button");
     b.type = "button";
     b.className = "mig-step-dot";
-    b.title = (idx + 1) + ". " + st.city + " · " + st.short;
-    b.setAttribute("aria-label", st.city + " · " + st.short);
+    b.title = (idx + 1) + ". " + st.city + " " + st.short;
+    b.setAttribute("aria-label", st.city + " " + st.short);
     b.addEventListener("click", function(){ jumpToStop(idx); });
     if (dotsHost) dotsHost.appendChild(b);
     return b;
   });
 
-  // 弹窗逻辑（原样保留）
+  // 弹窗逻辑（不展示年份）
   var mask = document.getElementById("migMask");
   var modalCity = document.getElementById("migModalCity");
   var modalYear = document.getElementById("migYear");
@@ -3433,7 +3685,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   function showStop(idx){
     if (!mask || !modalCity) return;
     var st = STOPS[idx];
-    modalYear.textContent = "第 " + (idx + 1) + " 站 · " + st.year;
+    if (modalYear) modalYear.textContent = "第 " + (idx + 1) + " 站";
     modalCity.textContent = st.city;
     modalDesc.textContent = st.short;
     mask.classList.add("on");
@@ -3447,8 +3699,8 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
   function showTip(idx){
     if (!tipEl || !tipCity) return;
     var st = STOPS[idx];
-    tipCity.textContent = st.short;
-    if (tipSub) tipSub.textContent = st.year + " · " + st.city;
+    tipCity.textContent = st.city;
+    if (tipSub) tipSub.textContent = st.short;
     var left = Math.min(84, Math.max(16, (st.x / 520) * 100));
     var top = Math.max(16, (st.y / 360) * 100);
     tipEl.style.left = left + "%";
@@ -3458,15 +3710,15 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     tipEl.classList.add("on");
   }
 
-  // 分段时序：起始停顿 0.8s + 7 段 × (1.15s 缓动飞航 + 0.85s 到站停顿) + 终点杭州展示 3.0s
-  var START_HOLD = 800, FLY_MS = 1150, DWELL_MS = 850, END_HOLD = 3000;
+  // 分段时序：起始停顿 0.8s + 7 段 × (1.1s 缓动飞航 + 0.85s 到站停顿) + 终点杭州展示 3.2s
+  var START_HOLD = 800, FLY_MS = 1100, DWELL_MS = 850, END_HOLD = 3200;
   var SEG_MS = FLY_MS + DWELL_MS;
   var CYCLE_MS = START_HOLD + (STOPS.length - 1) * SEG_MS + END_HOLD;
   function easeInOut(u){ return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
 
   var t0 = performance.now(), paused = false, pausedElapsed = 0, raf = null, lastActive = -1;
 
-  function renderAt(elapsed){
+  function renderAt(elapsed, nowMs){
     var curLen = 0, active = 0, dwellP = 0, inDwell = false;
     if (elapsed < START_HOLD) {
       curLen = 0; active = 0; inDwell = true; dwellP = elapsed / START_HOLD;
@@ -3491,36 +3743,78 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
       dwellP = ((elapsed - START_HOLD - (STOPS.length - 1) * SEG_MS) % 1500) / 1500;
     }
 
-    prog.style.strokeDashoffset = Math.max(0, total - curLen);
-    var pt = prog.getPointAtLength(curLen);
-    dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
+    var dashOff = Math.max(0, total - curLen);
+    prog.style.strokeDashoffset = dashOff;
+    if (glow) glow.style.strokeDashoffset = dashOff;
 
-    // 拖尾只在飞航段拉长，到站停顿时自然收拢
-    var tailSpread = inDwell ? 0 : 6.2;
+    var pt = prog.getPointAtLength(curLen);
+    var ptAhead = prog.getPointAtLength(Math.min(total, curLen + 2.5));
+    var ptBack = prog.getPointAtLength(Math.max(0, curLen - 2.5));
+    var ang = Math.atan2(ptAhead.y - ptBack.y, ptAhead.x - ptBack.x) * 180 / Math.PI;
+    if (headG) {
+      headG.setAttribute("transform", "translate(" + pt.x.toFixed(1) + " " + pt.y.toFixed(1) + ") rotate(" + ang.toFixed(1) + ")");
+    }
+    if (arrowEl) arrowEl.setAttribute("opacity", inDwell ? "0" : "1");
+    if (dot) dot.setAttribute("opacity", inDwell ? "1" : "0");
+
+    // 彗星拖尾：飞航段拉长，到站自然收拢
+    var tailSpread = inDwell ? 0 : 4.8;
     for (var ti = 0; ti < trail.length; ti++) {
       var tl = Math.max(0, curLen - (ti + 1) * tailSpread);
       var tp = prog.getPointAtLength(tl);
-      trail[ti].setAttribute("cx", tp.x); trail[ti].setAttribute("cy", tp.y);
-      trail[ti].setAttribute("opacity", inDwell ? "0" : String((0.52 - ti * 0.048).toFixed(3)));
+      trail[ti].setAttribute("cx", tp.x.toFixed(1));
+      trail[ti].setAttribute("cy", tp.y.toFixed(1));
+      trail[ti].setAttribute("opacity", inDwell ? "0" : String(Math.max(0, 0.72 - ti * 0.05).toFixed(3)));
     }
 
-    // 双圈雷达扩散波（到站时绽放）
-    if (ring && ring2) {
+    // 能量脉冲沿已走过路径持续流动
+    var tSec = (nowMs || performance.now()) / 1000;
+    for (var pi = 0; pi < pulses.length; pi++) {
+      if (curLen > 45) {
+        var frac = (tSec * 0.36 + pi / pulses.length) % 1;
+        var pl = frac * curLen;
+        var pp = prog.getPointAtLength(pl);
+        var fade = Math.sin(frac * Math.PI);
+        pulses[pi].setAttribute("cx", pp.x.toFixed(1));
+        pulses[pi].setAttribute("cy", pp.y.toFixed(1));
+        pulses[pi].setAttribute("opacity", (fade * 0.75).toFixed(3));
+      } else {
+        pulses[pi].setAttribute("opacity", "0");
+      }
+    }
+
+    // 三重雷达冲击波 + 6 粒辐射火花（到站时绽放）
+    if (ring && ring2 && ring3) {
       var stAct = STOPS[active];
       ring.setAttribute("cx", stAct.x); ring.setAttribute("cy", stAct.y);
       ring2.setAttribute("cx", stAct.x); ring2.setAttribute("cy", stAct.y);
+      ring3.setAttribute("cx", stAct.x); ring3.setAttribute("cy", stAct.y);
       if (inDwell) {
         var p1 = dwellP;
-        var p2 = (dwellP + 0.45) % 1;
-        ring.setAttribute("r", String((6 + p1 * 22).toFixed(1)));
-        ring.setAttribute("opacity", String((0.78 * (1 - p1)).toFixed(3)));
-        ring2.setAttribute("r", String((6 + p2 * 22).toFixed(1)));
-        ring2.setAttribute("opacity", String((0.48 * (1 - p2)).toFixed(3)));
+        var p2 = (dwellP + 0.34) % 1;
+        var p3 = (dwellP + 0.68) % 1;
+        ring.setAttribute("r", String((6 + p1 * 25).toFixed(1)));
+        ring.setAttribute("opacity", String((0.82 * (1 - p1)).toFixed(3)));
+        ring2.setAttribute("r", String((6 + p2 * 25).toFixed(1)));
+        ring2.setAttribute("opacity", String((0.55 * (1 - p2)).toFixed(3)));
+        ring3.setAttribute("r", String((6 + p3 * 25).toFixed(1)));
+        ring3.setAttribute("opacity", String((0.36 * (1 - p3)).toFixed(3)));
+        for (var ki = 0; ki < sparks.length; ki++) {
+          var a = (ki / sparks.length) * Math.PI * 2 + 0.3;
+          var sr = 7 + dwellP * 19;
+          sparks[ki].setAttribute("cx", (stAct.x + Math.cos(a) * sr).toFixed(1));
+          sparks[ki].setAttribute("cy", (stAct.y + Math.sin(a) * sr).toFixed(1));
+          sparks[ki].setAttribute("opacity", (Math.sin(dwellP * Math.PI) * 0.85).toFixed(3));
+        }
       } else {
         ring.setAttribute("opacity", "0");
         ring2.setAttribute("opacity", "0");
+        ring3.setAttribute("opacity", "0");
+        for (var ki2 = 0; ki2 < sparks.length; ki2++) sparks[ki2].setAttribute("opacity", "0");
       }
     }
+
+    if (homeBeacon) homeBeacon.classList.toggle("on", active === STOPS.length - 1);
 
     if (active !== lastActive) {
       lastActive = active;
@@ -3543,7 +3837,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     if (paused) return;
     var elapsed = (now - t0) % CYCLE_MS;
     pausedElapsed = elapsed;
-    renderAt(elapsed);
+    renderAt(elapsed, now);
     raf = requestAnimationFrame(frame);
   }
 
@@ -3552,7 +3846,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
     pausedElapsed = target;
     t0 = performance.now() - target;
     lastActive = -1;
-    renderAt(target);
+    renderAt(target, performance.now());
   }
 
   playBtn.addEventListener("click", function(){
@@ -3569,7 +3863,7 @@ function coverCommerce(host) { host.innerHTML = `<svg class="ph-commerce-sop" vi
 
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) {
-    renderAt(CYCLE_MS - 400);
+    renderAt(CYCLE_MS - 400, performance.now());
     playBtn.style.display = "none";
   } else {
     raf = requestAnimationFrame(frame);
@@ -3710,6 +4004,8 @@ html[data-theme="night"] .bc-wiki-win img, html[data-theme="night"] .kb2-shot-wr
 html[data-theme="night"] .bc-stage { background:radial-gradient(115% 90% at 50% 16%, #112545 0%, #071022 64%, #040914 100%) !important; }
 html[data-theme="night"] .bc-mini-app { background:#0b1528 !important; border-color:rgba(56,189,248,.62) !important; }
 html[data-theme="night"] .bc-canvas-app { background:radial-gradient(rgba(148,163,184,.22) 1px, transparent 1px) 0 0 / 12px 12px, #091121 !important; }
+html[data-theme="night"] .bc-edit-app { background:linear-gradient(180deg, #0c162b 0%, #060d1c 100%) !important; }
+html[data-theme="night"] .b-tag.doing { background:rgba(37,99,235,.22) !important; border-color:rgba(56,189,248,.4) !important; color:#93c5fd !important; }
 html[data-theme="night"] .bc-pill { color:#e2f1ff !important; background:rgba(8,18,36,.86) !important; border-color:rgba(56,189,248,.45) !important; }
 html[data-theme="night"] .bc-chip { color:#cbd5e1 !important; background:rgba(8,18,36,.88) !important; }
 html[data-theme="night"] .kb2-float { background:#0b1224 !important; color:#bae6fd !important; }
