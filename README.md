@@ -2,16 +2,16 @@
 
 硅基野人的个人站点：
 
-- 首页（个人品牌）：https://guijiyeren.github.io/
-- 高性价比人生指南 · 行动版：https://guijiyeren.github.io/rensheng/
-- 标签星云（3D 知识图谱）：https://guijiyeren.github.io/rensheng/graph.html
-- 资源中心（脱敏展示版）：https://guijiyeren.github.io/resource/
-- 情报中枢（公开榜单展示版）：https://guijiyeren.github.io/intel/
-- 会动网页（3D 交互与开源酷站库）：https://guijiyeren.github.io/huidong/
-- 视觉图鉴（整片风格、镜头组件与实时动效展厅）：https://guijiyeren.github.io/shijue/
-- 工作台流程：https://guijiyeren.github.io/workflow/
-- 更多项目：https://guijiyeren.github.io/projects/
-- 常用工具：https://guijiyeren.github.io/tools/
+- 首页（个人品牌）：https://guijiyeren.com/
+- 高性价比人生指南 · 行动版：https://guijiyeren.com/rensheng/
+- 标签星云（3D 知识图谱）：https://guijiyeren.com/rensheng/graph.html
+- 资源中心（脱敏展示版）：https://guijiyeren.com/resource/
+- 情报中枢（公开榜单展示版）：https://guijiyeren.com/intel/
+- 会动网页（3D 交互与开源酷站库）：https://guijiyeren.com/huidong/
+- 视觉图鉴（整片风格、镜头组件与实时动效展厅）：https://guijiyeren.com/shijue/
+- 工作台流程：https://guijiyeren.com/workflow/
+- 更多项目：https://guijiyeren.com/projects/
+- 常用工具：https://guijiyeren.com/tools/
 
 ## 目录结构
 

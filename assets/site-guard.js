@@ -6,9 +6,18 @@
   // 1. 域名绑定锁 + 防跨站 iframe 嵌套扒页（防止别人下载源码挂到其他域名盗版运行）
   try {
     var h = (location.hostname || '').toLowerCase();
-    var allowed = h === 'guijiyeren.github.io' || h === 'localhost' || h === '127.0.0.1' || h === '';
+    var allowed =
+      h === 'guijiyeren.com' ||
+      h === 'www.guijiyeren.com' ||
+      h === 'guijiyeren.github.io' ||
+      h.endsWith('.edgeone.app') ||
+      h.endsWith('.edgeone.cool') ||
+      h.endsWith('.pages.dev') ||
+      h === 'localhost' ||
+      h === '127.0.0.1' ||
+      h === '';
     if (location.protocol.indexOf('http') === 0 && !allowed) {
-      location.replace('https://guijiyeren.github.io/');
+      location.replace('https://guijiyeren.com/');
       return;
     }
     if (window.top !== window.self && window.top.location.origin !== window.location.origin) {

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /resource/
 Disallow: /stats/
 
-Sitemap: https://guijiyeren.github.io/sitemap.txt
+Sitemap: https://guijiyeren.com/sitemap.txt

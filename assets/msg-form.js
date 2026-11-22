@@ -71,7 +71,7 @@
         name: (fd.get("name") || "匿名").toString().trim() || "匿名",
         contact: (fd.get("contact") || "").toString().trim(),
         message: msg,
-        _subject: "来自 guijiyeren.github.io 的留言",
+        _subject: "来自 guijiyeren.com 的留言",
         _template: "table",
         _captcha: "false"
       })
