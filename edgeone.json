@@ -1,0 +1,56 @@
+{
+  "headers": [
+    {
+      "source": "/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=3600"
+        }
+      ]
+    },
+    {
+      "source": "/assets/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/shijue/media/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/huidong/assets/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    }
+  ]
+}
