@@ -1245,8 +1245,8 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
     </div>
     <div class="prog-v2">
       <div class="prog-hero">
-        <div class="ph-ring" id="phRing" data-target="90" style="--pct:90">
-          <svg viewBox="0 0 104 104" aria-label="进度 90%">
+        <div class="ph-ring" id="phRing" data-target="80" style="--pct:80">
+          <svg viewBox="0 0 104 104" aria-label="进度 80%">
             <defs>
               <linearGradient id="phArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#38bdf8"/>
@@ -1267,25 +1267,26 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
               <circle class="r-glow" id="phArcGlow" cx="52" cy="52" r="38"/>
               <circle class="r-fg" id="phArcFg" cx="52" cy="52" r="38"/>
               <circle class="r-sheen" cx="52" cy="52" r="38"/>
-              <circle class="r-tip-halo" id="phTipHalo" cx="82.74" cy="29.66" r="7.5"/>
-              <circle class="r-tip-dot" id="phTipDot" cx="82.74" cy="29.66" r="4"/>
+              <circle class="r-tip-halo" id="phTipHalo" cx="63.74" cy="15.86" r="7.5"/>
+              <circle class="r-tip-dot" id="phTipDot" cx="63.74" cy="15.86" r="4"/>
             </g>
           </svg>
-          <div class="ph-val"><b id="phPctNum">90</b><i>%</i></div>
+          <div class="ph-val"><b id="phPctNum">80</b><i>%</i></div>
         </div>
         <div class="ph-main">
-          <div class="ph-top"><span class="ph-live"><i></i>正在攻坚</span><h3>剪辑工厂搭建</h3></div>
-          <p>把录音导入、试片生成、字幕精修、红框改片与成片导出打通到同一条流水线。</p>
+          <div class="ph-top"><span class="ph-live"><i></i>正在攻坚</span><h3>个人 AI 助理</h3></div>
+          <p>把日程待办、健康睡眠、账单复盘、多设备协同与跨库知识接到同一位 AI 助理手里。</p>
           <div class="ph-steps">
-            <span class="done">✓ 工程导入</span>
-            <span class="done">✓ 一键试片</span>
-            <span class="done">✓ 字幕精修</span>
-            <span class="done">✓ 四轨时间轴</span>
-            <span class="now">● 批量导出冲刺</span>
+            <span class="done">✓ 日程与待办</span>
+            <span class="done">✓ 健康与睡眠</span>
+            <span class="done">✓ 跨库知识检索</span>
+            <span class="done">✓ 多设备协同</span>
+            <span class="now">● 主动早晚提醒</span>
           </div>
         </div>
       </div>
       <div class="prog-live-grid">
+        <div class="pl-card"><i></i><b>剪辑工厂搭建</b><span>已上线 100%</span></div>
         <div class="pl-card"><i></i><b>无限画布搭建</b><span>已上线</span></div>
         <div class="pl-card"><i></i><b>电商全自动化</b><span>已上线</span></div>
         <div class="pl-card"><i></i><b>AI个人工作台</b><span>已上线</span></div>
@@ -1310,10 +1311,10 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       .ph-ring .r-inner { stroke:rgba(99,102,241,.28); stroke-width:1.2; stroke-dasharray:2 5; transform-origin:52px 52px; animation:phOrbitSpin 22s linear reverse infinite; }
       @keyframes phOrbitSpin { to { transform:rotate(360deg); } }
       .ph-ring .r-bg { stroke:#dbeafe; stroke-width:7.5; }
-      .ph-ring .r-glow { stroke:url(#phArcGrad); stroke-width:11; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:23.88; opacity:.26; filter:blur(4px); }
-      .ph-ring .r-fg { stroke:url(#phArcGrad); stroke-width:7.5; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:23.88; filter:drop-shadow(0 0 5px rgba(37,99,235,.42)); }
+      .ph-ring .r-glow { stroke:url(#phArcGrad); stroke-width:11; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:47.75; opacity:.26; filter:blur(4px); }
+      .ph-ring .r-fg { stroke:url(#phArcGrad); stroke-width:7.5; stroke-linecap:round; stroke-dasharray:238.76; stroke-dashoffset:47.75; filter:drop-shadow(0 0 5px rgba(37,99,235,.42)); }
       .ph-ring .r-sheen { stroke:url(#phSheenGrad); stroke-width:4; stroke-linecap:round; stroke-dasharray:34 205; stroke-dashoffset:238.76; opacity:.9; animation:phArcSheen 2.9s ease-in-out infinite; }
-      @keyframes phArcSheen { 0% { stroke-dashoffset:238.76; opacity:0; } 14% { opacity:.95; } 78% { opacity:.9; } 100% { stroke-dashoffset:24; opacity:0; } }
+      @keyframes phArcSheen { 0% { stroke-dashoffset:238.76; opacity:0; } 14% { opacity:.95; } 78% { opacity:.9; } 100% { stroke-dashoffset:47.75; opacity:0; } }
       .ph-ring .r-tip-halo { fill:rgba(34,211,238,.28); stroke:rgba(56,189,248,.85); stroke-width:1.2; animation:phTipPulse 2.1s ease-out infinite; transform-box:fill-box; transform-origin:center; }
       .ph-ring .r-tip-dot { fill:#ffffff; stroke:#2563eb; stroke-width:2.2; filter:drop-shadow(0 0 6px rgba(56,189,248,.95)); }
       @keyframes phTipPulse { 0% { transform:scale(.75); opacity:.92; } 100% { transform:scale(1.9); opacity:0; } }
@@ -1607,7 +1608,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
               <circle cx="24" cy="264" r="3" fill="#a78bfa" opacity=".88"/>
               <circle cx="376" cy="264" r="3" fill="#34d399" opacity=".88"/>
             </svg>
-            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>EDIT FACTORY · 90% 实战剪辑台</div>
+            <div class="bc-pill"><i class="bc-dot bc-dot-live"></i>EDIT FACTORY · 100% 实战剪辑台</div>
             <div class="bc-mini-app bc-edit-app" aria-hidden="true">
               <div class="bce-bar">
                 <div class="bce-dots"><i></i><i></i><i></i></div>
@@ -1649,7 +1650,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
           </div>
         </div>
         <div class="b-body">
-          <div class="b-top"><h3>剪辑工厂</h3><span class="b-tag doing">开发中 90%</span></div>
+          <div class="b-top"><h3>剪辑工厂</h3><span class="b-tag open">已上线 100%</span></div>
           <p>把脚本、配音、字幕、红框改片和四轨剪辑接到同一条流程里。</p>
         </div>
       </article>
