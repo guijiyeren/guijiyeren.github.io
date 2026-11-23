@@ -14,6 +14,32 @@
       ]
     },
     {
+      "source": "/assets/opt/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, immutable"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/assets/thumbs/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, immutable"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    },
+    {
       "source": "/assets/*",
       "headers": [
         {
