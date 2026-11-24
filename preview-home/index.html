@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
+  location.replace(location.pathname + '/' + location.search + location.hash);
+}
+</script>
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>首页商业化分流方案（预览测试版） · 硅基野人</title>
 <link rel="icon" href="../assets/logo.png">
@@ -310,7 +315,7 @@
   </div>
 </div>
 
-<script src="../wiki/auth-pay.js?v=1"></script>
+<script src="../wiki/auth-pay.js?v=2"></script>
 <script src="../assets/msg-form.js" defer></script>
 <script>
 (function () {

@@ -73,11 +73,46 @@
     return new Uint8Array(plainBuf);
   }
 
+  function normalizeInput(str) {
+    return String(str || '')
+      .replace(/\u3000/g, ' ')
+      .replace(/[\uFF01-\uFF5E]/g, function (ch) {
+        return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+      })
+      .trim();
+  }
+
+  async function fetchWithRetry(url, opts, retries, timeoutMs) {
+    var maxRetries = typeof retries === 'number' ? retries : 3;
+    var waitMs = typeof timeoutMs === 'number' ? timeoutMs : 15000;
+    var lastErr = null;
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+      var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var tid = ctrl ? setTimeout(function () { ctrl.abort(); }, waitMs) : null;
+      try {
+        var reqOpts = Object.assign({}, opts || {});
+        if (ctrl && !reqOpts.signal) reqOpts.signal = ctrl.signal;
+        var res = await fetch(url, reqOpts);
+        if (tid) clearTimeout(tid);
+        if (res.ok || (res.status < 500 && res.status !== 429) || attempt === maxRetries) {
+          return res;
+        }
+        lastErr = new Error('HTTP ' + res.status);
+      } catch (e) {
+        if (tid) clearTimeout(tid);
+        lastErr = e;
+        if (attempt === maxRetries) throw e;
+      }
+      await new Promise(function (r) { setTimeout(r, 500 * attempt); });
+    }
+    throw lastErr || new Error('网络请求失败');
+  }
+
   var authCache = {};
   async function loadAuthConfig(base) {
     var root = base || './';
     if (authCache[root]) return authCache[root];
-    var res = await fetch(root + 'data/auth.json?t=' + Date.now(), { cache: 'no-store' });
+    var res = await fetchWithRetry(root + 'data/auth.json?t=' + Date.now(), { cache: 'no-store' }, 3, 12000);
     if (!res.ok) throw new Error('无法读取访问配置');
     var data = await res.json();
     authCache[root] = data;
@@ -139,25 +174,41 @@
     if (h === 'guijiyeren.github.io' || ((h === '127.0.0.1' || h === 'localhost') && p !== '8788')) {
       return { fallback: true };
     }
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var tid = ctrl ? setTimeout(function () { ctrl.abort(); }, 4500) : null;
     try {
       var res = await fetch('/api/wiki/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: type, credential: credential })
+        body: JSON.stringify({ type: type, credential: credential }),
+        signal: ctrl ? ctrl.signal : undefined
       });
+      if (tid) clearTimeout(tid);
       var ct = (res.headers.get('content-type') || '').toLowerCase();
       if (!ct.includes('application/json')) return { fallback: true };
       var j = await res.json();
       if (j && j.fallback) return { fallback: true };
       return j;
     } catch (e) {
+      if (tid) clearTimeout(tid);
       return { fallback: true };
     }
   }
 
   async function unlockWithPasscode(passcode, remember, base) {
-    var clean = String(passcode || '').trim();
+    var clean = normalizeInput(passcode);
     if (!clean) throw new Error('请输入访问密码');
+
+    var cfg = await loadAuthConfig(base);
+    if (cfg.passcodeEnabled && cfg.passcodeEnvelope && !cfg.preferServerAuth) {
+      try {
+        var dekBytes = await unwrapEnvelope(clean, cfg.passcodeEnvelope, cfg.kdf);
+        var cryptoKey = await importDek(dekBytes);
+        var meta = { plan: 'full', label: '密码访问', mode: 'envelope' };
+        saveSession(dekBytes, meta, remember);
+        return Object.assign({ dekBytes: dekBytes, cryptoKey: cryptoKey }, meta);
+      } catch (e) {}
+    }
 
     var srv = await tryServerAuth('passcode', clean);
     if (srv && !srv.fallback) {
@@ -171,24 +222,38 @@
       throw new Error(srv.error || '访问密码不正确');
     }
 
-    var cfg = await loadAuthConfig(base);
     if (!cfg.passcodeEnabled || !cfg.passcodeEnvelope) {
       throw new Error('密码通道已关闭，请使用正式授权码进入');
     }
-    try {
-      var dekBytes = await unwrapEnvelope(clean, cfg.passcodeEnvelope, cfg.kdf);
-      var cryptoKey = await importDek(dekBytes);
-      var meta = { plan: 'full', label: '密码访问', mode: 'envelope' };
-      saveSession(dekBytes, meta, remember);
-      return Object.assign({ dekBytes: dekBytes, cryptoKey: cryptoKey }, meta);
-    } catch (e) {
-      throw new Error('访问密码不正确，请核对后重试');
-    }
+    throw new Error('访问密码不正确，请核对后重试');
   }
 
   async function unlockWithLicense(code, remember, base) {
-    var norm = String(code || '').trim().toUpperCase();
+    var norm = normalizeInput(code).toUpperCase();
     if (!norm) throw new Error('请输入授权码');
+
+    var cfg = await loadAuthConfig(base);
+    var list = cfg.licenses || [];
+    if (list.length && !cfg.preferServerAuth) {
+      var hint = (await sha256Hex(norm)).slice(0, 8);
+      var candidates = list.filter(function (item) { return item.hint === hint; });
+      if (!candidates.length) candidates = list;
+      for (var i = 0; i < candidates.length; i++) {
+        var lic = candidates[i];
+        try {
+          var dekBytes = await unwrapEnvelope(norm, lic, cfg.kdf);
+          if (lic.expiresAt && Date.parse(lic.expiresAt) < Date.now()) {
+            throw new Error('该授权码已到期，请续费后使用');
+          }
+          var cryptoKey = await importDek(dekBytes);
+          var meta = { plan: lic.plan || 'full', label: lic.label || '正式授权', mode: 'license' };
+          saveSession(dekBytes, meta, remember);
+          return Object.assign({ dekBytes: dekBytes, cryptoKey: cryptoKey }, meta);
+        } catch (err) {
+          if (err && err.message && err.message.indexOf('到期') >= 0) throw err;
+        }
+      }
+    }
 
     var srv = await tryServerAuth('license', norm);
     if (srv && !srv.fallback) {
@@ -202,28 +267,8 @@
       throw new Error(srv.error || '授权码无效或已过期');
     }
 
-    var cfg = await loadAuthConfig(base);
-    var list = cfg.licenses || [];
     if (!list.length) {
       throw new Error('当前尚无离线授权码，请使用访问密码或通过在线下单开通');
-    }
-    var hint = (await sha256Hex(norm)).slice(0, 8);
-    var candidates = list.filter(function (item) { return item.hint === hint; });
-    if (!candidates.length) candidates = list;
-    for (var i = 0; i < candidates.length; i++) {
-      var lic = candidates[i];
-      try {
-        var dekBytes = await unwrapEnvelope(norm, lic, cfg.kdf);
-        if (lic.expiresAt && Date.parse(lic.expiresAt) < Date.now()) {
-          throw new Error('该授权码已到期，请续费后使用');
-        }
-        var cryptoKey = await importDek(dekBytes);
-        var meta = { plan: lic.plan || 'full', label: lic.label || '正式授权', mode: 'license' };
-        saveSession(dekBytes, meta, remember);
-        return Object.assign({ dekBytes: dekBytes, cryptoKey: cryptoKey }, meta);
-      } catch (err) {
-        if (err && err.message && err.message.indexOf('到期') >= 0) throw err;
-      }
     }
     throw new Error('授权码无效，请检查是否输入正确');
   }
@@ -477,6 +522,7 @@
 
   win.GuijiWikiAuth = {
     loadAuthConfig: loadAuthConfig,
+    fetchWithRetry: fetchWithRetry,
     tryRestoreSession: tryRestoreSession,
     unlockWithPasscode: unlockWithPasscode,
     unlockWithLicense: unlockWithLicense,

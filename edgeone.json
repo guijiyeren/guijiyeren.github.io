@@ -110,6 +110,10 @@
         {
           "key": "Cache-Control",
           "value": "no-store"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "no-store"
         }
       ]
     }

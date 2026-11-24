@@ -71,8 +71,8 @@
     try {
       var remember = document.getElementById('rememberPass').checked;
       var s = await Auth.unlockWithPasscode(pwInput.value, remember, './');
-      pwInput.value = '';
       await bootReader(s);
+      pwInput.value = '';
     } catch (e) {
       errEl.textContent = e.message || '密码验证失败';
     } finally {
@@ -119,7 +119,8 @@
 
   // ====== 解密工具 ======
   async function fetchDecryptedBytes(relPath) {
-    var res = await fetch(relPath);
+    var fetcher = Auth.fetchWithRetry || fetch;
+    var res = await fetcher(relPath, {}, 3, 20000);
     if (!res.ok) throw new Error('资源加载失败 (' + res.status + ')');
     var buf = await res.arrayBuffer();
     return Auth.decryptBytes(session.cryptoKey, buf);
@@ -155,8 +156,12 @@
     try {
       manifest = await fetchDecryptedJson('data/manifest.enc');
     } catch (e) {
-      Auth.lockSession();
-      throw new Error('密钥已变更或会话过期，请重新验证');
+      var msg = String((e && e.message) || '');
+      if (e && (e.name === 'OperationError' || msg.indexOf('加密') >= 0)) {
+        Auth.lockSession();
+        throw new Error('密钥已变更或会话过期，请重新验证');
+      }
+      throw new Error('网络波动导致目录加载超时，请再点一次「立即解锁知识库」');
     }
 
     nodeMap = {};
@@ -311,7 +316,18 @@
     titleEl.textContent = (nodeMap[ntok] && nodeMap[ntok].title) || '加载中…';
     bodyEl.innerHTML = '<p style="color:var(--muted)">正在本地解密内容…</p>';
 
-    var page = await fetchDecryptedJson('data/pages/' + ntok + '.enc');
+    var page;
+    try {
+      page = await fetchDecryptedJson('data/pages/' + ntok + '.enc');
+    } catch (e) {
+      bodyEl.innerHTML = '<div style="padding:18px;border:1px solid var(--line);border-radius:12px">' +
+        '<p style="color:var(--muted);margin-bottom:10px">页面加载遇到网络波动，暂未拉取成功。</p>' +
+        '<button type="button" class="wk-m-btn primary" id="wkRetryPageBtn">重新加载本页</button>' +
+      '</div>';
+      var rbtn = document.getElementById('wkRetryPageBtn');
+      if (rbtn) rbtn.addEventListener('click', function () { loadPage(ntok, activeFrag, false); });
+      return;
+    }
     activeMedia = page.media || {};
     document.title = page.title + ' · 硅基野人知识库';
 
@@ -925,7 +941,8 @@
     return (num / 1024 / 1024).toFixed(1) + ' MB';
   }
 
-  // ====== 启动检查 ======
+  // ====== 启动检查与预热配置 ======
+  Auth.loadAuthConfig('./').catch(function () {});
   Auth.tryRestoreSession().then(function (restored) {
     if (restored) {
       bootReader(restored).catch(function () {});
