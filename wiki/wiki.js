@@ -3,6 +3,7 @@
   'use strict';
 
   var Auth = window.GuijiWikiAuth;
+  var BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   var HOME_NODE = 'LJ5UwgCwziAVUpkqYKTcTsbXnwg';
   var session = null;
   var manifest = null;
@@ -352,7 +353,7 @@
       '<span>约 ' + (page.charCount || 0) + ' 字</span>' +
       '<span>预计阅读 ' + mins + ' 分钟</span>';
 
-    bodyEl.innerHTML = page.html;
+    bodyEl.innerHTML = page.html.replace(/(<img\b[^>]*?)\ssrc=""/g, '$1 src="' + BLANK_IMG + '" data-loading="1"');
 
     // 子页面导航卡
     var chBox = document.getElementById('wkChildrenBox');
@@ -487,17 +488,18 @@
       img.removeAttribute('loading');
       var slot = img.getAttribute('data-slot');
       var info = activeMedia[slot];
-      if (!info || !info.enc) return;
+      if (!info || !info.enc) {
+        img.removeAttribute('data-loading');
+        return;
+      }
       try {
         img.src = await getMediaBlobUrl(info.enc, info.mime);
+        img.removeAttribute('data-loading');
       } catch (e) {
+        img.removeAttribute('data-loading');
         img.alt = '图片解密失败';
       }
     }
-
-    imgs.forEach(function (im) {
-      if (im.getAttribute('src') === '') im.removeAttribute('src');
-    });
 
     // 首屏前 4 张立刻加载，其余用大预加载区懒解密
     imgs.slice(0, 4).forEach(loadImg);
@@ -517,7 +519,7 @@
 
     scope.querySelectorAll('img.wk-zoomable').forEach(function (im) {
       im.addEventListener('click', function () {
-        if (!im.src) return;
+        if (!im.src || im.getAttribute('data-loading') === '1') return;
         openLightbox(im.src, im.alt);
       });
     });

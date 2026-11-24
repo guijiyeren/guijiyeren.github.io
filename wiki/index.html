@@ -11,7 +11,7 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>实战知识库 · 硅基野人</title>
 <link rel="icon" href="../assets/logo.png">
-<link rel="stylesheet" href="wiki.css?v=3">
+<link rel="stylesheet" href="wiki.css?v=4">
 <script src="../assets/site-guard.js?v=2"></script>
 <script>
 (function(){
@@ -109,20 +109,21 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
       <button type="button" class="wk-icon-btn wk-mobile-only" id="sidebarToggle" aria-label="展开目录">☰ 目录</button>
       <a class="wk-tb-brand" href="?">
         <img src="../assets/opt/logo-160.webp" alt="" width="28" height="28">
-        <span>硅基野人知识库</span>
+        <span class="wk-hide-sm">硅基野人知识库</span>
       </a>
-      <a class="wk-tb-home" href="../">官网首页</a>
+      <a class="wk-tb-home wk-hide-sm" href="../">官网首页</a>
       <a class="wk-tb-home wk-hide-sm" href="../preview-home/">人群方案预览</a>
     </div>
     <button type="button" class="wk-search-trigger" id="searchOpenBtn">
-      <span>🔍 搜索 93 篇实战笔记与复盘…</span>
-      <kbd>Ctrl K</kbd>
+      <span class="wk-search-long">🔍 搜索 93 篇实战笔记与复盘…</span>
+      <span class="wk-search-short">🔍 搜索</span>
+      <kbd class="wk-hide-sm">Ctrl K</kbd>
     </button>
     <div class="wk-tb-right">
-      <button type="button" class="wk-pill-btn" id="openPayTopBtn">💎 授权与套餐</button>
+      <button type="button" class="wk-pill-btn" id="openPayTopBtn">💎 <span class="wk-hide-sm">授权与</span>套餐</button>
       <button type="button" class="wk-icon-btn wk-hide-sm" id="fontSizeBtn" title="切换字号">A±</button>
       <button type="button" class="wk-icon-btn" id="appThemeBtn" title="切换白天/夜晚">◐</button>
-      <button type="button" class="wk-icon-btn wk-lock-btn" id="lockBtn" title="退出并重新锁定">🔒 锁定</button>
+      <button type="button" class="wk-icon-btn wk-lock-btn" id="lockBtn" title="退出并重新锁定">🔒<span class="wk-hide-sm"> 锁定</span></button>
     </div>
   </header>
 
@@ -195,7 +196,7 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
 </div>
 
 <script src="vendor/hls.min.js?v=2"></script>
-<script src="auth-pay.js?v=3"></script>
-<script src="wiki.js?v=3"></script>
+<script src="auth-pay.js?v=4"></script>
+<script src="wiki.js?v=4"></script>
 </body>
 </html>
