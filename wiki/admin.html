@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>收款核销与发码后台 · 硅基野人</title>
+<link rel="icon" href="../assets/logo.png">
+<script src="../assets/site-guard.js?v=2"></script>
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('guiji_theme');
+    var h = new Date().getHours();
+    document.documentElement.setAttribute('data-theme', saved || ((h >= 7 && h < 19) ? 'day' : 'night'));
+  } catch (e) {}
+})();
+</script>
+<style>
+  :root { --bg:#f4f7fb; --surface:#fff; --surface2:#f8fafc; --ink:#0f172a; --ink2:#475569; --muted:#64748b; --line:#e2e8f0; --blue:#2563eb; --green:#059669; --red:#dc2626; }
+  html[data-theme="night"] { --bg:#070b16; --surface:#0f172a; --surface2:#111c33; --ink:#e2e8f0; --ink2:#94a3b8; --muted:#64748b; --line:#243247; --blue:#60a5fa; color-scheme:dark; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  [hidden] { display:none !important; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; }
+  button, input, select { font:inherit; }
+  .ad-wrap { max-width:1080px; margin:0 auto; padding:20px 16px 60px; }
+  .ad-top { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .ad-top h1 { font-size:20px; display:flex; align-items:center; gap:8px; }
+  .ad-btns { display:flex; gap:8px; flex-wrap:wrap; }
+  .btn { border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:10px; padding:7px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+  .btn.primary { background:var(--blue); border-color:transparent; color:#fff; }
+  .btn.green { background:var(--green); border-color:transparent; color:#fff; }
+  .btn.danger { color:var(--red); border-color:rgba(220,38,38,.35); }
+  .btn:disabled { opacity:.55; cursor:not-allowed; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px; margin-bottom:16px; }
+  .gate { max-width:440px; margin:70px auto; }
+  .gate h2 { font-size:19px; margin-bottom:6px; }
+  .gate p { font-size:13px; color:var(--ink2); margin-bottom:14px; }
+  .inp { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--surface2); color:var(--ink); font-size:14px; }
+  .status-bar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:13px; }
+  .pill { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:700; border:1px solid var(--line); background:var(--surface2); }
+  .pill.ok { color:#047857; background:#ecfdf5; border-color:#a7f3d0; }
+  .pill.warn { color:#b45309; background:#fffbeb; border-color:#fde68a; }
+  .issue-row { display:grid; grid-template-columns:1.3fr 1.2fr .7fr auto; gap:10px; align-items:center; margin-top:10px; }
+  @media(max-width:720px){ .issue-row{ grid-template-columns:1fr; } }
+  .tbl-wrap { overflow-x:auto; margin-top:10px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:middle; }
+  th { color:var(--ink2); font-size:12px; white-space:nowrap; }
+  code { font-family:ui-monospace,Consolas,monospace; font-size:12.5px; background:var(--surface2); padding:2px 6px; border-radius:6px; border:1px solid var(--line); }
+  .toast { position:fixed; bottom:20px; right:20px; z-index:99; padding:10px 16px; border-radius:10px; background:#0f172a; color:#fff; font-size:13px; font-weight:600; box-shadow:0 12px 30px rgba(0,0,0,.3); }
+</style>
+</head>
+<body>
+<div class="ad-wrap">
+  <div class="card gate" id="adGate">
+    <h2>🔐 老板收款核销与发码后台</h2>
+    <p>输入你电脑 <code>.secrets/admin_token.txt</code> 中的管理密码，即可查看官网订单、1 键确认收款发码、或随时吊销泄露授权码。</p>
+    <form id="adLoginForm">
+      <input type="password" class="inp" id="adTokenInp" placeholder="请输入管理密码" required>
+      <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink2);margin:10px 0 14px;cursor:pointer">
+        <input type="checkbox" id="adRemember" checked> 在我这台电脑记住管理密码
+      </label>
+      <button type="submit" class="btn primary" style="width:100%;padding:10px">登录收款后台 →</button>
+      <div id="adLoginErr" style="color:var(--red);font-size:12.5px;margin-top:8px"></div>
+    </form>
+  </div>
+
+  <div id="adApp" hidden>
+    <div class="ad-top">
+      <h1>💰 官网收款核销与发码后台</h1>
+      <div class="ad-btns">
+        <button type="button" class="btn" id="adRefreshBtn">🔄 刷新订单</button>
+        <a class="btn" href="./">打开知识库 ↗</a>
+        <button type="button" class="btn" id="adThemeBtn">◐ 主题</button>
+        <button type="button" class="btn danger" id="adLogoutBtn">退出</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="status-bar" id="adStatusBar">加载状态中…</div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:16px">⚡ 临时手动签发一个云端授权码</h3>
+      <div class="issue-row">
+        <select class="inp" id="issPlan">
+          <option value="wiki-full">实战知识库 · 全库通行证 (¥99)</option>
+          <option value="ecom-pack">电商老板 · 单款上架准备包 (¥9.9)</option>
+          <option value="ecom-workbench">电商老板 · 轻量工作台自助版 (¥99)</option>
+          <option value="ecom-pilot">电商老板 · 1对1单款上新试点 (¥999)</option>
+          <option value="media-pipeline">自媒体人 · 内容流水线实战包 (¥199)</option>
+          <option value="side-hustle">搞钱案例拆解精选 (¥49)</option>
+        </select>
+        <input type="text" class="inp" id="issLabel" placeholder="备注（如：老张微信付款）" value="微信手工成交">
+        <input type="number" class="inp" id="issDays" placeholder="天数（0=永久）" value="0" min="0">
+        <button type="button" class="btn primary" id="issBtn">立即发码</button>
+      </div>
+      <div id="issOut" style="margin-top:10px;font-size:13.5px"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:16px">🧾 官网订单队列（核对微信/支付宝到账后点绿色按钮）</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>时间</th><th>订单号</th><th>套餐 & 金额</th><th>买家微信 / 邮箱</th><th>状态 / 授权码</th><th>操作</th></tr>
+          </thead>
+          <tbody id="adOrdersBody"><tr><td colspan="6" style="color:var(--muted)">暂无订单</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:16px">🔑 云端已签发授权码（支持随时吊销防倒卖）</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>签发时间</th><th>授权码</th><th>套餐 / 备注</th><th>状态</th><th>操作</th></tr>
+          </thead>
+          <tbody id="adLicBody"><tr><td colspan="5" style="color:var(--muted)">暂无云端授权码</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="adToast" hidden></div>
+
+<script>
+(function(){
+  'use strict';
+  var TOKEN_KEY = 'guiji_wiki_admin_token_v1';
+  var token = '';
+  try { token = localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) {}
+
+  function showToast(msg) {
+    var t = document.getElementById('adToast');
+    t.textContent = msg;
+    t.hidden = false;
+    setTimeout(function () { t.hidden = true; }, 2400);
+  }
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+  function fmtTime(iso) {
+    if (!iso) return '-';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  }
+
+  async function apiAdmin(payload) {
+    var res = await fetch('/api/pay/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify(payload || {})
+    });
+    var j = await res.json().catch(function () { return { ok: false, error: '接口返回非JSON' }; });
+    if (!res.ok || !j.ok) throw new Error(j.error || ('请求失败 (' + res.status + ')'));
+    return j;
+  }
+
+  async function refreshData() {
+    var data = await apiAdmin({ action: 'list' });
+    document.getElementById('adStatusBar').innerHTML =
+      '<span class="pill ' + (data.hasKv ? 'ok' : 'warn') + '">' + (data.hasKv ? '✅ 云端订单库已连' : '⏳ 云端订单库审核中（手动发码已立即可用）') + '</span>' +
+      '<span class="pill ' + (data.hasDek ? 'ok' : 'warn') + '">' + (data.hasDek ? '✅ 主密钥就绪' : '⚠ 缺 WIKI_DEK_B64') + '</span>' +
+      '<span class="pill">当前收款模式：' + esc(data.payProvider) + '</span>';
+
+    var ob = document.getElementById('adOrdersBody');
+    if (!data.orders || !data.orders.length) {
+      ob.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">暂时还没有线上订单</td></tr>';
+    } else {
+      ob.innerHTML = data.orders.map(function (o) {
+        var st = o.paid
+          ? '<span class="pill ok">✅ 已付款发码</span><div style="margin-top:4px"><code>' + esc(o.licenseCode) + '</code></div>'
+          : (o.status === 'buyer_claimed_paid'
+            ? '<span class="pill warn">⏳ 买家点已付 · 待核实</span>'
+            : '<span class="pill">📝 待付款</span>');
+        var act = o.paid
+          ? '<button type="button" class="btn" data-copy="' + esc(o.licenseCode) + '">复制码</button>'
+          : '<button type="button" class="btn green" data-approve="' + esc(o.orderId) + '">✅ 确认收款并自动发码</button>';
+        return '<tr>' +
+          '<td>' + esc(fmtTime(o.claimedAt || o.createdAt)) + '</td>' +
+          '<td><code>' + esc(o.orderId) + '</code></td>' +
+          '<td><b>' + esc(o.planName) + '</b><div style="color:var(--blue);font-weight:700">¥' + esc(o.amount) + ' · ' + esc(o.channel === 'alipay' ? '支付宝' : '微信') + '</div></td>' +
+          '<td><b>' + esc(o.contact || '-') + '</b></td>' +
+          '<td>' + st + '</td>' +
+          '<td>' + act + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    var lb = document.getElementById('adLicBody');
+    if (!data.licenses || !data.licenses.length) {
+      lb.innerHTML = '<tr><td colspan="5" style="color:var(--muted)">暂无云端实时签发码（离线库存见本机 CSV）</td></tr>';
+    } else {
+      lb.innerHTML = data.licenses.map(function (l) {
+        var isAct = l.status === 'active';
+        return '<tr>' +
+          '<td>' + esc(fmtTime(l.createdAt)) + '</td>' +
+          '<td><code>' + esc(l.code) + '</code></td>' +
+          '<td>' + esc(l.plan) + ' · ' + esc(l.label) + (l.contact ? ' (' + esc(l.contact) + ')' : '') + '</td>' +
+          '<td>' + (isAct ? '<span class="pill ok">有效</span>' : '<span class="pill warn">已吊销</span>') + '</td>' +
+          '<td>' + (isAct ? '<button type="button" class="btn" data-copy="' + esc(l.code) + '">复制</button> <button type="button" class="btn danger" data-revoke="' + esc(l.code) + '">吊销停用</button>' : '-') + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    ob.querySelectorAll('[data-approve]').forEach(function (b) {
+      b.addEventListener('click', async function () {
+        b.disabled = true;
+        b.textContent = '发码中…';
+        try {
+          var res = await apiAdmin({ action: 'approve_order', orderId: b.getAttribute('data-approve') });
+          showToast('已确认收款！授权码：' + res.licenseCode);
+          await refreshData();
+        } catch (e) {
+          alert(e.message);
+          b.disabled = false;
+          b.textContent = '✅ 确认收款并自动发码';
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var c = b.getAttribute('data-copy');
+        if (navigator.clipboard) navigator.clipboard.writeText(c).catch(function () {});
+        showToast('已复制授权码：' + c);
+      });
+    });
+
+    lb.querySelectorAll('[data-revoke]').forEach(function (b) {
+      b.addEventListener('click', async function () {
+        var c = b.getAttribute('data-revoke');
+        if (!confirm('确认吊销授权码 ' + c + '？吊销后买家将无法再用该码解锁。')) return;
+        await apiAdmin({ action: 'revoke', code: c });
+        showToast('已吊销：' + c);
+        await refreshData();
+      });
+    });
+  }
+
+  async function enterApp(tok, remember) {
+    token = tok.trim();
+    await refreshData();
+    try {
+      sessionStorage.setItem(TOKEN_KEY, token);
+      if (remember) localStorage.setItem(TOKEN_KEY, token);
+    } catch (e) {}
+    document.getElementById('adGate').hidden = true;
+    document.getElementById('adApp').hidden = false;
+  }
+
+  document.getElementById('adLoginForm').addEventListener('submit', async function (ev) {
+    ev.preventDefault();
+    var err = document.getElementById('adLoginErr');
+    err.textContent = '';
+    try {
+      await enterApp(document.getElementById('adTokenInp').value, document.getElementById('adRemember').checked);
+    } catch (e) {
+      err.textContent = e.message;
+    }
+  });
+
+  document.getElementById('adRefreshBtn').addEventListener('click', function () {
+    refreshData().then(function () { showToast('已刷新'); }).catch(function (e) { alert(e.message); });
+  });
+
+  document.getElementById('issBtn').addEventListener('click', async function () {
+    var b = document.getElementById('issBtn');
+    b.disabled = true;
+    try {
+      var res = await apiAdmin({
+        action: 'issue',
+        plan: document.getElementById('issPlan').value,
+        label: document.getElementById('issLabel').value.trim(),
+        days: Number(document.getElementById('issDays').value || 0)
+      });
+      document.getElementById('issOut').innerHTML = '✅ 签发成功：<code>' + esc(res.licenseCode) + '</code>（已存入云端，买家立刻可用）';
+      await refreshData();
+    } catch (e) {
+      alert(e.message);
+    } finally {
+      b.disabled = false;
+    }
+  });
+
+  document.getElementById('adThemeBtn').addEventListener('click', function () {
+    var h = document.documentElement;
+    var n = h.getAttribute('data-theme') === 'night' ? 'day' : 'night';
+    h.setAttribute('data-theme', n);
+    try { localStorage.setItem('guiji_theme', n); } catch (e) {}
+  });
+
+  document.getElementById('adLogoutBtn').addEventListener('click', function () {
+    try { localStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  if (token) {
+    enterApp(token, true).catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>

@@ -175,7 +175,8 @@
       return { fallback: true };
     }
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var tid = ctrl ? setTimeout(function () { ctrl.abort(); }, 4500) : null;
+    var timeoutMs = type === 'license' ? 7000 : 4500;
+    var tid = ctrl ? setTimeout(function () { ctrl.abort(); }, timeoutMs) : null;
     try {
       var res = await fetch('/api/wiki/auth', {
         method: 'POST',
@@ -237,7 +238,6 @@
     if (list.length && !cfg.preferServerAuth) {
       var hint = (await sha256Hex(norm)).slice(0, 8);
       var candidates = list.filter(function (item) { return item.hint === hint; });
-      if (!candidates.length) candidates = list;
       for (var i = 0; i < candidates.length; i++) {
         var lic = candidates[i];
         try {
@@ -375,10 +375,17 @@
             '<button type="button" class="gp-ch' + (selectedChannel === 'wechat' ? ' is-on' : '') + '" data-ch="wechat">💚 微信支付</button>' +
             '<button type="button" class="gp-ch' + (selectedChannel === 'alipay' ? ' is-on' : '') + '" data-ch="alipay">💙 支付宝</button>' +
           '</div>' +
-          '<input type="text" class="gp-input" id="gpContact" placeholder="选填：微信 / 邮箱（方便接收回执或预约 1 对 1 对焦）">' +
-          '<button type="button" class="gp-submit" id="gpPayBtn">立即支付 ' + escHtml(cur.priceText || ('¥' + cur.price)) + ' 并获取授权码 →</button>' +
+          '<input type="text" class="gp-input" id="gpContact" placeholder="必填：你的微信号或邮箱（用于发授权码或预约 1 对 1）">' +
+          '<div id="gpErr" style="min-height:18px;margin-top:6px;font-size:12.5px;color:#dc2626;font-weight:600"></div>' +
+          '<button type="button" class="gp-submit" id="gpPayBtn">确认方案 · 下单付款 ' + escHtml(cur.priceText || ('¥' + cur.price)) + ' →</button>' +
           '<div class="gp-stage" id="gpStage" hidden></div>' +
         '</div>';
+
+      try {
+        var savedContact = localStorage.getItem('guiji_buyer_contact') || '';
+        var cInp = document.getElementById('gpContact');
+        if (savedContact && cInp) cInp.value = savedContact;
+      } catch (e) {}
 
       payModalEl.hidden = false;
       document.getElementById('gpCloseBtn').addEventListener('click', closeCheckout);
@@ -395,6 +402,32 @@
         });
       });
       document.getElementById('gpPayBtn').addEventListener('click', startOrder);
+    }
+
+    function resolveSiteAsset(urlPath, defFile) {
+      var u = String(urlPath || '');
+      if (/^https?:\/\//i.test(u)) return u;
+      var rootPrefix = base.replace(/\/$/, '') + '/../assets/';
+      if (u.indexOf('/assets/') === 0) return rootPrefix + u.slice('/assets/'.length);
+      return rootPrefix + defFile;
+    }
+
+    function sendOrderEmail(orderId, cur, contact, channel) {
+      try {
+        var FS_URL = 'https://formsubmit.co/ajax/' + String.fromCharCode(49,53,52,54,52,55,64,113,113,46,99,111,109);
+        fetch(FS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            name: contact,
+            contact: contact,
+            message: '官网订单：' + cur.name + ' (' + (cur.priceText || ('¥' + cur.price)) + ')\n订单号：' + orderId + '\n渠道：' + (channel === 'wechat' ? '微信支付' : '支付宝') + '\n客户联系：' + contact,
+            _subject: '[官网下单] ' + cur.name + ' ' + (cur.priceText || '') + ' (' + orderId + ')',
+            _template: 'table',
+            _captcha: 'false'
+          })
+        }).catch(function () {});
+      } catch (e) {}
     }
 
     async function handlePaid(payload) {
@@ -415,17 +448,32 @@
       stage.hidden = false;
       stage.innerHTML =
         '<div class="gp-ok-box">' +
-          '<div><b>✅ 订单支付成功！</b>（订单号：' + escHtml(payload.orderId || 'OK') + '）</div>' +
-          (code ? '<div>您的专属授权码：</div><div class="gp-code">' + escHtml(code) + '</div>' : '') +
+          '<div><b>✅ 订单已确认并激活！</b>（订单号：' + escHtml(payload.orderId || 'OK') + '）</div>' +
+          (code ? '<div>您的专属授权码（请截图保存，7天外换设备也能用）：</div><div class="gp-code">' + escHtml(code) + '</div>' : '') +
           (hasRealDek
-            ? '<div>已自动为您激活访问权限。<a href="' + escHtml(base) + '" style="font-weight:800;color:#047857;text-decoration:underline">立即进入知识库 →</a></div>'
-            : '<div style="margin-top:6px;font-size:12.5px">说明：当前为本地静态预览联调（未连接 EdgeOne 云端环境变量），正式发布至 EdgeOne 并填入商户参数后即可真收款并自动签发可解锁的真实授权码。</div>') +
+            ? '<div>已自动为您解锁知识库。<a href="' + escHtml(base) + '" style="font-weight:800;color:#047857;text-decoration:underline">立即进入知识库与领模板包 →</a></div>'
+            : '<div style="margin-top:6px;font-size:12.5px">请保存您的订单号，凭授权码进入知识库顶部「🎁 模板包」领取资料。</div>') +
         '</div>';
     }
 
     async function startOrder() {
       var cur = getPlan();
-      var contact = (document.getElementById('gpContact').value || '').trim();
+      var contactInp = document.getElementById('gpContact');
+      var errEl = document.getElementById('gpErr');
+      var contact = (contactInp.value || '').trim();
+      if (errEl) errEl.textContent = '';
+      if (!contact || contact.length < 3) {
+        if (errEl) errEl.textContent = '请先填一下你的微信号或邮箱，方便收款后发授权码或联系预约';
+        if (contactInp) contactInp.focus();
+        return;
+      }
+      try { localStorage.setItem('guiji_buyer_contact', contact); } catch (e) {}
+
+      if (cur.payUrl) {
+        window.open(cur.payUrl, '_blank', 'noopener');
+        return;
+      }
+
       var payBtn = document.getElementById('gpPayBtn');
       var stage = document.getElementById('gpStage');
       payBtn.disabled = true;
@@ -439,11 +487,11 @@
       var skipApi = (h === 'guijiyeren.github.io' || ((h === '127.0.0.1' || h === 'localhost') && p !== '8788'));
       if (!skipApi) {
         try {
-          var r = await fetch('/api/pay/create-order', {
+          var r = await fetchWithRetry('/api/pay/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ planId: cur.id, channel: selectedChannel, contact: contact })
-          });
+          }, 2, 12000);
           if (r.ok && (r.headers.get('content-type') || '').includes('application/json')) {
             orderRes = await r.json();
           }
@@ -451,27 +499,9 @@
       }
 
       payBtn.disabled = false;
-      payBtn.textContent = '立即支付 ' + (cur.priceText || ('¥' + cur.price)) + ' 并获取授权码 →';
+      payBtn.textContent = '确认方案 · 下单付款 ' + (cur.priceText || ('¥' + cur.price)) + ' →';
 
-      if (!orderRes || !orderRes.ok) {
-        // 纯静态托管 / 本地调试兜底沙箱流程
-        var simId = 'SIM-' + Date.now().toString(36).toUpperCase();
-        stage.innerHTML =
-          '<div><b>收银台联调演示</b> · 订单号 <code>' + escHtml(simId) + '</code></div>' +
-          '<div class="gp-qr-mock">' +
-            '<div style="font-size:32px;margin-bottom:6px">' + (selectedChannel === 'wechat' ? '💚' : '💙') + '</div>' +
-            '<div><b>' + (selectedChannel === 'wechat' ? '微信支付' : '支付宝') + '</b></div>' +
-            '<div style="color:#2563eb;font-weight:800;font-size:15px;margin-top:4px">' + escHtml(cur.priceText || ('¥' + cur.price)) + '</div>' +
-            '<div style="font-size:10.5px;color:#64748b;margin-top:4px">沙箱演示通道</div>' +
-          '</div>' +
-          '<button type="button" class="gp-submit" id="gpSimConfirm" style="margin-top:6px;background:linear-gradient(135deg,#059669,#10b981)">模拟买家付款成功（演示闭环）→</button>';
-        document.getElementById('gpSimConfirm').addEventListener('click', function () {
-          handlePaid({ orderId: simId, planId: cur.id, licenseCode: 'DEMO-PREVIEW-ONLY', dek: null });
-        });
-        return;
-      }
-
-      if (orderRes.mode === 'sandbox') {
+      if (orderRes && orderRes.ok && orderRes.mode === 'sandbox') {
         stage.innerHTML =
           '<div><b>沙箱测试订单</b> · 订单号 <code>' + escHtml(orderRes.orderId) + '</code></div>' +
           '<div class="gp-qr-mock">' +
@@ -487,14 +517,12 @@
             body: JSON.stringify({ orderId: orderRes.orderId, action: 'sandbox_pay' })
           });
           var nj = await nr.json();
-          if (nj && nj.ok) {
-            handlePaid(nj);
-          }
+          if (nj && nj.ok) handlePaid(nj);
         });
         return;
       }
 
-      if (orderRes.mode === 'external_card') {
+      if (orderRes && orderRes.ok && orderRes.mode === 'external_card') {
         stage.innerHTML =
           '<div><b>自助发卡 / 扫码支付通道</b> · 订单号 <code>' + escHtml(orderRes.orderId) + '</code></div>' +
           '<p style="font-size:13px;margin:8px 0">' + escHtml(orderRes.tip || '请点击下方链接完成支付，拿到授权码后可直接解锁。') + '</p>' +
@@ -502,19 +530,93 @@
         return;
       }
 
-      // alipay_f2f / wechat_native / hupijiao 轮询模式
+      if (orderRes && orderRes.ok && orderRes.mode === 'hupijiao') {
+        stage.innerHTML =
+          '<div><b>请使用' + (selectedChannel === 'wechat' ? '微信' : '支付宝') + '扫码支付</b> · <code>' + escHtml(orderRes.orderId) + '</code></div>' +
+          (orderRes.qrImg ? '<img src="' + escHtml(orderRes.qrImg) + '" alt="支付二维码" style="width:180px;height:180px;margin:10px auto;display:block;border-radius:10px">' : '') +
+          (orderRes.payUrl ? '<div style="margin:8px 0"><a href="' + escHtml(orderRes.payUrl) + '" target="_blank" rel="noopener">手机端点击直接拉起支付 ↗</a></div>' : '') +
+          '<div style="font-size:12px;color:#64748b">支付成功后页面将自动识别并解锁知识库…</div>';
+        pollTimer = setInterval(async function () {
+          try {
+            var qr = await fetch('/api/pay/query?orderId=' + encodeURIComponent(orderRes.orderId));
+            var qj = await qr.json();
+            if (qj && qj.paid) handlePaid(qj);
+          } catch (e) {}
+        }, 2200);
+        return;
+      }
+
+      // 生产默认 & 本地兜底：qr_direct（老板收款码直付 + 下单通知 + 自动轮询激活）
+      var oid = (orderRes && orderRes.orderId) || ('GJ' + Date.now().toString(36).toUpperCase());
+      var qrCfg = (cfg.commerce && cfg.commerce.qrDirect) || {};
+      var wechatRaw = (orderRes && orderRes.wechatQr) || qrCfg.wechat || '';
+      var alipayRaw = (orderRes && orderRes.alipayQr) || qrCfg.alipay || '';
+      var rawTargetQr = selectedChannel === 'wechat' ? wechatRaw : alipayRaw;
+      var chLabel = selectedChannel === 'wechat' ? '微信' : '支付宝';
+
       stage.innerHTML =
-        '<div><b>请使用' + (selectedChannel === 'wechat' ? '微信' : '支付宝') + '扫码支付</b> · <code>' + escHtml(orderRes.orderId) + '</code></div>' +
-        (orderRes.qrImg ? '<img src="' + escHtml(orderRes.qrImg) + '" alt="支付二维码" style="width:180px;height:180px;margin:10px auto;display:block;border-radius:10px">' : '') +
-        (orderRes.payUrl ? '<div style="margin:8px 0"><a href="' + escHtml(orderRes.payUrl) + '" target="_blank" rel="noopener">手机端点击直接拉起支付 ↗</a></div>' : '') +
-        '<div style="font-size:12px;color:#64748b">支付成功后页面将自动识别并解锁知识库…</div>';
-      pollTimer = setInterval(async function () {
-        try {
-          var qr = await fetch('/api/pay/query?orderId=' + encodeURIComponent(orderRes.orderId));
-          var qj = await qr.json();
-          if (qj && qj.paid) handlePaid(qj);
-        } catch (e) {}
-      }, 2200);
+        '<div style="font-size:14px"><b>' + escHtml(cur.name) + '</b> · 应付 <b style="color:#2563eb;font-size:16px">' + escHtml(cur.priceText || ('¥' + cur.price)) + '</b></div>' +
+        '<div style="font-size:12.5px;color:#64748b;margin-top:4px">订单号：<code>' + escHtml(oid) + '</code> · 联系：<code>' + escHtml(contact) + '</code></div>' +
+        '<div id="gpQrBox" style="margin:12px auto"></div>' +
+        '<button type="button" class="gp-submit" id="gpConfirmBtn" style="margin-top:8px;background:linear-gradient(135deg,#059669,#10b981)">我已完成付款 / 提交下单通知老板 →</button>';
+
+      var qrBox = document.getElementById('gpQrBox');
+      var noQrHtml =
+        '<div style="padding:12px 14px;border-radius:12px;border:1px dashed var(--line,#cbd5e1);font-size:13px;line-height:1.7;text-align:left">' +
+          '请点击下方按钮<b>提交下单通知老板</b>，提交后老板会在微信/邮箱第一时间发你收款码，收款后立即发送专属授权码（或本页自动解锁）。' +
+        '</div>';
+      if (rawTargetQr) {
+        var targetQr = resolveSiteAsset(rawTargetQr, selectedChannel === 'wechat' ? 'pay-wechat.png' : 'pay-alipay.png');
+        var probe = new Image();
+        probe.onload = function () {
+          qrBox.innerHTML =
+            '<img src="' + escHtml(targetQr) + '" alt="' + chLabel + '收款码" style="width:190px;height:190px;object-fit:contain;border-radius:12px;border:1px solid #cbd5e1;background:#fff;padding:6px;display:block;margin:0 auto">' +
+            '<div style="font-size:12.5px;margin-top:8px">请用 <b>' + chLabel + '</b> 扫码支付 <b>' + escHtml(cur.priceText) + '</b>，付款备注填 <code>' + escHtml(oid) + '</code></div>';
+        };
+        probe.onerror = function () { qrBox.innerHTML = noQrHtml; };
+        probe.src = targetQr;
+      } else {
+        qrBox.innerHTML = noQrHtml;
+      }
+
+      document.getElementById('gpConfirmBtn').addEventListener('click', async function () {
+        var cbtn = document.getElementById('gpConfirmBtn');
+        cbtn.disabled = true;
+        cbtn.textContent = '正在通知老板…';
+        if (!skipApi) {
+          sendOrderEmail(oid, cur, contact, selectedChannel);
+          try {
+            await fetch('/api/pay/confirm', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderId: oid, contact: contact, remark: cur.id })
+            });
+          } catch (e) {}
+        }
+
+        stage.innerHTML =
+          '<div class="gp-ok-box">' +
+            '<div><b>✅ 已提交下单并通知老板！</b></div>' +
+            '<div style="margin-top:4px">订单号：<code>' + escHtml(oid) + '</code> · 联系方式：<code>' + escHtml(contact) + '</code></div>' +
+            '<div style="margin-top:6px;font-size:12.5px">若你已扫码付款，请保持本窗口别关——老板确认收款后，<b>本页将在 3 秒内自动解锁</b>并显示你的专属授权码。</div>' +
+            (!skipApi ? '<div style="margin-top:10px"><button type="button" class="gp-close" id="gpCheckNowBtn" style="background:#fff;color:#065f46;border-color:#34d399;font-weight:700">🔄 立即刷新授权状态</button></div>' : '') +
+          '</div>';
+
+        async function checkNow() {
+          if (skipApi) return;
+          try {
+            var qr = await fetch('/api/pay/query?orderId=' + encodeURIComponent(oid), { cache: 'no-store' });
+            var qj = await qr.json();
+            if (qj && qj.paid) handlePaid(qj);
+          } catch (e) {}
+        }
+        var chkBtn = document.getElementById('gpCheckNowBtn');
+        if (chkBtn) chkBtn.addEventListener('click', checkNow);
+        if (!skipApi) {
+          if (pollTimer) clearInterval(pollTimer);
+          pollTimer = setInterval(checkNow, 3000);
+        }
+      });
     }
 
     render();

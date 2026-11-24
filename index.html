@@ -202,6 +202,48 @@
   .svc-card b { font-size:15px; color:#0f172a; }
   .svc-card p { margin:0; font-size:13px; color:#64748b; line-height:1.7; min-height:0; }
   .svc-card a { display:inline-block; margin-top:4px; font-size:12.5px; color:#1d4ed8; font-weight:700; align-self:flex-start; }
+  .cm-aud-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:22px; }
+  .cm-aud-tab { text-align:left; border:1.5px solid var(--line); border-radius:14px; padding:13px 14px; background:#fbfdff; cursor:pointer; transition:.15s; color:#0f172a; }
+  .cm-aud-tab:hover { border-color:#93c5fd; }
+  .cm-aud-tab.is-on { border-color:#2563eb; background:#eff6ff; box-shadow:0 8px 22px rgba(37,99,235,.10); }
+  .cm-aud-tab b { display:block; font-size:14.5px; }
+  .cm-aud-tab span { display:block; font-size:12px; color:#64748b; margin-top:3px; line-height:1.45; }
+  .cm-aud-panel { margin-top:14px; border:1px solid var(--line); border-radius:16px; padding:20px 22px; background:#f8fafc; display:grid; grid-template-columns:1.05fr .95fr; gap:20px; align-items:center; }
+  .cm-aud-pain h3 { font-size:17px; color:#0f172a; margin-bottom:8px; }
+  .cm-aud-pain ul { padding-left:18px; display:grid; gap:5px; font-size:13.5px; color:#475569; }
+  .cm-aud-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .cm-aud-links a { font-size:12px; font-weight:600; padding:4px 10px; border-radius:999px; border:1px solid #cbd5e1; background:#fff; color:#1d4ed8; }
+  .cm-aud-cta { border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:#fff; display:flex; flex-direction:column; gap:8px; }
+  .cm-aud-cta-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .cm-aud-cta-top b { font-size:15.5px; color:#0f172a; }
+  .cm-aud-price { font-size:20px; font-weight:800; color:#2563eb; }
+  .cm-aud-cta p { font-size:13px; color:#475569; margin:0; line-height:1.65; }
+  .cm-tier-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px; }
+  .cm-tier { border:1px solid var(--line); border-radius:16px; padding:20px; background:#fff; display:flex; flex-direction:column; gap:10px; }
+  .cm-tier.featured { border-color:#2563eb; box-shadow:0 14px 36px rgba(37,99,235,.12); background:linear-gradient(180deg,#f5f9ff,#fff 48%); }
+  .cm-tier-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .cm-tier-head b { font-size:16px; color:#0f172a; }
+  .cm-badge { font-size:11px; font-weight:700; padding:2px 9px; border-radius:999px; background:#dbeafe; color:#1d4ed8; white-space:nowrap; }
+  .cm-price { font-size:28px; font-weight:800; color:#1d4ed8; line-height:1.1; }
+  .cm-tier p { font-size:13.5px; color:#475569; line-height:1.7; flex:1; }
+  .cm-tier small { font-size:12px; color:#64748b; }
+  .cm-btn { border:0; border-radius:11px; padding:11px 14px; font-size:13.5px; font-weight:700; color:#fff; background:linear-gradient(135deg,#1e40af,#2563eb); cursor:pointer; text-align:center; }
+  .cm-btn:hover { opacity:.94; }
+  .cm-extra-pills { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:16px; padding:12px 16px; border-radius:12px; border:1px dashed var(--line); background:#f8fafc; font-size:13px; }
+  .cm-extra-pill { border:1px solid var(--line); border-radius:999px; padding:6px 13px; background:#fff; color:#0f172a; font-size:12.5px; font-weight:700; cursor:pointer; }
+  .cm-extra-pill:hover { border-color:#2563eb; color:#1d4ed8; }
+  html[data-theme="night"] .cm-aud-tab { background:#111c33; color:#e2e8f0; border-color:#243247; }
+  html[data-theme="night"] .cm-aud-tab.is-on { background:rgba(37,99,235,.22); border-color:#60a5fa; }
+  html[data-theme="night"] .cm-aud-tab span { color:#94a3b8; }
+  html[data-theme="night"] .cm-aud-panel, html[data-theme="night"] .cm-extra-pills { background:#0b1324; border-color:#243247; }
+  html[data-theme="night"] .cm-aud-pain h3, html[data-theme="night"] .cm-aud-cta-top b, html[data-theme="night"] .cm-tier-head b { color:#f1f5f9; }
+  html[data-theme="night"] .cm-aud-pain ul, html[data-theme="night"] .cm-aud-cta p, html[data-theme="night"] .cm-tier p { color:#cbd5e1; }
+  html[data-theme="night"] .cm-aud-links a, html[data-theme="night"] .cm-aud-cta, html[data-theme="night"] .cm-tier, html[data-theme="night"] .cm-extra-pill { background:#111c33; border-color:#243247; color:#e2e8f0; }
+  html[data-theme="night"] .cm-tier.featured { background:linear-gradient(180deg,#162544,#0f172a 55%); border-color:#60a5fa; }
+  html[data-theme="night"] .cm-aud-links a { color:#93c5fd; }
+  html[data-theme="night"] .cm-price, html[data-theme="night"] .cm-aud-price { color:#60a5fa; }
+  @media (max-width:900px) { .cm-aud-tabs { grid-template-columns:1fr 1fr; } .cm-aud-panel, .cm-tier-grid { grid-template-columns:1fr; } }
+  @media (max-width:520px) { .cm-aud-tabs { grid-template-columns:1fr; } }
   .faq-list { margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:4px 20px; }
   .faq-list details { border-bottom:1px solid #eef2f8; }
   .faq-list details:last-child { border-bottom:0; }
@@ -985,7 +1027,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
   <div class="nav-in">
     <a class="brand" href="#top"><img src="assets/opt/logo-160.webp" alt="硅基野人" width="32" height="32" decoding="async">硅基野人</a>
     <div class="nav-links">
-      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#workbench-flow">工作台流程</a><a href="#building">实战项目</a><a href="#kb">实战知识库</a><a href="#about">关于我</a><a href="#follow">联系方式</a>
+      <a href="#top">首页</a><a href="#projects">公开项目</a><a href="#workbench-flow">工作台流程</a><a href="#building">实战项目</a><a href="#kb">实战知识库</a><a href="#services">教程与落地</a><a href="#about">关于我</a><a href="#follow">联系方式</a>
     </div>
     <button class="theme-switch nav-theme" id="themeBtn" type="button" aria-label="切换白天/夜晚" title="切换白天/夜晚"><span class="knob"><svg class="sun" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm8-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM5 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm12.07-5.07a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zM8.05 16.95a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.41l.71-.71a1 1 0 0 1 1.41 0zm9.02 0l.7.71a1 1 0 1 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.42-1.42zM6.34 5.93l.71.71a1 1 0 0 1-1.41 1.41l-.71-.7a1 1 0 0 1 1.41-1.42zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8-9.8.5-.1.9.4.7.9A8 8 0 0 0 20.9 13c.5-.2 1 .2.9.7-.9 4.7-5 8.3-9.7 8.3z"/></svg></span></button>
   </div>
@@ -999,6 +1041,7 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
       <p class="lead">哈喽，你好啊，我叫<b>硅基野人</b>，十年电商人。<br>选品、上架、文案、剪视频、发布，通通 AI 干。<br>少点废话，多点实战；<b>做成晒结果，翻车晒现场</b>。</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#building">看看我在做的项目 →</a>
+        <a class="btn btn-ghost" href="#services">按身份选方案 / 开通 →</a>
         <a class="btn btn-ghost" href="#projects">公开项目</a>
       </div>
       <div class="hero-update"><span class="hu-dot"></span>最近同步：<span data-site-value="latest">11-19</span> · 资源中心 <span data-site-value="resource.count">10,281</span> 条 · 每日拆卡 <span data-site-value="daily.date">11-17</span></div>
@@ -1932,15 +1975,51 @@ html[data-theme="night"] .workbench-progress-card .entry-status { color:#9fcaff;
 <section id="services" style="background:#fff;border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow2">Services</div>
-      <h2>我能帮你做什么</h2>
-      <p>都是我自己在一线跑通的实战方案，主打拿来就能用，上手就能出成品。</p>
+      <div class="eyebrow2">Services & Store</div>
+      <h2>教程模板与 1 对 1 落地 · 按人群直通开跑</h2>
+      <p>免费展厅先看实力；想直接拿成品模板、解锁全部 93 篇知识库，或找我 1 对 1 带跑一款真实商品，选好你的身份下单即交付。</p>
     </div>
-    <div class="svc-grid">
-      <div class="svc-card"><b>电商 AI 提效方案</b><p>选品、主图、AI 穿搭和日常台账全打包，团队照着跑就能出成品。</p><a href="#message">聊聊需求</a></div>
-      <div class="svc-card"><b>多平台 AI 内容流水线</b><p>选题、脚本、配音、剪辑到多平台分发整套交付，平台可按需扩展。</p><a href="#message">聊聊需求</a></div>
-      <div class="svc-card"><b>个人和企业 AI 工作台</b><p>把信息采集、知识整理、任务派发和巡检串成工作台，减少重复人工。</p><a href="#message">聊聊需求</a></div>
-      <div class="svc-card"><b>实战样板和实操手册</b><p>电商、穿搭和自媒体全套搭建过程整理成手册，拿回去随时回看复刻。</p><a href="#message">聊聊需求</a></div>
+
+    <div class="cm-aud-tabs" id="homeAudTabs" role="tablist">
+      <button type="button" class="cm-aud-tab is-on" data-home-aud="ecom"><b>🛒 电商老板 / 运营</b><span>上新整理 · 标题合规 · AI 模特</span></button>
+      <button type="button" class="cm-aud-tab" data-home-aud="media"><b>🎬 自媒体 / 创作者</b><span>拆爆款 · IP 口播 · 九平台发布</span></button>
+      <button type="button" class="cm-aud-tab" data-home-aud="solo"><b>⚡ 超级个体 / 效率</b><span>0 元本地算力 · 多 AI 协同工作台</span></button>
+      <button type="button" class="cm-aud-tab" data-home-aud="hustle"><b>💰 副业 / AI 搞钱</b><span>实操案例拆解 · 65 期踩坑档案</span></button>
+    </div>
+
+    <div class="cm-aud-panel" id="homeAudPanel"></div>
+
+    <div class="cm-tier-grid">
+      <article class="cm-tier">
+        <div class="cm-tier-head"><b>电商单款上架准备包</b><span class="cm-badge">¥9.9 尝鲜</span></div>
+        <div class="cm-price">¥9.9</div>
+        <p>可编辑商品事实表 + 5 文件夹标准骨架 + 4 套上新 AI 提示词 + 春夏船袜完整示范样板 + 10 项防踩坑清单，解锁后一键领 ZIP 包。</p>
+        <small>交付：专属授权码 + 知识库内「🎁 模板包」立刻下载</small>
+        <button type="button" class="cm-btn" data-buy="ecom-pack">立即开通 ¥9.9 →</button>
+      </article>
+
+      <article class="cm-tier featured">
+        <div class="cm-tier-head"><b>实战知识库 · 全库通行证</b><span class="cm-badge">主推最划算</span></div>
+        <div class="cm-price">¥99</div>
+        <p>一次解锁全库 93 篇实战笔记、69 份在线翻页 PPT、108 段语音导读与 39 个演示视频，另送《轻量个人 AI 工作台模板包 v1》。</p>
+        <small>交付：付款确认 3 秒内网页自动解锁 + 同步新增内容</small>
+        <button type="button" class="cm-btn" data-buy="wiki-full">开通全库通行证 ¥99 →</button>
+      </article>
+
+      <article class="cm-tier">
+        <div class="cm-tier-head"><b>电商 1 对 1 单款上新试点</b><span class="cm-badge">限 3 席/周</span></div>
+        <div class="cm-price">¥999</div>
+        <p>20 分钟对齐类目痛点 + 60 分钟同屏拿你一款真商品跑出上架准备包 + 你自己独立跑完第二款 + 7 天内 2 次答疑（含全库通行证）。</p>
+        <small>条件：自备 Windows 电脑与自有 AI 工具账号 · 书面确认交付边界</small>
+        <button type="button" class="cm-btn" data-buy="ecom-pilot">预约 1 对 1 试点 ¥999 →</button>
+      </article>
+    </div>
+
+    <div class="cm-extra-pills">
+      <span style="color:var(--ink2);font-weight:700">更多专享档位：</span>
+      <button type="button" class="cm-extra-pill" data-buy="side-hustle">🔥 搞钱案例拆解与 65 期复盘精选（¥49）</button>
+      <button type="button" class="cm-extra-pill" data-buy="media-pipeline">🎬 自媒体内容流水线实战包 + 全库（¥199）</button>
+      <a class="cm-extra-pill" href="#message">🏢 小团队落地 / 企业定制（¥9,999 起 · 留言预约）→</a>
     </div>
   </div>
 </section>
@@ -4174,6 +4253,106 @@ html[data-theme="night"] .msg-ok { background:linear-gradient(135deg,#1e40af,#1d
   if (closeBtn) closeBtn.addEventListener("click", close);
   mask.addEventListener("click", (event) => { if (event.target === mask) close(); });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape" && mask.classList.contains("on")) close(); });
+})();
+</script>
+<script src="wiki/auth-pay.js?v=5" defer></script>
+<script>
+(() => {
+  const HOME_AUD = {
+    ecom: {
+      title: '🛒 电商老板 / 运营：把上新找图、写标题、AI 试穿整理成标准包',
+      pains: [
+        '每周上新几款货，原图、成分吊牌、白底图、AI 模特图散在聊天记录和不同电脑里',
+        '每天人工核对违禁词、套模板填 1688 / 淘宝参数重复耗掉几个小时',
+        '想拿一款真实商品跑出「拿到就能直接接着上架」的标准化交接文件夹'
+      ],
+      links: [
+        { label: '03｜电商全自动化（知识库）', href: './wiki/?p=XDn1wVKnCiMs5okndf9cmFzvnmc' },
+        { label: '06｜AI穿搭工作流（知识库）', href: './wiki/?p=NaIGw5NSmiTELakIGLycyC8un3d' },
+        { label: '我在用的工具箱', href: './tools/' }
+      ],
+      rec: { id: 'ecom-pack', name: '推荐起步：电商单款上架准备包', price: '¥9.9', desc: '立刻拿到事实核验表 + 5 文件夹结构 + 提示词卡片 + 完整示范款；想直接让我同屏带跑一款真货可选下方 ¥999 试点。', btn: '立即开通 ¥9.9 模板包 →' }
+    },
+    media: {
+      title: '🎬 自媒体 / 创作者：拆爆款、稳定 AI 出片、九平台自动分发',
+      pains: [
+        '自己出镜累且费时间，想做专属 3D 口播 IP 形象和音色克隆又老被模型算崩',
+        '做好一条图文或短视频，九个平台手动填标题标签耗神又容易漏发',
+        '缺现成的视觉风格参考库、镜头动效模版和真实成片工作流拆解'
+      ],
+      links: [
+        { label: '视觉图鉴 428 套（免费逛）', href: './shijue/' },
+        { label: '会动网页 1,050 个（免费逛）', href: './huidong/' },
+        { label: '04｜自媒体全自动（知识库）', href: './wiki/?p=Wpvrw5KkCiPsg1kDvWOcE8P1nkd' }
+      ],
+      rec: { id: 'media-pipeline', name: '推荐：自媒体内容流水线实战包 + 全库', price: '¥199', desc: '全套爆款拆解→口播配音→九平台分发实操方案 + 93 篇全库通行证；只想先看知识库可选下方 ¥99 全库通行证。', btn: '立即开通 ¥199 实战包 →' }
+    },
+    solo: {
+      title: '⚡ 超级个体 / AI 效率玩家：本机 ¥0 算力池 + 多 AI 协作总台',
+      pains: [
+        '买了一堆云端会员账单越来越高，其实很多生图/配音/视频本机显卡就能 ¥0 跑',
+        '几个 AI 聊天窗各干各的，没有统一的文件夹规范、任务单与验收检查机制',
+        '想直接拿走剥离私人数据后的干净工作台空骨架与规矩模板装进自己电脑'
+      ],
+      links: [
+        { label: '工作台四机协同流（免费看）', href: './workflow/' },
+        { label: '05｜个人AI工作台（知识库）', href: './wiki/?p=RhPVwJvlOiKL9UkdZf3c38fenNd' },
+        { label: '01｜懒得学直接抄（知识库）', href: './wiki/?p=OhsQwM56biRX1PkqDOCcICb9nRg' }
+      ],
+      rec: { id: 'wiki-full', name: '推荐：实战知识库全库 + 轻量工作台模板包', price: '¥99', desc: '一次解锁全部 93 篇笔记、69 份 PPT 与 39 个视频，另可直接下载干净无隐私的《轻量个人 AI 工作台模板包 v1》。', btn: '立即开通 ¥99 全库 + 模板 →' }
+    },
+    hustle: {
+      title: '💰 副业探索 / AI 搞钱人群：看真实跑通记录与 65 期踩坑档案',
+      pains: [
+        '网上到处是截图造假话术，分不清哪个副业项目普通人能真跑通收钱',
+        '刚入门不懂 AI 黑话，怕学一堆用不上的名词半途而废',
+        '想逐篇复盘别人花几天、踩过什么封号/合规坑才把一条路线跑通的真实过程'
+      ],
+      links: [
+        { label: '高性价比人生指南（免费）', href: './rensheng/' },
+        { label: '01｜新手 7 天路线（知识库）', href: './wiki/?p=Os9owYOfAilMQ9kRufrcyCvJn7e' },
+        { label: '08｜项目案例拆解（知识库）', href: './wiki/?p=LgNmwzFoyi4FjwkYug9c2C9fnIg' }
+      ],
+      rec: { id: 'side-hustle', name: '推荐新手：搞钱案例拆解与 65 期复盘精选', price: '¥49', desc: '包含全库 65 期一线实战复盘、避坑自查与多项目拆解（或直接 ¥99 步入全库畅看）。', btn: '立即开通 ¥49 精选 →' }
+    }
+  };
+
+  function renderHomeAud(key) {
+    const d = HOME_AUD[key] || HOME_AUD.ecom;
+    document.querySelectorAll('#homeAudTabs [data-home-aud]').forEach((b) => {
+      b.classList.toggle('is-on', b.getAttribute('data-home-aud') === key);
+    });
+    const box = document.getElementById('homeAudPanel');
+    if (!box) return;
+    box.innerHTML =
+      '<div class="cm-aud-pain">' +
+        '<h3>' + d.title + '</h3>' +
+        '<ul>' + d.pains.map((p) => '<li>' + p + '</li>').join('') + '</ul>' +
+        '<div class="cm-aud-links">' + d.links.map((l) => '<a href="' + l.href + '">' + l.label + ' →</a>').join('') + '</div>' +
+      '</div>' +
+      '<div class="cm-aud-cta">' +
+        '<div class="cm-aud-cta-top"><b>' + d.rec.name + '</b><span class="cm-aud-price">' + d.rec.price + '</span></div>' +
+        '<p>' + d.rec.desc + '</p>' +
+        '<button type="button" class="cm-btn" data-buy="' + d.rec.id + '">' + d.rec.btn + '</button>' +
+      '</div>';
+    box.querySelectorAll('[data-buy]').forEach(bindBuyBtn);
+  }
+
+  function bindBuyBtn(btn) {
+    if (btn.__boundBuy) return;
+    btn.__boundBuy = true;
+    btn.addEventListener('click', () => {
+      if (window.GuijiWikiAuth && typeof window.GuijiWikiAuth.openCheckout === 'function') {
+        window.GuijiWikiAuth.openCheckout({ base: './wiki/', planId: btn.getAttribute('data-buy') });
+      }
+    });
+  }
+
+  document.querySelectorAll('#homeAudTabs [data-home-aud]').forEach((b) => {
+    b.addEventListener('click', () => renderHomeAud(b.getAttribute('data-home-aud')));
+  });
+  document.querySelectorAll('#services [data-buy]').forEach(bindBuyBtn);
+  renderHomeAud('ecom');
 })();
 </script>
 </body>

@@ -80,7 +80,7 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: "无效的套餐编号" }, 400);
   }
 
-  const provider = (env && env.PAY_PROVIDER) || "sandbox";
+  const provider = (env && env.PAY_PROVIDER) || "qr_direct";
   const orderId = "GJ" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
   const orderObj = {
     orderId,
@@ -90,12 +90,30 @@ export async function onRequestPost(context) {
     channel,
     contact,
     provider,
+    status: "pending",
     paid: false,
     createdAt: new Date().toISOString()
   };
 
   if (env && env.WIKI_KV) {
-    await env.WIKI_KV.put("order:" + orderId, JSON.stringify(orderObj), { expirationTtl: 7200 });
+    await env.WIKI_KV.put("order:" + orderId, JSON.stringify(orderObj), { expirationTtl: 86400 * 30 });
+    const recentRaw = await env.WIKI_KV.get("orders:recent");
+    let recent = [];
+    try { recent = recentRaw ? JSON.parse(recentRaw) : []; } catch (e) { recent = []; }
+    recent = [orderId].concat(recent.filter(x => x !== orderId)).slice(0, 100);
+    await env.WIKI_KV.put("orders:recent", JSON.stringify(recent));
+  }
+
+  if (provider === "qr_direct") {
+    return json({
+      ok: true,
+      mode: "qr_direct",
+      orderId,
+      plan: { id: planId, name: plan.name, price: plan.price },
+      channel,
+      wechatQr: (env && env.WECHAT_QR_URL) || "",
+      alipayQr: (env && env.ALIPAY_QR_URL) || ""
+    });
   }
 
   if (provider === "external_card") {

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "ecom-pack",
+      "name": "电商单款上架准备包 v1",
+      "plan": "¥9.9 入门包 / 全库通用",
+      "filename": "ecom-pack-v1.zip",
+      "encPath": "m/packs/ecom-pack-v1.zip.enc",
+      "size": 10562,
+      "desc": "包含：3分钟上手说明书、商品事实核验表(CSV+MD)、5个标准上新文件夹、4套AI提示词卡片、1款完整示范样板及10项防踩坑清单。"
+    },
+    {
+      "id": "workbench-starter",
+      "name": "轻量个人AI工作台模板包 v1",
+      "plan": "¥99 全库通行证 / 工作台自助版",
+      "filename": "workbench-starter-v1.zip",
+      "encPath": "m/packs/workbench-starter-v1.zip.enc",
+      "size": 5909,
+      "desc": "包含：15分钟Windows+Obsidian装机指南、干净工作台6大目录骨架、AI规则模板、项目卡/复盘/任务单模板及首次启动自检清单（零私人数据）。"
+    }
+  ]
+}

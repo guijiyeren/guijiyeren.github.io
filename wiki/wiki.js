@@ -917,6 +917,59 @@
     return safe;
   }
 
+  // ====== 配套模板与交付包下载 ======
+  var packsModal = document.getElementById('packsModal');
+  var packsList = document.getElementById('packsList');
+  var packsCache = null;
+
+  async function openPacksModal() {
+    if (!packsModal) return;
+    packsModal.hidden = false;
+    packsModal.setAttribute('aria-hidden', 'false');
+    if (!packsCache) {
+      packsList.innerHTML = '<div style="color:var(--muted);font-size:13px">正在读取清单…</div>';
+      try {
+        var r = await (Auth.fetchWithRetry || fetch)('data/packs.json?t=' + Date.now(), { cache: 'no-store' }, 2, 10000);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        packsCache = await r.json();
+      } catch (e) {
+        packsList.innerHTML = '<div style="color:#dc2626;font-size:13px">暂时无法加载清单，请刷新重试。</div>';
+        return;
+      }
+    }
+    var items = (packsCache && packsCache.packs) || [];
+    if (!items.length) {
+      packsList.innerHTML = '<div style="color:var(--muted);font-size:13px">暂无可下载资料包</div>';
+      return;
+    }
+    packsList.innerHTML = items.map(function (pk, idx) {
+      return '<div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface2);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">' +
+        '<div style="flex:1 1 260px;min-width:0">' +
+          '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b>📦 ' + escHtml(pk.name) + '</b><span style="font-size:11px;padding:2px 8px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:700">' + escHtml(pk.plan) + '</span></div>' +
+          '<div style="font-size:12.5px;color:var(--ink2);margin-top:5px">' + escHtml(pk.desc) + '</div>' +
+          '<div style="font-size:11.5px;color:var(--muted);margin-top:4px">压缩包：' + escHtml(pk.filename) + '（' + fmtSize(pk.size) + '）</div>' +
+        '</div>' +
+        '<button type="button" class="wk-m-btn primary" data-pack-idx="' + idx + '">解密下载 →</button>' +
+      '</div>';
+    }).join('');
+    packsList.querySelectorAll('[data-pack-idx]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var pk = items[Number(btn.getAttribute('data-pack-idx'))];
+        if (pk) triggerDownload(pk.encPath, pk.filename, 'application/zip', btn);
+      });
+    });
+  }
+  function closePacksModal() {
+    if (!packsModal) return;
+    packsModal.hidden = true;
+    packsModal.setAttribute('aria-hidden', 'true');
+  }
+  var openPacksBtn = document.getElementById('openPacksBtn');
+  if (openPacksBtn) openPacksBtn.addEventListener('click', openPacksModal);
+  var packsCloseBtn = document.getElementById('packsCloseBtn');
+  if (packsCloseBtn) packsCloseBtn.addEventListener('click', closePacksModal);
+  if (packsModal) packsModal.addEventListener('click', function (ev) { if (ev.target === packsModal) closePacksModal(); });
+
   // 字号调节 & 键盘快捷键
   document.getElementById('fontSizeBtn').addEventListener('click', function () {
     fontIdx = (fontIdx + 1) % fontSizes.length;
@@ -928,6 +981,7 @@
       if (session) { ev.preventDefault(); openSearchModal(); }
     } else if (ev.key === 'Escape') {
       if (!searchModal.hidden) closeSearchModal();
+      if (packsModal && !packsModal.hidden) closePacksModal();
       if (!lbMask.hidden) closeLightbox();
       if (!pptModal.hidden) document.getElementById('pptModalClose').click();
     } else if (!pptModal.hidden && pptModalState) {
