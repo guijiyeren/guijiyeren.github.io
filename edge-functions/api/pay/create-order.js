@@ -1,16 +1,18 @@
 /* EdgeOne Pages Edge Function: /api/pay/create-order
- * 支持环境变量 PAY_PROVIDER:
- *   sandbox       - 沙箱联调模式（默认，完整跑通下单->付款->自动发授权码->解锁闭环）
- *   external_card - 免备案外链收款/发卡平台（配置 EXTERNAL_PAY_URL）
- *   hupijiao      - 虎皮椒个人微信/支付宝扫码即时回调（配置 PAY_APP_ID / PAY_SECRET / PAY_NOTIFY_URL）
+ * 统一扫码自动开通下单接口：
+ *   PAY_PROVIDER = lantu     -> 蓝兔支付个人直连微信/支付宝 Native 动态扫码
+ *   PAY_PROVIDER = hupijiao  -> 虎皮椒个人微信/支付宝动态扫码
+ *   其他/未配置真实密钥       -> 返回 mode: "preview"，前端自动走诚实演示态
  */
 const PLAN_PRICES = {
-  "wiki-full": { name: "实战知识库 · 全库通行证", price: 99 },
-  "ecom-pack": { name: "电商老板 · 单款上架准备包", price: 9.9 },
-  "ecom-workbench": { name: "电商老板 · 轻量工作台自助版", price: 99 },
-  "ecom-pilot": { name: "电商老板 · 1对1单款上新试点", price: 999 },
-  "media-pipeline": { name: "自媒体人 · 内容流水线实战包", price: 199 },
-  "side-hustle": { name: "搞钱案例拆解与65期复盘精选", price: 49 }
+  "wiki-full": { name: "硅基野人实战知识库全库永久通行证", price: 99 },
+  "ecom-pack": { name: "电商单款上架准备包", price: 9.9 },
+  "ecom-workbench": { name: "轻量电商工作台自助版", price: 99 },
+  "solo-workbench": { name: "个人AI工作台自助模板包与全库通行证", price: 99 },
+  "ecom-pilot": { name: "电商1对1单款上新实战试点", price: 999 },
+  "media-pipeline": { name: "自媒体全自动内容产线实战包", price: 199 },
+  "side-hustle": { name: "副业搞钱案例拆解与65期复盘精选", price: 49 },
+  "test-1fen": { name: "硅基野人扫码自动开通1分钱联调单", price: 0.01 }
 };
 
 function json(data, status = 200) {
@@ -20,9 +22,7 @@ function json(data, status = 200) {
   });
 }
 
-async function md5Hex(str) {
-  // 简易纯 JS MD5 用于虎皮椒签名（若接入微信/支付宝直连可在后续按需扩展）
-  const bytes = new TextEncoder().encode(str);
+function md5Bytes(bytes) {
   const k = new Uint32Array([
     0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,
     0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,
@@ -63,6 +63,52 @@ async function md5Hex(str) {
   return Array.from(res).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+function md5Hex(str) {
+  return md5Bytes(new TextEncoder().encode(str));
+}
+
+function lantuSign(requiredParams, key) {
+  const keys = Object.keys(requiredParams)
+    .filter(k => requiredParams[k] !== "" && requiredParams[k] !== undefined && requiredParams[k] !== null)
+    .sort();
+  const strA = keys.map(k => `${k}=${requiredParams[k]}`).join("&");
+  return md5Hex(`${strA}&key=${key}`).toUpperCase();
+}
+
+function hupijiaoSign(params, secret) {
+  const keys = Object.keys(params)
+    .filter(k => k !== "hash" && params[k] !== "" && params[k] !== undefined && params[k] !== null)
+    .sort();
+  const raw = keys.map(k => `${k}=${params[k]}`).join("&") + secret;
+  return md5Hex(raw).toLowerCase();
+}
+
+async function hmacHex(secret, msg) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+function toB64Url(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+async function makeOrderToken(secret, payload) {
+  if (!secret) return "";
+  const body = toB64Url(JSON.stringify(payload));
+  const sig = (await hmacHex(secret, "ORD|" + body)).slice(0, 32);
+  return body + "." + sig;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   let body;
@@ -73,29 +119,41 @@ export async function onRequestPost(context) {
   }
 
   const planId = String(body.planId || "");
-  const channel = body.channel === "alipay" ? "alipay" : "wechat";
+  const reqChannel = body.channel === "alipay" ? "alipay" : "wechat";
   const contact = String(body.contact || "").slice(0, 120);
   const plan = PLAN_PRICES[planId];
   if (!plan) {
     return json({ ok: false, error: "无效的套餐编号" }, 400);
   }
 
-  const provider = (env && env.PAY_PROVIDER) || "qr_direct";
-  const orderId = "GJ" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
-  const orderObj = {
-    orderId,
-    planId,
-    planName: plan.name,
-    amount: plan.price,
-    channel,
-    contact,
-    provider,
-    status: "pending",
-    paid: false,
-    createdAt: new Date().toISOString()
-  };
+  if (planId === "test-1fen") {
+    const adminTok = (env && env.WIKI_ADMIN_TOKEN) || "";
+    const testKey = String(body.testKey || "");
+    if (!adminTok || !testKey || testKey !== adminTok.slice(0, 8)) {
+      return json({ ok: false, error: "测试套餐需要联调口令" }, 403);
+    }
+  }
 
-  if (env && env.WIKI_KV) {
+  const provider = String((env && env.PAY_PROVIDER) || "preview").trim().toLowerCase();
+  const orderId = "GJ" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
+  const signSecret = (env && (env.WIKI_ADMIN_TOKEN || env.LANTU_WX_KEY || env.PAY_SECRET)) || "";
+  const notifyUrl = (env && env.PAY_NOTIFY_URL) || new URL("/api/pay/notify", request.url).toString();
+  const feeStr = Number(plan.price).toFixed(2);
+
+  async function saveOrderRecord(actualChannel, extra) {
+    if (!env || !env.WIKI_KV) return;
+    const orderObj = Object.assign({
+      orderId,
+      planId,
+      planName: plan.name,
+      amount: plan.price,
+      channel: actualChannel,
+      contact,
+      provider,
+      status: "pending",
+      paid: false,
+      createdAt: new Date().toISOString()
+    }, extra || {});
     await env.WIKI_KV.put("order:" + orderId, JSON.stringify(orderObj), { expirationTtl: 86400 * 30 });
     const recentRaw = await env.WIKI_KV.get("orders:recent");
     let recent = [];
@@ -104,65 +162,127 @@ export async function onRequestPost(context) {
     await env.WIKI_KV.put("orders:recent", JSON.stringify(recent));
   }
 
-  if (provider === "qr_direct") {
-    return json({
-      ok: true,
-      mode: "qr_direct",
-      orderId,
-      plan: { id: planId, name: plan.name, price: plan.price },
-      channel,
-      wechatQr: (env && env.WECHAT_QR_URL) || "",
-      alipayQr: (env && env.ALIPAY_QR_URL) || ""
-    });
+  // 1. 蓝兔支付（首选个人免营业执照/免备案官方直连通道）
+  if (provider === "lantu" && env) {
+    const wxMchId = String(env.LANTU_WX_MCH_ID || env.PAY_APP_ID || "").trim();
+    const wxKey = String(env.LANTU_WX_KEY || env.PAY_SECRET || "").trim();
+    const aliMchId = String(env.LANTU_ALI_MCH_ID || "").trim();
+    const aliKey = String(env.LANTU_ALI_KEY || "").trim();
+
+    const availableChannels = [];
+    if (wxMchId && wxKey) availableChannels.push("wechat");
+    if (aliMchId && aliKey) availableChannels.push("alipay");
+
+    if (availableChannels.length > 0) {
+      const actualChannel = availableChannels.includes(reqChannel) ? reqChannel : availableChannels[0];
+      const useAli = actualChannel === "alipay";
+      const mchId = useAli ? aliMchId : wxMchId;
+      const mchKey = useAli ? aliKey : wxKey;
+      const endpoint = useAli
+        ? "https://api.ltzf.cn/api/alipay/native"
+        : "https://api.ltzf.cn/api/wxpay/native";
+
+      const reqSigned = {
+        mch_id: mchId,
+        out_trade_no: orderId,
+        total_fee: feeStr,
+        body: plan.name,
+        timestamp: String(Math.floor(Date.now() / 1000)),
+        notify_url: notifyUrl
+      };
+      const formObj = Object.assign({}, reqSigned, {
+        attach: planId,
+        time_expire: "5m",
+        sign: lantuSign(reqSigned, mchKey)
+      });
+
+      const resp = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formObj).toString()
+      });
+      const resJson = await resp.json().catch(() => null);
+      if (resJson && Number(resJson.code) === 0 && resJson.data) {
+        const d = resJson.data;
+        const qrImg = typeof d === "string" ? d : (d.QRcode_url || d.qr_code || "");
+        const codeUrl = typeof d === "string" ? d : (d.code_url || "");
+        const orderToken = await makeOrderToken(signSecret, {
+          o: orderId, p: planId, c: actualChannel, pr: "lantu", t: Date.now()
+        });
+        await saveOrderRecord(actualChannel, { mchId });
+        return json({
+          ok: true,
+          mode: "live_qr",
+          provider: "lantu",
+          orderId,
+          orderToken,
+          channel: actualChannel,
+          availableChannels,
+          amount: plan.price,
+          planName: plan.name,
+          qrImg,
+          codeUrl
+        });
+      }
+      return json({
+        ok: false,
+        error: (resJson && resJson.msg) || "蓝兔支付下单失败"
+      }, 502);
+    }
   }
 
-  if (provider === "external_card") {
-    return json({
-      ok: true,
-      mode: "external_card",
-      orderId,
-      payUrl: (env && env.EXTERNAL_PAY_URL) || "",
-      tip: "请前往发卡/收款页完成支付，拿到授权码后在知识库「授权码」页签直接输入解锁。"
-    });
-  }
-
+  // 2. 虎皮椒（备选个人免备案聚合通道）
   if (provider === "hupijiao" && env && env.PAY_APP_ID && env.PAY_SECRET) {
+    const gatewayUrl = env.PAY_GATEWAY_URL || "https://api.xunhupay.com/payment/do.html";
     const params = {
       version: "1.1",
-      appid: env.PAY_APP_ID,
+      appid: String(env.PAY_APP_ID).trim(),
       trade_order_id: orderId,
       total_fee: String(plan.price),
       title: plan.name,
       time: String(Math.floor(Date.now() / 1000)),
-      notify_url: env.PAY_NOTIFY_URL || (new URL("/api/pay/notify", request.url)).toString(),
-      return_url: (new URL("/wiki/", request.url)).toString(),
+      notify_url: notifyUrl,
+      return_url: new URL("/wiki/", request.url).toString(),
       nonce_str: Math.random().toString(36).slice(2, 12),
-      type: channel === "alipay" ? "ALIPAY" : "WAP"
+      type: reqChannel === "alipay" ? "ALIPAY" : "WAP",
+      attach: planId
     };
-    const keys = Object.keys(params).sort();
-    const rawSign = keys.map(k => `${k}=${params[k]}`).join("&") + env.PAY_SECRET;
-    params.hash = await md5Hex(rawSign);
-    const resp = await fetch(env.PAY_GATEWAY_URL || "https://api.xunhupay.com/payment/do.html", {
+    params.hash = hupijiaoSign(params, String(env.PAY_SECRET).trim());
+    const resp = await fetch(gatewayUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params)
     });
-    const resJson = await resp.json();
-    if (resJson && resJson.errcode === 0) {
+    const resJson = await resp.json().catch(() => null);
+    if (resJson && Number(resJson.errcode) === 0) {
+      const orderToken = await makeOrderToken(signSecret, {
+        o: orderId, p: planId, c: reqChannel, pr: "hupijiao", t: Date.now()
+      });
+      await saveOrderRecord(reqChannel);
       return json({
         ok: true,
-        mode: "hupijiao",
+        mode: "live_qr",
+        provider: "hupijiao",
         orderId,
-        payUrl: resJson.url || "",
-        qrImg: resJson.url_qrcode || ""
+        orderToken,
+        channel: reqChannel,
+        availableChannels: ["wechat", "alipay"],
+        amount: plan.price,
+        planName: plan.name,
+        qrImg: resJson.url_qrcode || "",
+        payUrl: resJson.url || ""
       });
     }
-    return json({ ok: false, error: (resJson && resJson.errmsg) || "支付网关下单失败" }, 502);
+    return json({
+      ok: false,
+      error: (resJson && resJson.errmsg) || "虎皮椒支付下单失败"
+    }, 502);
   }
 
+  // 3. 尚未填写商户密钥：明确返回 preview 演示态
   return json({
     ok: true,
-    mode: "sandbox",
+    mode: "preview",
     orderId,
     plan: { id: planId, name: plan.name, price: plan.price }
   });

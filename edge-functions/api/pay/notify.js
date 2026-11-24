@@ -1,5 +1,5 @@
 /* EdgeOne Pages Edge Function: /api/pay/notify
- * 处理支付回调（沙箱演示或支付平台异步通知）并自动在 KV 中签发一次性可用授权码。
+ * 处理支付异步回调通知（蓝兔支付 / 虎皮椒），验签确认支付后在 KV 中落库并签发永久 GJ2 授权码。
  */
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -8,7 +8,7 @@ function json(data, status = 200) {
   });
 }
 
-async function md5Hex(str) {
+function md5Hex(str) {
   const bytes = new TextEncoder().encode(str);
   const k = new Uint32Array([
     0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,
@@ -50,72 +50,110 @@ async function md5Hex(str) {
   return Array.from(res).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-function genLicenseCode() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const bytes = new Uint8Array(12);
-  crypto.getRandomValues(bytes);
-  const g = [];
-  for (let i = 0; i < 3; i++) {
-    let s = "";
-    for (let j = 0; j < 4; j++) s += chars[bytes[i * 4 + j] % chars.length];
-    g.push(s);
+async function hmacHex(secret, msg) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+async function deriveOrderLicense(adminToken, orderId) {
+  if (!adminToken || !orderId) return "";
+  const raw6 = (await hmacHex(adminToken, "ORD6|" + orderId)).slice(0, 6);
+  const sig10 = (await hmacHex(adminToken, "GJ2|00000000|" + raw6)).slice(0, 10);
+  return `GJ2-00000000-${raw6}-${sig10}`;
+}
+
+async function persistPaidOrder(env, orderId, planId, channel, provider) {
+  const licenseCode = await deriveOrderLicense((env && env.WIKI_ADMIN_TOKEN) || "", orderId);
+  if (!env || !env.WIKI_KV || !orderId) return licenseCode;
+
+  const raw = await env.WIKI_KV.get("order:" + orderId);
+  let order = null;
+  if (raw) {
+    try { order = JSON.parse(raw); } catch (e) { order = null; }
   }
-  return "GJ-" + g.join("-");
+  const finalPlan = (order && order.planId) || planId || "wiki-full";
+  const finalCode = (order && order.licenseCode) || licenseCode;
+  if (!order || !order.paid) {
+    const updated = Object.assign(order || { orderId, planId: finalPlan, channel, provider }, {
+      paid: true,
+      status: "paid",
+      licenseCode: finalCode,
+      paidAt: new Date().toISOString()
+    });
+    await env.WIKI_KV.put("order:" + orderId, JSON.stringify(updated), { expirationTtl: 86400 * 30 });
+    if (finalCode) {
+      await env.WIKI_KV.put("lic:" + finalCode, JSON.stringify({
+        code: finalCode,
+        status: "active",
+        plan: finalPlan,
+        label: "扫码自动开通",
+        orderId,
+        createdAt: new Date().toISOString()
+      }));
+    }
+  }
+  return finalCode;
 }
 
 export async function onRequestPost(context) {
   const { request, env } = context;
-  const provider = (env && env.PAY_PROVIDER) || "sandbox";
+  const provider = String((env && env.PAY_PROVIDER) || "").trim().toLowerCase();
   const ct = (request.headers.get("content-type") || "").toLowerCase();
 
   let payload = {};
   if (ct.includes("application/json")) {
     payload = await request.json().catch(() => ({}));
-  } else {
+  } else if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
     const fd = await request.formData().catch(() => null);
     if (fd) for (const [k, v] of fd.entries()) payload[k] = String(v);
+  } else {
+    const txt = await request.text().catch(() => "");
+    if (txt.includes("=")) {
+      for (const [k, v] of new URLSearchParams(txt).entries()) payload[k] = v;
+    }
   }
 
-  if (payload.action === "sandbox_pay") {
-    if (provider !== "sandbox") {
-      return json({ ok: false, error: "生产模式禁止沙箱模拟付款" }, 403);
+  // 1. 蓝兔支付异步通知验签（7 个必填字段按 ASCII 升序 + &key=商户密钥 大写 MD5）
+  if (provider === "lantu" && env) {
+    const mchIdGot = String(payload.mch_id || "").trim();
+    const wxMchId = String(env.LANTU_WX_MCH_ID || env.PAY_APP_ID || "").trim();
+    const aliMchId = String(env.LANTU_ALI_MCH_ID || "").trim();
+    const isAli = Boolean(aliMchId && mchIdGot === aliMchId);
+    const mchKey = String((isAli ? env.LANTU_ALI_KEY : (env.LANTU_WX_KEY || env.PAY_SECRET)) || "").trim();
+    if (!mchKey) return new Response("missing merchant key", { status: 500 });
+
+    const reqFields = ["code", "timestamp", "mch_id", "order_no", "out_trade_no", "pay_no", "total_fee"];
+    const signedObj = {};
+    for (const f of reqFields) {
+      if (payload[f] !== undefined && payload[f] !== "") signedObj[f] = payload[f];
     }
-    const orderId = String(payload.orderId || "");
-    const licenseCode = genLicenseCode();
-    let planId = "wiki-full";
-    if (env && env.WIKI_KV && orderId) {
-      const raw = await env.WIKI_KV.get("order:" + orderId);
-      if (raw) {
-        const order = JSON.parse(raw);
-        planId = order.planId || planId;
-        order.paid = true;
-        order.licenseCode = licenseCode;
-        order.paidAt = new Date().toISOString();
-        await env.WIKI_KV.put("order:" + orderId, JSON.stringify(order), { expirationTtl: 86400 });
-      }
-      await env.WIKI_KV.put("lic:" + licenseCode, JSON.stringify({
-        status: "active",
-        plan: planId,
-        label: "沙箱测试授权",
-        orderId,
-        createdAt: new Date().toISOString()
-      }));
+    const keys = Object.keys(signedObj).sort();
+    const rawSign = keys.map(k => `${k}=${signedObj[k]}`).join("&") + `&key=${mchKey}`;
+    const expectedSign = md5Hex(rawSign).toUpperCase();
+    const gotSign = String(payload.sign || "").toUpperCase();
+    if (!gotSign || gotSign !== expectedSign) {
+      return new Response("invalid signature", { status: 403 });
     }
-    return json({
-      ok: true,
-      paid: true,
-      orderId,
-      planId,
-      licenseCode,
-      dek: (env && env.WIKI_DEK_B64) || null
-    });
+    if (String(payload.code) !== "0") {
+      return new Response("FAIL", { status: 400 });
+    }
+    const orderId = String(payload.out_trade_no || "").trim();
+    await persistPaidOrder(env, orderId, String(payload.attach || "wiki-full"), isAli ? "alipay" : "wechat", "lantu");
+    return new Response("SUCCESS", { status: 200 });
   }
 
-  // 虎皮椒真实回调验签与验收（校验 hash 签名与 status === "OD"）
-  if (provider === "hupijiao" && env && env.PAY_SECRET && env.WIKI_KV) {
+  // 2. 虎皮椒真实回调验签（校验 hash 与 status === "OD"）
+  if (provider === "hupijiao" && env && env.PAY_SECRET) {
     const keys = Object.keys(payload).filter(k => k !== "hash" && payload[k] !== "" && payload[k] !== undefined).sort();
-    const rawSign = keys.map(k => `${k}=${payload[k]}`).join("&") + env.PAY_SECRET;
-    const expectedHash = (await md5Hex(rawSign)).toLowerCase();
+    const rawSign = keys.map(k => `${k}=${payload[k]}`).join("&") + String(env.PAY_SECRET).trim();
+    const expectedHash = md5Hex(rawSign).toLowerCase();
     const gotHash = String(payload.hash || "").toLowerCase();
     if (!gotHash || gotHash !== expectedHash) {
       return new Response("invalid signature", { status: 403 });
@@ -123,27 +161,10 @@ export async function onRequestPost(context) {
     if (payload.status !== "OD") {
       return new Response("fail", { status: 400 });
     }
-    const orderId = String(payload.trade_order_id || "");
-    const raw = await env.WIKI_KV.get("order:" + orderId);
-    if (!raw) return new Response("order not found", { status: 404 });
-    const order = JSON.parse(raw);
-    if (!order.paid) {
-      const licenseCode = genLicenseCode();
-      order.paid = true;
-      order.licenseCode = licenseCode;
-      order.paidAt = new Date().toISOString();
-      await env.WIKI_KV.put("order:" + orderId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
-      await env.WIKI_KV.put("lic:" + licenseCode, JSON.stringify({
-        status: "active",
-        plan: order.planId,
-        label: order.planName,
-        contact: order.contact || "",
-        orderId,
-        createdAt: new Date().toISOString()
-      }));
-    }
-    return new Response("success");
+    const orderId = String(payload.trade_order_id || "").trim();
+    await persistPaidOrder(env, orderId, String(payload.attach || "wiki-full"), "wechat", "hupijiao");
+    return new Response("success", { status: 200 });
   }
 
-  return json({ ok: false, error: "未匹配的支付回调配置" }, 400);
+  return json({ ok: false, error: "未启用在线回调模式" }, 400);
 }
