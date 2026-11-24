@@ -353,6 +353,29 @@ html[data-theme="night"] .tok-ch.is-on[data-ch="alipay"] { color: #60a5fa; }
 }
 .tok-reset-link { margin-top: 10px; background: none; border: 0; color: var(--muted); font-size: 12.5px; cursor: pointer; text-decoration: underline; }
 
+/* 免备案大平台自动发卡两步直进模块 */
+.tok-ext-box { margin-top: 14px; display: grid; gap: 12px; }
+.tok-ext-step {
+  background: var(--surface3); border: 1px solid var(--line); border-radius: 14px; padding: 14px 15px;
+}
+.tok-ext-step b { display: block; font-size: 14px; margin-bottom: 5px; }
+.tok-ext-step p { font-size: 12.5px; color: var(--ink2); line-height: 1.6; }
+.tok-ext-pay-btn {
+  margin-top: 10px; display: flex; align-items: center; justify-content: center; width: 100%;
+  border-radius: 12px; padding: 12px 14px; font-size: 14.5px; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, #059669, #10b981); text-align: center;
+}
+.tok-ext-input-row { margin-top: 9px; display: flex; gap: 8px; }
+.tok-ext-input-row input {
+  flex: 1 1 auto; min-width: 0; border: 1.5px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; font: inherit; font-size: 13.5px; background: var(--surface2); color: var(--ink);
+}
+.tok-ext-input-row button {
+  flex: none; border: 0; border-radius: 10px; padding: 10px 14px; font-size: 13.5px; font-weight: 800;
+  color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); cursor: pointer; white-space: nowrap;
+}
+.tok-ext-err { margin-top: 6px; font-size: 12.5px; color: #dc2626; font-weight: 600; min-height: 16px; }
+
 .lp-num-grid > *, .lp-kit-grid > *, .lp-gift-wrap > *, .lp-offer-grid > *, .lp-stats > * { min-width: 0; }
 .lp-gift-form input { width: 100%; max-width: 100%; min-width: 0; }
 

@@ -279,7 +279,42 @@ export async function onRequestPost(context) {
     }, 502);
   }
 
-  // 3. 尚未填写商户密钥：明确返回 preview 演示态
+  // 3. 正规大平台外链按品自动发卡（面包多 / 微信小店）
+  if (provider === "external_card" && env) {
+    const extEnvMap = {
+      "ecom-pack": ["PAY_URL_ECOM_PACK"],
+      "ecom-pilot": ["PAY_URL_ECOM_PILOT"],
+      "media-pipeline": ["PAY_URL_MEDIA_PIPELINE"],
+      "solo-workbench": ["PAY_URL_SOLO_WORKBENCH", "PAY_URL_WIKI_FULL"],
+      "ecom-workbench": ["PAY_URL_ECOM_WORKBENCH", "PAY_URL_WIKI_FULL"],
+      "side-hustle": ["PAY_URL_SIDE_HUSTLE"],
+      "wiki-full": ["PAY_URL_WIKI_FULL"]
+    };
+    const candidates = (extEnvMap[planId] || []).concat(["EXTERNAL_PAY_URL"]);
+    let payUrl = "";
+    for (const k of candidates) {
+      const v = String(env[k] || "").trim();
+      if (/^https?:\/\//i.test(v)) {
+        payUrl = v;
+        break;
+      }
+    }
+    if (payUrl) {
+      await saveOrderRecord(reqChannel, { payUrl });
+      return json({
+        ok: true,
+        mode: "external_card",
+        platformName: String(env.PAY_PLATFORM_NAME || "官方安全收银台").trim(),
+        orderId,
+        planId,
+        planName: plan.name,
+        amount: plan.price,
+        payUrl
+      });
+    }
+  }
+
+  // 4. 尚未填写商户或发卡链接：明确返回 preview 演示态
   return json({
     ok: true,
     mode: "preview",

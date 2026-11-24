@@ -1,4 +1,4 @@
-/* 单人群广告落地页共有漏斗引擎：UTM 参数捕获 + 免费见面礼留资解锁 + 真实扫码秒开通（无缝兼容演示预览态） */
+/* 单人群广告落地页共有漏斗引擎：UTM 参数捕获 + 免费见面礼留资解锁 + 真实扫码秒开通 / 大平台发卡秒进（兼容演示态） */
 (function (win, doc) {
   'use strict';
 
@@ -21,6 +21,57 @@
     var h = (win.location && win.location.hostname || '').toLowerCase();
     var p = (win.location && win.location.port) || '';
     return h === 'guijiyeren.github.io' || ((h === '127.0.0.1' || h === 'localhost') && p !== '8788');
+  }
+
+  function normalizeCode(str) {
+    return String(str || '')
+      .replace(/\u3000/g, ' ')
+      .replace(/[\uFF01-\uFF5E]/g, function (ch) {
+        return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+      })
+      .trim()
+      .toUpperCase();
+  }
+
+  function toB64(bytes) {
+    var bin = '';
+    var arr = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    for (var i = 0; i < arr.length; i += 0x8000) {
+      bin += String.fromCharCode.apply(null, arr.subarray(i, i + 0x8000));
+    }
+    return btoa(bin);
+  }
+
+  function fromB64(b64) {
+    var bin = atob(b64);
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  async function sha256Hex(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function (b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  async function unwrapEnvelope(secret, env, kdfCfg) {
+    var baseKey = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), 'PBKDF2', false, ['deriveKey']);
+    var kek = await crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: fromB64(env.salt),
+        iterations: (kdfCfg && kdfCfg.iterations) || 200000,
+        hash: (kdfCfg && kdfCfg.hash) || 'SHA-256'
+      },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+    var plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(env.iv) }, kek, fromB64(env.wrapped));
+    return new Uint8Array(plainBuf);
   }
 
   // 主题切换
@@ -160,7 +211,7 @@
     });
   }
 
-  // ====== 2. 统一「扫码 1 秒自动开通」收银台（真实商户接通自动出真码并轮询，未接入时保持演示态） ======
+  // ====== 2. 统一收银台（兼容直连动态扫码 + 正规平台发卡直进 + 演示态） ======
   var offers = cfg.offers || {};
   var maskEl = null;
   var timerId = null;
@@ -208,6 +259,59 @@
     } catch (e) {}
   }
 
+  async function verifyAndEnterWiki(rawCode) {
+    var norm = normalizeCode(rawCode);
+    if (!norm) throw new Error('请粘贴你拿到的授权码');
+
+    if (!isLocalHost()) {
+      try {
+        var srvRes = await fetch('/api/wiki/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'license', credential: norm })
+        });
+        var ct = (srvRes.headers.get('content-type') || '').toLowerCase();
+        if (ct.includes('application/json')) {
+          var sj = await srvRes.json();
+          if (sj && !sj.fallback) {
+            if (sj.ok && sj.dek) {
+              writeWikiSession(sj.dek, sj.plan || currentOfferId, norm);
+              win.location.href = '../../wiki/';
+              return;
+            }
+            throw new Error(sj.error || '授权码无效或已过期');
+          }
+        }
+      } catch (e) {
+        if (e && e.message && (e.message.indexOf('无效') >= 0 || e.message.indexOf('过期') >= 0 || e.message.indexOf('停用') >= 0)) {
+          throw e;
+        }
+      }
+    }
+
+    var authRes = await fetch('../../wiki/data/auth.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!authRes.ok) throw new Error('读取授权校验配置失败');
+    var authCfg = await authRes.json();
+    var list = authCfg.licenses || [];
+    var hint = (await sha256Hex(norm)).slice(0, 8);
+    var candidates = list.filter(function (item) { return item.hint === hint; });
+    for (var i = 0; i < candidates.length; i++) {
+      var lic = candidates[i];
+      try {
+        var dekBytes = await unwrapEnvelope(norm, lic, authCfg.kdf);
+        if (lic.expiresAt && Date.parse(lic.expiresAt) < Date.now()) {
+          throw new Error('该授权码已到期，请联系核对');
+        }
+        writeWikiSession(toB64(dekBytes), lic.plan || currentOfferId, norm);
+        win.location.href = '../../wiki/';
+        return;
+      } catch (err) {
+        if (err && err.message && err.message.indexOf('到期') >= 0) throw err;
+      }
+    }
+    throw new Error('没有核对到这个授权码，请检查是否复制完整（不含多余空格）');
+  }
+
   function ensureModal() {
     if (maskEl) return maskEl;
     maskEl = doc.createElement('div');
@@ -219,10 +323,10 @@
       '<div class="tok-box">' +
         '<div class="tok-demo-banner" id="tokDemoBanner">' +
           '<span>🧪</span>' +
-          '<span><strong>收银台流程演示（尚未接入真实收款商户，不会扣款）</strong>：展示用户扫码后 1 秒自动开通的交互效果，接入即时扫码通道后立即变为真实收款码。</span>' +
+          '<span><strong>收银台流程演示（尚未接入真实收款商户，不会扣款）</strong>：展示用户扫码后 1 秒自动开通的交互效果，挂上真实收款链接或通道后即刻切换成真收银台。</span>' +
         '</div>' +
         '<div class="tok-head">' +
-          '<div><h3>扫码开通 · 付款后自动放行</h3><div class="tok-head-sub">无需加微信或人工发码，到账即刻进入知识库</div></div>' +
+          '<div><h3 id="tokTitle">扫码开通 · 付款后自动放行</h3><div class="tok-head-sub" id="tokSub">无需加微信等人工发码，付完自动放行直进知识库</div></div>' +
           '<button type="button" class="tok-close" id="tokCloseBtn" aria-label="关闭窗口">✕</button>' +
         '</div>' +
         '<div class="tok-order-card">' +
@@ -246,6 +350,21 @@
           '</div>' +
           '<button type="button" class="tok-sim-btn" id="tokSimPayBtn">模拟手机扫码已付款 → 看用户秒开通效果</button>' +
           '<p class="tok-wait-tip" id="tokWaitTip">点击上方绿色按钮可体验客户付完后 1 秒自动开通的画面</p>' +
+        '</div>' +
+        '<div class="tok-ext-box" id="tokExtView" hidden>' +
+          '<div class="tok-ext-step">' +
+            '<b id="tokExtStep1Title">第 1 步 · 前往安全平台完成付款（微信 / 支付宝）</b>' +
+            '<p>付款确认后页面会立刻自动显示一串「GJ-...」永久授权码，不用加微信也不等人工发网盘。</p>' +
+            '<a class="tok-ext-pay-btn" id="tokExtPayLink" href="#" target="_blank" rel="noopener">前往安全收银台付款并领授权码 ↗</a>' +
+          '</div>' +
+          '<div class="tok-ext-step">' +
+            '<b>第 2 步 · 粘贴刚拿到的授权码，1 秒直进知识库</b>' +
+            '<form class="tok-ext-input-row" id="tokExtForm" novalidate>' +
+              '<input type="text" id="tokExtCodeInput" placeholder="粘贴收到的 GJ-... 授权码" autocomplete="off" required>' +
+              '<button type="submit" id="tokExtUnlockBtn">解锁进入 →</button>' +
+            '</form>' +
+            '<div class="tok-ext-err" id="tokExtErr" role="alert"></div>' +
+          '</div>' +
         '</div>' +
         '<div class="tok-ok-box" id="tokSuccessView" hidden>' +
           '<div class="tok-ok-icon">✓</div>' +
@@ -281,6 +400,21 @@
         sim.disabled = false;
         sim.textContent = '模拟手机扫码已付款 → 看用户秒开通效果';
       }, 450);
+    });
+
+    doc.getElementById('tokExtForm').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var inp = doc.getElementById('tokExtCodeInput');
+      var errBox = doc.getElementById('tokExtErr');
+      var btn = doc.getElementById('tokExtUnlockBtn');
+      errBox.textContent = '';
+      btn.disabled = true;
+      btn.textContent = '核验中…';
+      verifyAndEnterWiki(inp.value).catch(function (e) {
+        errBox.textContent = (e && e.message) || '验证失败，请核对授权码';
+        btn.disabled = false;
+        btn.textContent = '解锁进入 →';
+      });
     });
 
     doc.getElementById('tokRefreshQrBtn').addEventListener('click', function () {
@@ -322,6 +456,8 @@
 
   function setModalUiMode(live, data) {
     isLiveMode = Boolean(live);
+    doc.getElementById('tokExtView').hidden = true;
+    doc.getElementById('tokWaitView').hidden = false;
     doc.getElementById('tokDemoBanner').hidden = isLiveMode;
     doc.getElementById('tokDemoSvg').hidden = isLiveMode;
     doc.getElementById('tokQrBadge').hidden = isLiveMode;
@@ -351,6 +487,21 @@
       doc.getElementById('tokCodeLabel').textContent = '自动签发专属授权码（示例）：';
       doc.getElementById('tokBackWaitBtn').hidden = false;
     }
+  }
+
+  function showExternalCardMode(data) {
+    stopTimers();
+    isLiveMode = false;
+    doc.getElementById('tokDemoBanner').hidden = true;
+    doc.getElementById('tokWaitView').hidden = true;
+    doc.getElementById('tokSuccessView').hidden = true;
+    doc.getElementById('tokExtView').hidden = false;
+    var pName = data.platformName || '官方安全收银台';
+    doc.getElementById('tokTitle').textContent = '安全付款与自动发码';
+    doc.getElementById('tokSub').textContent = '由 ' + pName + ' 安全托管交易，付完自动弹永久授权码';
+    doc.getElementById('tokExtStep1Title').textContent = '第 1 步 · 前往 ' + pName + ' 付款（支持微信 / 支付宝）';
+    doc.getElementById('tokExtPayLink').href = data.payUrl;
+    doc.getElementById('tokExtErr').textContent = '';
   }
 
   function startCountdownAndPoll(live) {
@@ -390,7 +541,7 @@
   }
 
   function requestLiveOrder(offerId, channel) {
-    doc.getElementById('tokLiveHint').textContent = '正在获取实时动态收款码…';
+    doc.getElementById('tokLiveHint').textContent = '正在读取收银台配置…';
     fetch('/api/pay/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -399,7 +550,9 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!maskEl || !maskEl.classList.contains('is-open')) return;
-        if (res && res.ok && res.mode === 'live_qr' && res.qrImg) {
+        if (res && res.ok && res.mode === 'external_card' && res.payUrl) {
+          showExternalCardMode(res);
+        } else if (res && res.ok && res.mode === 'live_qr' && res.qrImg) {
           currentOrderId = res.orderId;
           currentOrderToken = res.orderToken || '';
           setModalUiMode(true, res);
@@ -422,6 +575,8 @@
     var m = ensureModal();
     currentOfferId = offerId;
     var item = offers[offerId] || Object.values(offers)[0] || { name: '实战知识库通行证', price: '¥99', chips: ['全库畅看', '1 秒自动开通'] };
+    doc.getElementById('tokTitle').textContent = '扫码开通 · 付款后自动放行';
+    doc.getElementById('tokSub').textContent = '无需加微信等人工发码，付完自动放行直进知识库';
     doc.getElementById('tokPlanName').textContent = item.name;
     doc.getElementById('tokPlanPrice').textContent = item.price;
     doc.getElementById('tokChips').innerHTML = (item.chips || []).map(function (c) { return '<span>' + c + '</span>'; }).join('');
@@ -429,6 +584,7 @@
     doc.getElementById('tokIssuedCode').textContent = 'GJ-DEMO-' + aud.toUpperCase() + '-2026';
 
     doc.getElementById('tokSuccessView').hidden = true;
+    doc.getElementById('tokExtView').hidden = true;
     doc.getElementById('tokWaitView').hidden = false;
     setModalUiMode(false);
     setChannel('wechat');
