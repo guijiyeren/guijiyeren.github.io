@@ -29,6 +29,13 @@ html[data-theme="night"] {
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html.wk-has-session .wk-gate { display: none !important; }
+@keyframes wkAppEnter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.wk-app.wk-entering { animation: wkAppEnter 0.24s ease-out both; }
 html { scroll-behavior: smooth; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;

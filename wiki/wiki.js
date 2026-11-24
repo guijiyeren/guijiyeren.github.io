@@ -113,6 +113,7 @@
   document.getElementById('openPayTopBtn').addEventListener('click', openCheckoutHandler);
 
   document.getElementById('lockBtn').addEventListener('click', function () {
+    document.documentElement.classList.remove('wk-has-session');
     Auth.lockSession();
     location.reload();
   });
@@ -172,7 +173,12 @@
     });
 
     gateEl.hidden = true;
+    document.documentElement.classList.add('wk-has-session');
     appEl.hidden = false;
+    appEl.classList.remove('wk-entering');
+    void appEl.offsetWidth;
+    appEl.classList.add('wk-entering');
+    window.scrollTo(0, 0);
     document.getElementById('treeCount').textContent = '共 ' + manifest.count + ' 页 · 已本地解密';
 
     renderTree(manifest.tree || [], '');
@@ -945,7 +951,15 @@
   Auth.loadAuthConfig('./').catch(function () {});
   Auth.tryRestoreSession().then(function (restored) {
     if (restored) {
-      bootReader(restored).catch(function () {});
+      bootReader(restored).catch(function () {
+        document.documentElement.classList.remove('wk-has-session');
+        gateEl.hidden = false;
+        appEl.hidden = true;
+      });
+    } else {
+      document.documentElement.classList.remove('wk-has-session');
+      gateEl.hidden = false;
+      appEl.hidden = true;
     }
   });
 })();
