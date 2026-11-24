@@ -51,7 +51,7 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
 
     <div class="wk-gate-tabs" role="tablist">
       <button type="button" class="is-on" data-gate-tab="passcode" role="tab" aria-selected="true">密码进入</button>
-      <button type="button" data-gate-tab="license" role="tab" aria-selected="false">授权码 / 开通权限</button>
+      <button type="button" data-gate-tab="license" role="tab" aria-selected="false">授权码进入</button>
     </div>
 
     <form class="wk-gate-panel is-on" id="passcodeForm" data-gate-panel="passcode" novalidate>
@@ -86,11 +86,10 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
       <div class="wk-gate-commerce">
         <div class="wk-gc-head">
           <b>还没有授权码？</b>
-          <span>支持微信 / 支付宝 · 付款后自动发放</span>
+          <span>自助扫码秒开通道正在接入中，当前可先去官网留言联系获取。</span>
         </div>
         <div class="wk-gc-actions">
-          <button type="button" class="wk-btn-accent" id="openPayFromGate">开通正式授权 / 查看套餐 →</button>
-          <a class="wk-btn-ghost" href="../preview-home/" target="_blank" rel="noopener">按人群选方案（预览）↗</a>
+          <a class="wk-btn-ghost" href="../#message">去官网留言获取授权 →</a>
         </div>
       </div>
     </div>
@@ -112,7 +111,6 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
         <span class="wk-hide-sm">硅基野人知识库</span>
       </a>
       <a class="wk-tb-home wk-hide-sm" href="../">官网首页</a>
-      <a class="wk-tb-home wk-hide-sm" href="../preview-home/">人群方案预览</a>
     </div>
     <button type="button" class="wk-search-trigger" id="searchOpenBtn">
       <span class="wk-search-long">🔍 搜索 93 篇实战笔记与复盘…</span>
@@ -121,7 +119,6 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
     </button>
     <div class="wk-tb-right">
       <button type="button" class="wk-pill-btn" id="openPacksBtn" title="下载配套模板与交付包">🎁<span class="wk-hide-sm"> 模板包</span></button>
-      <button type="button" class="wk-pill-btn" id="openPayTopBtn">💎 <span class="wk-hide-sm">授权与</span>套餐</button>
       <button type="button" class="wk-icon-btn wk-hide-sm" id="fontSizeBtn" title="切换字号">A±</button>
       <button type="button" class="wk-icon-btn" id="appThemeBtn" title="切换白天/夜晚">◐</button>
       <button type="button" class="wk-icon-btn wk-lock-btn" id="lockBtn" title="退出并重新锁定">🔒<span class="wk-hide-sm"> 锁定</span></button>
@@ -212,6 +209,6 @@ if (!location.pathname.endsWith('/') && !/\.[^/]+$/.test(location.pathname)) {
 
 <script src="vendor/hls.min.js?v=2"></script>
 <script src="auth-pay.js?v=5"></script>
-<script src="wiki.js?v=5"></script>
+<script src="wiki.js?v=6"></script>
 </body>
 </html>

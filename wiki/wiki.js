@@ -110,8 +110,10 @@
       }
     });
   }
-  document.getElementById('openPayFromGate').addEventListener('click', openCheckoutHandler);
-  document.getElementById('openPayTopBtn').addEventListener('click', openCheckoutHandler);
+  var openPayGateEl = document.getElementById('openPayFromGate');
+  if (openPayGateEl) openPayGateEl.addEventListener('click', openCheckoutHandler);
+  var openPayTopEl = document.getElementById('openPayTopBtn');
+  if (openPayTopEl) openPayTopEl.addEventListener('click', openCheckoutHandler);
 
   document.getElementById('lockBtn').addEventListener('click', function () {
     document.documentElement.classList.remove('wk-has-session');
