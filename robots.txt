@@ -4,5 +4,6 @@ Disallow: /resource/
 Disallow: /stats/
 Disallow: /wiki/
 Disallow: /preview-home/
+Disallow: /lp/
 
 Sitemap: https://guijiyeren.com/sitemap.txt
