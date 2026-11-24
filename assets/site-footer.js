@@ -24,7 +24,7 @@
           '<div class="sf-head"><div class="eyebrow2">Contact</div><h2>联系方式</h2></div>' +
           '<div class="sf-contacts">' +
             '<a class="sf-contact-card" href="' + base + '"><img src="' + base + 'assets/icon-github.png" alt="个人主页" loading="lazy" decoding="async"><span>个人主页</span></a>' +
-            '<a class="sf-contact-card" href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener"><img src="' + base + 'assets/icon-feishu.png" alt="飞书知识库" loading="lazy" decoding="async"><span>飞书知识库</span></a>' +
+            '<a class="sf-contact-card" href="' + base + 'wiki/"><img src="' + base + 'assets/icon-feishu.png" alt="实战知识库" loading="lazy" decoding="async"><span>实战知识库</span></a>' +
             '<a class="sf-contact-card" href="#" data-mail="49,53,52,54,52,55,64,113,113,46,99,111,109"><img src="' + base + 'assets/icon-qqmail.png" alt="QQ邮箱" loading="lazy" decoding="async"><span>QQ邮箱</span></a>' +
             '<a class="sf-contact-card" href="#message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5H5L3 22v-6.5A8.5 8.5 0 0 1 12.5 3.5h0A8.5 8.5 0 0 1 21 12z"/></svg><span>给我留言</span></a>' +
           '</div>' +
@@ -48,7 +48,7 @@
           '</form>' +
         '</div>' +
       '</section>' +
-      '<footer id="page-end"><div class="in"><div>© 2026 <b>硅基野人</b> · 本站 V2.0 · 内容由 AI 参与生产，我负责拍板</div><div>知识库：<a href="https://guijiyeren.feishu.cn/wiki/LJ5UwgCwziAVUpkqYKTcTsbXnwg" target="_blank" rel="noopener">飞书</a> · <a href="' + base + 'daily/" data-sf-daily>每日早报</a> · <a href="' + base + 'stats/">访问统计</a> · <a href="' + base + '">返回首页</a></div></div></footer>' +
+      '<footer id="page-end"><div class="in"><div>© 2026 <b>硅基野人</b> · 本站 V2.0 · 内容由 AI 参与生产，我负责拍板</div><div>知识库：<a href="' + base + 'wiki/">实战知识库</a> · <a href="' + base + 'daily/" data-sf-daily>每日早报</a> · <a href="' + base + 'stats/">访问统计</a> · <a href="' + base + '">返回首页</a></div></div></footer>' +
     '</div>' +
     '<div class="mail-mask" id="mailMask"><div class="mail-box"><img src="' + base + 'assets/email-card.png" alt="邮箱" loading="lazy" decoding="async"><div class="mail-actions"><button type="button" class="mail-copy" id="mailCopy">一键复制邮箱</button><button type="button" class="mail-close" id="mailClose">关闭</button></div><p class="mail-tip">邮箱用图片显示，避免被爬虫采集；需要发信时点「复制」。</p></div></div>' +
     '<div class="msg-mask" id="msgMask"><div class="msg-box"><div class="msg-check">✓</div><h3>感谢你的留言</h3><p>我们会第一时间查看。<br>祝您生活愉快，工作顺利！</p><button type="button" class="msg-ok" id="msgOk">关闭</button></div></div>' +

@@ -36,7 +36,7 @@
     if (shijue?.date) replace("shijue.date", shortDate(shijue.date));
     if (shijue?.count !== undefined) replace("shijue.count", count(shijue.count));
     const latestCard = document.querySelector("[data-latest-card]");
-    if (latestCard && daily?.url?.startsWith("https://guijiyeren.feishu.cn/wiki/")) {
+    if (latestCard && daily?.url && (daily.url.startsWith("./wiki/") || daily.url.startsWith("https://guijiyeren.com/wiki/") || daily.url.startsWith("https://guijiyeren.feishu.cn/wiki/"))) {
       latestCard.href = daily.url;
       latestCard.title = daily.title;
     }

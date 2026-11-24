@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>实战知识库 · 硅基野人</title>
+<link rel="icon" href="../assets/logo.png">
+<link rel="stylesheet" href="wiki.css?v=1">
+<script src="../assets/site-guard.js?v=2"></script>
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('guiji_theme');
+    var h = new Date().getHours();
+    document.documentElement.setAttribute('data-theme', saved || ((h >= 7 && h < 19) ? 'day' : 'night'));
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- 未解锁门禁锁屏（默认唯一展示界面，零正文泄露） -->
+<main class="wk-gate" id="wkGate">
+  <div class="wk-gate-top">
+    <a class="wk-back-home" href="../">← 返回 guijiyeren.com</a>
+    <button type="button" class="wk-icon-btn" id="gateThemeBtn" title="切换白天/夜晚">◐ 主题</button>
+  </div>
+
+  <section class="wk-gate-card" aria-labelledby="gateTitle">
+    <div class="wk-gate-brand">
+      <img src="../assets/opt/logo-160.webp" alt="硅基野人" width="56" height="56">
+      <div>
+        <span class="wk-lock-pill">🔒 受保护访问 · 全库已加密</span>
+        <h1 id="gateTitle">硅基野人 · 实战知识库</h1>
+      </div>
+    </div>
+    <p class="wk-gate-sub">已从第三方平台全量独立迁移至自有网站：含全部实战笔记、一线复盘、PPT 讲义、语音与视频教程。</p>
+
+    <div class="wk-gate-tabs" role="tablist">
+      <button type="button" class="is-on" data-gate-tab="passcode" role="tab" aria-selected="true">密码进入</button>
+      <button type="button" data-gate-tab="license" role="tab" aria-selected="false">授权码 / 开通权限</button>
+    </div>
+
+    <form class="wk-gate-panel is-on" id="passcodeForm" data-gate-panel="passcode" novalidate>
+      <label class="wk-field">
+        <span>访问密码</span>
+        <div class="wk-pw-wrap">
+          <input type="password" id="passcodeInput" autocomplete="current-password" placeholder="请输入访问密码" required>
+          <button type="button" class="wk-pw-toggle" id="togglePwBtn" aria-label="显示或隐藏密码">显示</button>
+        </div>
+      </label>
+      <label class="wk-remember">
+        <input type="checkbox" id="rememberPass" checked>
+        <span>7 天内本机免重复输入</span>
+      </label>
+      <button type="submit" class="wk-btn-primary" id="passcodeSubmit">立即解锁知识库 →</button>
+      <p class="wk-gate-err" id="passcodeErr" role="alert"></p>
+    </form>
+
+    <div class="wk-gate-panel" data-gate-panel="license">
+      <form id="licenseForm" novalidate>
+        <label class="wk-field">
+          <span>商业授权码</span>
+          <input type="text" id="licenseInput" placeholder="例如：GJ-XXXX-XXXX-XXXX" autocomplete="off">
+        </label>
+        <label class="wk-remember">
+          <input type="checkbox" id="rememberLicense" checked>
+          <span>7 天内本机免重复输入</span>
+        </label>
+        <button type="submit" class="wk-btn-primary" id="licenseSubmit">验证授权码进入 →</button>
+        <p class="wk-gate-err" id="licenseErr" role="alert"></p>
+      </form>
+      <div class="wk-gate-commerce">
+        <div class="wk-gc-head">
+          <b>还没有授权码？</b>
+          <span>支持微信 / 支付宝 · 付款后自动发放</span>
+        </div>
+        <div class="wk-gc-actions">
+          <button type="button" class="wk-btn-accent" id="openPayFromGate">开通正式授权 / 查看套餐 →</button>
+          <a class="wk-btn-ghost" href="../preview-home/" target="_blank" rel="noopener">按人群选方案（预览）↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wk-gate-foot">
+      <span>遇到问题？</span>
+      <a href="../#message">去官网给我留言 →</a>
+    </div>
+  </section>
+</main>
+
+<!-- 解锁后三栏知识库阅读器 -->
+<div class="wk-app" id="wkApp" hidden>
+  <header class="wk-topbar">
+    <div class="wk-tb-left">
+      <button type="button" class="wk-icon-btn wk-mobile-only" id="sidebarToggle" aria-label="展开目录">☰ 目录</button>
+      <a class="wk-tb-brand" href="?">
+        <img src="../assets/opt/logo-160.webp" alt="" width="28" height="28">
+        <span>硅基野人知识库</span>
+      </a>
+      <a class="wk-tb-home" href="../">官网首页</a>
+      <a class="wk-tb-home wk-hide-sm" href="../preview-home/">人群方案预览</a>
+    </div>
+    <button type="button" class="wk-search-trigger" id="searchOpenBtn">
+      <span>🔍 搜索 93 篇实战笔记与复盘…</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+    <div class="wk-tb-right">
+      <button type="button" class="wk-pill-btn" id="openPayTopBtn">💎 授权与套餐</button>
+      <button type="button" class="wk-icon-btn wk-hide-sm" id="fontSizeBtn" title="切换字号">A±</button>
+      <button type="button" class="wk-icon-btn" id="appThemeBtn" title="切换白天/夜晚">◐</button>
+      <button type="button" class="wk-icon-btn wk-lock-btn" id="lockBtn" title="退出并重新锁定">🔒 锁定</button>
+    </div>
+  </header>
+
+  <div class="wk-layout">
+    <div class="wk-sidebar-mask" id="sidebarMask"></div>
+    <aside class="wk-sidebar" id="wkSidebar" aria-label="知识库目录">
+      <div class="wk-sb-head">
+        <input type="search" id="treeFilter" placeholder="筛选页面标题…" aria-label="筛选目录">
+        <div class="wk-sb-meta" id="treeCount">共 93 页</div>
+      </div>
+      <nav class="wk-tree" id="wkTree"></nav>
+    </aside>
+
+    <main class="wk-main" id="wkMain">
+      <article class="wk-article" id="wkArticle">
+        <nav class="wk-crumbs" id="wkCrumbs" aria-label="面包屑导航"></nav>
+        <header class="wk-doc-header">
+          <h1 id="wkDocTitle">加载中…</h1>
+          <div class="wk-doc-meta" id="wkDocMeta"></div>
+        </header>
+        <div class="wk-doc-body" id="wkDocBody"></div>
+        <section class="wk-children-box" id="wkChildrenBox" hidden></section>
+        <nav class="wk-prev-next" id="wkPrevNext"></nav>
+      </article>
+    </main>
+
+    <aside class="wk-toc-aside" id="wkTocAside" aria-label="本页目录">
+      <div class="wk-toc-box">
+        <div class="wk-toc-title">本页目录</div>
+        <nav class="wk-toc-list" id="wkTocList"></nav>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- 搜索弹窗 -->
+<div class="wk-modal-mask" id="searchModal" hidden aria-hidden="true">
+  <div class="wk-search-box" role="dialog" aria-label="全库搜索">
+    <div class="wk-search-bar">
+      <span>🔍</span>
+      <input type="search" id="searchModalInput" placeholder="输入关键词搜索全库标题与正文…" autocomplete="off">
+      <button type="button" class="wk-icon-btn" id="searchCloseBtn">ESC</button>
+    </div>
+    <div class="wk-search-status" id="searchStatus">输入关键词开始搜索</div>
+    <div class="wk-search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- 图片灯箱 -->
+<div class="wk-lightbox" id="wkLightbox" hidden aria-hidden="true">
+  <button type="button" class="wk-lb-close" id="lbClose" aria-label="关闭大图">✕</button>
+  <img id="lbImg" src="" alt="">
+  <div class="wk-lb-cap" id="lbCap"></div>
+</div>
+
+<!-- PPT 全屏弹窗 -->
+<div class="wk-ppt-modal" id="pptModal" hidden aria-hidden="true">
+  <div class="wk-ppt-modal-bar">
+    <strong id="pptModalTitle">PPT 演示</strong>
+    <span id="pptModalPage">1 / 1</span>
+    <div class="wk-ppt-modal-btns">
+      <button type="button" id="pptModalPrev">‹ 上一页</button>
+      <button type="button" id="pptModalNext">下一页 ›</button>
+      <button type="button" id="pptModalClose">✕ 退出全屏</button>
+    </div>
+  </div>
+  <div class="wk-ppt-modal-stage">
+    <img id="pptModalImg" src="" alt="">
+  </div>
+</div>
+
+<script src="vendor/hls.min.js?v=1"></script>
+<script src="auth-pay.js?v=1"></script>
+<script src="wiki.js?v=1"></script>
+</body>
+</html>

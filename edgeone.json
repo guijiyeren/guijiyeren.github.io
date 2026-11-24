@@ -77,6 +77,41 @@
           "value": "s-maxage=2592000"
         }
       ]
+    },
+    {
+      "source": "/wiki/m/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, immutable"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "s-maxage=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/wiki/data/auth.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Pages-Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/api/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }
