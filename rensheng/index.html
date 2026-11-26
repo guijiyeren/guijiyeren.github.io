@@ -1439,16 +1439,45 @@ function initPersonalGuide(){
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   });
   const file = document.getElementById('import-file');
-  document.getElementById('import-progress').addEventListener('click', () => file.click());
+  const importButton = document.getElementById('import-progress'); // 2026-11-26 同步本地版导入保护：拒收空/坏文件、先确认、保存失败保留原进度
+  importButton.addEventListener('click', () => file.click());
   file.addEventListener('change', async () => {
     const selected = file.files?.[0]; if (!selected) return;
+    importButton.disabled = true;
     try {
-      const data = JSON.parse(await selected.text()); const incoming = data.progress || data;
-      if (!incoming || typeof incoming !== 'object') throw new Error('格式不对');
-      HABITS = Object.fromEntries(Object.entries(incoming).filter(([,v]) => ['todo','done','later'].includes(v)));
-      saveHabits(); syncAllHabitCards(); syncSampleBoard(); updatePersonalSummary(); alert('进度已导入');
-    } catch (e) { alert('导入失败：请选择本页面导出的 JSON 文件'); }
-    file.value = '';
+      let incoming;
+      try {
+        const data = JSON.parse(await selected.text());
+        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error();
+        const wrapped = Object.prototype.hasOwnProperty.call(data, 'progress');
+        if (wrapped && data.version !== undefined && data.version !== 1) throw new Error();
+        const progress = wrapped ? data.progress : data;
+        if (!progress || typeof progress !== 'object' || Array.isArray(progress)) throw new Error();
+        const entries = Object.entries(progress);
+        if (!entries.length || entries.some(([id, value]) => !/^\d+-\d+$/.test(id) || !['todo','done','later'].includes(value))) throw new Error();
+        incoming = Object.fromEntries(entries);
+      } catch (e) {
+        alert('导入失败：请选择包含有效进度的本页面导出 JSON 文件。原有进度已保留。');
+        return;
+      }
+      const ids = Object.keys(incoming);
+      const added = ids.filter(id => !(id in HABITS)).length;
+      const changed = ids.filter(id => id in HABITS && HABITS[id] !== incoming[id]).length;
+      const removed = Object.keys(HABITS).filter(id => !(id in incoming)).length;
+      if (!confirm('导入 '+ids.length+' 条进度。新增 '+added+' 条，变更 '+changed+' 条，移除 '+removed+' 条。确定替换本机进度吗？')) return;
+      try {
+        localStorage.setItem(HABIT_KEY, JSON.stringify(incoming));
+      } catch (e) {
+        alert('进度保存失败，原有进度已保留。');
+        return;
+      }
+      HABITS = incoming;
+      syncAllHabitCards(); syncSampleBoard(); updatePersonalSummary();
+      alert('进度已导入');
+    } finally {
+      file.value = '';
+      importButton.disabled = false;
+    }
   });
 }
 
