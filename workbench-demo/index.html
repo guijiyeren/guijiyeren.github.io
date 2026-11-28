@@ -1,0 +1,390 @@
+<!doctype html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>硅基野人工作台 · 免费互动演示</title>
+<meta name="description" content="亲手走一遍任务交办、AI 示例回执、人工确认和导出交接单。">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="硅基野人工作台 · 免费互动演示">
+<meta property="og:description" content="把一句交办，变成一份交接单。打开就能试。">
+<meta property="og:url" content="https://guijiyeren.com/workbench-demo/">
+<style>
+:root{
+  color-scheme:light;
+  --canvas:#f4f6f2;--paper:#fff;--ink:#1d3027;--muted:#53655a;--line:#dce5dc;
+  --green:#266249;--deep:#15392d;--tint:#edf6ee;--lime:#dff3a9;--gold:#f8edca;
+  --radius:18px;font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",
+  system-ui,sans-serif;font-size:16px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);line-height:1.6}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid #469268;outline-offset:4px}
+.shell{width:min(1256px,calc(100% - 72px));margin-inline:auto}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.brand,.head-actions{display:flex;align-items:center;gap:12px}
+.brand{font-size:17px;font-weight:750;letter-spacing:.03em}
+.mark{width:34px;height:34px;border-radius:10px;background:var(--deep);display:grid;place-items:center;flex:none}
+.mark::before{content:"";width:13px;height:11px;border:1.5px solid #e6f5c9;border-radius:2px;box-shadow:3px 3px 0 -1px var(--deep),4px 4px 0 -1px #e6f5c9;transform:translate(-2px,-2px)}
+.head-actions{gap:15px}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:100px;white-space:nowrap;background:var(--tint);color:#2e573e;font-size:.84rem;font-weight:650}
+.header .pill{background:#e5eee0}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:#558668}
+.pill.pending{background:#faf1d8;color:#63502a}
+.pill.pending::before{background:#82713a}
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:228px;
+  display:grid;grid-template-columns:1fr minmax(244px,28%);gap:30px;align-items:center;
+  padding:36px 42px 38px;background:#163b2e;color:#fbfff6;border-radius:24px}
+.hero::before{content:"";position:absolute;z-index:-1;inset:0;
+  background:radial-gradient(circle at 86% 26%,#9fce4b3b,transparent 42%),radial-gradient(#efffd729 1px,transparent 1px);
+  background-size:auto,18px 18px;mask-image:linear-gradient(90deg,transparent 15%,#000 78%)}
+.hero h1{font-size:clamp(2.12rem,4.5vw,3.33rem);letter-spacing:-.06em;line-height:1.18;margin:8px 0 14px;font-weight:800;text-wrap:balance}
+.hero h1 span{white-space:nowrap}
+.eyebrow{color:var(--lime);font-size:.875rem;font-weight:750;letter-spacing:.12em;margin:0}
+.hero p:last-child{margin:0;color:#dfeadf;font-size:1rem;max-width:36rem;text-wrap:pretty}
+.hero-note{position:relative;min-width:0;max-width:275px;width:100%;justify-self:end;margin-right:8px;transform:rotate(-3deg);padding:17px 18px 15px;background:#f4f8e6;color:#213529;border-radius:13px;box-shadow:8px 9px 0 #8ab37e76,0 15px 25px #09271c69}
+.hero-note small{display:block;color:#4a6350;font-size:.8rem;letter-spacing:.06em}
+.hero-note strong{display:block;margin:6px 0 10px;font-size:1.01rem}
+.hero-note div{border-top:1px solid #cddbc2;padding-top:9px;display:flex;gap:6px 12px;flex-wrap:wrap;color:#375340;font-size:.77rem}
+.hero-note span::before{content:"✓";display:inline-block;width:16px;color:var(--green);font-weight:800}
+.work-area{display:grid;grid-template-columns:minmax(0,1fr) minmax(258px,29%);gap:20px;align-items:start;margin:22px 0 0}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);min-width:0;box-shadow:0 3px 8px #17382b06}
+.workspace{padding:23px 26px 24px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.section-head h2{margin:2px 0 0;font-size:1.39rem;line-height:1.4;letter-spacing:-.035em}
+.kicker{font-size:.83rem;color:var(--muted);margin:0;font-weight:650}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:19px 0 23px;padding:0;list-style:none;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#f8faf7}
+.steps li{min-width:0;display:flex;gap:8px;align-items:center;padding:11px 10px;font-size:.87rem;font-weight:650;color:#4e6155}
+.steps li+li{border-left:1px solid var(--line)}
+.steps li[aria-current="step"]{background:#e9f3e8;color:#224b35}
+.steps li.done{color:#286449}
+.step-number{display:grid;place-items:center;flex:none;width:23px;height:23px;border:1px solid #cfdcd1;border-radius:50%;font-size:.75rem;line-height:1;font-variant-numeric:tabular-nums}
+[aria-current="step"] .step-number{background:var(--green);border-color:var(--green);color:white}
+.done .step-number{background:#e7f3e7;border-color:#e7f3e7}
+.phase h3{font-size:1.07rem;margin:0 0 8px}
+.summary-card,.draft-card{background:#f8faf7;border:1px solid #e3ebe2;border-radius:12px;padding:13px 16px;overflow-wrap:anywhere}
+.summary-card p{margin:0}
+.scope{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0 0;padding:0;list-style:none}
+.scope li{background:#eef3ec;border:1px solid #e0e9df;color:#3a5846;padding:4px 8px;border-radius:7px;font-size:.82rem}
+.actions{display:flex;align-items:center;justify-content:flex-start;gap:9px;flex-wrap:wrap;margin-top:18px}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:43px;border:1px solid transparent;border-radius:9px;padding:8px 15px;line-height:1.3;font-size:.94rem;font-weight:700;text-align:center;text-decoration:none}
+.primary{background:var(--green);color:white}
+.primary:hover{background:#1b4d38}
+.secondary{background:#fff;border-color:#cddcd0;color:#254f37}
+.secondary:hover{background:#f0f6ef}
+.ghost{background:transparent;color:#405849;padding-inline:2px;font-size:.86rem}
+.ghost:hover{text-decoration:underline}
+.button:disabled{background:#e7ece6;color:#546458;cursor:default}
+.hint{font-size:.84rem;color:var(--muted);margin:6px 0 0}
+.checklist{display:grid;gap:7px;margin:12px 0 0}
+.checklist label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:.94rem;cursor:pointer}
+.checklist input{width:17px;height:17px;margin:4px 0 0;accent-color:#276349;flex:none}
+.checklist label:has(:checked){background:#f2f8f0}
+.draft-card h4{font-size:1rem;margin:0 0 7px}
+.draft-card p{margin:5px 0;white-space:pre-wrap}
+.preview{font-family:inherit;font-size:.91rem;background:#f8faf7;border:1px solid #e3ebe2;border-radius:12px;padding:13px 16px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;margin:0}
+.receipt-view{white-space:normal}
+.receipt-view section{padding:11px 0}
+.receipt-view section+section{border-top:1px solid var(--line)}
+.receipt-view section:first-child{padding-top:0}
+.receipt-view section:last-child{padding-bottom:0}
+.receipt-view h4{margin:0 0 4px;font-size:.94rem;color:#286249}
+.receipt-view p{margin:0;white-space:pre-wrap}
+
+.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:grid;gap:5px;margin:10px 0 0;font-size:.94rem;font-weight:650}
+.field :is(input,textarea){display:block;width:100%;min-width:0;background:#fcfdfb;border:1px solid #ccd9cc;border-radius:9px;padding:8px 10px;color:var(--ink);font-size:1rem;font-weight:400}
+.field textarea{min-height:84px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:#626f64}
+.form-note{color:#7b3e27;font-size:.9rem;margin:8px 0 0}
+.aside{display:grid;gap:14px}
+.side-panel{padding:18px 19px}
+.side-panel h2{font-size:1.06rem;margin:0 0 8px}
+.side-panel .section-head{align-items:flex-start}
+.timeline{list-style:none;margin:14px 0 2px;padding:0}
+.timeline li{position:relative;padding:0 0 15px 20px;min-height:34px;color:var(--muted);font-size:.84rem;overflow-wrap:anywhere}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;inset:5px auto 0 4px;border-left:1px solid #ceddcf}
+.timeline li:last-child::before{display:none}
+.timeline li::after{content:"";position:absolute;width:9px;height:9px;background:white;border:2px solid #c9d6ca;border-radius:50%;left:0;top:4px}
+.timeline li.current::after{background:#538564;border-color:#538564}
+.timeline li.done::after{background:#8cae80;border-color:#8cae80}
+.timeline strong{display:block;color:var(--ink);font-size:.9rem;line-height:1.4;margin-bottom:2px}
+.side-note{background:#edf3e9;border-color:#dce8d8}
+.side-note p{color:#405749;margin:0;font-size:.89rem}
+.footer{font-size:.81rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px;margin-block:15px 28px}
+.toast{position:fixed;right:22px;bottom:22px;z-index:4;max-width:calc(100% - 44px);padding:10px 14px;border-radius:9px;background:#1c4836;color:#fff;font-size:.91rem;box-shadow:0 6px 20px #13342626}
+@media(max-width:950px){.shell{width:calc(100% - 44px)}.hero{padding-inline:27px}.work-area{grid-template-columns:minmax(0,1fr) 245px}.workspace{padding:19px}.steps li{gap:5px;padding-inline:6px;font-size:.81rem}}
+@media(max-width:760px){.shell{width:calc(100% - 30px)}.header{min-height:62px}.hero{grid-template-columns:1fr;gap:18px;padding:23px 21px 24px;min-height:auto;border-radius:18px}.hero-note{justify-self:start;margin:0;transform:none;max-width:290px;padding:11px 13px;box-shadow:4px 4px 0 #8ab37e76}.hero-note strong{margin:2px 0 5px}.hero-note div{padding-top:4px}.work-area{grid-template-columns:1fr;margin-top:14px;gap:14px}.aside{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.shell{width:calc(100% - 24px)}.brand{font-size:.92rem;gap:8px}.mark{width:30px;height:30px}.head-actions{gap:7px}.header .pill{padding:4px 6px;font-size:.74rem}.head-actions .button{font-size:.8rem}.hero h1{letter-spacing:-.04em;font-size:2rem;line-height:1.2}.hero p:last-child{font-size:.91rem}.hero-note{display:none}.workspace{padding:15px}.section-head h2{font-size:1.2rem}.steps{margin:13px 0 16px}.steps li{flex-direction:column;align-items:center;justify-content:flex-start;padding:7px 2px;font-size:.73rem;text-align:center}.aside,.summary-grid{grid-template-columns:1fr}.footer{display:block}.footer span{display:block}}
+@media(prefers-reduced-motion:no-preference){.button{transition:background-color .15s ease}html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="header">
+    <div class="brand"><span class="mark" aria-hidden="true"></span> 硅基野人工作台</div>
+    <div class="head-actions">
+      <span class="pill">免费演示</span>
+      <button id="reset" class="button ghost" type="button">重新开始</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <p class="eyebrow">个人工作台</p>
+        <h1 id="title"><span>把一句交办，</span><span>变成一份交接单</span></h1>
+        <p>点一遍体验交给 AI、看回执、人工确认和导出交接单。</p>
+      </div>
+      <div class="hero-note" aria-hidden="true">
+        <small>交接单示例</small>
+        <strong>准备一条周五发布的选题笔记</strong>
+        <div><span>草稿</span><span>审核</span><span>下一步</span></div>
+      </div>
+    </section>
+    <div class="work-area">
+      <section class="panel workspace" aria-labelledby="task-title">
+        <header class="section-head">
+          <div><p class="kicker">当前任务</p><h2 id="task-title">准备一条周五发布的选题笔记</h2></div>
+          <span class="pill pending" id="task-status">待交办</span>
+        </header>
+        <ol class="steps" aria-label="任务进度">
+          <li aria-current="step"><span class="step-number" aria-hidden="true">1</span>交办任务</li><li><span class="step-number" aria-hidden="true">2</span>查看回执</li><li><span class="step-number" aria-hidden="true">3</span>人工确认</li><li><span class="step-number" aria-hidden="true">4</span>导出交接</li>
+        </ol>
+        <section class="phase" id="brief-phase">
+          
+          <h3 tabindex="-1">你原话怎么说</h3>
+          <div class="summary-card"><p>周五想发一条笔记，讲我怎么用一张表定下下周的选题。帮我先写一版，还没确认几点发。</p></div>
+          <ul class="scope" aria-label="交付要求"><li>1 个标题</li><li>3 段正文</li><li>发布前核对</li></ul>
+          <div class="actions"><button class="button primary" id="start" type="button">模拟交给 AI</button></div>
+        </section>
+        <section class="phase" id="result-phase" hidden>
+          
+          <h3 tabindex="-1">AI 示例回执</h3>
+          <div class="draft-card">
+            <h4>周五用一张表，把下周要发的先定下来</h4>
+            <p>手里记了一堆选题，下周先做哪条？我用一张三列表，记选题、手头素材和下一步。</p>
+            <p>每周五回看一次。先选一条手上已经有截图或案例的主题，再写下第一步，比如给截图加注释。</p>
+            <p>下周打开表，先做写好的那一步。剩下的选题留在表里，下周五再看。</p>
+          </div>
+          <p class="hint">待你确认｜周五具体几点发布。</p>
+          <div class="actions">
+            <button class="button primary" id="open-review" type="button">进入人工确认</button>
+            <button class="button secondary" id="back-brief" type="button">返回交办</button>
+          </div>
+        </section>
+        <section class="phase" id="review-phase" hidden>
+          <h3 tabindex="-1">你来做最后确认</h3>
+          <p class="hint">这份交接单会留下待确认事项，接手的人一眼就知道要做什么。</p>
+          <div class="checklist" role="group" aria-label="人工核对清单">
+            <label><input type="checkbox" data-check> 标题和正文都围绕三栏选题表</label><label><input type="checkbox" data-check> 草稿用的是已知资料</label><label><input type="checkbox" data-check> 周五几点发留给负责人决定</label>
+          </div>
+          <div class="actions">
+            <button class="button primary" id="approve" type="button" disabled>确认并生成交接单</button>
+            <button class="button secondary" id="back-result" type="button">返回回执</button>
+          </div>
+        </section>
+        <section class="phase" id="export-phase" hidden>
+          <h3 tabindex="-1">交接单</h3>
+          <div class="preview receipt-view" id="receipt" tabindex="0" role="region" aria-label="交接单正文"></div>
+          <div class="actions">
+            <button class="button primary" id="download" type="button">下载交接单</button>
+            <button class="button secondary" id="copy-receipt" type="button">复制交接单</button>
+            <button class="button secondary" id="back-review" type="button">返回确认</button>
+          </div>
+        </section>
+      </section>
+      <aside class="aside">
+        <section class="panel side-panel">
+          <div class="section-head"><h2>进度记录</h2><span class="kicker" id="overall">0 / 4 已完成</span></div>
+          <ol class="timeline">
+            <li data-current="把一句话写成可执行的任务" data-done="已模拟交给 AI"><strong>交办任务</strong><span>待处理</span></li><li data-current="查看 AI 的示例结果" data-done="草稿和核对事项已返回"><strong>查看回执</strong><span>待处理</span></li><li data-current="检查结果，写清下一步" data-done="交接内容已人工确认"><strong>人工确认</strong><span>待处理</span></li><li data-current="交接单可复制或下载" data-done="交接单已复制或下载"><strong>导出交接</strong><span>待处理</span></li>
+          </ol>
+        </section>
+        <section class="panel side-panel side-note">
+          <h2>下一步</h2>
+          <p id="progress-note">先把任务与交付要求说清楚。</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="footer">
+    <span>示例数据 · AI 回执为模拟 · 可下载示例交接单</span>
+    
+  </footer>
+</div>
+<div role="status" aria-live="polite" id="toast" class="toast" hidden></div>
+<script>
+"use strict";
+const byId = (id) => document.getElementById(id);
+const sample = {
+  name: "准备一条周五发布的选题笔记",
+  brief: "周五想发一条笔记，讲我怎么用一张表定下下周的选题。帮我先写一版，还没确认几点发。",
+  facts: "选题表的三栏分别写选题、手头素材和下一步。每周五回看一次，从有素材的主题里选一条。",
+  scope: "一个标题、三段正文和一份发布前核对清单。发布时间留给我确认。",
+  result: "标题｜周五用一张表，把下周要发的先定下来\n\n手里记了一堆选题，下周先做哪条？我用一张三列表，记选题、手头素材和下一步。\n\n每周五回看一次。先选一条手上已经有截图或案例的主题，再写下第一步，比如给截图加注释。\n\n下周打开表，先做写好的那一步。剩下的选题留在表里，下周五再看。",
+  next: "我来决定周五的发布时间，再手动发布。"
+};
+const phaseIds = ["brief-phase", "result-phase", "review-phase", "export-phase"];
+const stepNames = ["交办任务", "查看回执", "人工确认", "导出交接"];
+const createDraft = () => ({phase: 0, checks: [false, false, false], exported: false});
+let state = createDraft();
+let toastTimer;
+const checks = [...document.querySelectorAll("[data-check]")];
+
+function announce(message) {
+  const toast = byId("toast");
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.hidden = true; }, 3200);
+}
+function markdown() {
+  const details = sample;
+  const bullets = checks.map((check) => "- [x] " + check.labels[0].innerText.trim()).join("\n");
+  return [
+    "# " + details.name,
+    "状态｜示例交接内容已确认",
+    "## 原始交办\n" + details.brief,
+    "## 已知资料\n" + (details.facts || "未填写"),
+    "## 交付要求\n" + details.scope,
+    "## " + "AI 示例回执" + "\n" + details.result,
+    "## 人工核对\n" + bullets,
+    "## 下一步\n" + details.next
+  ].join("\n\n") + "\n";
+}
+function renderReceipt() {
+  const details = sample;
+  const panels = [
+    ["下一步", details.next],
+    ["AI 示例回执", details.result],
+    ["原始交办", details.brief],
+    ["已知资料", details.facts || "未填写"],
+    ["交付要求", details.scope]
+  ];
+  byId("receipt").replaceChildren(...panels.map(([label, value]) => {
+    const section = document.createElement("section");
+    const heading = document.createElement("h4");
+    const body = document.createElement("p");
+    heading.textContent = label;
+    body.textContent = value;
+    section.append(heading, body);
+    return section;
+  }));
+}
+function updateApproval() {
+  byId("approve").disabled = !state.checks.every(Boolean);
+}
+function render(moveFocus = false) {
+  const {phase, exported} = state;
+  const statuses = ["待交办", "待查看", "待确认", exported ? "已导出" : "可导出"];
+  byId("task-status").classList.toggle("pending", phase < 3);
+  byId("task-status").textContent = statuses[phase];
+  byId("overall").textContent = (phase + Number(exported)) + " / 4 已完成";
+  byId("progress-note").textContent = exported ? "交接单已导出，可交给下一位接手。" :
+    ["先把任务与交付要求说清楚。","有了结果，再交给人核对。","最后写清谁来接下一步。","交接单已就绪，可以下载或复制。"][phase];
+  document.querySelectorAll(".steps li").forEach((step, i) => {
+    const isCurrent = i === phase;
+    const done = i < phase || (i === 3 && exported);
+    step.classList.toggle("done", done);
+    if (isCurrent) step.setAttribute("aria-current", "step");
+    else step.removeAttribute("aria-current");
+    step.firstElementChild.textContent = done ? "✓" : i + 1;
+  });
+  document.querySelectorAll(".timeline li").forEach((item, i) => {
+    const done = i < phase || (i === 3 && exported);
+    item.classList.toggle("done", done);
+    item.classList.toggle("current", i === phase && !done);
+    item.querySelector("strong").textContent = stepNames[i];
+    item.querySelector("span").textContent = done ? item.dataset.done :
+      i === phase ? item.dataset.current : "待处理";
+  });
+  phaseIds.forEach((id, i) => { byId(id).hidden = i !== phase; });
+  checks.forEach((check, i) => { check.checked = state.checks[i]; });
+  if (phase === 3) renderReceipt();
+  updateApproval();
+  if (moveFocus) byId(phaseIds[phase]).querySelector("h3").focus();
+}
+function advance(phase) {
+  state.phase = phase;
+  if (phase < 3) state.exported = false;
+  render(true);
+}
+function reset() {
+  clearTimeout(toastTimer);
+  byId("toast").hidden = true;
+  state = createDraft();
+  render(true);
+}
+
+async function copy(text, success) {
+  try {
+    await navigator.clipboard.writeText(text);
+    announce(success);
+    return true;
+  } catch {
+    const source = document.createElement("textarea");
+    const priorFocus = document.activeElement;
+    source.value = text;
+    source.style.cssText = "position:fixed;left:0;top:0;opacity:0;pointer-events:none";
+    document.body.append(source);
+    source.select();
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch {
+      // A locked-down browser may restrict both clipboard methods.
+    }
+    source.remove();
+    priorFocus?.focus();
+    announce(copied ? success : "复制受浏览器限制，请选中文字手动复制。");
+    return copied;
+  }
+}
+
+byId("reset").addEventListener("click", reset);
+
+checks.forEach((check, i) => check.addEventListener("change", () => {
+  state.checks[i] = check.checked;
+  updateApproval();
+}));
+
+byId("approve").addEventListener("click", () => {
+  if (!byId("approve").disabled) advance(3);
+});
+byId("back-review").addEventListener("click", () => advance(2));
+byId("back-result").addEventListener("click", () => advance(1));
+
+byId("download").addEventListener("click", () => {
+  const objectUrl = URL.createObjectURL(new Blob([markdown()], {type: "text/markdown;charset=utf-8"}));
+  const download = document.createElement("a");
+  download.href = objectUrl;
+  const name = (sample.name.slice(0, 65).replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")).trim();
+  download.download = (name || "工作台") + "-交接单.md";
+  download.click();
+  // Keep the URL alive while the browser starts the download.
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 10000);
+  state.exported = true;
+  render();
+  announce("下载已发起，请在浏览器下载记录查看。");
+});
+byId("copy-receipt").addEventListener("click", async () => {
+  if (await copy(markdown(), "交接单已复制。")) {
+    state.exported = true;
+    render();
+  }
+});
+
+byId("start").addEventListener("click", () => advance(1));
+byId("open-review").addEventListener("click", () => advance(2));
+byId("back-brief").addEventListener("click", () => advance(0));
+render();
+</script>
+</body>
+</html>
